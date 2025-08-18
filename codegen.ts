@@ -16,7 +16,7 @@ const config: CodegenConfig = {
       },
     },
   },
-  documents: ['graphql/**/*.ts'], 
+  documents: ['graphql/**/*.ts'],
   generates: {
     'types/shopify/graphql.ts': {
       plugins: ['typescript', 'typescript-operations'],
