@@ -1,3 +1,4 @@
+import { formatDate } from '@/lib/helper'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -35,7 +36,7 @@ const BlogCard = ({ blog }: BlogCardProps) => {
           </Link>
         )}
       </div>
-      <div>{blog.publishedAt}</div>
+      <div>{formatDate(blog.publishedAt)}</div>
 
       <h2 className="title-heading mt-5">
         <Link

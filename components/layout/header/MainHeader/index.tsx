@@ -45,7 +45,7 @@ const MainHeader = ({ menuItems }: Props) => {
           </Link>
         </div>
         <Navbar menuItems={menuItems} />
-        <Search scrolled={scrolled} />
+        <Search />
         <button onClick={() => setIsOpen(!isOpen)} className="md:hidden">
           <FaBars
             className={cn(

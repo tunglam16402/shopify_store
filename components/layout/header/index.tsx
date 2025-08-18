@@ -32,8 +32,6 @@ export default async function Header() {
       title: col.title,
     })) || []
 
-  console.log('menuItems :>> ', menuItems)
-
   return (
     <header>
       <TopHeader />

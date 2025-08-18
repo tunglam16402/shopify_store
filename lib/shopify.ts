@@ -1,4 +1,4 @@
-// lib/shopify.ts
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 export const SHOPIFY_DOMAIN = process.env.SHOPIFY_STORE_DOMAIN!
 export const SHOPIFY_TOKEN = process.env.SHOPIFY_STOREFRONT_TOKEN!

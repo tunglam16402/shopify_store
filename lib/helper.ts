@@ -68,3 +68,20 @@ export function transformShopifyUrl(url?: string | null): string {
     return '/'
   }
 }
+
+export function formatDate(
+  dateString?: string,
+  locale: string = 'en-EN',
+  options: Intl.DateTimeFormatOptions = {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }
+): string {
+  if (!dateString) return 'Invalid Date'
+
+  const date = new Date(dateString)
+  if (isNaN(date.getTime())) return 'Invalid Date'
+
+  return date.toLocaleDateString(locale, options)
+}

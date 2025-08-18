@@ -1,3 +1,4 @@
+import { formatDate } from '@/lib/helper'
 import { GetDetailArticleQuery } from '@/types/shopify/graphql'
 import Image from 'next/image'
 import React from 'react'
@@ -26,7 +27,7 @@ const BlogDetail = ({ blog }: BlogDetailProps) => {
         <div className="text-lg side-text mt-6 flex items-center gap-2 md:text-2xl md:gap-4 flex-wrap">
           <span>{blog?.author.name}</span>
           <span>|</span>
-          <time dateTime={blog?.publishedAt}>{blog?.publishedAt}</time>
+          <time>{formatDate(blog?.publishedAt)}</time>
         </div>
 
         <h1 className="text-5xl md:text-8xl font-bold mt-4">{blog?.title}</h1>

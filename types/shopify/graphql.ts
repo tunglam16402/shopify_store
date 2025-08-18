@@ -3124,3 +3124,38 @@ export type GetProductDetailQuery = {
     }
   } | null
 }
+
+export type PredictiveSearchQueryVariables = Exact<{
+  query: Scalars['String']['input']
+}>
+
+export type PredictiveSearchQuery = {
+  predictiveSearch?: {
+    products: Array<{
+      id: string
+      title: string
+      handle: string
+      images: { nodes: Array<{ url: string }> }
+    }>
+  } | null
+}
+
+export type SearchQueryVariables = Exact<{
+  query: Scalars['String']['input']
+}>
+
+export type SearchQuery = {
+  search: {
+    nodes: Array<
+      | { __typename: 'Article' }
+      | { __typename: 'Page' }
+      | {
+          __typename: 'Product'
+          id: string
+          title: string
+          handle: string
+          images: { nodes: Array<{ url: string; altText?: string | null }> }
+        }
+    >
+  }
+}
