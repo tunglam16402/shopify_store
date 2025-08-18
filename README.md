@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Description
 
-## Getting Started
+This project demonstrates how to use Shopify Storefront API with Next.js to build a headless Shopify storefront.
+You can fetch products, collections, and manage the cart on the frontend without using Shopify’s default Liquid themes.
 
-First, run the development server:
+Requirements
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Node.js >= 18
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Next.js >= 14
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+A Shopify store with Storefront API access token
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Yarn or npm
 
-## Learn More
+Installation
 
-To learn more about Next.js, take a look at the following resources:
+Clone the repository and install dependencies:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+git clone <repo-url>
+npm install  # or yarn
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+Create a .env.local file to store your Shopify store domain and Storefront API token.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Shopify Configuration
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Create a Storefront API access token in Shopify Admin:
+
+Go to Apps → Develop apps → Create App → Storefront API
+
+Grant permissions for reading products, collections, and customers as needed.
+
+Save the store domain and API token in environment variables to keep them secure.
+
+Usage
+
+Use GraphQL queries to fetch products, collections, and cart data from Shopify Storefront API.
+
+Combine with Next.js App Router or pages for server-side rendering (SSR) or static site generation (SSG) to optimize performance and SEO.
+
+Handle cart functionality and checkout links entirely on the frontend for a headless experience.
+
+Tips
+
+Always store sensitive tokens in environment variables.
+
+Use caching or incremental static regeneration (ISR) for better performance.
+
+Make sure your Storefront API token has the correct permissions for the data you need.
+
+You can integrate headless cart and checkout with Shopify’s checkout URLs or the Cart API.
+
+References
+
+Shopify Storefront API
+
+Next.js Documentation
+
+GraphQL Basics
