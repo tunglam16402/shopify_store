@@ -1,7 +1,7 @@
 import {
   GetProductDetailQuery,
   GetProductsQuery,
-} from '@/types/shopify/graphql'
+} from '@/shopify/types/graphql'
 
 type VariantFromQuery = NonNullable<
   GetProductDetailQuery['product']

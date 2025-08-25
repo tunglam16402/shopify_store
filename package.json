@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "lint-staged": "lint-staged",
-    "codegen": "graphql-codegen --config codegen.ts"
+    "codegen": "graphql-codegen --config shopify/codegen.ts"
   },
   "dependencies": {
     "classnames": "^2.5.1",

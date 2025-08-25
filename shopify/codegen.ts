@@ -16,9 +16,9 @@ const config: CodegenConfig = {
       },
     },
   },
-  documents: ['graphql/**/*.ts'],
+  documents: ['shopify/utils/query/**/*.ts'],
   generates: {
-    'types/shopify/graphql.ts': {
+    'shopify/types/graphql.ts': {
       plugins: ['typescript', 'typescript-operations'],
       config: {
         dedupeOperationSuffix: true,

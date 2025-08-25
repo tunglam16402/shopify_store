@@ -1,21 +1,13 @@
 import { ProductList } from '@/components/products'
-import getProductsQuery from '@/graphql/get-all-product-query'
-import { mappingDiscountPrice } from '@/lib/helper'
-import { shopifyFetch } from '@/lib/shopify'
-import { GetProductsQuery } from '@/types/shopify/graphql'
+import { getAllProduct } from '@/shopify/operations/get-product'
 
 export default async function ProductsPage() {
-  const data = await shopifyFetch<GetProductsQuery>({
-    query: getProductsQuery,
-  })
-  const products = data.products?.nodes ?? []
-
-  const productsWithDiscount = products.map(mappingDiscountPrice)
+  const products = await getAllProduct()
 
   return (
     <main className="p-8 max-w-6xl mx-auto">
       <h1 className="text-3xl font-bold mb-6">Shop All Products</h1>
-      <ProductList products={productsWithDiscount} />
+      <ProductList products={products} />
     </main>
   )
 }

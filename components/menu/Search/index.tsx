@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import type { PredictiveSearchQuery } from '@/types/shopify/graphql'
+import { PredictiveSearchQuery } from '@/shopify/types/graphql'
 
 const SearchBox = () => {
   const [input, setInput] = useState('')
@@ -48,7 +48,7 @@ const SearchBox = () => {
         <input
           type="text"
           className="w-full border rounded p-2"
-          placeholder="Tìm sản phẩm..."
+          placeholder="Enter product name..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
           autoComplete="off"

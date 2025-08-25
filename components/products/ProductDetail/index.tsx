@@ -1,5 +1,5 @@
 import { mappingVariantPrice } from '@/lib/helper'
-import { GetProductDetailQuery } from '@/types/shopify/graphql'
+import { GetProductDetailQuery } from '@/shopify/types/graphql'
 import Image from 'next/image'
 import React from 'react'
 

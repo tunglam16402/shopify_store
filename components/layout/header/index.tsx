@@ -1,36 +1,12 @@
-import getMainMenuQuery from '@/graphql/get-main-menu-query'
-import getAllCollectionQuery from '@/graphql/get-all-collection-query'
-
-import { shopifyFetch } from '@/lib/shopify'
-import { transformShopifyUrl } from '@/lib/helper'
-
-import {
-  GetMainMenuQuery,
-  GetAllCollectionQuery,
-} from '@/types/shopify/graphql'
-
 import TopHeader from './TopHeader'
 import MainHeader from './MainHeader'
 import SubHeader from './SubHeader'
+import { getCollections } from '@/shopify/operations/get-collection'
+import { getMainMenu } from '@/shopify/operations/get-menu'
 
 export default async function Header() {
-  const mainMenuData = await shopifyFetch<GetMainMenuQuery>({
-    query: getMainMenuQuery,
-  })
-  const menuItems =
-    mainMenuData?.menu?.items.map((item) => ({
-      title: item.title,
-      url: transformShopifyUrl(item.url),
-    })) || []
-
-  const collectionData = await shopifyFetch<GetAllCollectionQuery>({
-    query: getAllCollectionQuery,
-  })
-  const collections =
-    collectionData?.collections?.nodes.map((col) => ({
-      handle: col.handle,
-      title: col.title,
-    })) || []
+  const menuItems = await getMainMenu()
+  const collections = await getCollections()
 
   return (
     <header>

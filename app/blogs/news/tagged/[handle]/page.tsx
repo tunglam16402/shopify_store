@@ -1,7 +1,5 @@
 import { BlogList } from '@/components/blogs'
-import getArticleByBlogQuery from '@/graphql/get-article-by-blog-query'
-import { shopifyFetch } from '@/lib/shopify'
-import { GetArticleListQuery } from '@/types/shopify/graphql'
+import { getArticlesByCategory } from '@/shopify/operations/get-articles'
 import { notFound } from 'next/navigation'
 
 type Props = {
@@ -11,20 +9,7 @@ type Props = {
 const BlogCategoryPage = async ({ params }: Props) => {
   const { handle } = await params
 
-  const data = await shopifyFetch<GetArticleListQuery>({
-    query: getArticleByBlogQuery,
-    variables: { handle },
-  })
-
-  const category = (data?.blog?.articles.nodes || []).map((article) => ({
-    id: article.id,
-    title: article.title,
-    handle: article.handle,
-    excerpt: article.excerpt ?? '',
-    publishedAt: article.publishedAt,
-    imageUrl: article.image?.url,
-    author: article.author?.name ?? 'Unknown',
-  }))
+  const category = await getArticlesByCategory(handle)
 
   if (!category) return notFound()
 

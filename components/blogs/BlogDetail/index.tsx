@@ -1,5 +1,5 @@
 import { formatDate } from '@/lib/helper'
-import { GetDetailArticleQuery } from '@/types/shopify/graphql'
+import { GetDetailArticleQuery } from '@/shopify/types/graphql'
 import Image from 'next/image'
 import React from 'react'
 

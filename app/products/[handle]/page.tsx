@@ -1,8 +1,6 @@
 // app/products/[handle]/page.tsx
 import ProductDetail from '@/components/products/ProductDetail'
-import getProductDetailQuery from '@/graphql/get-product-by-handle-query'
-import { shopifyFetch } from '@/lib/shopify'
-import { GetProductDetailQuery } from '@/types/shopify/graphql'
+import { getProductByHandle } from '@/shopify/operations/get-product'
 
 interface Props {
   params: Promise<{ handle: string }>
@@ -10,11 +8,8 @@ interface Props {
 
 const ProductDetailPage = async ({ params }: Props) => {
   const { handle } = await params
-  const data = await shopifyFetch<GetProductDetailQuery>({
-    query: getProductDetailQuery,
-    variables: { handle },
-  })
-  const product = data.product
+
+  const product = await getProductByHandle(handle)
 
   if (!product) {
     return <div>Product not found.</div>
