@@ -1,5 +1,5 @@
 import { BlogList } from '@/components/blogs'
-import { getArticlesByCategory } from '@/shopify/operations/get-articles'
+import { getArticlesByCategory } from '@/shopify/api/operations/get-articles'
 import { notFound } from 'next/navigation'
 
 type Props = {

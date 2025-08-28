@@ -1,7 +1,7 @@
-import { NextResponse } from 'next/server'
-import predictiveSearchQuery from '@/shopify/utils/query/get-search-predictive-query'
-import { PredictiveSearchQuery } from '@/shopify/types/graphql'
 import { shopifyFetch } from '@/shopify/fetcher'
+import { GetPredictiveSearchQuery } from '@/shopify/types/graphql'
+import getPredictiveSearchQuery from '@/shopify/utils/query/get-search-predictive-query'
+import { NextResponse } from 'next/server'
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
@@ -12,8 +12,8 @@ export async function GET(request: Request) {
   }
 
   try {
-    const data = await shopifyFetch<PredictiveSearchQuery>({
-      query: predictiveSearchQuery,
+    const data = await shopifyFetch<GetPredictiveSearchQuery>({
+      query: getPredictiveSearchQuery,
       variables: { query },
     })
     return NextResponse.json({

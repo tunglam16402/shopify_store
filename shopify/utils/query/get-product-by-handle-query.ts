@@ -5,20 +5,16 @@ const getProductDetailQuery = /* GraphQL */ `
       title
       description
       images(first: 5) {
-        edges {
-          node {
-            url
-            altText
-          }
+        nodes {
+          url
+          altText
         }
-      }
-      metafield(namespace: "custom", key: "discount_percentage") {
-        value
       }
       variants(first: 5) {
         edges {
           node {
             id
+            title
             sku
             price {
               amount

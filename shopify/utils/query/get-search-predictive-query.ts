@@ -1,5 +1,5 @@
-const predictiveSearchQuery = /* GraphQL */ `
-  query predictiveSearch($query: String!) {
+const getPredictiveSearchQuery = /* GraphQL */ `
+  query getPredictiveSearch($query: String!) {
     predictiveSearch(query: $query, types: [PRODUCT], limit: 5) {
       products {
         id
@@ -10,9 +10,12 @@ const predictiveSearchQuery = /* GraphQL */ `
             url
           }
         }
+        featuredImage {
+          url
+        }
       }
     }
   }
 `
 
-export default predictiveSearchQuery
+export default getPredictiveSearchQuery

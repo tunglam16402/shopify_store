@@ -1,39 +1,26 @@
-export type Maybe<T> = T | null
-export type InputMaybe<T> = Maybe<T>
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K]
-}
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]?: Maybe<T[SubKey]>
-}
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]: Maybe<T[SubKey]>
-}
-export type MakeEmpty<
-  T extends { [key: string]: unknown },
-  K extends keyof T,
-> = { [_ in K]?: never }
-export type Incremental<T> =
-  | T
-  | {
-      [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never
-    }
+export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string }
-  String: { input: string; output: string }
-  Boolean: { input: boolean; output: boolean }
-  Int: { input: number; output: number }
-  Float: { input: number; output: number }
-  Color: { input: any; output: any }
-  DateTime: { input: string; output: string }
-  Decimal: { input: string; output: string }
-  HTML: { input: string; output: string }
-  ISO8601DateTime: { input: any; output: any }
-  JSON: { input: any; output: any }
-  URL: { input: string; output: string }
-  UnsignedInt64: { input: any; output: any }
-}
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
+  Color: { input: any; output: any; }
+  DateTime: { input: string; output: string; }
+  Decimal: { input: string; output: string; }
+  HTML: { input: string; output: string; }
+  ISO8601DateTime: { input: any; output: any; }
+  JSON: { input: any; output: any; }
+  URL: { input: string; output: string; }
+  UnsignedInt64: { input: any; output: any; }
+};
 
 /**
  * The input fields for submitting Apple Pay payment method information for checkout.
@@ -41,18 +28,18 @@ export type Scalars = {
  */
 export type ApplePayWalletContentInput = {
   /** The customer's billing address. */
-  billingAddress: MailingAddressInput
+  billingAddress: MailingAddressInput;
   /** The data for the Apple Pay wallet. */
-  data: Scalars['String']['input']
+  data: Scalars['String']['input'];
   /** The header data for the Apple Pay wallet. */
-  header: ApplePayWalletHeaderInput
+  header: ApplePayWalletHeaderInput;
   /** The last digits of the card used to create the payment. */
-  lastDigits?: InputMaybe<Scalars['String']['input']>
+  lastDigits?: InputMaybe<Scalars['String']['input']>;
   /** The signature for the Apple Pay wallet. */
-  signature: Scalars['String']['input']
+  signature: Scalars['String']['input'];
   /** The version for the Apple Pay wallet. */
-  version: Scalars['String']['input']
-}
+  version: Scalars['String']['input'];
+};
 
 /**
  * The input fields for submitting wallet payment method information for checkout.
@@ -60,14 +47,14 @@ export type ApplePayWalletContentInput = {
  */
 export type ApplePayWalletHeaderInput = {
   /** The application data for the Apple Pay wallet. */
-  applicationData?: InputMaybe<Scalars['String']['input']>
+  applicationData?: InputMaybe<Scalars['String']['input']>;
   /** The ephemeral public key for the Apple Pay wallet. */
-  ephemeralPublicKey: Scalars['String']['input']
+  ephemeralPublicKey: Scalars['String']['input'];
   /** The public key hash for the Apple Pay wallet. */
-  publicKeyHash: Scalars['String']['input']
+  publicKeyHash: Scalars['String']['input'];
   /** The transaction ID for the Apple Pay wallet. */
-  transactionId: Scalars['String']['input']
-}
+  transactionId: Scalars['String']['input'];
+};
 
 /** The set of valid sort keys for the Article query. */
 export type ArticleSortKeys =
@@ -88,15 +75,15 @@ export type ArticleSortKeys =
   /** Sort by the `title` value. */
   | 'TITLE'
   /** Sort by the `updated_at` value. */
-  | 'UPDATED_AT'
+  | 'UPDATED_AT';
 
 /** The input fields for an attribute. */
 export type AttributeInput = {
   /** Key or name of the attribute. */
-  key: Scalars['String']['input']
+  key: Scalars['String']['input'];
   /** Value of the attribute. */
-  value: Scalars['String']['input']
-}
+  value: Scalars['String']['input'];
+};
 
 /** The set of valid sort keys for the Blog query. */
 export type BlogSortKeys =
@@ -111,7 +98,7 @@ export type BlogSortKeys =
    */
   | 'RELEVANCE'
   /** Sort by the `title` value. */
-  | 'TITLE'
+  | 'TITLE';
 
 /**
  * The input fields for obtaining the buyer's identity.
@@ -119,10 +106,10 @@ export type BlogSortKeys =
  */
 export type BuyerInput = {
   /** The identifier of the company location. */
-  companyLocationId?: InputMaybe<Scalars['ID']['input']>
+  companyLocationId?: InputMaybe<Scalars['ID']['input']>;
   /** The customer access token retrieved from the [Customer Accounts API](https://shopify.dev/docs/api/customer#step-obtain-access-token). */
-  customerAccessToken: Scalars['String']['input']
-}
+  customerAccessToken: Scalars['String']['input'];
+};
 
 /** Card brand, such as Visa or Mastercard, which can be used for payments. */
 export type CardBrand =
@@ -137,15 +124,15 @@ export type CardBrand =
   /** Mastercard. */
   | 'MASTERCARD'
   /** Visa. */
-  | 'VISA'
+  | 'VISA';
 
 /** The input fields to provide exactly one of a variety of delivery address types. */
 export type CartAddressInput = {
   /** Copies details from the customer address to an address on this cart. */
-  copyFromCustomerAddressId?: InputMaybe<Scalars['ID']['input']>
+  copyFromCustomerAddressId?: InputMaybe<Scalars['ID']['input']>;
   /** A delivery address stored on this cart. */
-  deliveryAddress?: InputMaybe<CartDeliveryAddressInput>
-}
+  deliveryAddress?: InputMaybe<CartDeliveryAddressInput>;
+};
 
 /**
  * Specifies the input fields to update the buyer information associated with a cart.
@@ -156,22 +143,22 @@ export type CartAddressInput = {
  */
 export type CartBuyerIdentityInput = {
   /** The company location of the buyer that is interacting with the cart. */
-  companyLocationId?: InputMaybe<Scalars['ID']['input']>
+  companyLocationId?: InputMaybe<Scalars['ID']['input']>;
   /** The country where the buyer is located. */
-  countryCode?: InputMaybe<CountryCode>
+  countryCode?: InputMaybe<CountryCode>;
   /** The access token used to identify the customer associated with the cart. */
-  customerAccessToken?: InputMaybe<Scalars['String']['input']>
+  customerAccessToken?: InputMaybe<Scalars['String']['input']>;
   /** The email address of the buyer that is interacting with the cart. */
-  email?: InputMaybe<Scalars['String']['input']>
+  email?: InputMaybe<Scalars['String']['input']>;
   /** The phone number of the buyer that is interacting with the cart. */
-  phone?: InputMaybe<Scalars['String']['input']>
+  phone?: InputMaybe<Scalars['String']['input']>;
   /**
    * A set of preferences tied to the buyer interacting with the cart. Preferences are used to prefill fields in at checkout to streamline information collection.
    * Preferences are not synced back to the cart if they are overwritten.
    *
    */
-  preferences?: InputMaybe<CartPreferencesInput>
-}
+  preferences?: InputMaybe<CartPreferencesInput>;
+};
 
 /**
  * Represents how credit card details are provided for a direct payment.
@@ -183,7 +170,7 @@ export type CartCardSource =
    * Using this value requires a separate permission from Shopify.
    *
    */
-  'SAVED_CREDIT_CARD'
+  | 'SAVED_CREDIT_CARD';
 
 /** The input fields to create or update a cart address. */
 export type CartDeliveryAddressInput = {
@@ -191,40 +178,40 @@ export type CartDeliveryAddressInput = {
    * The first line of the address. Typically the street address or PO Box number.
    *
    */
-  address1?: InputMaybe<Scalars['String']['input']>
+  address1?: InputMaybe<Scalars['String']['input']>;
   /**
    * The second line of the address. Typically the number of the apartment, suite, or unit.
    *
    */
-  address2?: InputMaybe<Scalars['String']['input']>
+  address2?: InputMaybe<Scalars['String']['input']>;
   /**
    * The name of the city, district, village, or town.
    *
    */
-  city?: InputMaybe<Scalars['String']['input']>
+  city?: InputMaybe<Scalars['String']['input']>;
   /**
    * The name of the customer's company or organization.
    *
    */
-  company?: InputMaybe<Scalars['String']['input']>
+  company?: InputMaybe<Scalars['String']['input']>;
   /** The name of the country. */
-  countryCode?: InputMaybe<CountryCode>
+  countryCode?: InputMaybe<CountryCode>;
   /** The first name of the customer. */
-  firstName?: InputMaybe<Scalars['String']['input']>
+  firstName?: InputMaybe<Scalars['String']['input']>;
   /** The last name of the customer. */
-  lastName?: InputMaybe<Scalars['String']['input']>
+  lastName?: InputMaybe<Scalars['String']['input']>;
   /**
    * A unique phone number for the customer.
    *
    * Formatted using E.164 standard. For example, _+16135551111_.
    *
    */
-  phone?: InputMaybe<Scalars['String']['input']>
+  phone?: InputMaybe<Scalars['String']['input']>;
   /** The region of the address, such as the province, state, or district. */
-  provinceCode?: InputMaybe<Scalars['String']['input']>
+  provinceCode?: InputMaybe<Scalars['String']['input']>;
   /** The zip or postal code of the address. */
-  zip?: InputMaybe<Scalars['String']['input']>
-}
+  zip?: InputMaybe<Scalars['String']['input']>;
+};
 
 /** Preferred location used to find the closest pick up point based on coordinates. */
 export type CartDeliveryCoordinatesPreferenceInput = {
@@ -234,12 +221,12 @@ export type CartDeliveryCoordinatesPreferenceInput = {
    * For example, US.
    *
    */
-  countryCode: CountryCode
+  countryCode: CountryCode;
   /** The geographic latitude for a given location. Coordinates are required in order to set pickUpHandle for pickup points. */
-  latitude: Scalars['Float']['input']
+  latitude: Scalars['Float']['input'];
   /** The geographic longitude for a given location. Coordinates are required in order to set pickUpHandle for pickup points. */
-  longitude: Scalars['Float']['input']
-}
+  longitude: Scalars['Float']['input'];
+};
 
 /**
  * Defines what type of merchandise is in the delivery group.
@@ -253,7 +240,7 @@ export type CartDeliveryGroupType =
    */
   | 'ONE_TIME_PURCHASE'
   /** The delivery group only contains subscription merchandise. */
-  | 'SUBSCRIPTION'
+  | 'SUBSCRIPTION';
 
 /** The input fields for the cart's delivery properties. */
 export type CartDeliveryInput = {
@@ -262,27 +249,27 @@ export type CartDeliveryInput = {
    *
    * The input must not contain more than `250` values.
    */
-  addresses?: InputMaybe<Array<CartSelectableAddressInput>>
-}
+  addresses?: InputMaybe<Array<CartSelectableAddressInput>>;
+};
 
 /** Delivery preferences can be used to prefill the delivery section at checkout. */
 export type CartDeliveryPreferenceInput = {
   /** The coordinates of a delivery location in order of preference. */
-  coordinates?: InputMaybe<CartDeliveryCoordinatesPreferenceInput>
+  coordinates?: InputMaybe<CartDeliveryCoordinatesPreferenceInput>;
   /**
    * The preferred delivery methods such as shipping, local pickup or through pickup points.
    *
    * The input must not contain more than `250` values.
    */
-  deliveryMethod?: InputMaybe<Array<PreferenceDeliveryMethodType>>
+  deliveryMethod?: InputMaybe<Array<PreferenceDeliveryMethodType>>;
   /**
    * The pickup handle prefills checkout fields with the location for either local pickup or pickup points delivery methods.
    * It accepts both location ID for local pickup and external IDs for pickup points.
    *
    * The input must not contain more than `250` values.
    */
-  pickupHandle?: InputMaybe<Array<Scalars['String']['input']>>
-}
+  pickupHandle?: InputMaybe<Array<Scalars['String']['input']>>;
+};
 
 /**
  * The input fields for submitting direct payment method information for checkout.
@@ -290,14 +277,14 @@ export type CartDeliveryPreferenceInput = {
  */
 export type CartDirectPaymentMethodInput = {
   /** Indicates if the customer has accepted the subscription terms. Defaults to false. */
-  acceptedSubscriptionTerms?: InputMaybe<Scalars['Boolean']['input']>
+  acceptedSubscriptionTerms?: InputMaybe<Scalars['Boolean']['input']>;
   /** The customer's billing address. */
-  billingAddress: MailingAddressInput
+  billingAddress: MailingAddressInput;
   /** The source of the credit card payment. */
-  cardSource?: InputMaybe<CartCardSource>
+  cardSource?: InputMaybe<CartCardSource>;
   /** The session ID for the direct payment method used to create the payment. */
-  sessionId: Scalars['String']['input']
-}
+  sessionId: Scalars['String']['input'];
+};
 
 /** Possible error codes that can be returned by `CartUserError`. */
 export type CartErrorCode =
@@ -364,7 +351,7 @@ export type CartErrorCode =
   /** Validation failed. */
   | 'VALIDATION_CUSTOM'
   /** The given zip code is unsupported. */
-  | 'ZIP_CODE_NOT_SUPPORTED'
+  | 'ZIP_CODE_NOT_SUPPORTED';
 
 /**
  * The input fields for submitting a billing address without a selected payment method.
@@ -372,8 +359,8 @@ export type CartErrorCode =
  */
 export type CartFreePaymentMethodInput = {
   /** The customer's billing address. */
-  billingAddress: MailingAddressInput
-}
+  billingAddress: MailingAddressInput;
+};
 
 /** The input fields to create a cart. */
 export type CartInput = {
@@ -382,63 +369,63 @@ export type CartInput = {
    *
    * The input must not contain more than `250` values.
    */
-  attributes?: InputMaybe<Array<AttributeInput>>
+  attributes?: InputMaybe<Array<AttributeInput>>;
   /**
    * The customer associated with the cart. Used to determine [international pricing]
    * (https://shopify.dev/custom-storefronts/internationalization/international-pricing).
    * Buyer identity should match the customer's shipping address.
    *
    */
-  buyerIdentity?: InputMaybe<CartBuyerIdentityInput>
+  buyerIdentity?: InputMaybe<CartBuyerIdentityInput>;
   /** The delivery-related fields for the cart. */
-  delivery?: InputMaybe<CartDeliveryInput>
+  delivery?: InputMaybe<CartDeliveryInput>;
   /**
    * The case-insensitive discount codes that the customer added at checkout.
    *
    * The input must not contain more than `250` values.
    */
-  discountCodes?: InputMaybe<Array<Scalars['String']['input']>>
+  discountCodes?: InputMaybe<Array<Scalars['String']['input']>>;
   /**
    * The case-insensitive gift card codes.
    *
    * The input must not contain more than `250` values.
    */
-  giftCardCodes?: InputMaybe<Array<Scalars['String']['input']>>
+  giftCardCodes?: InputMaybe<Array<Scalars['String']['input']>>;
   /**
    * A list of merchandise lines to add to the cart.
    *
    * The input must not contain more than `250` values.
    */
-  lines?: InputMaybe<Array<CartLineInput>>
+  lines?: InputMaybe<Array<CartLineInput>>;
   /**
    * The metafields to associate with this cart.
    *
    * The input must not contain more than `250` values.
    */
-  metafields?: InputMaybe<Array<CartInputMetafieldInput>>
+  metafields?: InputMaybe<Array<CartInputMetafieldInput>>;
   /**
    * A note that's associated with the cart. For example, the note can be a personalized message to the buyer.
    *
    */
-  note?: InputMaybe<Scalars['String']['input']>
-}
+  note?: InputMaybe<Scalars['String']['input']>;
+};
 
 /** The input fields for a cart metafield value to set. */
 export type CartInputMetafieldInput = {
   /** The key name of the metafield. */
-  key: Scalars['String']['input']
+  key: Scalars['String']['input'];
   /**
    * The type of data that the cart metafield stores.
    * The type of data must be a [supported type](https://shopify.dev/apps/metafields/types).
    *
    */
-  type: Scalars['String']['input']
+  type: Scalars['String']['input'];
   /**
    * The data to store in the cart metafield. The data is always stored as a string, regardless of the metafield's type.
    *
    */
-  value: Scalars['String']['input']
-}
+  value: Scalars['String']['input'];
+};
 
 /** The input fields to create a merchandise line on a cart. */
 export type CartLineInput = {
@@ -447,14 +434,14 @@ export type CartLineInput = {
    *
    * The input must not contain more than `250` values.
    */
-  attributes?: InputMaybe<Array<AttributeInput>>
+  attributes?: InputMaybe<Array<AttributeInput>>;
   /** The ID of the merchandise that the buyer intends to purchase. */
-  merchandiseId: Scalars['ID']['input']
+  merchandiseId: Scalars['ID']['input'];
   /** The quantity of the merchandise. */
-  quantity?: InputMaybe<Scalars['Int']['input']>
+  quantity?: InputMaybe<Scalars['Int']['input']>;
   /** The ID of the selling plan that the merchandise is being purchased with. */
-  sellingPlanId?: InputMaybe<Scalars['ID']['input']>
-}
+  sellingPlanId?: InputMaybe<Scalars['ID']['input']>;
+};
 
 /** The input fields to update a line item on a cart. */
 export type CartLineUpdateInput = {
@@ -463,16 +450,16 @@ export type CartLineUpdateInput = {
    *
    * The input must not contain more than `250` values.
    */
-  attributes?: InputMaybe<Array<AttributeInput>>
+  attributes?: InputMaybe<Array<AttributeInput>>;
   /** The ID of the merchandise line. */
-  id: Scalars['ID']['input']
+  id: Scalars['ID']['input'];
   /** The ID of the merchandise for the line item. */
-  merchandiseId?: InputMaybe<Scalars['ID']['input']>
+  merchandiseId?: InputMaybe<Scalars['ID']['input']>;
   /** The quantity of the line item. */
-  quantity?: InputMaybe<Scalars['Int']['input']>
+  quantity?: InputMaybe<Scalars['Int']['input']>;
   /** The ID of the selling plan that the merchandise is being purchased with. */
-  sellingPlanId?: InputMaybe<Scalars['ID']['input']>
-}
+  sellingPlanId?: InputMaybe<Scalars['ID']['input']>;
+};
 
 /** The input fields to delete a cart metafield. */
 export type CartMetafieldDeleteInput = {
@@ -481,29 +468,29 @@ export type CartMetafieldDeleteInput = {
    *  that relies on the default app-reserved namespace.
    *
    */
-  key: Scalars['String']['input']
+  key: Scalars['String']['input'];
   /** The ID of the cart resource. */
-  ownerId: Scalars['ID']['input']
-}
+  ownerId: Scalars['ID']['input'];
+};
 
 /** The input fields for a cart metafield value to set. */
 export type CartMetafieldsSetInput = {
   /** The key name of the cart metafield. */
-  key: Scalars['String']['input']
+  key: Scalars['String']['input'];
   /** The ID of the cart resource. */
-  ownerId: Scalars['ID']['input']
+  ownerId: Scalars['ID']['input'];
   /**
    * The type of data that the cart metafield stores.
    * The type of data must be a [supported type](https://shopify.dev/apps/metafields/types).
    *
    */
-  type: Scalars['String']['input']
+  type: Scalars['String']['input'];
   /**
    * The data to store in the cart metafield. The data is always stored as a string, regardless of the metafield's type.
    *
    */
-  value: Scalars['String']['input']
-}
+  value: Scalars['String']['input'];
+};
 
 /**
  * The input fields for updating the payment method that will be used to checkout.
@@ -511,69 +498,69 @@ export type CartMetafieldsSetInput = {
  */
 export type CartPaymentInput = {
   /** The amount that the customer will be charged at checkout. */
-  amount: MoneyInput
+  amount: MoneyInput;
   /**
    * The input fields to use when checking out a cart with a direct payment method (like a credit card).
    *
    */
-  directPaymentMethod?: InputMaybe<CartDirectPaymentMethodInput>
+  directPaymentMethod?: InputMaybe<CartDirectPaymentMethodInput>;
   /**
    * The input fields to use to checkout a cart without providing a payment method.
    * Use this payment method input if the total cost of the cart is 0.
    *
    */
-  freePaymentMethod?: InputMaybe<CartFreePaymentMethodInput>
+  freePaymentMethod?: InputMaybe<CartFreePaymentMethodInput>;
   /**
    * An ID of the order placed on the originating platform.
    * Note that this value doesn't correspond to the Shopify Order ID.
    *
    */
-  sourceIdentifier?: InputMaybe<Scalars['String']['input']>
+  sourceIdentifier?: InputMaybe<Scalars['String']['input']>;
   /**
    * The input fields to use when checking out a cart with a wallet payment method (like Shop Pay or Apple Pay).
    *
    */
-  walletPaymentMethod?: InputMaybe<CartWalletPaymentMethodInput>
-}
+  walletPaymentMethod?: InputMaybe<CartWalletPaymentMethodInput>;
+};
 
 /** The input fields represent preferences for the buyer that is interacting with the cart. */
 export type CartPreferencesInput = {
   /** Delivery preferences can be used to prefill the delivery section in at checkout. */
-  delivery?: InputMaybe<CartDeliveryPreferenceInput>
+  delivery?: InputMaybe<CartDeliveryPreferenceInput>;
   /**
    * Wallet preferences are used to populate relevant payment fields in the checkout flow.
    * Accepted value: `["shop_pay"]`.
    *
    * The input must not contain more than `250` values.
    */
-  wallet?: InputMaybe<Array<Scalars['String']['input']>>
-}
+  wallet?: InputMaybe<Array<Scalars['String']['input']>>;
+};
 
 /** The input fields for a selectable delivery address in a cart. */
 export type CartSelectableAddressInput = {
   /** Exactly one kind of delivery address. */
-  address: CartAddressInput
+  address: CartAddressInput;
   /** When true, this delivery address will not be associated with the buyer after a successful checkout. */
-  oneTimeUse?: InputMaybe<Scalars['Boolean']['input']>
+  oneTimeUse?: InputMaybe<Scalars['Boolean']['input']>;
   /** Sets exactly one address as pre-selected for the buyer. */
-  selected?: InputMaybe<Scalars['Boolean']['input']>
+  selected?: InputMaybe<Scalars['Boolean']['input']>;
   /** Defines what kind of address validation is requested. */
-  validationStrategy?: InputMaybe<DeliveryAddressValidationStrategy>
-}
+  validationStrategy?: InputMaybe<DeliveryAddressValidationStrategy>;
+};
 
 /** The input fields to update a line item on a cart. */
 export type CartSelectableAddressUpdateInput = {
   /** Exactly one kind of delivery address. */
-  address?: InputMaybe<CartAddressInput>
+  address?: InputMaybe<CartAddressInput>;
   /** The id of the selectable address. */
-  id: Scalars['ID']['input']
+  id: Scalars['ID']['input'];
   /** When true, this delivery address will not be associated with the buyer after a successful checkout. */
-  oneTimeUse?: InputMaybe<Scalars['Boolean']['input']>
+  oneTimeUse?: InputMaybe<Scalars['Boolean']['input']>;
   /** Sets exactly one address as pre-selected for the buyer. */
-  selected?: InputMaybe<Scalars['Boolean']['input']>
+  selected?: InputMaybe<Scalars['Boolean']['input']>;
   /** Defines what kind of address validation is requested. */
-  validationStrategy?: InputMaybe<DeliveryAddressValidationStrategy>
-}
+  validationStrategy?: InputMaybe<DeliveryAddressValidationStrategy>;
+};
 
 /**
  * The input fields for updating the selected delivery options for a delivery group.
@@ -581,10 +568,10 @@ export type CartSelectableAddressUpdateInput = {
  */
 export type CartSelectedDeliveryOptionInput = {
   /** The ID of the cart delivery group. */
-  deliveryGroupId: Scalars['ID']['input']
+  deliveryGroupId: Scalars['ID']['input'];
   /** The handle of the selected delivery option. */
-  deliveryOptionHandle: Scalars['String']['input']
-}
+  deliveryOptionHandle: Scalars['String']['input'];
+};
 
 /**
  * The input fields for submitting wallet payment method information for checkout.
@@ -592,10 +579,10 @@ export type CartSelectedDeliveryOptionInput = {
  */
 export type CartWalletPaymentMethodInput = {
   /** The payment method information for the Apple Pay wallet. */
-  applePayWalletContent?: InputMaybe<ApplePayWalletContentInput>
+  applePayWalletContent?: InputMaybe<ApplePayWalletContentInput>;
   /** The payment method information for the Shop Pay wallet. */
-  shopPayWalletContent?: InputMaybe<ShopPayWalletContentInput>
-}
+  shopPayWalletContent?: InputMaybe<ShopPayWalletContentInput>;
+};
 
 /** The code for the cart warning. */
 export type CartWarningCode =
@@ -606,7 +593,7 @@ export type CartWarningCode =
   /** The merchandise is out of stock. */
   | 'MERCHANDISE_OUT_OF_STOCK'
   /** Gift cards are not available as a payment method. */
-  | 'PAYMENTS_GIFT_CARDS_UNAVAILABLE'
+  | 'PAYMENTS_GIFT_CARDS_UNAVAILABLE';
 
 /**
  * A filter used to view a subset of products in a collection matching a specific category value.
@@ -614,8 +601,8 @@ export type CartWarningCode =
  */
 export type CategoryFilter = {
   /** The id of the category to filter on. */
-  id: Scalars['String']['input']
-}
+  id: Scalars['String']['input'];
+};
 
 /** The set of valid sort keys for the Collection query. */
 export type CollectionSortKeys =
@@ -630,7 +617,7 @@ export type CollectionSortKeys =
   /** Sort by the `title` value. */
   | 'TITLE'
   /** Sort by the `updated_at` value. */
-  | 'UPDATED_AT'
+  | 'UPDATED_AT';
 
 /** The code of the error that occurred during a cart completion attempt. */
 export type CompletionErrorCode =
@@ -646,14 +633,14 @@ export type CompletionErrorCode =
   | 'PAYMENT_INVALID_CREDIT_CARD'
   | 'PAYMENT_INVALID_CURRENCY'
   | 'PAYMENT_INVALID_PAYMENT_METHOD'
-  | 'PAYMENT_TRANSIENT_ERROR'
+  | 'PAYMENT_TRANSIENT_ERROR';
 
 /** The precision of the value returned by a count field. */
 export type CountPrecision =
   /** The count is at least the value. A limit was reached. */
   | 'AT_LEAST'
   /** The count is exactly the value. */
-  | 'EXACT'
+  | 'EXACT';
 
 /**
  * The code designating a country/region, which generally follows ISO 3166-1 alpha-2 guidelines.
@@ -1152,7 +1139,7 @@ export type CountryCode =
   /** Zimbabwe. */
   | 'ZW'
   /** Unknown Region. */
-  | 'ZZ'
+  | 'ZZ';
 
 /** The part of the image that should remain after cropping. */
 export type CropRegion =
@@ -1165,7 +1152,7 @@ export type CropRegion =
   /** Keep the right of the image. */
   | 'RIGHT'
   /** Keep the top of the image. */
-  | 'TOP'
+  | 'TOP';
 
 /**
  * The three-letter currency codes that represent the world currencies used in
@@ -1495,44 +1482,44 @@ export type CurrencyCode =
   /** South African Rand (ZAR). */
   | 'ZAR'
   /** Zambian Kwacha (ZMW). */
-  | 'ZMW'
+  | 'ZMW';
 
 /** The input fields required to create a customer access token. */
 export type CustomerAccessTokenCreateInput = {
   /** The email associated to the customer. */
-  email: Scalars['String']['input']
+  email: Scalars['String']['input'];
   /** The login password to be used by the customer. */
-  password: Scalars['String']['input']
-}
+  password: Scalars['String']['input'];
+};
 
 /** The input fields to activate a customer. */
 export type CustomerActivateInput = {
   /** The activation token required to activate the customer. */
-  activationToken: Scalars['String']['input']
+  activationToken: Scalars['String']['input'];
   /** New password that will be set during activation. */
-  password: Scalars['String']['input']
-}
+  password: Scalars['String']['input'];
+};
 
 /** The input fields to create a new customer. */
 export type CustomerCreateInput = {
   /** Indicates whether the customer has consented to be sent marketing material via email. */
-  acceptsMarketing?: InputMaybe<Scalars['Boolean']['input']>
+  acceptsMarketing?: InputMaybe<Scalars['Boolean']['input']>;
   /** The customer’s email. */
-  email: Scalars['String']['input']
+  email: Scalars['String']['input'];
   /** The customer’s first name. */
-  firstName?: InputMaybe<Scalars['String']['input']>
+  firstName?: InputMaybe<Scalars['String']['input']>;
   /** The customer’s last name. */
-  lastName?: InputMaybe<Scalars['String']['input']>
+  lastName?: InputMaybe<Scalars['String']['input']>;
   /** The login password used by the customer. */
-  password: Scalars['String']['input']
+  password: Scalars['String']['input'];
   /**
    * A unique phone number for the customer.
    *
    * Formatted using E.164 standard. For example, _+16135551111_.
    *
    */
-  phone?: InputMaybe<Scalars['String']['input']>
-}
+  phone?: InputMaybe<Scalars['String']['input']>;
+};
 
 /** Possible error codes that can be returned by `CustomerUserError`. */
 export type CustomerErrorCode =
@@ -1565,36 +1552,36 @@ export type CustomerErrorCode =
   /** The input value is too short. */
   | 'TOO_SHORT'
   /** Unidentified customer. */
-  | 'UNIDENTIFIED_CUSTOMER'
+  | 'UNIDENTIFIED_CUSTOMER';
 
 /** The input fields to reset a customer's password. */
 export type CustomerResetInput = {
   /** New password that will be set as part of the reset password process. */
-  password: Scalars['String']['input']
+  password: Scalars['String']['input'];
   /** The reset token required to reset the customer’s password. */
-  resetToken: Scalars['String']['input']
-}
+  resetToken: Scalars['String']['input'];
+};
 
 /** The input fields to update the Customer information. */
 export type CustomerUpdateInput = {
   /** Indicates whether the customer has consented to be sent marketing material via email. */
-  acceptsMarketing?: InputMaybe<Scalars['Boolean']['input']>
+  acceptsMarketing?: InputMaybe<Scalars['Boolean']['input']>;
   /** The customer’s email. */
-  email?: InputMaybe<Scalars['String']['input']>
+  email?: InputMaybe<Scalars['String']['input']>;
   /** The customer’s first name. */
-  firstName?: InputMaybe<Scalars['String']['input']>
+  firstName?: InputMaybe<Scalars['String']['input']>;
   /** The customer’s last name. */
-  lastName?: InputMaybe<Scalars['String']['input']>
+  lastName?: InputMaybe<Scalars['String']['input']>;
   /** The login password used by the customer. */
-  password?: InputMaybe<Scalars['String']['input']>
+  password?: InputMaybe<Scalars['String']['input']>;
   /**
    * A unique phone number for the customer.
    *
    * Formatted using E.164 standard. For example, _+16135551111_. To remove the phone number, specify `null`.
    *
    */
-  phone?: InputMaybe<Scalars['String']['input']>
-}
+  phone?: InputMaybe<Scalars['String']['input']>;
+};
 
 /**
  * The input fields for delivery address preferences.
@@ -1605,18 +1592,18 @@ export type DeliveryAddressInput = {
    * The ID of a customer address that is associated with the buyer that is interacting with the cart.
    *
    */
-  customerAddressId?: InputMaybe<Scalars['ID']['input']>
+  customerAddressId?: InputMaybe<Scalars['ID']['input']>;
   /** A delivery address preference of a buyer that is interacting with the cart. */
-  deliveryAddress?: InputMaybe<MailingAddressInput>
+  deliveryAddress?: InputMaybe<MailingAddressInput>;
   /** Defines what kind of address validation is requested. */
-  deliveryAddressValidationStrategy?: InputMaybe<DeliveryAddressValidationStrategy>
+  deliveryAddressValidationStrategy?: InputMaybe<DeliveryAddressValidationStrategy>;
   /**
    * Whether the given delivery address is considered to be a one-time use address. One-time use addresses do not
    * get persisted to the buyer's personal addresses when checking out.
    *
    */
-  oneTimeUse?: InputMaybe<Scalars['Boolean']['input']>
-}
+  oneTimeUse?: InputMaybe<Scalars['Boolean']['input']>;
+};
 
 /**
  * Defines the types of available validation strategies for delivery addresses.
@@ -1630,7 +1617,7 @@ export type DeliveryAddressValidationStrategy =
    * according to Shopify's checkout rules. If the address fails validation, the cart will not be updated.
    *
    */
-  | 'STRICT'
+  | 'STRICT';
 
 /** List of different delivery method types. */
 export type DeliveryMethodType =
@@ -1645,7 +1632,7 @@ export type DeliveryMethodType =
   /** Retail. */
   | 'RETAIL'
   /** Shipping. */
-  | 'SHIPPING'
+  | 'SHIPPING';
 
 /** Digital wallet, such as Apple Pay, which can be used for accelerated checkouts. */
 export type DigitalWallet =
@@ -1656,7 +1643,7 @@ export type DigitalWallet =
   /** Google Pay. */
   | 'GOOGLE_PAY'
   /** Shopify Pay. */
-  | 'SHOPIFY_PAY'
+  | 'SHOPIFY_PAY';
 
 /** The method by which the discount's value is allocated onto its entitled lines. */
 export type DiscountApplicationAllocationMethod =
@@ -1665,7 +1652,7 @@ export type DiscountApplicationAllocationMethod =
   /** The value is applied onto every entitled line. */
   | 'EACH'
   /** The value is specifically applied onto a particular line. */
-  | 'ONE'
+  | 'ONE';
 
 /**
  * The lines on the order to which the discount is applied, of the type defined by
@@ -1680,7 +1667,7 @@ export type DiscountApplicationTargetSelection =
   /** The discount is allocated onto only the lines that it's entitled for. */
   | 'ENTITLED'
   /** The discount is allocated onto explicitly chosen lines. */
-  | 'EXPLICIT'
+  | 'EXPLICIT';
 
 /**
  * The type of line (i.e. line item or shipping line) on an order that the discount is applicable towards.
@@ -1690,7 +1677,7 @@ export type DiscountApplicationTargetType =
   /** The discount applies onto line items. */
   | 'LINE_ITEM'
   /** The discount applies onto shipping lines. */
-  | 'SHIPPING_LINE'
+  | 'SHIPPING_LINE';
 
 /**
  * Defines how to present the filter values, specifies the presentation of the filter.
@@ -1702,7 +1689,7 @@ export type FilterPresentation =
   /** Swatch presentation, filter values display color or image patterns. */
   | 'SWATCH'
   /** Text presentation, no additional visual display for filter values. */
-  | 'TEXT'
+  | 'TEXT';
 
 /**
  * The type of data that the filter group represents.
@@ -1717,23 +1704,23 @@ export type FilterType =
   /** A list of selectable values. */
   | 'LIST'
   /** A range of prices. */
-  | 'PRICE_RANGE'
+  | 'PRICE_RANGE';
 
 /** The input fields used to specify a geographical location. */
 export type GeoCoordinateInput = {
   /** The coordinate's latitude value. */
-  latitude: Scalars['Float']['input']
+  latitude: Scalars['Float']['input'];
   /** The coordinate's longitude value. */
-  longitude: Scalars['Float']['input']
-}
+  longitude: Scalars['Float']['input'];
+};
 
 /** The input fields to identify a metafield on an owner resource by namespace and key. */
 export type HasMetafieldsIdentifier = {
   /** The identifier for the metafield. */
-  key: Scalars['String']['input']
+  key: Scalars['String']['input'];
   /** The container the metafield belongs to. If omitted, the app-reserved namespace will be used. */
-  namespace?: InputMaybe<Scalars['String']['input']>
-}
+  namespace?: InputMaybe<Scalars['String']['input']>;
+};
 
 /** List of supported image content types. */
 export type ImageContentType =
@@ -1742,7 +1729,7 @@ export type ImageContentType =
   /** A PNG image. */
   | 'PNG'
   /** A WEBP image. */
-  | 'WEBP'
+  | 'WEBP';
 
 /**
  * The available options for transforming an image.
@@ -1762,29 +1749,29 @@ export type ImageTransformInput = {
    * in an image with a width of 5 and height of 10, where the right side of the image is removed.
    *
    */
-  crop?: InputMaybe<CropRegion>
+  crop?: InputMaybe<CropRegion>;
   /**
    * Image height in pixels between 1 and 5760.
    *
    */
-  maxHeight?: InputMaybe<Scalars['Int']['input']>
+  maxHeight?: InputMaybe<Scalars['Int']['input']>;
   /**
    * Image width in pixels between 1 and 5760.
    *
    */
-  maxWidth?: InputMaybe<Scalars['Int']['input']>
+  maxWidth?: InputMaybe<Scalars['Int']['input']>;
   /**
    * Convert the source image into the preferred content type.
    * Supported conversions: `.svg` to `.png`, any file type to `.jpg`, and any file type to `.webp`.
    *
    */
-  preferredContentType?: InputMaybe<ImageContentType>
+  preferredContentType?: InputMaybe<ImageContentType>;
   /**
    * Image size multiplier for high-resolution retina displays. Must be within 1..3.
    *
    */
-  scale?: InputMaybe<Scalars['Int']['input']>
-}
+  scale?: InputMaybe<Scalars['Int']['input']>;
+};
 
 /** Language codes supported by Shopify. */
 export type LanguageCode =
@@ -2075,7 +2062,7 @@ export type LanguageCode =
   /** Chinese (Traditional). */
   | 'ZH_TW'
   /** Zulu. */
-  | 'ZU'
+  | 'ZU';
 
 /** The set of valid sort keys for the Location query. */
 export type LocationSortKeys =
@@ -2086,7 +2073,7 @@ export type LocationSortKeys =
   /** Sort by the `id` value. */
   | 'ID'
   /** Sort by the `name` value. */
-  | 'NAME'
+  | 'NAME';
 
 /** The input fields to create or update a mailing address. */
 export type MailingAddressInput = {
@@ -2094,40 +2081,40 @@ export type MailingAddressInput = {
    * The first line of the address. Typically the street address or PO Box number.
    *
    */
-  address1?: InputMaybe<Scalars['String']['input']>
+  address1?: InputMaybe<Scalars['String']['input']>;
   /**
    * The second line of the address. Typically the number of the apartment, suite, or unit.
    *
    */
-  address2?: InputMaybe<Scalars['String']['input']>
+  address2?: InputMaybe<Scalars['String']['input']>;
   /**
    * The name of the city, district, village, or town.
    *
    */
-  city?: InputMaybe<Scalars['String']['input']>
+  city?: InputMaybe<Scalars['String']['input']>;
   /**
    * The name of the customer's company or organization.
    *
    */
-  company?: InputMaybe<Scalars['String']['input']>
+  company?: InputMaybe<Scalars['String']['input']>;
   /** The name of the country. */
-  country?: InputMaybe<Scalars['String']['input']>
+  country?: InputMaybe<Scalars['String']['input']>;
   /** The first name of the customer. */
-  firstName?: InputMaybe<Scalars['String']['input']>
+  firstName?: InputMaybe<Scalars['String']['input']>;
   /** The last name of the customer. */
-  lastName?: InputMaybe<Scalars['String']['input']>
+  lastName?: InputMaybe<Scalars['String']['input']>;
   /**
    * A unique phone number for the customer.
    *
    * Formatted using E.164 standard. For example, _+16135551111_.
    *
    */
-  phone?: InputMaybe<Scalars['String']['input']>
+  phone?: InputMaybe<Scalars['String']['input']>;
   /** The region of the address, such as the province, state, or district. */
-  province?: InputMaybe<Scalars['String']['input']>
+  province?: InputMaybe<Scalars['String']['input']>;
   /** The zip or postal code of the address. */
-  zip?: InputMaybe<Scalars['String']['input']>
-}
+  zip?: InputMaybe<Scalars['String']['input']>;
+};
 
 /** The possible content types for a media object. */
 export type MediaContentType =
@@ -2138,21 +2125,21 @@ export type MediaContentType =
   /** A 3d model. */
   | 'MODEL_3D'
   /** A Shopify hosted video. */
-  | 'VIDEO'
+  | 'VIDEO';
 
 /** Host for a Media Resource. */
 export type MediaHost =
   /** Host for Vimeo embedded videos. */
   | 'VIMEO'
   /** Host for YouTube embedded videos. */
-  | 'YOUTUBE'
+  | 'YOUTUBE';
 
 /** The possible formats for a media presentation. */
 export type MediaPresentationFormat =
   /** A media image presentation. */
   | 'IMAGE'
   /** A model viewer presentation. */
-  | 'MODEL_VIEWER'
+  | 'MODEL_VIEWER';
 
 /** A menu item type. */
 export type MenuItemType =
@@ -2181,14 +2168,14 @@ export type MenuItemType =
   /** A search link. */
   | 'SEARCH'
   /** A shop policy link. */
-  | 'SHOP_POLICY'
+  | 'SHOP_POLICY';
 
 /** Possible error codes that can be returned by `MetafieldDeleteUserError`. */
 export type MetafieldDeleteErrorCode =
   /** The owner ID is invalid. */
   | 'INVALID_OWNER'
   /** Metafield not found. */
-  | 'METAFIELD_DOES_NOT_EXIST'
+  | 'METAFIELD_DOES_NOT_EXIST';
 
 /**
  * A filter used to view a subset of products in a collection matching a specific metafield value.
@@ -2202,12 +2189,12 @@ export type MetafieldDeleteErrorCode =
  */
 export type MetafieldFilter = {
   /** The key of the metafield to filter on. */
-  key: Scalars['String']['input']
+  key: Scalars['String']['input'];
   /** The namespace of the metafield to filter on. */
-  namespace: Scalars['String']['input']
+  namespace: Scalars['String']['input'];
   /** The value of the metafield. */
-  value: Scalars['String']['input']
-}
+  value: Scalars['String']['input'];
+};
 
 /** Possible error codes that can be returned by `MetafieldsSetUserError`. */
 export type MetafieldsSetUserErrorCode =
@@ -2228,23 +2215,23 @@ export type MetafieldsSetUserErrorCode =
   /** The input value is too long. */
   | 'TOO_LONG'
   /** The input value is too short. */
-  | 'TOO_SHORT'
+  | 'TOO_SHORT';
 
 /** The input fields used to retrieve a metaobject by handle. */
 export type MetaobjectHandleInput = {
   /** The handle of the metaobject. */
-  handle: Scalars['String']['input']
+  handle: Scalars['String']['input'];
   /** The type of the metaobject. */
-  type: Scalars['String']['input']
-}
+  type: Scalars['String']['input'];
+};
 
 /** The input fields for a monetary value with currency. */
 export type MoneyInput = {
   /** Decimal money amount. */
-  amount: Scalars['Decimal']['input']
+  amount: Scalars['Decimal']['input'];
   /** Currency of the money. */
-  currencyCode: CurrencyCode
-}
+  currencyCode: CurrencyCode;
+};
 
 /** Represents the reason for the order's cancellation. */
 export type OrderCancelReason =
@@ -2259,7 +2246,7 @@ export type OrderCancelReason =
   /** The order was canceled for an unlisted reason. */
   | 'OTHER'
   /** Staff made an error. */
-  | 'STAFF'
+  | 'STAFF';
 
 /** Represents the order's current financial status. */
 export type OrderFinancialStatus =
@@ -2276,7 +2263,7 @@ export type OrderFinancialStatus =
   /** Displayed as **Refunded**. */
   | 'REFUNDED'
   /** Displayed as **Voided**. */
-  | 'VOIDED'
+  | 'VOIDED';
 
 /** Represents the order's aggregated fulfillment status for display purposes. */
 export type OrderFulfillmentStatus =
@@ -2297,7 +2284,7 @@ export type OrderFulfillmentStatus =
   /** Displayed as **Scheduled**. All of the unfulfilled items in this order are scheduled for fulfillment at later time. */
   | 'SCHEDULED'
   /** Displayed as **Unfulfilled**. None of the items in the order have been fulfilled. */
-  | 'UNFULFILLED'
+  | 'UNFULFILLED';
 
 /** The set of valid sort keys for the Order query. */
 export type OrderSortKeys =
@@ -2312,7 +2299,7 @@ export type OrderSortKeys =
    */
   | 'RELEVANCE'
   /** Sort by the `total_price` value. */
-  | 'TOTAL_PRICE'
+  | 'TOTAL_PRICE';
 
 /** The set of valid sort keys for the Page query. */
 export type PageSortKeys =
@@ -2327,14 +2314,14 @@ export type PageSortKeys =
   /** Sort by the `title` value. */
   | 'TITLE'
   /** Sort by the `updated_at` value. */
-  | 'UPDATED_AT'
+  | 'UPDATED_AT';
 
 /** Decides the distribution of results. */
 export type PredictiveSearchLimitScope =
   /** Return results up to limit across all types. */
   | 'ALL'
   /** Return results up to limit per type. */
-  | 'EACH'
+  | 'EACH';
 
 /** The types of search items to perform predictive search on. */
 export type PredictiveSearchType =
@@ -2347,7 +2334,7 @@ export type PredictiveSearchType =
   /** Returns matching products. */
   | 'PRODUCT'
   /** Returns matching query strings. */
-  | 'QUERY'
+  | 'QUERY';
 
 /** The preferred delivery methods such as shipping, local pickup or through pickup points. */
 export type PreferenceDeliveryMethodType =
@@ -2356,7 +2343,7 @@ export type PreferenceDeliveryMethodType =
   /** A delivery method used to let buyers receive items directly from a specific location within an area. */
   | 'PICK_UP'
   /** A delivery method used to send items directly to a buyer’s specified address. */
-  | 'SHIPPING'
+  | 'SHIPPING';
 
 /**
  * The input fields for a filter used to view a subset of products in a collection matching a specific price range.
@@ -2364,10 +2351,10 @@ export type PreferenceDeliveryMethodType =
  */
 export type PriceRangeFilter = {
   /** The maximum price in the range. Empty indicates no max price. */
-  max?: InputMaybe<Scalars['Float']['input']>
+  max?: InputMaybe<Scalars['Float']['input']>;
   /** The minimum price in the range. Defaults to zero. */
-  min?: InputMaybe<Scalars['Float']['input']>
-}
+  min?: InputMaybe<Scalars['Float']['input']>;
+};
 
 /** The set of valid sort keys for the ProductCollection query. */
 export type ProductCollectionSortKeys =
@@ -2390,7 +2377,7 @@ export type ProductCollectionSortKeys =
    */
   | 'RELEVANCE'
   /** Sort by the `title` value. */
-  | 'TITLE'
+  | 'TITLE';
 
 /**
  * The input fields for a filter used to view a subset of products in a collection.
@@ -2400,26 +2387,26 @@ export type ProductCollectionSortKeys =
  */
 export type ProductFilter = {
   /** Filter on if the product is available for sale. */
-  available?: InputMaybe<Scalars['Boolean']['input']>
+  available?: InputMaybe<Scalars['Boolean']['input']>;
   /** A product category to filter on. */
-  category?: InputMaybe<CategoryFilter>
+  category?: InputMaybe<CategoryFilter>;
   /** A range of prices to filter with-in. */
-  price?: InputMaybe<PriceRangeFilter>
+  price?: InputMaybe<PriceRangeFilter>;
   /** A product metafield to filter on. */
-  productMetafield?: InputMaybe<MetafieldFilter>
+  productMetafield?: InputMaybe<MetafieldFilter>;
   /** The product type to filter on. */
-  productType?: InputMaybe<Scalars['String']['input']>
+  productType?: InputMaybe<Scalars['String']['input']>;
   /** The product vendor to filter on. */
-  productVendor?: InputMaybe<Scalars['String']['input']>
+  productVendor?: InputMaybe<Scalars['String']['input']>;
   /** A product tag to filter on. */
-  tag?: InputMaybe<Scalars['String']['input']>
+  tag?: InputMaybe<Scalars['String']['input']>;
   /** A standard product attribute metafield to filter on. */
-  taxonomyMetafield?: InputMaybe<TaxonomyMetafieldFilter>
+  taxonomyMetafield?: InputMaybe<TaxonomyMetafieldFilter>;
   /** A variant metafield to filter on. */
-  variantMetafield?: InputMaybe<MetafieldFilter>
+  variantMetafield?: InputMaybe<MetafieldFilter>;
   /** A variant option to filter on. */
-  variantOption?: InputMaybe<VariantOptionFilter>
-}
+  variantOption?: InputMaybe<VariantOptionFilter>;
+};
 
 /** The set of valid sort keys for the ProductImage query. */
 export type ProductImageSortKeys =
@@ -2434,7 +2421,7 @@ export type ProductImageSortKeys =
    * Don't use this sort key when no search query is specified.
    *
    */
-  | 'RELEVANCE'
+  | 'RELEVANCE';
 
 /** The set of valid sort keys for the ProductMedia query. */
 export type ProductMediaSortKeys =
@@ -2447,7 +2434,7 @@ export type ProductMediaSortKeys =
    * Don't use this sort key when no search query is specified.
    *
    */
-  | 'RELEVANCE'
+  | 'RELEVANCE';
 
 /**
  * The recommendation intent that is used to generate product recommendations.
@@ -2458,7 +2445,7 @@ export type ProductRecommendationIntent =
   /** Offer customers products that are complementary to a product for which recommendations are to be fetched. An example is add-on products that display in a Pair it with section. */
   | 'COMPLEMENTARY'
   /** Offer customers a mix of products that are similar or complementary to a product for which recommendations are to be fetched. An example is substitutable products that display in a You may also like section. */
-  | 'RELATED'
+  | 'RELATED';
 
 /** The set of valid sort keys for the Product query. */
 export type ProductSortKeys =
@@ -2483,7 +2470,7 @@ export type ProductSortKeys =
   /** Sort by the `updated_at` value. */
   | 'UPDATED_AT'
   /** Sort by the `vendor` value. */
-  | 'VENDOR'
+  | 'VENDOR';
 
 /** The set of valid sort keys for the ProductVariant query. */
 export type ProductVariantSortKeys =
@@ -2500,21 +2487,21 @@ export type ProductVariantSortKeys =
   /** Sort by the `sku` value. */
   | 'SKU'
   /** Sort by the `title` value. */
-  | 'TITLE'
+  | 'TITLE';
 
 /** Specifies whether to perform a partial word match on the last search term. */
 export type SearchPrefixQueryType =
   /** Perform a partial word match on the last search term. */
   | 'LAST'
   /** Don't perform a partial word match on the last search term. */
-  | 'NONE'
+  | 'NONE';
 
 /** The set of valid sort keys for the search query. */
 export type SearchSortKeys =
   /** Sort by the `price` value. */
   | 'PRICE'
   /** Sort by relevance to the search terms. */
-  | 'RELEVANCE'
+  | 'RELEVANCE';
 
 /** The types of search items to perform search within. */
 export type SearchType =
@@ -2523,7 +2510,7 @@ export type SearchType =
   /** Returns matching pages. */
   | 'PAGE'
   /** Returns matching products. */
-  | 'PRODUCT'
+  | 'PRODUCT';
 
 /** Specifies whether to display results for unavailable products. */
 export type SearchUnavailableProductsType =
@@ -2532,7 +2519,7 @@ export type SearchUnavailableProductsType =
   /** Show unavailable products after all other matching results. This is the default. */
   | 'LAST'
   /** Show unavailable products in the order that they're found. */
-  | 'SHOW'
+  | 'SHOW';
 
 /** Specifies the list of resource fields to search. */
 export type SearchableField =
@@ -2553,22 +2540,22 @@ export type SearchableField =
   /** Variant title. */
   | 'VARIANTS_TITLE'
   /** Product vendor. */
-  | 'VENDOR'
+  | 'VENDOR';
 
 /** The input fields required for a selected option. */
 export type SelectedOptionInput = {
   /** The product option’s name. */
-  name: Scalars['String']['input']
+  name: Scalars['String']['input'];
   /** The product option’s value. */
-  value: Scalars['String']['input']
-}
+  value: Scalars['String']['input'];
+};
 
 /** The checkout charge when the full amount isn't charged at checkout. */
 export type SellingPlanCheckoutChargeType =
   /** The checkout charge is a percentage of the product or variant price. */
   | 'PERCENTAGE'
   /** The checkout charge is a fixed price amount. */
-  | 'PRICE'
+  | 'PRICE';
 
 /** Represents a valid selling plan interval. */
 export type SellingPlanInterval =
@@ -2579,14 +2566,14 @@ export type SellingPlanInterval =
   /** Week interval. */
   | 'WEEK'
   /** Year interval. */
-  | 'YEAR'
+  | 'YEAR';
 
 /** The payment frequency for a Shop Pay Installments Financing Plan. */
 export type ShopPayInstallmentsFinancingPlanFrequency =
   /** Monthly payment frequency. */
   | 'MONTHLY'
   /** Weekly payment frequency. */
-  | 'WEEKLY'
+  | 'WEEKLY';
 
 /** The loan type for a Shop Pay Installments Financing Plan Term. */
 export type ShopPayInstallmentsLoan =
@@ -2595,48 +2582,48 @@ export type ShopPayInstallmentsLoan =
   /** A split-pay loan type. */
   | 'SPLIT_PAY'
   /** A zero-percent loan type. */
-  | 'ZERO_PERCENT'
+  | 'ZERO_PERCENT';
 
 /** The input fields to create a delivery method for a Shop Pay payment request. */
 export type ShopPayPaymentRequestDeliveryMethodInput = {
   /** The amount for the delivery method. */
-  amount?: InputMaybe<MoneyInput>
+  amount?: InputMaybe<MoneyInput>;
   /** The code of the delivery method. */
-  code?: InputMaybe<Scalars['String']['input']>
+  code?: InputMaybe<Scalars['String']['input']>;
   /** The detail about when the delivery may be expected. */
-  deliveryExpectationLabel?: InputMaybe<Scalars['String']['input']>
+  deliveryExpectationLabel?: InputMaybe<Scalars['String']['input']>;
   /** The detail of the delivery method. */
-  detail?: InputMaybe<Scalars['String']['input']>
+  detail?: InputMaybe<Scalars['String']['input']>;
   /** The label of the delivery method. */
-  label?: InputMaybe<Scalars['String']['input']>
+  label?: InputMaybe<Scalars['String']['input']>;
   /** The maximum delivery date for the delivery method. */
-  maxDeliveryDate?: InputMaybe<Scalars['ISO8601DateTime']['input']>
+  maxDeliveryDate?: InputMaybe<Scalars['ISO8601DateTime']['input']>;
   /** The minimum delivery date for the delivery method. */
-  minDeliveryDate?: InputMaybe<Scalars['ISO8601DateTime']['input']>
-}
+  minDeliveryDate?: InputMaybe<Scalars['ISO8601DateTime']['input']>;
+};
 
 /** Represents the delivery method type for a Shop Pay payment request. */
 export type ShopPayPaymentRequestDeliveryMethodType =
   /** The delivery method type is pickup. */
   | 'PICKUP'
   /** The delivery method type is shipping. */
-  | 'SHIPPING'
+  | 'SHIPPING';
 
 /** The input fields to create a discount for a Shop Pay payment request. */
 export type ShopPayPaymentRequestDiscountInput = {
   /** The amount of the discount. */
-  amount?: InputMaybe<MoneyInput>
+  amount?: InputMaybe<MoneyInput>;
   /** The label of the discount. */
-  label?: InputMaybe<Scalars['String']['input']>
-}
+  label?: InputMaybe<Scalars['String']['input']>;
+};
 
 /** The input fields to create an image for a Shop Pay payment request. */
 export type ShopPayPaymentRequestImageInput = {
   /** The alt text of the image. */
-  alt?: InputMaybe<Scalars['String']['input']>
+  alt?: InputMaybe<Scalars['String']['input']>;
   /** The source URL of the image. */
-  url: Scalars['String']['input']
-}
+  url: Scalars['String']['input'];
+};
 
 /** The input fields represent a Shop Pay payment request. */
 export type ShopPayPaymentRequestInput = {
@@ -2645,92 +2632,92 @@ export type ShopPayPaymentRequestInput = {
    *
    * The input must not contain more than `250` values.
    */
-  deliveryMethods?: InputMaybe<Array<ShopPayPaymentRequestDeliveryMethodInput>>
+  deliveryMethods?: InputMaybe<Array<ShopPayPaymentRequestDeliveryMethodInput>>;
   /**
    * The discount codes for the payment request.
    *
    * The input must not contain more than `250` values.
    */
-  discountCodes?: InputMaybe<Array<Scalars['String']['input']>>
+  discountCodes?: InputMaybe<Array<Scalars['String']['input']>>;
   /**
    * The discounts for the payment request order.
    *
    * The input must not contain more than `250` values.
    */
-  discounts?: InputMaybe<Array<ShopPayPaymentRequestDiscountInput>>
+  discounts?: InputMaybe<Array<ShopPayPaymentRequestDiscountInput>>;
   /**
    * The line items for the payment request.
    *
    * The input must not contain more than `250` values.
    */
-  lineItems?: InputMaybe<Array<ShopPayPaymentRequestLineItemInput>>
+  lineItems?: InputMaybe<Array<ShopPayPaymentRequestLineItemInput>>;
   /** The locale for the payment request. */
-  locale: Scalars['String']['input']
+  locale: Scalars['String']['input'];
   /** The encrypted payment method for the payment request. */
-  paymentMethod?: InputMaybe<Scalars['String']['input']>
+  paymentMethod?: InputMaybe<Scalars['String']['input']>;
   /** The presentment currency for the payment request. */
-  presentmentCurrency: CurrencyCode
+  presentmentCurrency: CurrencyCode;
   /** The delivery method type for the payment request. */
-  selectedDeliveryMethodType?: InputMaybe<ShopPayPaymentRequestDeliveryMethodType>
+  selectedDeliveryMethodType?: InputMaybe<ShopPayPaymentRequestDeliveryMethodType>;
   /**
    * The shipping lines for the payment request.
    *
    * The input must not contain more than `250` values.
    */
-  shippingLines?: InputMaybe<Array<ShopPayPaymentRequestShippingLineInput>>
+  shippingLines?: InputMaybe<Array<ShopPayPaymentRequestShippingLineInput>>;
   /** The subtotal amount for the payment request. */
-  subtotal: MoneyInput
+  subtotal: MoneyInput;
   /** The total amount for the payment request. */
-  total: MoneyInput
+  total: MoneyInput;
   /** The total shipping price for the payment request. */
-  totalShippingPrice?: InputMaybe<ShopPayPaymentRequestTotalShippingPriceInput>
+  totalShippingPrice?: InputMaybe<ShopPayPaymentRequestTotalShippingPriceInput>;
   /** The total tax for the payment request. */
-  totalTax?: InputMaybe<MoneyInput>
-}
+  totalTax?: InputMaybe<MoneyInput>;
+};
 
 /** The input fields to create a line item for a Shop Pay payment request. */
 export type ShopPayPaymentRequestLineItemInput = {
   /** The final item price for the line item. */
-  finalItemPrice?: InputMaybe<MoneyInput>
+  finalItemPrice?: InputMaybe<MoneyInput>;
   /** The final line price for the line item. */
-  finalLinePrice?: InputMaybe<MoneyInput>
+  finalLinePrice?: InputMaybe<MoneyInput>;
   /** The image of the line item. */
-  image?: InputMaybe<ShopPayPaymentRequestImageInput>
+  image?: InputMaybe<ShopPayPaymentRequestImageInput>;
   /**
    * The item discounts for the line item.
    *
    * The input must not contain more than `250` values.
    */
-  itemDiscounts?: InputMaybe<Array<ShopPayPaymentRequestDiscountInput>>
+  itemDiscounts?: InputMaybe<Array<ShopPayPaymentRequestDiscountInput>>;
   /** The label of the line item. */
-  label?: InputMaybe<Scalars['String']['input']>
+  label?: InputMaybe<Scalars['String']['input']>;
   /**
    * The line discounts for the line item.
    *
    * The input must not contain more than `250` values.
    */
-  lineDiscounts?: InputMaybe<Array<ShopPayPaymentRequestDiscountInput>>
+  lineDiscounts?: InputMaybe<Array<ShopPayPaymentRequestDiscountInput>>;
   /** The original item price for the line item. */
-  originalItemPrice?: InputMaybe<MoneyInput>
+  originalItemPrice?: InputMaybe<MoneyInput>;
   /** The original line price for the line item. */
-  originalLinePrice?: InputMaybe<MoneyInput>
+  originalLinePrice?: InputMaybe<MoneyInput>;
   /** The quantity of the line item. */
-  quantity: Scalars['Int']['input']
+  quantity: Scalars['Int']['input'];
   /** Whether the line item requires shipping. */
-  requiresShipping?: InputMaybe<Scalars['Boolean']['input']>
+  requiresShipping?: InputMaybe<Scalars['Boolean']['input']>;
   /** The SKU of the line item. */
-  sku?: InputMaybe<Scalars['String']['input']>
-}
+  sku?: InputMaybe<Scalars['String']['input']>;
+};
 
 /** The input fields to create a shipping line for a Shop Pay payment request. */
 export type ShopPayPaymentRequestShippingLineInput = {
   /** The amount for the shipping line. */
-  amount?: InputMaybe<MoneyInput>
+  amount?: InputMaybe<MoneyInput>;
   /** The code of the shipping line. */
-  code?: InputMaybe<Scalars['String']['input']>
+  code?: InputMaybe<Scalars['String']['input']>;
   /** The label of the shipping line. */
-  label?: InputMaybe<Scalars['String']['input']>
-}
+  label?: InputMaybe<Scalars['String']['input']>;
+};
 
 /** The input fields to create a shipping total for a Shop Pay payment request. */
 export type ShopPayPaymentRequestTotalShippingPriceInput = {
@@ -2739,12 +2726,12 @@ export type ShopPayPaymentRequestTotalShippingPriceInput = {
    *
    * The input must not contain more than `250` values.
    */
-  discounts?: InputMaybe<Array<ShopPayPaymentRequestDiscountInput>>
+  discounts?: InputMaybe<Array<ShopPayPaymentRequestDiscountInput>>;
   /** The final total for the shipping total. */
-  finalTotal?: InputMaybe<MoneyInput>
+  finalTotal?: InputMaybe<MoneyInput>;
   /** The original total for the shipping total. */
-  originalTotal?: InputMaybe<MoneyInput>
-}
+  originalTotal?: InputMaybe<MoneyInput>;
+};
 
 /**
  * The input fields for submitting Shop Pay payment method information for checkout.
@@ -2752,10 +2739,10 @@ export type ShopPayPaymentRequestTotalShippingPriceInput = {
  */
 export type ShopPayWalletContentInput = {
   /** The customer's billing address. */
-  billingAddress: MailingAddressInput
+  billingAddress: MailingAddressInput;
   /** Session token for transaction. */
-  sessionToken: Scalars['String']['input']
-}
+  sessionToken: Scalars['String']['input'];
+};
 
 /** The types of resources potentially present in a sitemap. */
 export type SitemapType =
@@ -2775,7 +2762,7 @@ export type SitemapType =
   /** Pages present in the sitemap. */
   | 'PAGE'
   /** Products present in the sitemap. */
-  | 'PRODUCT'
+  | 'PRODUCT';
 
 /** The code of the error that occurred during cart submit for completion. */
 export type SubmissionErrorCode =
@@ -2871,7 +2858,7 @@ export type SubmissionErrorCode =
   | 'PAYMENTS_WALLET_CONTENT_MISSING'
   | 'TAXES_DELIVERY_GROUP_ID_NOT_FOUND'
   | 'TAXES_LINE_ID_NOT_FOUND'
-  | 'TAXES_MUST_BE_DEFINED'
+  | 'TAXES_MUST_BE_DEFINED';
 
 /**
  * A filter used to view a subset of products in a collection matching a specific taxonomy metafield value.
@@ -2879,12 +2866,12 @@ export type SubmissionErrorCode =
  */
 export type TaxonomyMetafieldFilter = {
   /** The key of the metafield to filter on. */
-  key: Scalars['String']['input']
+  key: Scalars['String']['input'];
   /** The namespace of the metafield to filter on. */
-  namespace: Scalars['String']['input']
+  namespace: Scalars['String']['input'];
   /** The value of the metafield. */
-  value: Scalars['String']['input']
-}
+  value: Scalars['String']['input'];
+};
 
 /** The accepted types of unit of measurement. */
 export type UnitPriceMeasurementMeasuredType =
@@ -2895,7 +2882,7 @@ export type UnitPriceMeasurementMeasuredType =
   /** Unit of measurements representing volumes. */
   | 'VOLUME'
   /** Unit of measurements representing weights. */
-  | 'WEIGHT'
+  | 'WEIGHT';
 
 /** The valid units of measurement for a unit price measurement. */
 export type UnitPriceMeasurementMeasuredUnit =
@@ -2920,14 +2907,14 @@ export type UnitPriceMeasurementMeasuredUnit =
   /** 1000 milliliters equals 1 liter. */
   | 'ML'
   /** 1000 millimeters equals 1 meter. */
-  | 'MM'
+  | 'MM';
 
 /** Systems of weights and measures. */
 export type UnitSystem =
   /** Imperial system of weights and measures. */
   | 'IMPERIAL_SYSTEM'
   /** Metric system of weights and measures. */
-  | 'METRIC_SYSTEM'
+  | 'METRIC_SYSTEM';
 
 /** Possible error codes that can be returned by `ShopPayPaymentRequestSessionUserErrors`. */
 export type UserErrorsShopPayPaymentRequestSessionUserErrorsCode =
@@ -2936,15 +2923,15 @@ export type UserErrorsShopPayPaymentRequestSessionUserErrorsCode =
   /** Payment request input is invalid. */
   | 'PAYMENT_REQUEST_INVALID_INPUT'
   /** Payment request not found. */
-  | 'PAYMENT_REQUEST_NOT_FOUND'
+  | 'PAYMENT_REQUEST_NOT_FOUND';
 
 /** The input fields for a filter used to view a subset of products in a collection matching a specific variant option. */
 export type VariantOptionFilter = {
   /** The name of the variant option to filter on. */
-  name: Scalars['String']['input']
+  name: Scalars['String']['input'];
   /** The value of the variant option to filter on. */
-  value: Scalars['String']['input']
-}
+  value: Scalars['String']['input'];
+};
 
 /** Units of measurement for weight. */
 export type WeightUnit =
@@ -2955,207 +2942,79 @@ export type WeightUnit =
   /** Imperial system unit of mass. */
   | 'OUNCES'
   /** 1 pound equals 16 ounces. */
-  | 'POUNDS'
+  | 'POUNDS';
 
-export type GetAllArticlesQueryVariables = Exact<{ [key: string]: never }>
+export type CartCreateMutationVariables = Exact<{
+  input: CartInput;
+}>;
 
-export type GetAllArticlesQuery = {
-  articles: {
-    nodes: Array<{
-      id: string
-      title: string
-      handle: string
-      excerpt?: string | null
-      publishedAt: string
-      blog: { handle: string; title: string }
-      author: { name: string }
-      image?: { url: string; altText?: string | null } | null
-    }>
-  }
-}
 
-export type GetBlogsQueryVariables = Exact<{ [key: string]: never }>
+export type CartCreateMutation = { cartCreate?: { cart?: { id: string, createdAt: string, updatedAt: string, lines: { edges: Array<{ node: { id: string, quantity: number, merchandise: { id: string, title: string, sku?: string | null, price: { amount: string, currencyCode: CurrencyCode }, selectedOptions: Array<{ name: string, value: string }>, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null, image?: { url: string, altText?: string | null } | null } } | { id: string, quantity: number, merchandise: { id: string, title: string, sku?: string | null, price: { amount: string, currencyCode: CurrencyCode }, selectedOptions: Array<{ name: string, value: string }>, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null, image?: { url: string, altText?: string | null } | null } } }> }, cost: { totalAmount: { amount: string, currencyCode: CurrencyCode }, subtotalAmount: { amount: string, currencyCode: CurrencyCode } } } | null, userErrors: Array<{ code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
 
-export type GetBlogsQuery = {
-  blogs: { nodes: Array<{ id: string; title: string; handle: string }> }
-}
+export type GetAllArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type GetAllCollectionQueryVariables = Exact<{ [key: string]: never }>
 
-export type GetAllCollectionQuery = {
-  collections: { nodes: Array<{ handle: string; title: string }> }
-}
+export type GetAllArticlesQuery = { articles: { nodes: Array<{ id: string, title: string, handle: string, excerpt?: string | null, publishedAt: string, blog: { handle: string, title: string }, author: { name: string }, image?: { url: string, altText?: string | null } | null }> } };
 
-export type GetProductsQueryVariables = Exact<{ [key: string]: never }>
+export type GetBlogsQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type GetProductsQuery = {
-  products: {
-    nodes: Array<{
-      id: string
-      title: string
-      handle: string
-      description: string
-      images: {
-        edges: Array<{ node: { url: string; altText?: string | null } }>
-      }
-      variants: {
-        edges: Array<{
-          node: {
-            price: { amount: string; currencyCode: CurrencyCode }
-            compareAtPrice?: {
-              amount: string
-              currencyCode: CurrencyCode
-            } | null
-          }
-        }>
-      }
-      metafield?: { value: string } | null
-    }>
-  }
-}
+
+export type GetBlogsQuery = { blogs: { nodes: Array<{ id: string, title: string, handle: string }> } };
+
+export type GetAllCollectionQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllCollectionQuery = { collections: { nodes: Array<{ handle: string, title: string }> } };
+
+export type GetProductsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetProductsQuery = { products: { nodes: Array<{ id: string, title: string, handle: string, description: string, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } }> } };
 
 export type GetArticleListQueryVariables = Exact<{
-  handle: Scalars['String']['input']
-}>
+  handle: Scalars['String']['input'];
+}>;
 
-export type GetArticleListQuery = {
-  blog?: {
-    id: string
-    title: string
-    handle: string
-    articles: {
-      nodes: Array<{
-        id: string
-        title: string
-        handle: string
-        excerpt?: string | null
-        publishedAt: string
-        image?: { url: string; altText?: string | null } | null
-        author: { name: string }
-      }>
-    }
-  } | null
-}
+
+export type GetArticleListQuery = { blog?: { id: string, title: string, handle: string, articles: { nodes: Array<{ id: string, title: string, handle: string, excerpt?: string | null, publishedAt: string, image?: { url: string, altText?: string | null } | null, author: { name: string } }> } } | null };
 
 export type GetDetailArticleQueryVariables = Exact<{
-  blogHandle: Scalars['String']['input']
-  articleHandle: Scalars['String']['input']
-}>
+  blogHandle: Scalars['String']['input'];
+  articleHandle: Scalars['String']['input'];
+}>;
 
-export type GetDetailArticleQuery = {
-  blog?: {
-    articleByHandle?: {
-      id: string
-      title: string
-      handle: string
-      excerpt?: string | null
-      contentHtml: string
-      publishedAt: string
-      image?: { url: string; altText?: string | null } | null
-      author: { name: string }
-    } | null
-  } | null
-}
 
-export type GetMainMenuQueryVariables = Exact<{ [key: string]: never }>
+export type GetDetailArticleQuery = { blog?: { articleByHandle?: { id: string, title: string, handle: string, excerpt?: string | null, contentHtml: string, publishedAt: string, image?: { url: string, altText?: string | null } | null, author: { name: string } } | null } | null };
 
-export type GetMainMenuQuery = {
-  menu?: {
-    items: Array<{ title: string; url?: string | null; type: MenuItemType }>
-  } | null
-}
+export type GetMainMenuQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMainMenuQuery = { menu?: { items: Array<{ title: string, url?: string | null, type: MenuItemType }> } | null };
 
 export type GetCollectionListQueryVariables = Exact<{
-  handle: Scalars['String']['input']
-}>
+  handle: Scalars['String']['input'];
+}>;
 
-export type GetCollectionListQuery = {
-  collection?: {
-    title: string
-    description: string
-    products: {
-      nodes: Array<{
-        id: string
-        title: string
-        handle: string
-        description: string
-        images: {
-          edges: Array<{ node: { url: string; altText?: string | null } }>
-        }
-        variants: {
-          edges: Array<{
-            node: {
-              price: { amount: string; currencyCode: CurrencyCode }
-              compareAtPrice?: {
-                amount: string
-                currencyCode: CurrencyCode
-              } | null
-            }
-          }>
-        }
-        metafield?: { value: string } | null
-      }>
-    }
-  } | null
-}
+
+export type GetCollectionListQuery = { collection?: { title: string, description: string, products: { nodes: Array<{ id: string, title: string, handle: string, description: string, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } }> } } | null };
 
 export type GetProductDetailQueryVariables = Exact<{
-  handle: Scalars['String']['input']
-}>
+  handle: Scalars['String']['input'];
+}>;
 
-export type GetProductDetailQuery = {
-  product?: {
-    id: string
-    title: string
-    description: string
-    images: { edges: Array<{ node: { url: string; altText?: string | null } }> }
-    metafield?: { value: string } | null
-    variants: {
-      edges: Array<{
-        node: {
-          id: string
-          sku?: string | null
-          price: { amount: string; currencyCode: CurrencyCode }
-          compareAtPrice?: { amount: string; currencyCode: CurrencyCode } | null
-          selectedOptions: Array<{ name: string; value: string }>
-          image?: { url: string; altText?: string | null } | null
-        }
-      }>
-    }
-  } | null
-}
 
-export type PredictiveSearchQueryVariables = Exact<{
-  query: Scalars['String']['input']
-}>
+export type GetProductDetailQuery = { product?: { id: string, title: string, description: string, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, sku?: string | null, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null, selectedOptions: Array<{ name: string, value: string }>, image?: { url: string, altText?: string | null } | null } }> } } | null };
 
-export type PredictiveSearchQuery = {
-  predictiveSearch?: {
-    products: Array<{
-      id: string
-      title: string
-      handle: string
-      images: { nodes: Array<{ url: string }> }
-    }>
-  } | null
-}
+export type GetPredictiveSearchQueryVariables = Exact<{
+  query: Scalars['String']['input'];
+}>;
 
-export type SearchQueryVariables = Exact<{
-  query: Scalars['String']['input']
-}>
 
-export type SearchQuery = {
-  search: {
-    nodes: Array<
-      | { __typename: 'Article' }
-      | { __typename: 'Page' }
-      | {
-          __typename: 'Product'
-          id: string
-          title: string
-          handle: string
-          images: { nodes: Array<{ url: string; altText?: string | null }> }
-        }
-    >
-  }
-}
+export type GetPredictiveSearchQuery = { predictiveSearch?: { products: Array<{ id: string, title: string, handle: string, images: { nodes: Array<{ url: string }> }, featuredImage?: { url: string } | null }> } | null };
+
+export type GetSearchResultQueryVariables = Exact<{
+  query: Scalars['String']['input'];
+}>;
+
+
+export type GetSearchResultQuery = { search: { edges: Array<{ node: { id: string, title: string, handle: string, description: string, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } } | {} }> } };

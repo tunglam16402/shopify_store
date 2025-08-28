@@ -10,16 +10,16 @@ const getProductByCollectionQuery = /* GraphQL */ `
           handle
           description
           images(first: 1) {
-            edges {
-              node {
-                url
-                altText
-              }
+            nodes {
+              url
+              altText
             }
           }
           variants(first: 1) {
             edges {
               node {
+                id
+                title
                 price {
                   amount
                   currencyCode
@@ -30,9 +30,6 @@ const getProductByCollectionQuery = /* GraphQL */ `
                 }
               }
             }
-          }
-          metafield(namespace: "custom", key: "discount_percentage") {
-            value
           }
         }
       }

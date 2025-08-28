@@ -1,11 +1,14 @@
 'use client'
 
+import { Button } from '@/components/ui/button'
+import { createCart } from '@/shopify/cart/use-cart'
 import Image from 'next/image'
 import Link from 'next/link'
 
 export type ProductCardProps = {
   product: {
     id: string
+    variantId: string
     title: string
     handle: string
     description: string
@@ -19,9 +22,13 @@ export type ProductCardProps = {
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
-  const handleAddToCart = () => {
-    console.log('Add to cart:', product.id)
-    // TODO: add to cart logic
+  const handleAddToCart = async () => {
+    const data = await createCart(product.variantId, 1)
+
+    // console.error('Add to cart failed:', error)
+
+    console.log('data :>> ', data)
+    return data
   }
 
   return (
@@ -60,12 +67,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </p>
         )}
 
-        <button
+        <Button
           className="mt-4 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition"
           onClick={handleAddToCart}
         >
           Add to Cart
-        </button>
+        </Button>
       </div>
     </div>
   )

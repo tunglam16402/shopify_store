@@ -3,7 +3,7 @@ import CategoryMenu from '@/components/menu/CategoryMenu'
 import {
   getAllArticles,
   getBlogCategories,
-} from '@/shopify/operations/get-articles'
+} from '@/shopify/api/operations/get-articles'
 
 const Blogs = async () => {
   const blogs = await getAllArticles()

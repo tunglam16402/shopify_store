@@ -1,5 +1,5 @@
 import { ProductList } from '@/components/products'
-import { getCollectionProductsByHandle } from '@/shopify/operations/get-collection'
+import { getCollectionProductsByHandle } from '@/shopify/api/operations/get-collection'
 
 type Props = {
   params: Promise<{ handle: string }>

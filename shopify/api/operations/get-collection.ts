@@ -1,7 +1,10 @@
 import getProductByCollectionQuery from '@/shopify/utils/query/get-product-by-collection-query'
-import { shopifyFetch } from '../fetcher'
-import { GetAllCollectionQuery, GetCollectionListQuery } from '../types/graphql'
-import getAllCollectionQuery from '../utils/query/get-all-collection-query'
+import { shopifyFetch } from '../../fetcher'
+import {
+  GetAllCollectionQuery,
+  GetCollectionListQuery,
+} from '../../types/graphql'
+import getAllCollectionQuery from '../../utils/query/get-all-collection-query'
 import { mappingDiscountPrice } from '@/lib/helper'
 import { notFound } from 'next/navigation'
 

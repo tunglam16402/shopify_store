@@ -1,5 +1,5 @@
 import { BlogDetail } from '@/components/blogs'
-import { getArticleByHandle } from '@/shopify/operations/get-articles'
+import { getArticleByHandle } from '@/shopify/api/operations/get-articles'
 
 interface Props {
   params: Promise<{ handle: string }>

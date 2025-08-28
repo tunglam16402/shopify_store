@@ -3,12 +3,13 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { PredictiveSearchQuery } from '@/shopify/types/graphql'
+import { GetPredictiveSearchQuery } from '@/shopify/types/graphql'
+import Image from 'next/image'
 
 const SearchBox = () => {
   const [input, setInput] = useState('')
   const [suggestions, setSuggestions] = useState<
-    NonNullable<PredictiveSearchQuery['predictiveSearch']>['products']
+    NonNullable<GetPredictiveSearchQuery['predictiveSearch']>['products']
   >([])
 
   const router = useRouter()
@@ -38,7 +39,7 @@ const SearchBox = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (input.trim()) {
-      router.push(`/search?q=${encodeURIComponent(input.trim())}`)
+      router.push(`/search-result?q=${encodeURIComponent(input.trim())}`)
     }
   }
 
@@ -47,6 +48,7 @@ const SearchBox = () => {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
+          name="q"
           className="w-full border rounded p-2"
           placeholder="Enter product name..."
           value={input}
@@ -64,6 +66,12 @@ const SearchBox = () => {
                 className="block px-4 py-2 hover:bg-gray-100"
               >
                 {product.title}
+                <Image
+                  src={product.featuredImage?.url || ''}
+                  alt=""
+                  width={100}
+                  height={200}
+                />
               </Link>
             </li>
           ))}

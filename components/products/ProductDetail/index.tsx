@@ -14,7 +14,7 @@ const ProductDetail = ({ product }: ProductDetailProps) => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
-          {product.images.edges.map(({ node }, i) => (
+          {product.images.nodes.map((node, i) => (
             <Image
               key={i}
               src={node.url}

@@ -1,6 +1,6 @@
 // app/products/[handle]/page.tsx
 import ProductDetail from '@/components/products/ProductDetail'
-import { getProductByHandle } from '@/shopify/operations/get-product'
+import { getProductByHandle } from '@/shopify/api/operations/get-product'
 
 interface Props {
   params: Promise<{ handle: string }>

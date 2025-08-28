@@ -1,16 +1,34 @@
-const searchResultQuery = /* GraphQL */ `
-  query search($query: String!) {
-    search(query: $query, first: 20) {
-      nodes {
-        __typename
-        ... on Product {
-          id
-          title
-          handle
-          images(first: 1) {
-            nodes {
-              url
-              altText
+const getSearchResultQuery = /* GraphQL */ `
+  query getSearchResult($query: String!) {
+    search(query: $query, types: PRODUCT, first: 6) {
+      edges {
+        node {
+          ... on Product {
+            id
+            title
+            handle
+            description
+            images(first: 1) {
+              nodes {
+                url
+                altText
+              }
+            }
+            variants(first: 1) {
+              edges {
+                node {
+                  id
+                  title
+                  price {
+                    amount
+                    currencyCode
+                  }
+                  compareAtPrice {
+                    amount
+                    currencyCode
+                  }
+                }
+              }
             }
           }
         }
@@ -19,4 +37,4 @@ const searchResultQuery = /* GraphQL */ `
   }
 `
 
-export default searchResultQuery
+export default getSearchResultQuery

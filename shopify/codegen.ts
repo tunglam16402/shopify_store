@@ -16,7 +16,7 @@ const config: CodegenConfig = {
       },
     },
   },
-  documents: ['shopify/utils/query/**/*.ts'],
+  documents: ['shopify/utils/query/**/*.ts', 'shopify/utils/mutation/**/*.ts'],
   generates: {
     'shopify/types/graphql.ts': {
       plugins: ['typescript', 'typescript-operations'],

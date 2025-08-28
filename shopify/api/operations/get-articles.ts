@@ -1,14 +1,14 @@
-import { shopifyFetch } from '../fetcher'
+import { shopifyFetch } from '../../fetcher'
 import {
   GetAllArticlesQuery,
   GetArticleListQuery,
   GetBlogsQuery,
   GetDetailArticleQuery,
-} from '../types/graphql'
-import getAllAriclesQuery from '../utils/query/get-all-article-query'
-import getBlogsQuery from '../utils/query/get-all-blog-query'
-import getArticleByBlogQuery from '../utils/query/get-article-by-blog-query'
-import getDetailArticleQuery from '../utils/query/get-article-by-handle-query'
+} from '../../types/graphql'
+import getAllAriclesQuery from '../../utils/query/get-all-article-query'
+import getBlogsQuery from '../../utils/query/get-all-blog-query'
+import getArticleByBlogQuery from '../../utils/query/get-article-by-blog-query'
+import getDetailArticleQuery from '../../utils/query/get-article-by-handle-query'
 
 export async function getAllArticles() {
   const data = await shopifyFetch<GetAllArticlesQuery>({
