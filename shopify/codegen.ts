@@ -4,12 +4,12 @@ import 'dotenv/config'
 import dotenv from 'dotenv'
 dotenv.config({ path: '.env.local' })
 
-export const SHOPIFY_DOMAIN = process.env.SHOPIFY_STORE_DOMAIN!
-export const SHOPIFY_TOKEN = process.env.SHOPIFY_STOREFRONT_TOKEN!
+export const SHOPIFY_DOMAIN = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN!
+export const SHOPIFY_TOKEN = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN!
 
 const config: CodegenConfig = {
   schema: {
-    [`https://${SHOPIFY_DOMAIN}/api/2025-01/graphql.json`]: {
+    [`https://${SHOPIFY_DOMAIN}/api/2025-07/graphql.json`]: {
       headers: {
         'X-Shopify-Storefront-Access-Token': SHOPIFY_TOKEN,
         'Content-Type': 'application/json',

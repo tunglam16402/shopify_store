@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Cart } from '@/context/cart/Provider'
 import {
   GetProductDetailQuery,
   GetProductsQuery,
@@ -85,4 +87,14 @@ export function formatDate(
   if (isNaN(date.getTime())) return 'Invalid Date'
 
   return date.toLocaleDateString(locale, options)
+}
+
+export function mapCartResponse(cartResponse: any): Cart {
+  return {
+    id: cartResponse.id,
+    createdAt: cartResponse.createdAt,
+    updatedAt: cartResponse.updatedAt,
+    lines: cartResponse.lines.edges.map((e: any) => e.node),
+    cost: cartResponse.cost,
+  }
 }

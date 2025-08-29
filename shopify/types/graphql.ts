@@ -300,6 +300,10 @@ export type CartErrorCode =
   | 'ADDRESS_FIELD_IS_REQUIRED'
   /** The specified address field is too long. */
   | 'ADDRESS_FIELD_IS_TOO_LONG'
+  /** Buyer cannot purchase for company location. */
+  | 'BUYER_CANNOT_PURCHASE_FOR_COMPANY_LOCATION'
+  /** The cart is too large to save. */
+  | 'CART_TOO_LARGE'
   /** The input value is invalid. */
   | 'INVALID'
   /** Company location not found or not allowed. */
@@ -318,6 +322,8 @@ export type CartErrorCode =
   | 'INVALID_METAFIELDS'
   /** The payment wasn't valid. */
   | 'INVALID_PAYMENT'
+  /** The payment is invalid. Deferred payment is required. */
+  | 'INVALID_PAYMENT_DEFERRED_PAYMENT_REQUIRED'
   /** Cannot update payment on an empty cart */
   | 'INVALID_PAYMENT_EMPTY_CART'
   /** The given zip code is invalid for the provided country. */
@@ -340,16 +346,46 @@ export type CartErrorCode =
   | 'NOTE_TOO_LONG'
   /** Only one delivery address can be selected. */
   | 'ONLY_ONE_DELIVERY_ADDRESS_CAN_BE_SELECTED'
+  /** Credit card has expired. */
+  | 'PAYMENTS_CREDIT_CARD_BASE_EXPIRED'
+  /** Credit card gateway is not supported. */
+  | 'PAYMENTS_CREDIT_CARD_BASE_GATEWAY_NOT_SUPPORTED'
+  /** Credit card error. */
+  | 'PAYMENTS_CREDIT_CARD_GENERIC'
+  /** Credit card month is invalid. */
+  | 'PAYMENTS_CREDIT_CARD_MONTH_INCLUSION'
+  /** Credit card number is invalid. */
+  | 'PAYMENTS_CREDIT_CARD_NUMBER_INVALID'
+  /** Credit card number format is invalid. */
+  | 'PAYMENTS_CREDIT_CARD_NUMBER_INVALID_FORMAT'
+  /** Credit card verification value is blank. */
+  | 'PAYMENTS_CREDIT_CARD_VERIFICATION_VALUE_BLANK'
+  /** Credit card verification value is invalid for card type. */
+  | 'PAYMENTS_CREDIT_CARD_VERIFICATION_VALUE_INVALID_FOR_CARD_TYPE'
+  /** Credit card has expired. */
+  | 'PAYMENTS_CREDIT_CARD_YEAR_EXPIRED'
+  /** Credit card expiry year is invalid. */
+  | 'PAYMENTS_CREDIT_CARD_YEAR_INVALID_EXPIRY_YEAR'
+  /** The payment method is not applicable. */
+  | 'PAYMENT_METHOD_NOT_APPLICABLE'
   /** The payment method is not supported. */
   | 'PAYMENT_METHOD_NOT_SUPPORTED'
+  /** The delivery group is in a pending state. */
+  | 'PENDING_DELIVERY_GROUPS'
   /** The given province cannot be found. */
   | 'PROVINCE_NOT_FOUND'
+  /** Selling plan is not applicable. */
+  | 'SELLING_PLAN_NOT_APPLICABLE'
+  /** An error occurred while saving the cart. */
+  | 'SERVICE_UNAVAILABLE'
   /** Too many delivery addresses on Cart. */
   | 'TOO_MANY_DELIVERY_ADDRESSES'
   /** A general error occurred during address validation. */
   | 'UNSPECIFIED_ADDRESS_ERROR'
   /** Validation failed. */
   | 'VALIDATION_CUSTOM'
+  /** Variant can only be purchased with a selling plan. */
+  | 'VARIANT_REQUIRES_SELLING_PLAN'
   /** The given zip code is unsupported. */
   | 'ZIP_CODE_NOT_SUPPORTED';
 
@@ -586,6 +622,30 @@ export type CartWalletPaymentMethodInput = {
 
 /** The code for the cart warning. */
 export type CartWarningCode =
+  /** The discount code cannot be honored. */
+  | 'DISCOUNT_CODE_NOT_HONOURED'
+  /** The discount is currently inactive. */
+  | 'DISCOUNT_CURRENTLY_INACTIVE'
+  /** The customer is not eligible for this discount. */
+  | 'DISCOUNT_CUSTOMER_NOT_ELIGIBLE'
+  /** The customer's discount usage limit has been reached. */
+  | 'DISCOUNT_CUSTOMER_USAGE_LIMIT_REACHED'
+  /** An eligible customer is missing for this discount. */
+  | 'DISCOUNT_ELIGIBLE_CUSTOMER_MISSING'
+  /** The purchase type is incompatible with this discount. */
+  | 'DISCOUNT_INCOMPATIBLE_PURCHASE_TYPE'
+  /** The discount was not found. */
+  | 'DISCOUNT_NOT_FOUND'
+  /** There are no entitled line items for this discount. */
+  | 'DISCOUNT_NO_ENTITLED_LINE_ITEMS'
+  /** There are no entitled shipping lines for this discount. */
+  | 'DISCOUNT_NO_ENTITLED_SHIPPING_LINES'
+  /** The purchase is not in range for this discount. */
+  | 'DISCOUNT_PURCHASE_NOT_IN_RANGE'
+  /** The quantity is not in range for this discount. */
+  | 'DISCOUNT_QUANTITY_NOT_IN_RANGE'
+  /** The discount usage limit has been reached. */
+  | 'DISCOUNT_USAGE_LIMIT_REACHED'
   /** A delivery address with the same details already exists on this cart. */
   | 'DUPLICATE_DELIVERY_ADDRESS'
   /** The merchandise does not have enough stock. */
@@ -2856,9 +2916,13 @@ export type SubmissionErrorCode =
   | 'PAYMENTS_SHOPIFY_PAYMENTS_REQUIRED'
   | 'PAYMENTS_UNACCEPTABLE_PAYMENT_AMOUNT'
   | 'PAYMENTS_WALLET_CONTENT_MISSING'
+  /** Redirect to checkout required to complete this action. */
+  | 'REDIRECT_TO_CHECKOUT_REQUIRED'
   | 'TAXES_DELIVERY_GROUP_ID_NOT_FOUND'
   | 'TAXES_LINE_ID_NOT_FOUND'
-  | 'TAXES_MUST_BE_DEFINED';
+  | 'TAXES_MUST_BE_DEFINED'
+  /** Validation failed. */
+  | 'VALIDATION_CUSTOM';
 
 /**
  * A filter used to view a subset of products in a collection matching a specific taxonomy metafield value.
@@ -2877,8 +2941,12 @@ export type TaxonomyMetafieldFilter = {
 export type UnitPriceMeasurementMeasuredType =
   /** Unit of measurements representing areas. */
   | 'AREA'
+  /** Unit of measurements representing counts. */
+  | 'COUNT'
   /** Unit of measurements representing lengths. */
   | 'LENGTH'
+  /** The type of measurement is unknown. Upgrade to the latest version of the API to resolve this type. */
+  | 'UNKNOWN'
   /** Unit of measurements representing volumes. */
   | 'VOLUME'
   /** Unit of measurements representing weights. */
@@ -2890,12 +2958,26 @@ export type UnitPriceMeasurementMeasuredUnit =
   | 'CL'
   /** 100 centimeters equals 1 meter. */
   | 'CM'
+  /** Imperial system unit of volume (U.S. customary unit). */
+  | 'FLOZ'
+  /** 1 foot equals 12 inches. */
+  | 'FT'
+  /** Imperial system unit of area. */
+  | 'FT2'
   /** Metric system unit of weight. */
   | 'G'
+  /** 1 gallon equals 128 fluid ounces (U.S. customary unit). */
+  | 'GAL'
+  /** Imperial system unit of length. */
+  | 'IN'
+  /** 1 item, a unit of count. */
+  | 'ITEM'
   /** 1 kilogram equals 1000 grams. */
   | 'KG'
   /** Metric system unit of volume. */
   | 'L'
+  /** Imperial system unit of weight. */
+  | 'LB'
   /** Metric system unit of length. */
   | 'M'
   /** Metric system unit of area. */
@@ -2907,7 +2989,17 @@ export type UnitPriceMeasurementMeasuredUnit =
   /** 1000 milliliters equals 1 liter. */
   | 'ML'
   /** 1000 millimeters equals 1 meter. */
-  | 'MM';
+  | 'MM'
+  /** 16 ounces equals 1 pound. */
+  | 'OZ'
+  /** 1 pint equals 16 fluid ounces (U.S. customary unit). */
+  | 'PT'
+  /** 1 quart equals 32 fluid ounces (U.S. customary unit). */
+  | 'QT'
+  /** The unit of measurement is unknown. Upgrade to the latest version of the API to resolve this unit. */
+  | 'UNKNOWN'
+  /** 1 yard equals 36 inches. */
+  | 'YD';
 
 /** Systems of weights and measures. */
 export type UnitSystem =
@@ -2950,6 +3042,14 @@ export type CartCreateMutationVariables = Exact<{
 
 
 export type CartCreateMutation = { cartCreate?: { cart?: { id: string, createdAt: string, updatedAt: string, lines: { edges: Array<{ node: { id: string, quantity: number, merchandise: { id: string, title: string, sku?: string | null, price: { amount: string, currencyCode: CurrencyCode }, selectedOptions: Array<{ name: string, value: string }>, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null, image?: { url: string, altText?: string | null } | null } } | { id: string, quantity: number, merchandise: { id: string, title: string, sku?: string | null, price: { amount: string, currencyCode: CurrencyCode }, selectedOptions: Array<{ name: string, value: string }>, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null, image?: { url: string, altText?: string | null } | null } } }> }, cost: { totalAmount: { amount: string, currencyCode: CurrencyCode }, subtotalAmount: { amount: string, currencyCode: CurrencyCode } } } | null, userErrors: Array<{ code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
+
+export type CartLinesAddMutationVariables = Exact<{
+  cartId: Scalars['ID']['input'];
+  lines: Array<CartLineInput> | CartLineInput;
+}>;
+
+
+export type CartLinesAddMutation = { cartLinesAdd?: { cart?: { id: string, createdAt: string, updatedAt: string, lines: { edges: Array<{ node: { id: string, quantity: number, merchandise: { id: string, title: string, sku?: string | null, price: { amount: string, currencyCode: CurrencyCode }, selectedOptions: Array<{ name: string, value: string }>, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null, image?: { url: string, altText?: string | null } | null } } | { id: string, quantity: number, merchandise: { id: string, title: string, sku?: string | null, price: { amount: string, currencyCode: CurrencyCode }, selectedOptions: Array<{ name: string, value: string }>, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null, image?: { url: string, altText?: string | null } | null } } }> }, cost: { totalAmount: { amount: string, currencyCode: CurrencyCode }, subtotalAmount: { amount: string, currencyCode: CurrencyCode } } } | null, userErrors: Array<{ code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
 
 export type GetAllArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 

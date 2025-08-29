@@ -1,19 +1,23 @@
 'use client'
 
+import CartIcon from '@/components/cart/CartIcon/page'
+import CartSideBar from '@/components/cart/CartSidebar/page'
+import { Navbar } from '@/components/menu'
 import Search from '@/components/menu/Search'
+import { useCartUI } from '@/lib/hooks/useCart'
+import cn from 'classnames'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { FaBars } from 'react-icons/fa'
-import cn from 'classnames'
-import { Navbar, NavbarMobile } from '@/components/menu'
 
 type Props = {
   menuItems: { title: string; url: string }[]
 }
 
 const MainHeader = ({ menuItems }: Props) => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpenMobile, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const { openCart, isOpen } = useCartUI()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,7 +50,9 @@ const MainHeader = ({ menuItems }: Props) => {
         </div>
         <Navbar menuItems={menuItems} />
         <Search />
-        <button onClick={() => setIsOpen(!isOpen)} className="md:hidden">
+        <CartIcon onClick={openCart} />
+
+        <button onClick={() => setIsOpen(!isOpenMobile)} className="md:hidden">
           <FaBars
             className={cn(
               'h-8 w-8 transition-colors duration-300',
@@ -55,14 +61,15 @@ const MainHeader = ({ menuItems }: Props) => {
           />
         </button>
       </div>
+      <div>{isOpen && <CartSideBar />} </div>
 
-      {isOpen && (
+      {/* {isOpen && (
         <NavbarMobile
           isOpen={isOpen}
           onClose={() => setIsOpen(false)}
           menuItems={menuItems}
         />
-      )}
+      )} */}
     </div>
   )
 }

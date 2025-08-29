@@ -1,9 +1,11 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { createCart } from '@/shopify/cart/use-cart'
+import { useCart, useCartUI } from '@/lib/hooks/useCart'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useState } from 'react'
+import AddToCartButton from '../AddToCartButton'
 
 export type ProductCardProps = {
   product: {
@@ -22,15 +24,6 @@ export type ProductCardProps = {
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
-  const handleAddToCart = async () => {
-    const data = await createCart(product.variantId, 1)
-
-    // console.error('Add to cart failed:', error)
-
-    console.log('data :>> ', data)
-    return data
-  }
-
   return (
     <div className="rounded-xl border bg-white shadow-md overflow-hidden hover:shadow-lg transition">
       {product.imageUrl && (
@@ -49,6 +42,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <h2 className="text-lg font-semibold">{product.title}</h2>
         <p className="text-sm text-gray-600">{product.description}</p>
 
+        {/* giá */}
         {product.discountPercent > 0 ? (
           <div className="mt-2">
             {product.compareAtPrice && (
@@ -67,12 +61,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </p>
         )}
 
-        <Button
-          className="mt-4 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition"
-          onClick={handleAddToCart}
-        >
-          Add to Cart
-        </Button>
+        <AddToCartButton variantId={product.variantId} />
       </div>
     </div>
   )
