@@ -1,8 +1,8 @@
 import { cartFragment } from '../query/get-cart-query'
 
-const createCartMutation = /* GraphQL */ `
-  mutation cartCreate($input: CartInput!) {
-    cartCreate(input: $input) {
+const cartLineAddMutation = /* GraphQL */ `
+  mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
+    cartLinesAdd(cartId: $cartId, lines: $lines) {
       cart {
         ...cartFragment
       }
@@ -13,7 +13,8 @@ const createCartMutation = /* GraphQL */ `
       }
     }
   }
+
   ${cartFragment}
 `
 
-export default createCartMutation
+export default cartLineAddMutation

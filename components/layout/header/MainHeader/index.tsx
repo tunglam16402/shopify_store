@@ -1,7 +1,7 @@
 'use client'
 
-import CartIcon from '@/components/cart/CartIcon/page'
-import CartSideBar from '@/components/cart/CartSidebar/page'
+import CartIcon from '@/components/cart/CartIcon'
+import CartSideBar from '@/components/cart/CartSidebar'
 import { Navbar } from '@/components/menu'
 import Search from '@/components/menu/Search'
 import { useCartUI } from '@/lib/hooks/useCart'

@@ -2,11 +2,12 @@
 
 import { useEffect } from 'react'
 // import { CartSummary } from './CartSummary'
+import { Button } from '@/components/ui/Button'
+import { useCart, useCartUI } from '@/lib/hooks/useCart'
 import { X } from 'lucide-react'
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { useCart, useCartUI } from '@/lib/hooks/useCart'
-import { CartItem } from '../CartItem/page'
+import { CartItem } from '../CartItem'
+import CartSubtotal from '../CartSubtotal'
 
 const CartSideBar = () => {
   const { cart } = useCart()
@@ -57,9 +58,9 @@ const CartSideBar = () => {
           )}
         </div>
 
-        {/* <div>
-          <CartSummary />
-        </div> */}
+        <div>
+          <CartSubtotal />
+        </div>
 
         <div className="p-4 flex flex-col items-center justify-center">
           <Link href={'/cart'}>

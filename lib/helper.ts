@@ -94,6 +94,7 @@ export function mapCartResponse(cartResponse: any): Cart {
     id: cartResponse.id,
     createdAt: cartResponse.createdAt,
     updatedAt: cartResponse.updatedAt,
+    checkoutUrl: cartResponse.checkoutUrl,
     lines: cartResponse.lines.edges.map((e: any) => e.node),
     cost: cartResponse.cost,
   }

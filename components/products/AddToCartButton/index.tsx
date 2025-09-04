@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/Button'
 import { useCart, useCartUI } from '@/lib/hooks/useCart'
 import { useState } from 'react'
 

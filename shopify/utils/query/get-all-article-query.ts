@@ -1,6 +1,6 @@
 const getAllAriclesQuery = /* GraphQL */ `
-  query GetAllArticles {
-    articles(first: 50, sortKey: PUBLISHED_AT) {
+  query getAllArticles {
+    articles(first: 99, sortKey: PUBLISHED_AT) {
       nodes {
         id
         title

@@ -4,13 +4,13 @@ const getProductDetailQuery = /* GraphQL */ `
       id
       title
       description
-      images(first: 5) {
+      images(first: 10) {
         nodes {
           url
           altText
         }
       }
-      variants(first: 5) {
+      variants(first: 10) {
         edges {
           node {
             id

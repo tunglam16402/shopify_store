@@ -11,7 +11,7 @@ const CartIcon = ({ onClick }: { onClick: () => void }) => {
     <button
       onClick={onClick}
       className="relative p-2 rounded text-hover cursor-pointer"
-      aria-label="Mở giỏ hàng"
+      aria-label="open cart"
     >
       <ShoppingCart className="w-6 h-6" />
       {totalQty > 0 && (

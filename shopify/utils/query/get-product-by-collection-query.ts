@@ -3,7 +3,7 @@ const getProductByCollectionQuery = /* GraphQL */ `
     collection(handle: $handle) {
       title
       description
-      products(first: 20) {
+      products(first: 250) {
         nodes {
           id
           title

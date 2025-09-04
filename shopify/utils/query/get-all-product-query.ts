@@ -1,6 +1,6 @@
 const getProductsQuery = /* GraphQL */ `
   query getProducts {
-    products(first: 6) {
+    products(first: 250) {
       nodes {
         id
         title
