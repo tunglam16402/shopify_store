@@ -30,7 +30,7 @@ const AddToCartButton = ({ variantId, quantity = 1 }: AddToCartButtonProps) => {
     <Button
       onClick={handleAddToCart}
       disabled={loading}
-      className="mt-4 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition"
+      className="w-full py-2 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold hover:from-indigo-600 hover:to-purple-600 transition-all duration-300"
     >
       {loading ? 'Adding...' : 'Add to Cart'}
     </Button>

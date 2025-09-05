@@ -22,43 +22,65 @@ export type ProductCardProps = {
 
 const ProductCard = ({ product }: ProductCardProps) => {
   return (
-    <div className="rounded-xl border bg-white shadow-md overflow-hidden hover:shadow-lg transition">
+    <div className="group relative rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden hover:shadow-xl transition-shadow duration-300">
+      {/* Badge giảm giá */}
+      {product.discountPercent > 0 && (
+        <span className="absolute top-3 left-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-lg z-10">
+          -{product.discountPercent}%
+        </span>
+      )}
+
+      {/* Hình ảnh */}
       {product.imageUrl && (
-        <Link href={`/products/${product.handle}`}>
+        <Link
+          href={`/products/${product.handle}`}
+          className="block overflow-hidden"
+        >
           <Image
             src={product.imageUrl}
             alt={product.altText || product.title}
             width={400}
             height={400}
-            className="object-cover w-full h-64"
+            className="object-cover w-full h-64 transition-transform duration-300 group-hover:scale-105"
           />
         </Link>
       )}
 
-      <div className="p-4">
-        <h2 className="text-lg font-semibold">{product.title}</h2>
-        <p className="text-sm text-gray-600">{product.description}</p>
-
-        {/* giá */}
-        {product.discountPercent > 0 ? (
-          <div className="mt-2">
-            {product.compareAtPrice && (
-              <p className="line-through text-gray-400 text-sm">
-                {product.compareAtPrice} {product.currency}
-              </p>
-            )}
-            <p className="text-red-600 font-semibold text-lg">
-              {product.basePrice} {product.currency}{' '}
-              <span className="text-xs">(-{product.discountPercent}%)</span>
-            </p>
-          </div>
-        ) : (
-          <p className="font-semibold text-lg mt-2">
-            {product.basePrice} {product.currency}
+      <div className="p-5 flex flex-col justify-between h-[220px]">
+        {/* Title & description */}
+        <div>
+          <h2 className="text-lg font-semibold text-gray-900 truncate">
+            {product.title}
+          </h2>
+          <p className="text-sm text-gray-500 mt-1 line-clamp-2">
+            {product.description}
           </p>
-        )}
+        </div>
 
-        <AddToCartButton variantId={product.variantId} />
+        {/* Giá */}
+        <div className="mt-3">
+          {product.discountPercent > 0 ? (
+            <div className="flex items-center gap-2">
+              {product.compareAtPrice && (
+                <span className="line-through text-gray-400 text-sm">
+                  {product.compareAtPrice} {product.currency}
+                </span>
+              )}
+              <span className="text-red-600 font-bold text-lg">
+                {product.basePrice} {product.currency}
+              </span>
+            </div>
+          ) : (
+            <span className="font-bold text-lg text-gray-900">
+              {product.basePrice} {product.currency}
+            </span>
+          )}
+        </div>
+
+        {/* Button */}
+        <div className="mt-4">
+          <AddToCartButton variantId={product.variantId} />
+        </div>
       </div>
     </div>
   )
