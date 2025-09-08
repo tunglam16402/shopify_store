@@ -16,7 +16,14 @@ export async function createCart() {
   const data = await shopifyFetch<CartCreateMutation>({
     query: cartCreateMutation,
     variables: {
-      input: {},
+      input: {
+        attributes: [
+          {
+            key: '_returnUrl',
+            value: 'https://headless-frontend.com',
+          },
+        ],
+      },
     },
   })
 
