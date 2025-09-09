@@ -1,7 +1,9 @@
 'use client'
 
 import { Button } from '@/components/ui/Button'
-import { useCart, useCartUI } from '@/lib/hooks/useCart'
+import { useAppDispatch } from '@/lib/hooks/useAppDispatch'
+import { useUI } from '@/lib/hooks/useContext'
+import { addItem } from '@/store/thunks/cartThunk'
 import { useState } from 'react'
 
 type AddToCartButtonProps = {
@@ -10,15 +12,15 @@ type AddToCartButtonProps = {
 }
 
 const AddToCartButton = ({ variantId, quantity = 1 }: AddToCartButtonProps) => {
-  const { addItem } = useCart()
-  const { openCart } = useCartUI()
+  const dispatch = useAppDispatch()
+  const { open } = useUI('cart')
   const [loading, setLoading] = useState(false)
 
   const handleAddToCart = async () => {
     try {
       setLoading(true)
-      await addItem(variantId, quantity)
-      openCart?.()
+      await dispatch(addItem({ variantId, quantity })).unwrap()
+      open?.()
     } catch (err) {
       console.error('Add to cart failed', err)
     } finally {

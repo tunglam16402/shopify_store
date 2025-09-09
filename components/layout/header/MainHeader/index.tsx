@@ -4,7 +4,7 @@ import CartIcon from '@/components/cart/CartIcon'
 import CartSideBar from '@/components/cart/CartSidebar'
 import { Navbar, AccountDropdown } from '@/components/menu'
 import Search from '@/components/menu/Search'
-import { useCartUI } from '@/lib/hooks/useCart'
+import { useUI } from '@/lib/hooks/useContext'
 import cn from 'classnames'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
@@ -15,9 +15,9 @@ type Props = {
 }
 
 const MainHeader = ({ menuItems }: Props) => {
-  const [isOpenMobile, setIsOpen] = useState(false)
+  const [isOpenMobile, setIsOpenMobile] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const { openCart, isOpen } = useCartUI()
+  const { open, isOpen } = useUI('cart')
 
   useEffect(() => {
     const handleScroll = () => {
@@ -50,10 +50,13 @@ const MainHeader = ({ menuItems }: Props) => {
         </div>
         <Navbar menuItems={menuItems} />
         <Search />
-        <CartIcon onClick={openCart} />
+        <CartIcon onClick={open} />
         <AccountDropdown />
 
-        <button onClick={() => setIsOpen(!isOpenMobile)} className="md:hidden">
+        <button
+          onClick={() => setIsOpenMobile(!isOpenMobile)}
+          className="md:hidden"
+        >
           <FaBars
             className={cn(
               'h-8 w-8 transition-colors duration-300',
@@ -67,7 +70,7 @@ const MainHeader = ({ menuItems }: Props) => {
       {/* {isOpen && (
         <NavbarMobile
           isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
+          onClose={() => setIsOpenMobile(false)}
           menuItems={menuItems}
         />
       )} */}

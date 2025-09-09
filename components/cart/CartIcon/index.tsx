@@ -1,10 +1,10 @@
 'use client'
 
-import { useCart } from '@/lib/hooks/useCart'
+import { useAppSelector } from '@/lib/hooks/useAppSelector'
 import { ShoppingCart } from 'lucide-react'
 
 const CartIcon = ({ onClick }: { onClick: () => void }) => {
-  const { cart } = useCart()
+  const cart = useAppSelector((state) => state.cart.cart)
   const totalQty = cart?.lines.reduce((sum, x) => sum + x.quantity, 0) ?? 0
 
   return (

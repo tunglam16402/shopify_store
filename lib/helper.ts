@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Cart } from '@/context/cart/Provider'
+import { Cart } from '@/types/cart'
 import {
   GetProductDetailQuery,
   GetProductsQuery,

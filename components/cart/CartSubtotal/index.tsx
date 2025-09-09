@@ -1,9 +1,9 @@
 'use client'
 
-import { useCart } from '@/lib/hooks/useCart'
+import { useAppSelector } from '@/lib/hooks/useAppSelector'
 
 const CartSubtotal = () => {
-  const { cart } = useCart()
+  const cart = useAppSelector((state) => state.cart.cart)
 
   if (!cart) return null
 
