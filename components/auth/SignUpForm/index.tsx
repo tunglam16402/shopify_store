@@ -64,7 +64,7 @@ const SignUpForm = () => {
       {error && <p className="text-red-500">{error}</p>}
 
       <Button type="submit" disabled={loading}>
-        {loading ? 'Đang gửi...' : 'Đăng ký'}
+        {loading ? 'Sending...' : 'Register'}
       </Button>
     </form>
   )

@@ -2,7 +2,7 @@
 
 import CartIcon from '@/components/cart/CartIcon'
 import CartSideBar from '@/components/cart/CartSidebar'
-import { Navbar } from '@/components/menu'
+import { Navbar, AccountDropdown } from '@/components/menu'
 import Search from '@/components/menu/Search'
 import { useCartUI } from '@/lib/hooks/useCart'
 import cn from 'classnames'
@@ -51,6 +51,7 @@ const MainHeader = ({ menuItems }: Props) => {
         <Navbar menuItems={menuItems} />
         <Search />
         <CartIcon onClick={openCart} />
+        <AccountDropdown />
 
         <button onClick={() => setIsOpen(!isOpenMobile)} className="md:hidden">
           <FaBars

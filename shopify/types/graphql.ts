@@ -3071,6 +3071,20 @@ export type CartLinesUpdateMutationVariables = Exact<{
 
 export type CartLinesUpdateMutation = { cartLinesUpdate?: { cart?: { id: string, createdAt: string, updatedAt: string, checkoutUrl: string, lines: { edges: Array<{ node: { id: string, quantity: number, merchandise: { id: string, title: string, sku?: string | null, quantityAvailable?: number | null, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null, selectedOptions: Array<{ name: string, value: string }>, image?: { url: string, altText?: string | null } | null, product: { id: string, handle: string, title: string, totalInventory?: number | null } } } | { id: string, quantity: number, merchandise: { id: string, title: string, sku?: string | null, quantityAvailable?: number | null, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null, selectedOptions: Array<{ name: string, value: string }>, image?: { url: string, altText?: string | null } | null, product: { id: string, handle: string, title: string, totalInventory?: number | null } } } }> }, cost: { totalAmount: { amount: string, currencyCode: CurrencyCode }, subtotalAmount: { amount: string, currencyCode: CurrencyCode } }, attributes: Array<{ key: string, value?: string | null }> } | null, userErrors: Array<{ code?: CartErrorCode | null, field?: Array<string> | null, message: string }> } | null };
 
+export type CustomerAccessTokenCreateMutationVariables = Exact<{
+  input: CustomerAccessTokenCreateInput;
+}>;
+
+
+export type CustomerAccessTokenCreateMutation = { customerAccessTokenCreate?: { customerUserErrors: Array<{ code?: CustomerErrorCode | null, field?: Array<string> | null, message: string }>, customerAccessToken?: { accessToken: string, expiresAt: string } | null } | null };
+
+export type CustomerAccessTokenDeleteMutationVariables = Exact<{
+  customerAccessToken: Scalars['String']['input'];
+}>;
+
+
+export type CustomerAccessTokenDeleteMutation = { customerAccessTokenDelete?: { deletedAccessToken?: string | null, deletedCustomerAccessTokenId?: string | null, userErrors: Array<{ field?: Array<string> | null, message: string }> } | null };
+
 export type CustomerActivateByUrlMutationVariables = Exact<{
   activationUrl: Scalars['URL']['input'];
   password: Scalars['String']['input'];
@@ -3129,6 +3143,13 @@ export type GetCheckoutQueryVariables = Exact<{
 
 
 export type GetCheckoutQuery = { cart?: { id: string, createdAt: string, updatedAt: string, checkoutUrl: string, lines: { edges: Array<{ node: { id: string, quantity: number, merchandise: { id: string, title: string, sku?: string | null, quantityAvailable?: number | null, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null, selectedOptions: Array<{ name: string, value: string }>, image?: { url: string, altText?: string | null } | null, product: { id: string, handle: string, title: string, totalInventory?: number | null } } } | { id: string, quantity: number, merchandise: { id: string, title: string, sku?: string | null, quantityAvailable?: number | null, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null, selectedOptions: Array<{ name: string, value: string }>, image?: { url: string, altText?: string | null } | null, product: { id: string, handle: string, title: string, totalInventory?: number | null } } } }> }, cost: { totalAmount: { amount: string, currencyCode: CurrencyCode }, subtotalAmount: { amount: string, currencyCode: CurrencyCode } }, attributes: Array<{ key: string, value?: string | null }> } | null };
+
+export type GetCustomerQueryVariables = Exact<{
+  customerAccessToken: Scalars['String']['input'];
+}>;
+
+
+export type GetCustomerQuery = { customer?: { id: string, email?: string | null, firstName?: string | null, lastName?: string | null, phone?: string | null, createdAt: string } | null };
 
 export type GetMainMenuQueryVariables = Exact<{ [key: string]: never; }>;
 

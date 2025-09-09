@@ -1,19 +1,16 @@
-const customerActivateByUrlMutation = /* GraphQL */ `
-  mutation customerActivateByUrl($activationUrl: URL!, $password: String!) {
-    customerActivateByUrl(activationUrl: $activationUrl, password: $password) {
-      customer {
-        id
-      }
-      customerAccessToken {
-        accessToken
-        expiresAt
-      }
+const customerAccessTokenCreateMutation = /* GraphQL */ `
+  mutation customerAccessTokenCreate($input: CustomerAccessTokenCreateInput!) {
+    customerAccessTokenCreate(input: $input) {
       customerUserErrors {
         code
         field
         message
       }
+      customerAccessToken {
+        accessToken
+        expiresAt
+      }
     }
   }
 `
-export default customerActivateByUrlMutation
+export default customerAccessTokenCreateMutation
