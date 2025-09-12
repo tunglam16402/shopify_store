@@ -1,14 +1,16 @@
 import { ProductList } from '@/components/products'
 import { getSearchResult } from '@/shopify/api/operations/get-search'
 
+interface SearchResultPageProps {
+  searchParams?: Promise<{ q?: string }>
+}
+
 export default async function SearchResultPage({
   searchParams,
-}: {
-  searchParams: { q?: string }
-}) {
-  const param = searchParams.q ?? ''
+}: SearchResultPageProps) {
+  const query = (await searchParams)?.q || ''
 
-  const products = await getSearchResult(param)
+  const products = await getSearchResult(query)
 
   return (
     <main className="p-8 max-w-6xl mx-auto">

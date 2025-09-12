@@ -1,6 +1,4 @@
-import { shopifyFetch } from '@/shopify/fetcher'
-import { CustomerActivateByUrlMutation } from '@/shopify/types/graphql'
-import customerActivateByUrlMutation from '@/shopify/utils/mutation/customer-access-token-create'
+import { activateCustomer } from '@/shopify/auth/use-signup'
 import { NextResponse } from 'next/server'
 
 export async function POST(req: Request) {
@@ -14,19 +12,14 @@ export async function POST(req: Request) {
       )
     }
 
-    const data = await shopifyFetch<CustomerActivateByUrlMutation>({
-      query: customerActivateByUrlMutation,
-      variables: { activationUrl, password },
-    })
+    const result = await activateCustomer({ activationUrl, password })
 
-    const result = data.customerActivateByUrl
-
-    const errors = result?.customerUserErrors || []
-    if (errors.length > 0) {
+    if (!result.success) {
       return NextResponse.json(
         {
           success: false,
-          error: errors.map((e) => e.message).join(', '),
+          error:
+            result.errors?.map((e) => e.message).join(', ') || 'Unknown error',
         },
         { status: 400 }
       )
@@ -34,9 +27,9 @@ export async function POST(req: Request) {
 
     return NextResponse.json({
       success: true,
-      accessToken: result?.customerAccessToken?.accessToken,
-      expiresAt: result?.customerAccessToken?.expiresAt,
-      customerId: result?.customer?.id,
+      accessToken: result.accessToken,
+      expiresAt: result.expiresAt,
+      customer: result.customer,
     })
   } catch (error) {
     return NextResponse.json(

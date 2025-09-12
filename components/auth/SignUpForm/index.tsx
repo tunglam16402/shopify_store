@@ -18,6 +18,8 @@ const SignUpForm = () => {
 
     const result = await registerCustomer(formData)
 
+    console.log('result :>> ', result)
+
     if (!result.success) {
       setError(
         result.errors?.map((e: any) => e.message || e).join(', ') ||
@@ -59,7 +61,6 @@ const SignUpForm = () => {
         <Label htmlFor="password">Password</Label>
         <Input type="password" name="password" id="password" required />
       </div>
-
 
       {error && <p className="text-red-500">{error}</p>}
 

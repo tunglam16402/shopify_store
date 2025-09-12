@@ -1,39 +1,30 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { loginCustomer } from '@/actions/login'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Label } from '@/components/ui/Lable'
-
-interface LoginResult {
-  success: boolean
-  errors?: { message: string }[]
-}
+import { useAppDispatch } from '@/lib/hooks/useAppDispatch'
+import { loginUser } from '@/store/slices/userSlice'
+import { RootState } from '@/store/store'
+import { useRouter } from 'next/navigation'
+import { useSelector } from 'react-redux'
 
 const SignInForm = () => {
+  const dispatch = useAppDispatch()
   const router = useRouter()
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const { loading, error } = useSelector((state: RootState) => state.user)
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setLoading(true)
-    setError(null)
-
     const formData = new FormData(e.currentTarget)
-    const result: LoginResult = await loginCustomer(formData)
 
-    if (!result.success) {
-      setError(
-        result.errors?.map((e) => e.message).join(', ') || 'Login failed'
-      )
-    } else {
-      router.push('/')
-    }
-
-    setLoading(false)
+    dispatch(loginUser(formData))
+      .unwrap()
+      .then(() => {
+        router.push('/')
+      })
+      .catch(() => {})
   }
 
   return (

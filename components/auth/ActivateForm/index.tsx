@@ -33,6 +33,7 @@ const ActivateForm: React.FC<ActivateFormProps> = ({ activationUrl }) => {
         setMessage(data.error || 'Activation failed')
       }
     } catch (err) {
+      console.error('Error has occured:', err)
       setMessage('Unexpected error')
     } finally {
       setLoading(false)

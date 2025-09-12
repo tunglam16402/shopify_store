@@ -30,8 +30,19 @@ export async function shopifyFetch<T>({
   const json = await res.json()
 
   if (json.errors) {
-    console.error('Shopify query error:', JSON.stringify(json.errors, null, 2))
-    throw new Error('Shopify query error')
+    const throttled = json.errors.find(
+      (e: any) => e.extensions?.code === 'THROTTLED'
+    )
+    if (throttled) {
+      throw new Error('Too many requests. Please wait and try again.')
+    }
+
+    json.errors.forEach((err: any) => {
+      console.error(
+        `[Shopify Error] Code: ${err.extensions?.code}, Message: ${err.message}`
+      )
+    })
+    throw new Error(json.errors[0].message)
   }
 
   return json.data

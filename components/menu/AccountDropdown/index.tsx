@@ -1,21 +1,26 @@
 'use client'
 
-import { useState } from 'react'
+import { useAppDispatch } from '@/lib/hooks/useAppDispatch'
+import { logoutUser } from '@/store/slices/userSlice'
+import { RootState } from '@/store/store'
 import { User } from 'lucide-react'
 import Link from 'next/link'
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
 
-interface AccountDropdownProps {
-  isLoggedIn: boolean
-  userName?: string
-}
-
-const AccountDropdown: React.FC<AccountDropdownProps> = ({
-  isLoggedIn,
-  userName,
-}) => {
+const AccountDropdown = () => {
   const [open, setOpen] = useState(false)
+  const dispatch = useAppDispatch()
+  const { isLoggedIn, customer } = useSelector((state: RootState) => state.user)
 
   const toggleDropdown = () => setOpen((prev) => !prev)
+
+  const handleLogout = () => {
+    dispatch(logoutUser())
+    setOpen(false)
+  }
+
+  const userName = customer?.firstName || customer?.email || 'User'
 
   return (
     <div className="relative">
@@ -67,10 +72,7 @@ const AccountDropdown: React.FC<AccountDropdownProps> = ({
               <li>
                 <button
                   className="w-full text-left px-4 py-2 hover:bg-gray-100"
-                  onClick={() => {
-                    // call logout function
-                    setOpen(false)
-                  }}
+                  onClick={handleLogout}
                 >
                   Logout
                 </button>
