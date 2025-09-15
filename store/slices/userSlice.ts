@@ -22,12 +22,12 @@ const initialState: UserState = {
   error: null,
 }
 
-// ---- LOGIN ----
+// ---- login ----
 export const loginUser = createAsyncThunk(
   'user/loginUser',
   async (formData: FormData, { rejectWithValue }) => {
     const result = await loginCustomer(formData)
-    console.log('loginResult:', result)
+    console.log('RAW LOGIN RESPONSE:', JSON.stringify(result, null, 2))
     if (!result.success) {
       return rejectWithValue(result.errors?.[0]?.message || 'Login failed')
     }
@@ -35,11 +35,10 @@ export const loginUser = createAsyncThunk(
     console.log('result.accessToken! :>> ', result.accessToken!)
 
     const customer = await getCustomer(result.accessToken!)
+    console.log('CUSTOMER FETCH:', customer)
     // if (!customer) {
     //   return rejectWithValue('Customer fetch failed after login')
     // }
-    console.log('customer fetch result:', customer)
-
     return {
       accessToken: result.accessToken!,
       expiresAt: result.expiresAt!,
@@ -47,17 +46,25 @@ export const loginUser = createAsyncThunk(
     }
   }
 )
-
+// logout
 export const logoutUser = createAsyncThunk(
   'user/logoutUser',
   async (_, { getState, dispatch }) => {
+    console.log('=== LOGOUT THUNK CALLED ===')
+
     const state = getState() as { user: { accessToken: string | null } }
     const token = state.user.accessToken
+    console.log('Token in logout thunk:', token)
 
     if (token) {
+      console.log('Calling deleteCustomerAccessToken...')
       await deleteCustomerAccessToken(token)
+    } else {
+      console.warn('No token found, skipping deleteCustomerAccessToken')
     }
+
     dispatch(logout())
+    console.log('Logout Redux cleared!')
   }
 )
 
