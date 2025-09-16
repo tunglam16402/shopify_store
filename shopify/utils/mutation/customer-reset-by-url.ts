@@ -1,0 +1,20 @@
+const customerResetByUrlMutation = /* GraphQL */ `
+  mutation customerResetByUrl($resetUrl: URL!, $password: String!) {
+    customerResetByUrl(resetUrl: $resetUrl, password: $password) {
+      customer {
+        id
+      }
+      customerAccessToken {
+        accessToken
+        expiresAt
+      }
+      customerUserErrors {
+        code
+        field
+        message
+      }
+    }
+  }
+`
+
+export default customerResetByUrlMutation

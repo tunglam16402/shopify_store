@@ -1,34 +1,47 @@
 'use client'
 
+import { loginCustomer } from '@/actions/login'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
-import { Label } from '@/components/ui/Lable'
-import { useAppDispatch } from '@/lib/hooks/useAppDispatch'
-import { loginUser } from '@/store/slices/userSlice'
-import { RootState } from '@/store/store'
+import { Label } from '@/components/ui/Label'
+import type { LoginState } from '@/types/auth'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useSelector } from 'react-redux'
+import { useActionState, useEffect } from 'react'
+
+const initialState: LoginState = {
+  success: false,
+  accessToken: null,
+  expiresAt: null,
+  errors: [],
+}
 
 const SignInForm = () => {
-  const dispatch = useAppDispatch()
   const router = useRouter()
 
-  const { loading, error } = useSelector((state: RootState) => state.user)
+  const [state, formAction, pending] = useActionState(
+    loginCustomer,
+    initialState
+  )
+  console.log('SignInForm state:', state)
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
+  useEffect(() => {
+    console.log('[CLIENT] state changed =>', state)
+  }, [state])
 
-    dispatch(loginUser(formData))
-      .unwrap()
-      .then(() => {
+  useEffect(() => {
+    if (state.success) {
+      console.log('Login successful, redirecting...', state)
         router.push('/')
-      })
-      .catch(() => {})
-  }
+    }
+  }, [state, router])
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form
+      action={formAction}
+      onSubmit={() => console.log('Form submit triggered')}
+      className="space-y-4"
+    >
       <div>
         <Label htmlFor="email">Email</Label>
         <Input
@@ -37,6 +50,7 @@ const SignInForm = () => {
           id="email"
           placeholder="you@example.com"
           required
+          disabled={pending}
         />
       </div>
 
@@ -48,13 +62,29 @@ const SignInForm = () => {
           id="password"
           placeholder="Enter your password"
           required
+          disabled={pending}
         />
       </div>
 
-      {error && <p className="text-red-500">{error}</p>}
+      <div>
+        <Link
+          href="/account/recovery"
+          className="text-sm text-blue-600 hover:underline"
+        >
+          Forgot your password?
+        </Link>
+      </div>
 
-      <Button type="submit" disabled={loading}>
-        {loading ? 'Logging in...' : 'Login'}
+      {state.errors.length > 0 && (
+        <ul className="text-red-500 text-sm space-y-1">
+          {state.errors.map((error, index) => (
+            <li key={index}>{error.message}</li>
+          ))}
+        </ul>
+      )}
+
+      <Button type="submit" disabled={pending} className="w-full">
+        {pending ? 'Logging in...' : 'Login'}
       </Button>
     </form>
   )

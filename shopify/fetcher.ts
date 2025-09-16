@@ -23,7 +23,7 @@ export async function shopifyFetch<T>({
         'X-Shopify-Storefront-Access-Token': SHOPIFY_TOKEN,
       },
       body: JSON.stringify({ query, variables }),
-      next: { revalidate: 300 },
+      cache: 'no-store',
     }
   )
 

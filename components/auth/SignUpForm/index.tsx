@@ -4,7 +4,7 @@
 import { useState } from 'react'
 import { registerCustomer } from '@/actions/register'
 import { Input } from '@/components/ui/Input'
-import { Label } from '@/components/ui/Lable'
+import { Label } from '@/components/ui/Label'
 import { Button } from '@/components/ui/Button'
 
 const SignUpForm = () => {

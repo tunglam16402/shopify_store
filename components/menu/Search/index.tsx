@@ -35,7 +35,6 @@ const SearchBox = () => {
     return () => clearTimeout(timeout)
   }, [input])
 
-  console.log('suggestions :>> ', input)
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (input.trim()) {

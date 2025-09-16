@@ -24,7 +24,6 @@ const AccountDropdown = () => {
 
   return (
     <div className="relative">
-      {/* Nút Account */}
       <button
         onClick={toggleDropdown}
         className="flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100 transition"
@@ -33,7 +32,6 @@ const AccountDropdown = () => {
         {isLoggedIn && <span>{userName}</span>}
       </button>
 
-      {/* Dropdown */}
       {open && (
         <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg z-50">
           {!isLoggedIn ? (

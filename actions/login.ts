@@ -1,19 +1,115 @@
 'use server'
 import { createCustomerAccessToken } from '@/shopify/auth/use-login'
-import { unstable_noStore } from 'next/cache'
+import { recoverAccount, resetPasswordByUrl } from '@/shopify/auth/use-recover'
+import { LoginState } from '@/types/auth'
+import { cookies } from 'next/headers'
 
-export async function loginCustomer(formData: FormData) {
-  unstable_noStore()
+export async function loginCustomer(
+  prevState: LoginState,
+  formData: FormData
+): Promise<LoginState> {
 
   const email = formData.get('email') as string
   const password = formData.get('password') as string
 
-  const result = await createCustomerAccessToken({
-    email,
-    password,
-  })
+  if (!email || !password) {
+    return {
+      success: false,
+      accessToken: null,
+      expiresAt: null,
+      errors: [{ field: [], message: 'Email and password are required.' }],
+    }
+  }
 
-  console.log('result :>> ', result)
+  const result = await createCustomerAccessToken({ email, password })
 
-  return result
+  if (result.success && result.accessToken) {
+    const cookieStore = await cookies()
+    cookieStore.set('shopify_customer_token', result.accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      path: '/',
+      expires: new Date(
+        result.expiresAt || Date.now() + 30 * 24 * 60 * 60 * 1000
+      ),
+    })
+  }
+
+  const response: LoginState = {
+    success: result.success,
+    accessToken: result.accessToken ?? null,
+    expiresAt: result.expiresAt ?? null,
+    errors:
+      result.errors?.map((err) => ({
+        field: err.field || [],
+        message: err.message,
+      })) ?? [],
+  }
+
+  return response
+}
+
+//recovery account action
+export async function recoveryCustomerAccount(formData: FormData) {
+  const email = formData.get('email') as string
+
+  if (!email) {
+    return {
+      success: false,
+      message: 'Email is required.',
+    }
+  }
+
+  try {
+    const result = await recoverAccount(email)
+    if (!result.success) {
+      return {
+        success: false,
+        message:
+          result.errors?.[0]?.message || 'Failed to send recovery email.',
+      }
+    }
+
+    return { success: true, message: 'Recovery email sent successfully.' }
+  } catch (error) {
+    console.error('recoveryCustomerAccount error:', error)
+    return {
+      success: false,
+      message: 'Unexpected error during account recovery.',
+    }
+  }
+}
+
+//reset password action
+export async function resetCustomerPassword(formData: FormData) {
+  const password = formData.get('password') as string
+  const resetUrl = formData.get('resetUrl') as string
+
+  if (!password) {
+    return {
+      success: false,
+      message: 'Password is required.',
+    }
+  }
+
+  if (!resetUrl) {
+    return {
+      success: false,
+      message: 'Missing resetUrl.',
+    }
+  }
+
+  try {
+    const result = await resetPasswordByUrl(resetUrl, password)
+
+    console.log('RESET PASSWORD RESULT :>> ', result)
+    return result
+  } catch (error) {
+    console.error('resetCustomerPassword error:', error)
+    return {
+      success: false,
+      message: 'Unexpected error during password reset.',
+    }
+  }
 }

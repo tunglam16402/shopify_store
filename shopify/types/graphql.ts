@@ -3405,6 +3405,22 @@ export type CustomerActivateByUrlMutation = {
   } | null
 }
 
+export type CustomerAddressDeleteMutationVariables = Exact<{
+  customerAccessToken: Scalars['String']['input']
+  id: Scalars['ID']['input']
+}>
+
+export type CustomerAddressDeleteMutation = {
+  customerAddressDelete?: {
+    customerUserErrors: Array<{
+      message: string
+      code?: CustomerErrorCode | null
+      field?: Array<string> | null
+    }>
+    userErrors: Array<{ field?: Array<string> | null; message: string }>
+  } | null
+}
+
 export type CustomerCreateMutationVariables = Exact<{
   input: CustomerCreateInput
 }>
@@ -3417,6 +3433,37 @@ export type CustomerCreateMutation = {
       message: string
     }>
     customer?: { id: string } | null
+  } | null
+}
+
+export type CustomerRecoverMutationVariables = Exact<{
+  email: Scalars['String']['input']
+}>
+
+export type CustomerRecoverMutation = {
+  customerRecover?: {
+    customerUserErrors: Array<{
+      code?: CustomerErrorCode | null
+      field?: Array<string> | null
+      message: string
+    }>
+  } | null
+}
+
+export type CustomerResetByUrlMutationVariables = Exact<{
+  resetUrl: Scalars['URL']['input']
+  password: Scalars['String']['input']
+}>
+
+export type CustomerResetByUrlMutation = {
+  customerResetByUrl?: {
+    customer?: { id: string } | null
+    customerAccessToken?: { accessToken: string; expiresAt: string } | null
+    customerUserErrors: Array<{
+      code?: CustomerErrorCode | null
+      field?: Array<string> | null
+      message: string
+    }>
   } | null
 }
 

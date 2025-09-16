@@ -7,11 +7,17 @@ interface LoginInput {
   password: string
 }
 
-interface LoginResult {
+export interface LoginError {
+  code?: string
+  field: string[]
+  message: string
+}
+
+export interface LoginResult {
   success: boolean
   accessToken?: string
   expiresAt?: string
-  errors?: Array<{ field: string[]; message: string }>
+  errors?: LoginError[]
 }
 
 export async function createCustomerAccessToken(
@@ -29,6 +35,7 @@ export async function createCustomerAccessToken(
       return {
         success: false,
         errors: result.customerUserErrors.map((err) => ({
+          code: err.code || undefined,
           field: err.field || [],
           message: err.message,
         })),
@@ -43,12 +50,11 @@ export async function createCustomerAccessToken(
       }
     }
 
-    return { success: false, errors: [{ field: [], message: 'Unknown error' }] }
   } catch (err) {
     console.error('createCustomerAccessToken error:', err)
     return {
       success: false,
-      errors: [{ field: [], message: 'Network or server error' }],
+      errors: [{ field: [], message: 'Network or server error occurred.' }],
     }
   }
 }
