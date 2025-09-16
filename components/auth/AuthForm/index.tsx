@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import * as React from 'react'
@@ -12,7 +13,7 @@ interface AuthFormProps {
   buttonText: string
   fieldName: string
   type?: 'text' | 'email' | 'password'
-  action: any
+  action: (formData: FormData) => Promise<any>
   className?: string
   extraFields?: React.ReactNode
 }

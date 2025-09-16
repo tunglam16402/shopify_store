@@ -1,14 +1,13 @@
 'use server'
 import { createCustomerAccessToken } from '@/shopify/auth/use-login'
 import { recoverAccount, resetPasswordByUrl } from '@/shopify/auth/use-recover'
-import { LoginState } from '@/types/auth'
+import { LoginState, TypeState } from '@/types/auth'
 import { cookies } from 'next/headers'
 
 export async function loginCustomer(
-  prevState: LoginState,
+  initialState: LoginState,
   formData: FormData
 ): Promise<LoginState> {
-
   const email = formData.get('email') as string
   const password = formData.get('password') as string
 
@@ -51,13 +50,15 @@ export async function loginCustomer(
 }
 
 //recovery account action
-export async function recoveryCustomerAccount(formData: FormData) {
+export async function recoveryCustomerAccount(
+  formData: FormData
+): Promise<TypeState> {
   const email = formData.get('email') as string
 
   if (!email) {
     return {
       success: false,
-      message: 'Email is required.',
+      errors: [{ field: [], message: 'Email is required' }],
     }
   }
 
@@ -82,7 +83,9 @@ export async function recoveryCustomerAccount(formData: FormData) {
 }
 
 //reset password action
-export async function resetCustomerPassword(formData: FormData) {
+export async function resetCustomerPassword(
+  formData: FormData
+): Promise<TypeState> {
   const password = formData.get('password') as string
   const resetUrl = formData.get('resetUrl') as string
 
@@ -103,8 +106,14 @@ export async function resetCustomerPassword(formData: FormData) {
   try {
     const result = await resetPasswordByUrl(resetUrl, password)
 
-    console.log('RESET PASSWORD RESULT :>> ', result)
-    return result
+    if (!result.success) {
+      return {
+        success: false,
+        message: result.errors?.[0]?.message || 'Failed to reset password.',
+      }
+    }
+
+    return { success: true, message: 'Password reset successfully.' }
   } catch (error) {
     console.error('resetCustomerPassword error:', error)
     return {

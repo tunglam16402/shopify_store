@@ -1,71 +1,87 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
-import { useState } from 'react'
+import { useActionState, useEffect } from 'react'
 import { registerCustomer } from '@/actions/register'
+import type { RegisterState } from '@/types/auth'
 import { Input } from '@/components/ui/Input'
 import { Label } from '@/components/ui/Label'
 import { Button } from '@/components/ui/Button'
 
+const initialState: RegisterState = {
+  success: false,
+  errors: [],
+  customer: null,
+}
+
 const SignUpForm = () => {
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [success, setSuccess] = useState(false)
+  const [state, formAction, pending] = useActionState(
+    registerCustomer,
+    initialState
+  )
 
-  async function handleSubmit(formData: FormData) {
-    setLoading(true)
-    setError(null)
-
-    const result = await registerCustomer(formData)
-
-    console.log('result :>> ', result)
-
-    if (!result.success) {
-      setError(
-        result.errors?.map((e: any) => e.message || e).join(', ') ||
-          'Register Failed'
-      )
-    } else {
-      setSuccess(true)
+  useEffect(() => {
+    if (state.success) {
+      console.log('Registration successful', state.customer)
     }
-
-    setLoading(false)
-  }
-
-  if (success)
-    return <p>Đăng ký thành công! Vui lòng kiểm tra email để xác nhận.</p>
+  }, [state])
 
   return (
-    <form action={handleSubmit} className="space-y-4">
+    <form action={formAction} className="space-y-4">
       <div>
         <Label htmlFor="email">Email</Label>
-        <Input type="email" name="email" id="email" required />
+        <Input
+          type="email"
+          name="email"
+          id="email"
+          required
+          disabled={pending}
+        />
       </div>
 
       <div>
         <Label htmlFor="phone">Phone Number</Label>
-        <Input type="tel" name="phone" id="phone" required />
+        <Input type="tel" name="phone" id="phone" required disabled={pending} />
       </div>
 
       <div>
         <Label htmlFor="firstName">First Name</Label>
-        <Input type="text" name="firstName" id="firstName" />
+        <Input type="text" name="firstName" id="firstName" disabled={pending} />
       </div>
 
       <div>
         <Label htmlFor="lastName">Last Name</Label>
-        <Input type="text" name="lastName" id="lastName" />
+        <Input type="text" name="lastName" id="lastName" disabled={pending} />
       </div>
 
       <div>
         <Label htmlFor="password">Password</Label>
-        <Input type="password" name="password" id="password" required />
+        <Input
+          type="password"
+          name="password"
+          id="password"
+          required
+          disabled={pending}
+        />
       </div>
 
-      {error && <p className="text-red-500">{error}</p>}
+      {/* Hiển thị lỗi từ server action */}
+      {state.errors.length > 0 && (
+        <ul className="text-red-500 text-sm space-y-1">
+          {state.errors.map((error, index) => (
+            <li key={index}>{error.message}</li>
+          ))}
+        </ul>
+      )}
 
-      <Button type="submit" disabled={loading}>
-        {loading ? 'Sending...' : 'Register'}
+      {/* Hiển thị success message */}
+      {state.success && (
+        <p className="text-green-600">
+          Register SuccessFully
+        </p>
+      )}
+
+      <Button type="submit" disabled={pending} className="w-full">
+        {pending ? 'Sending...' : 'Register'}
       </Button>
     </form>
   )

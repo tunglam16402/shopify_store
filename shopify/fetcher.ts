@@ -3,8 +3,6 @@
 export const SHOPIFY_DOMAIN = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN!
 export const SHOPIFY_TOKEN = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN!
 
-console.log(SHOPIFY_DOMAIN)
-
 interface ShopifyFetchParams {
   query: string
   variables?: Record<string, any>

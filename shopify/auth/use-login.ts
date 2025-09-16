@@ -50,6 +50,10 @@ export async function createCustomerAccessToken(
       }
     }
 
+    return {
+      success: false,
+      errors: [{ field: [], message: 'Unknown error occurred during login.' }],
+    }
   } catch (err) {
     console.error('createCustomerAccessToken error:', err)
     return {
