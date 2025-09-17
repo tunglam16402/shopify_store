@@ -5,19 +5,22 @@ import { logoutUser } from '@/store/slices/userSlice'
 import { RootState } from '@/store/store'
 import { User } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 
 const AccountDropdown = () => {
   const [open, setOpen] = useState(false)
+  const router = useRouter()
   const dispatch = useAppDispatch()
   const { isLoggedIn, customer } = useSelector((state: RootState) => state.user)
 
   const toggleDropdown = () => setOpen((prev) => !prev)
 
-  const handleLogout = () => {
-    dispatch(logoutUser())
+  const handleLogout = async () => {
+    await dispatch(logoutUser())
     setOpen(false)
+    router.push('/account/login')
   }
 
   const userName = customer?.firstName || customer?.email || 'User'

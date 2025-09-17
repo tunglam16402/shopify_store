@@ -4,6 +4,8 @@ import { loginCustomer } from '@/actions/login'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Label } from '@/components/ui/Label'
+import { useAppDispatch } from '@/lib/hooks/useAppDispatch'
+import { loadUserFromCookie } from '@/store/slices/userSlice'
 import type { LoginState } from '@/types/auth'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -18,21 +20,16 @@ const initialState: LoginState = {
 
 const SignInForm = () => {
   const router = useRouter()
-
+  const dispatch = useAppDispatch()
   const [state, formAction, pending] = useActionState(
     loginCustomer,
     initialState
   )
-  console.log('SignInForm state:', state)
-
-  useEffect(() => {
-    console.log('[CLIENT] state changed =>', state)
-  }, [state])
 
   useEffect(() => {
     if (state.success) {
-      console.log('Login successful, redirecting...', state)
-        router.push('/')
+      dispatch(loadUserFromCookie())
+      router.push('/')
     }
   }, [state, router])
 

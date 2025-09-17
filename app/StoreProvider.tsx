@@ -5,6 +5,7 @@ import store from '@/store/store'
 import { useAppDispatch } from '@/lib/hooks/useAppDispatch'
 import { useEffect } from 'react'
 import { hydrateCart } from '@/store/thunks/cartThunk'
+import { loadUserFromCookie } from '@/store/slices/userSlice'
 
 export default function StoreProvider({
   children,
@@ -13,7 +14,9 @@ export default function StoreProvider({
 }) {
   return (
     <Provider store={store}>
-      <HydrateCart>{children}</HydrateCart>
+      <HydrateCart>
+        <GetCustomer>{children}</GetCustomer>
+      </HydrateCart>
     </Provider>
   )
 }
@@ -22,6 +25,16 @@ function HydrateCart({ children }: { children: React.ReactNode }) {
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(hydrateCart())
+  }, [dispatch])
+
+  return <>{children}</>
+}
+
+function GetCustomer({ children }: { children: React.ReactNode }) {
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(loadUserFromCookie())
   }, [dispatch])
 
   return <>{children}</>
