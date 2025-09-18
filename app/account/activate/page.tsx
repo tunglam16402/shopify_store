@@ -9,7 +9,7 @@ interface ActivatePageProps {
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
-const ActivatePage = async ({ params }: ActivatePageProps) => {
+const Activate = async ({ params }: ActivatePageProps) => {
   const { id, token } = await params
   const activationUrl =
     id && token ? `${baseUrl}/account/activate/${id}/${token}` : ''
@@ -17,4 +17,4 @@ const ActivatePage = async ({ params }: ActivatePageProps) => {
   return <ActivateForm activationUrl={activationUrl} />
 }
 
-export default ActivatePage
+export default Activate

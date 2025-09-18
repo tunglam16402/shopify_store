@@ -5,7 +5,7 @@ import AuthForm from '@/components/auth/AuthForm'
 import { useSearchParams } from 'next/navigation'
 import React from 'react'
 
-const ResetPage = () => {
+const Reset = () => {
   const searchParams = useSearchParams()
   const resetUrl = decodeURIComponent(searchParams.get('reset_url') || '')
 
@@ -33,4 +33,4 @@ const ResetPage = () => {
   )
 }
 
-export default ResetPage
+export default Reset

@@ -1,16 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { loginCustomer, logoutCustomer } from '@/actions/login'
+import { loginCustomer } from '@/actions/login'
+import { logoutCustomer } from '@/actions/logout'
 import { LoginState } from '@/types/auth'
+import { Customer } from '@/types/customer'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-export interface Customer {
-  id: string
-  email?: string | null
-  firstName?: string | null
-  lastName?: string | null
-  phone?: string | null
-  createdAt?: string
-}
+// export interface Customer {
+//   id: string
+//   email?: string | null
+//   firstName?: string | null
+//   lastName?: string | null
+//   phone?: string | null
+//   createdAt?: string
+// }
 
 interface UserState {
   isLoggedIn: boolean
@@ -98,7 +100,6 @@ const userSlice = createSlice({
       state.error = action.payload as string
     })
 
-    // load user
     builder.addCase(loadUserFromCookie.fulfilled, (state, action) => {
       if (action.payload) {
         state.isLoggedIn = true

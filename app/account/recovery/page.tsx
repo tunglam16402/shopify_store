@@ -1,7 +1,7 @@
 import { recoveryCustomerAccount } from '@/actions/login'
 import AuthForm from '@/components/auth/AuthForm'
 
-const RecoveryPage = () => {
+const Recovery = () => {
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-md">
@@ -21,4 +21,4 @@ const RecoveryPage = () => {
   )
 }
 
-export default RecoveryPage
+export default Recovery

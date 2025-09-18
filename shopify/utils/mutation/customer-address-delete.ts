@@ -10,6 +10,7 @@ const customerAddressDeleteMutation = /* GraphQL */ `
         field
         message
       }
+      deletedCustomerAddressId
     }
   }
 `

@@ -63,7 +63,7 @@ const AccountDropdown = () => {
               <li className="px-4 py-2 text-gray-700">Hello, {userName}</li>
               <li>
                 <Link
-                  href="/account/profile"
+                  href="/account"
                   className="block px-4 py-2 hover:bg-gray-100"
                   onClick={() => setOpen(false)}
                 >
