@@ -1,5 +1,5 @@
 import { recoveryCustomerAccount } from '@/actions/login'
-import AuthForm from '@/components/auth/AuthForm'
+import AuthForm from '@/components/common/AuthForm'
 
 const Recovery = () => {
   return (

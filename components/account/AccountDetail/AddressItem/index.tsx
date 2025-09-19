@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/Button'
 import { Address } from '@/types/customer/address'
 import React from 'react'
 
@@ -49,6 +50,10 @@ const AddressItem: React.FC<AddressItemProbs> = ({
             <span>Phone: {address.phone}</span>
           </div>
         )}
+      </div>
+      <div className='flex gap-2 mt-4'>
+        <Button>Edit</Button>
+        <Button>Delete</Button>
       </div>
     </div>
   )

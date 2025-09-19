@@ -2,7 +2,7 @@ import { AppError } from '../error'
 
 export type Address = {
   id?: string
-  address1: string 
+  address1: string
   address2?: string | null
   city: string
   company?: string | null
@@ -20,6 +20,13 @@ export type Address = {
 
 export interface CreateAddressState {
   success: boolean
+  address?: Address
+  errors: AppError[]
+}
+
+export interface UpdateAddressState {
+  success: boolean
+  id?: string
   address?: Address
   errors: AppError[]
 }

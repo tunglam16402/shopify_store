@@ -14,9 +14,9 @@ const ProductDetail = ({ product }: ProductDetailProps) => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
-          {product.images.nodes.map((node, i) => (
+          {product.images.nodes.map((node) => (
             <Image
-              key={i}
+              key={node.url}
               src={node.url}
               alt={node.altText || product.title}
               width={600}

@@ -35,7 +35,6 @@ const AddressForm: React.FC<addressFormProps> = ({ onCancel }) => {
         <Label className="text-sm font-medium">Company</Label>
         <Input name="company" className="border rounded p-2 w-full" />
       </div>
-
       <div>
         <Label className="text-sm font-medium">Phone</Label>
         <Input
@@ -44,7 +43,6 @@ const AddressForm: React.FC<addressFormProps> = ({ onCancel }) => {
           className="border rounded p-2 w-full"
         />
       </div>
-
       <div>
         <Label className="text-sm font-medium">Address 1</Label>
         <Input name="address1" className="border rounded p-2 w-full" />
@@ -87,7 +85,6 @@ const AddressForm: React.FC<addressFormProps> = ({ onCancel }) => {
         </button>
       </div>
 
-      {/* Hiển thị lỗi */}
       {state.errors.length > 0 && (
         <ul className="text-red-500 text-sm">
           {state.errors.map((err, idx) => (
@@ -96,7 +93,6 @@ const AddressForm: React.FC<addressFormProps> = ({ onCancel }) => {
         </ul>
       )}
 
-      {/* Hiển thị thành công */}
       {state.success && (
         <p className="text-green-500 text-sm">Update successful!</p>
       )}

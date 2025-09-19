@@ -3479,6 +3479,7 @@ export type CustomerAddressUpdateMutationVariables = Exact<{
 export type CustomerAddressUpdateMutation = {
   customerAddressUpdate?: {
     customerAddress?: {
+      map(arg0: (err: any) => { field: any; message: any }): import("../../types/error").AppError[]
       address1?: string | null
       address2?: string | null
       city?: string | null

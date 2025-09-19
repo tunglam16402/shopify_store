@@ -51,7 +51,7 @@ const DetailForm: React.FC<detailsFormProps> = ({ customer, onCancel }) => {
         />
       </div>
 
-         <div>
+      <div>
         <label className="block text-sm font-medium">Phone</label>
         <input
           type="phone"
@@ -78,16 +78,14 @@ const DetailForm: React.FC<detailsFormProps> = ({ customer, onCancel }) => {
         </button>
       </div>
 
-      {/* Hiển thị lỗi */}
-      {state.errors.length > 0 && (
+      {(state?.errors?.length ?? 0) > 0 && (
         <ul className="text-red-500 text-sm">
-          {state.errors.map((err, idx) => (
+          {state.errors?.map((err, idx) => (
             <li key={idx}>{err.message}</li>
           ))}
         </ul>
       )}
 
-      {/* Hiển thị thành công */}
       {state.success && (
         <p className="text-green-500 text-sm">Update successful!</p>
       )}

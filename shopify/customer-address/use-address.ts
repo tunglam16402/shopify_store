@@ -1,7 +1,13 @@
 import { Address } from '@/types/customer/address'
 import { shopifyFetch } from '../fetcher'
-import { customerAddressCreateMutation } from '../utils/mutation'
-import { CustomerAddressCreateMutation } from '../types/graphql'
+import {
+  customerAddressCreateMutation,
+  customerAddressUpdateMutation,
+} from '../utils/mutation'
+import {
+  CustomerAddressCreateMutation,
+  CustomerAddressUpdateMutation,
+} from '../types/graphql'
 import { parseShopifyErrors } from '@/lib/helper'
 
 export async function createCustomerAddress(
@@ -29,6 +35,39 @@ export async function createCustomerAddress(
     return {
       success: true,
       data: data.customerAddressCreate,
+    }
+  } catch (error) {
+    console.error('Error in createCustomerAddres:', error)
+    return {
+      success: false,
+      errors: [{ field: [], message: 'Network error or Shopify unreachable' }],
+    }
+  }
+}
+
+export async function updateCustomerAddress(
+  accessToken: string,
+  id: string,
+  address: Address
+) {
+  try {
+    const data = await shopifyFetch<CustomerAddressUpdateMutation>({
+      query: customerAddressUpdateMutation,
+      variables: {
+        customerAccessToken: accessToken,
+        id,
+        address,
+      },
+    })
+
+    const errors = parseShopifyErrors(data.customerAddressUpdate)
+    if (errors.length > 0) {
+      return { success: false, errors }
+    }
+
+    return {
+      success: true,
+      data: data.customerAddressUpdate,
     }
   } catch (error) {
     console.error('Error in createCustomerAddres:', error)

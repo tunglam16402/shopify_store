@@ -1,6 +1,8 @@
 import { ProductList } from '@/components/products'
 import { getCollectionProductsByHandle } from '@/shopify/api/operations/get-collection'
 
+export const experimental_ppr = true
+
 type Props = {
   params: Promise<{ handle: string }>
 }

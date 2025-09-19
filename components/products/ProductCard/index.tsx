@@ -23,14 +23,12 @@ export type ProductCardProps = {
 const ProductCard = ({ product }: ProductCardProps) => {
   return (
     <div className="group relative rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden hover:shadow-xl transition-shadow duration-300">
-      {/* Badge giảm giá */}
       {product.discountPercent > 0 && (
         <span className="absolute top-3 left-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-lg z-10">
           -{product.discountPercent}%
         </span>
       )}
 
-      {/* Hình ảnh */}
       {product.imageUrl && (
         <Link
           href={`/products/${product.handle}`}
