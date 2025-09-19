@@ -4,6 +4,8 @@ import {
   GetProductDetailQuery,
   GetProductsQuery,
 } from '@/shopify/types/graphql'
+import { AppError } from '@/types/error'
+import { Address } from '@/types/customer/address'
 
 type VariantFromQuery = NonNullable<
   GetProductDetailQuery['product']
@@ -97,5 +99,45 @@ export function mapCartResponse(cartResponse: any): Cart {
     checkoutUrl: cartResponse.checkoutUrl,
     lines: cartResponse.lines.edges.map((e: any) => e.node),
     cost: cartResponse.cost,
+  }
+}
+
+export function parseShopifyErrors(data: any): AppError[] {
+  const errors: AppError[] = []
+
+  if (data?.customerUserErrors?.length) {
+    errors.push(
+      ...data.customerUserErrors.map((err: any) => ({
+        field: err.field || [],
+        code: err.code || 'CUSTOMER_ERROR',
+        message: err.message,
+      }))
+    )
+  }
+
+  if (data?.userErrors?.length) {
+    errors.push(
+      ...data.userErrors.map((err: any) => ({
+        field: err.field || [],
+        message: err.message,
+      }))
+    )
+  }
+
+  return errors
+}
+
+export function normalizeAddress(address: any): Address {
+  return {
+    address1: address.address1 ?? undefined,
+    address2: address.address2 ?? undefined,
+    city: address.city ?? undefined,
+    company: address.company ?? undefined,
+    country: address.country ?? undefined,
+    firstName: address.firstName ?? undefined,
+    lastName: address.lastName ?? undefined,
+    phone: address.phone ?? undefined,
+    province: address.province ?? undefined,
+    zip: address.zip ?? undefined,
   }
 }

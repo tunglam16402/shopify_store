@@ -1,20 +1,15 @@
-
-export type ErrorItem = {
-  code?: string
-  field: string[]
-  message: string
-}
+import { AppError } from '../error'
 
 export type LoginState = {
   success: boolean
   accessToken: string | null
   expiresAt: string | null
-  errors: ErrorItem[]
+  errors: AppError[]
 }
 
 export interface RegisterState {
   success: boolean
-  errors: ErrorItem[]
+  errors: AppError[]
   customer: {
     id: string
     email?: string

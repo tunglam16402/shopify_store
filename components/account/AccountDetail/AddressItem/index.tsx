@@ -24,26 +24,30 @@ const AddressItem: React.FC<AddressItemProbs> = ({
         )}
       </div>
       <div className="text-sm space-y-1 text-gray-700">
+        <div>
+          <span>
+            Address: {address.address1}, {address.address2}
+          </span>
+        </div>
+        <div>
+          <span>City, State: {address.city}</span>
+        </div>
+        <div>
+          <span>Country: {address.country}</span>
+        </div>
+        <div>
+          <span>PostCode: {address.zip}</span>
+        </div>
         {address.company && (
           <p className="flex items-center gap-2">
             {/* <Building className="w-4 h-4 text-gray-400" /> */}
-            {address.company}
+            Company: {address.company}
           </p>
         )}
-        <p className="flex items-center gap-2">
-          {/* <MapPin className="w-4 h-4 text-gray-400" /> */}
-          {address.address1}
-          {address.address2 && `, ${address.address2}`}
-          {address.city && `, ${address.city}`}
-          {address.province && `, ${address.province}`}
-          {address.country && `, ${address.country}`}
-        </p>
-        {address.zip && <p>ZIP: {address.zip}</p>}
         {address.phone && (
-          <p className="flex items-center gap-2">
-            {/* <Phone className="w-4 h-4 text-gray-400" /> */}
-            {address.phone}
-          </p>
+          <div>
+            <span>Phone: {address.phone}</span>
+          </div>
         )}
       </div>
     </div>

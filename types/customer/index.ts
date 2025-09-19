@@ -1,3 +1,4 @@
+import { AppError } from '../error'
 import type { Address } from './address'
 import { Order } from './order'
 
@@ -20,7 +21,7 @@ export interface Customer {
 
 export interface UpdateCustomerState {
   success: boolean
-  errors: { message: string }[]
+  errors?: AppError[]
   customer?: {
     id: string
   } | null
