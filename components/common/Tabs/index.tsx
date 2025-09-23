@@ -20,7 +20,7 @@ interface TabsProps {
   tabClassName?: string
 }
 
-const Tabs: React.FC<TabsProps> = ({
+const Tab: React.FC<TabsProps> = ({
   tabs,
   selectedKey,
   defaultKey,
@@ -100,4 +100,4 @@ const Tabs: React.FC<TabsProps> = ({
   )
 }
 
-export default Tabs
+export default Tab

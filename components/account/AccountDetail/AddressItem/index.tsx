@@ -2,20 +2,23 @@ import { Button } from '@/components/ui/Button'
 import { Address } from '@/types/customer/address'
 import React from 'react'
 
-export type AddressItemProbs = {
+export type AddressItemProps = {
   isDefault: boolean
   address: Address
+  onEdit: (address: Address) => void
+  onDelete: (id: string) => void
 }
 
-const AddressItem: React.FC<AddressItemProbs> = ({
+const AddressItem: React.FC<AddressItemProps> = ({
   address,
   isDefault = false,
+  onEdit,
+  onDelete,
 }) => {
   return (
     <div className="rounded-2xl border border-gray-200 p-4 shadow-sm hover:shadow-md transition">
       <div className="flex items-center justify-between mb-3">
         <h3 className="font-semibold text-gray-800 flex items-center gap-2">
-          {/* <User className="w-4 h-4 text-gray-500" /> */}
           {address.firstName} {address.lastName}
         </h3>
         {isDefault && (
@@ -24,6 +27,7 @@ const AddressItem: React.FC<AddressItemProbs> = ({
           </span>
         )}
       </div>
+
       <div className="text-sm space-y-1 text-gray-700">
         <div>
           <span>
@@ -39,21 +43,17 @@ const AddressItem: React.FC<AddressItemProbs> = ({
         <div>
           <span>PostCode: {address.zip}</span>
         </div>
-        {address.company && (
-          <p className="flex items-center gap-2">
-            {/* <Building className="w-4 h-4 text-gray-400" /> */}
-            Company: {address.company}
-          </p>
-        )}
-        {address.phone && (
-          <div>
-            <span>Phone: {address.phone}</span>
-          </div>
-        )}
+        {address.company && <p>Company: {address.company}</p>}
+        {address.phone && <div>Phone: {address.phone}</div>}
       </div>
-      <div className='flex gap-2 mt-4'>
-        <Button>Edit</Button>
-        <Button>Delete</Button>
+
+      <div className="flex gap-2 mt-4">
+        <Button variant="secondary" onClick={() => onEdit(address)}>
+          Edit
+        </Button>
+        <Button variant="destructive" onClick={() => onDelete(address.id!)}>
+          Delete
+        </Button>
       </div>
     </div>
   )

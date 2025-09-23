@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
 import DetailForm from './DetailForm'
 import AddressForm from './AddressForm'
+import { createCustomerAddressAction } from '@/actions/customer'
 
 const AccountDetail: React.FC = () => {
   const { customer } = useSelector((state: RootState) => state.user)
@@ -19,52 +20,66 @@ const AccountDetail: React.FC = () => {
   }
 
   return (
-    <div className="space-y-6">
-      {/* Header với 2 nút Update + Add Address */}
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">Account Details</h2>
-        <div className="flex space-x-2">
-          {/* Nút Update Account */}
-          <button
-            onClick={() => {
-              setIsAddingAddress(false) // đảm bảo không hiển thị form add khi đang update
-              setIsEditing(!isEditing)
-            }}
-            className="px-4 py-2 text-sm bg-blue-500 text-white rounded hover:bg-blue-600 transition"
-          >
-            {isEditing ? 'Cancel' : 'Update'}
-          </button>
+    <div className="space-y-8">
+      {/* ----- Account Info ----- */}
+      <div className="space-y-4">
+        <AccountInfo customer={customer} />
 
-          {/* Nút Add Address */}
-          <button
-            onClick={() => {
-              setIsEditing(false) // đảm bảo không hiển thị form update khi đang add
-              setIsAddingAddress(!isAddingAddress)
-            }}
-            className="px-4 py-2 text-sm bg-green-500 text-white rounded hover:bg-green-600 transition"
-          >
-            {isAddingAddress ? 'Cancel' : 'Add Address'}
-          </button>
-        </div>
+        {/* Nút Update - ẩn khi form đang mở */}
+        {!isEditing && (
+          <div className="flex justify-center">
+            <button
+              onClick={() => {
+                setIsEditing(true)
+                setIsAddingAddress(false) // đóng form Add Address nếu mở
+              }}
+              className="px-4 py-2 text-sm bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+            >
+              Update
+            </button>
+          </div>
+        )}
+
+        {/* Form Update Account */}
+        {isEditing && (
+          <DetailForm
+            customer={customer}
+            onCancel={() => setIsEditing(false)}
+          />
+        )}
       </div>
 
-      {/* Hiển thị form Update Account */}
-      {!isEditing ? (
-        <AccountInfo customer={customer} />
-      ) : (
-        <DetailForm customer={customer} onCancel={() => setIsEditing(false)} />
-      )}
+      {/* ----- Address List ----- */}
+      <div className="space-y-4">
+        <AddressList
+          addresses={customer?.addresses?.nodes ?? []}
+          defaultAddressId={customer?.defaultAddress?.id ?? null}
+        />
 
-      {/* Hiển thị form Add Address */}
-      {isAddingAddress && (
-        <AddressForm onCancel={() => setIsAddingAddress(false)} />
-      )}
+        {/* Nút Add Address - ẩn khi form đang mở */}
+        {!isAddingAddress && (
+          <div className="flex justify-center">
+            <button
+              onClick={() => {
+                setIsAddingAddress(true)
+                setIsEditing(false) // đóng form Update nếu mở
+              }}
+              className="px-4 py-2 text-sm bg-green-500 text-white rounded hover:bg-green-600 transition"
+            >
+              Add Address
+            </button>
+          </div>
+        )}
 
-      {/* Danh sách địa chỉ */}
-      <AddressList
-        addresses={customer?.addresses?.nodes ?? []}
-        defaultAddressId={customer?.defaultAddress?.id ?? null}
-      />
+        {/* Form Add Address */}
+        {isAddingAddress && (
+          <AddressForm
+            actionType="create"
+            actionFn={createCustomerAddressAction}
+            onCancel={() => setIsAddingAddress(false)}
+          />
+        )}
+      </div>
     </div>
   )
 }

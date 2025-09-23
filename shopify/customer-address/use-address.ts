@@ -2,10 +2,12 @@ import { Address } from '@/types/customer/address'
 import { shopifyFetch } from '../fetcher'
 import {
   customerAddressCreateMutation,
+  customerAddressDeleteMutation,
   customerAddressUpdateMutation,
 } from '../utils/mutation'
 import {
   CustomerAddressCreateMutation,
+  CustomerAddressDeleteMutation,
   CustomerAddressUpdateMutation,
 } from '../types/graphql'
 import { parseShopifyErrors } from '@/lib/helper'
@@ -71,6 +73,34 @@ export async function updateCustomerAddress(
     }
   } catch (error) {
     console.error('Error in createCustomerAddres:', error)
+    return {
+      success: false,
+      errors: [{ field: [], message: 'Network error or Shopify unreachable' }],
+    }
+  }
+}
+
+export async function deleteCustomerAddress(accessToken: string, id: string) {
+  try {
+    const data = await shopifyFetch<CustomerAddressDeleteMutation>({
+      query: customerAddressDeleteMutation,
+      variables: {
+        customerAccessToken: accessToken,
+        id,
+      },
+    })
+
+    const errors = parseShopifyErrors(data.customerAddressDelete)
+    if (errors.length > 0) {
+      return { success: false, errors }
+    }
+
+    return {
+      success: true,
+      data: data.customerAddressDelete,
+    }
+  } catch (error) {
+    console.error('Error in deleteCustomerAddres:', error)
     return {
       success: false,
       errors: [{ field: [], message: 'Network error or Shopify unreachable' }],

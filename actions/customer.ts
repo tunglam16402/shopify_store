@@ -179,7 +179,7 @@ export async function updateCustomerAddressAction(
   if (!result || !result.data) {
     return {
       success: false,
-      errors: [{ field: [], message: 'Create address failed' }],
+      errors: [{ field: [], message: 'update address failed' }],
     }
   }
 
@@ -193,3 +193,4 @@ export async function updateCustomerAddressAction(
       })) ?? [],
   }
 }
+
