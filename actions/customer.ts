@@ -3,6 +3,7 @@
 import { normalizeAddress } from '@/lib/helper'
 import {
   createCustomerAddress,
+  deleteCustomerAddress,
   updateCustomerAddress,
 } from '@/shopify/customer-address/use-address'
 import { updateCustomer } from '@/shopify/customer/use-customer'
@@ -159,8 +160,6 @@ export async function updateCustomerAddressAction(
     }
   }
 
-  console.log('accessToken :>> ', accessToken)
-
   const result = await updateCustomerAddress(accessToken, id, {
     firstName,
     lastName,
@@ -173,8 +172,6 @@ export async function updateCustomerAddressAction(
     country,
     zip,
   })
-
-  console.log('result :>> ', result)
 
   if (!result || !result.data) {
     return {
@@ -194,3 +191,34 @@ export async function updateCustomerAddressAction(
   }
 }
 
+export async function deleteCustomerAddressAction(id: string) {
+  try {
+    const cookieStore = await cookies()
+    const accessToken = cookieStore.get('shopify_customer_token')?.value
+
+    if (!accessToken) {
+      return {
+        success: false,
+        errors: [{ field: [], message: 'User not authenticated' }],
+      }
+    }
+
+    const result = await deleteCustomerAddress(accessToken, id)
+
+    if (!result || !result.data) {
+      return {
+        success: false,
+        errors: [{ field: [], message: 'update address failed' }],
+      }
+    }
+
+    return {
+      success: true,
+    }
+  } catch (error) {
+    return {
+      success: false,
+      errors: [{ message: 'Server error while deleting address' }],
+    }
+  }
+}
