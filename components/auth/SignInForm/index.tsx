@@ -32,14 +32,13 @@ const SignInForm = () => {
       dispatch(loadUserFromCookie())
       router.push('/')
     }
-  }, [state, router])
+  }, [state, router, dispatch])
+
+  const getFieldError = (fieldName: string) =>
+    state.errors.find((err) => err.field[0] === fieldName)?.message
 
   return (
-    <form
-      action={formAction}
-      onSubmit={() => console.log('Form submit triggered')}
-      className="space-y-4"
-    >
+    <form action={formAction} className="space-y-4">
       <div>
         <Label htmlFor="email">Email</Label>
         <Input
@@ -47,9 +46,11 @@ const SignInForm = () => {
           name="email"
           id="email"
           placeholder="you@example.com"
-          required
           disabled={pending}
         />
+        {getFieldError('email') && (
+          <p className="text-sm text-red-500 mt-1">{getFieldError('email')}</p>
+        )}
       </div>
 
       <div>
@@ -58,9 +59,13 @@ const SignInForm = () => {
           name="password"
           id="password"
           placeholder="Enter your password"
-          required
           disabled={pending}
         />
+        {getFieldError('password') && (
+          <p className="text-sm text-red-500 mt-1">
+            {getFieldError('password')}
+          </p>
+        )}
       </div>
 
       <div>
@@ -72,11 +77,13 @@ const SignInForm = () => {
         </Link>
       </div>
 
-      {state.errors.length > 0 && (
+      {state.errors.some((e) => e.field.length === 0) && (
         <ul className="text-red-500 text-sm space-y-1">
-          {state.errors.map((error, index) => (
-            <li key={index}>{error.message}</li>
-          ))}
+          {state.errors
+            .filter((e) => e.field.length === 0)
+            .map((error, index) => (
+              <li key={index}>{error.message}</li>
+            ))}
         </ul>
       )}
 

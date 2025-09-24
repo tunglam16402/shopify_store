@@ -1,4 +1,5 @@
 'use server'
+import { loginSchema } from '@/lib/validation/auth'
 import { createCustomerAccessToken } from '@/shopify/auth/use-login'
 import { recoverAccount, resetPasswordByUrl } from '@/shopify/auth/use-recover'
 import { LoginState, TypeState } from '@/types/auth'
@@ -11,12 +12,16 @@ export async function loginCustomer(
   const email = formData.get('email') as string
   const password = formData.get('password') as string
 
-  if (!email || !password) {
+  const parseResult = loginSchema.safeParse({ email, password })
+  if (!parseResult.success) {
     return {
       success: false,
       accessToken: null,
       expiresAt: null,
-      errors: [{ field: [], message: 'Email and password are required.' }],
+      errors: parseResult.error.issues.map((issue) => ({
+        field: issue.path.map(String), // ví dụ ['email']
+        message: issue.message,
+      })),
     }
   }
 
@@ -122,5 +127,3 @@ export async function resetCustomerPassword(
     }
   }
 }
-
-

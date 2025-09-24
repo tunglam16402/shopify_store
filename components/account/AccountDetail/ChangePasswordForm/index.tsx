@@ -32,6 +32,11 @@ export default function ChangePasswordForm({
         required
         disabled={pending}
       />
+      {state.errors?.find((e) => e.field.includes('oldPassword')) && (
+        <p className="text-red-500 text-sm">
+          {state.errors.find((e) => e.field.includes('oldPassword'))?.message}
+        </p>
+      )}
       <PasswordInput
         name="newPassword"
         placeholder="Enter your new password"
