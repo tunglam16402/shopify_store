@@ -1,6 +1,7 @@
 'use client'
 
 import { loginCustomer } from '@/actions/login'
+import PasswordInput from '@/components/common/PasswordInput'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Label } from '@/components/ui/Label'
@@ -53,8 +54,7 @@ const SignInForm = () => {
 
       <div>
         <Label htmlFor="password">Password</Label>
-        <Input
-          type="password"
+        <PasswordInput
           name="password"
           id="password"
           placeholder="Enter your password"

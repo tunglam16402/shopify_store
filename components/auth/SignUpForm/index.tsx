@@ -6,6 +6,7 @@ import type { RegisterState } from '@/types/auth'
 import { Input } from '@/components/ui/Input'
 import { Label } from '@/components/ui/Label'
 import { Button } from '@/components/ui/Button'
+import PasswordInput from '@/components/common/PasswordInput'
 
 const initialState: RegisterState = {
   success: false,
@@ -18,13 +19,7 @@ const SignUpForm = () => {
     registerCustomer,
     initialState
   )
-
-  useEffect(() => {
-    if (state.success) {
-      console.log('Registration successful', state.customer)
-    }
-  }, [state])
-
+  
   return (
     <form action={formAction} className="space-y-4">
       <div>
@@ -55,16 +50,15 @@ const SignUpForm = () => {
 
       <div>
         <Label htmlFor="password">Password</Label>
-        <Input
-          type="password"
+        <PasswordInput
           name="password"
           id="password"
-          required
+          placeholder="Enter your password"
+          required  
           disabled={pending}
         />
       </div>
 
-      {/* Hiển thị lỗi từ server action */}
       {state.errors.length > 0 && (
         <ul className="text-red-500 text-sm space-y-1">
           {state.errors.map((error, index) => (
@@ -73,12 +67,7 @@ const SignUpForm = () => {
         </ul>
       )}
 
-      {/* Hiển thị success message */}
-      {state.success && (
-        <p className="text-green-600">
-          Register SuccessFully
-        </p>
-      )}
+      {state.success && <p className="text-green-600">Register SuccessFully</p>}
 
       <Button type="submit" disabled={pending} className="w-full">
         {pending ? 'Sending...' : 'Register'}

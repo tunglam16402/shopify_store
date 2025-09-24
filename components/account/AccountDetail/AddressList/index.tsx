@@ -1,6 +1,6 @@
 'use client'
 
-import { deleteCustomerAddressAction } from '@/actions/customer'
+import { deleteCustomerAddressAction } from '@/actions/customer-address'
 import { Address } from '@/types/customer/address'
 import React from 'react'
 import AddressItem from '../AddressItem'

@@ -21,7 +21,7 @@ export interface Customer {
 
 export interface UpdateCustomerState {
   success: boolean
-  errors?: AppError[]
+  errors: AppError[]
   customer?: {
     id: string
   } | null

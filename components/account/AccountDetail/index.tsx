@@ -7,8 +7,9 @@ import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
 import DetailForm from './DetailForm'
 import AddressForm from './AddressForm'
-import { createCustomerAddressAction } from '@/actions/customer'
+import { createCustomerAddressAction } from '@/actions/customer-address'
 import { Address } from '@/types/customer/address'
+import ChangePasswordForm from './ChangePasswordForm'
 
 const AccountDetail: React.FC = () => {
   const { customer } = useSelector((state: RootState) => state.user)
@@ -74,7 +75,7 @@ const AccountDetail: React.FC = () => {
         <AddressList
           addresses={customer?.addresses?.nodes ?? []}
           defaultAddressId={customer?.defaultAddress?.id ?? null}
-          onEditAddress={handleOpenEditAddress} 
+          onEditAddress={handleOpenEditAddress}
         />
 
         {!isAddingAddress && !editingAddress && (
@@ -88,7 +89,6 @@ const AccountDetail: React.FC = () => {
           </div>
         )}
 
-   
         {isAddingAddress && (
           <AddressForm
             actionType="create"
@@ -101,11 +101,15 @@ const AccountDetail: React.FC = () => {
         {editingAddress && (
           <AddressForm
             actionType="edit"
-            actionFn={createCustomerAddressAction} // dùng updateCustomerAddressAction nếu có
+            actionFn={createCustomerAddressAction}
             defaultValues={editingAddress}
             onCancel={handleCancelEditAddress}
           />
         )}
+      </div>
+
+      <div>
+        <ChangePasswordForm userEmail={customer.email} />
       </div>
     </div>
   )

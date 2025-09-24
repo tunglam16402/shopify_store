@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { parseShopifyErrors } from '@/lib/helper'
 import { shopifyFetch } from '../fetcher'
 import { CustomerUpdateMutation, GetCustomerQuery } from '../types/graphql'
 import { customerUpdateMutation } from '../utils/mutation'
@@ -43,6 +45,11 @@ export async function updateCustomer(
     if (!data?.customerUpdate?.customer) {
       return null
     }
+
+    // const errors = parseShopifyErrors(data.customerUpdate?.customerUserErrors)
+    // if (errors.length > 0) {
+    //   return { success: false, errors }
+    // }
 
     return data.customerUpdate
   } catch (error) {

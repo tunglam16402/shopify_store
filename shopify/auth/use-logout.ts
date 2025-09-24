@@ -13,8 +13,6 @@ export async function deleteCustomerAccessToken(accessToken: string) {
       variables: { customerAccessToken: accessToken },
     })
 
-    console.log('LOGOUT RAW RESPONSE:', JSON.stringify(data, null, 2))
-
     const errors = data.customerAccessTokenDelete?.userErrors
     if (errors?.length) {
       console.error('Logout errors:', errors)
