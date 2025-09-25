@@ -29,7 +29,7 @@ const AccountDropdown = () => {
     <div className="relative">
       <button
         onClick={toggleDropdown}
-        className="flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100 transition"
+        className="flex items-center gap-2 py-2 rounded hover:bg-gray-100 transition"
       >
         <User className="w-6 h-6" />
         {isLoggedIn && <span>{userName}</span>}

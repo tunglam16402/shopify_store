@@ -5,8 +5,9 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { GetPredictiveSearchQuery } from '@/shopify/types/graphql'
 import Image from 'next/image'
+import { SearchIcon } from '@/components/icons'
 
-const SearchBox = () => {
+const Search = () => {
   const [input, setInput] = useState('')
   const [suggestions, setSuggestions] = useState<
     NonNullable<GetPredictiveSearchQuery['predictiveSearch']>['products']
@@ -43,17 +44,20 @@ const SearchBox = () => {
   }
 
   return (
-    <div className="relative w-full max-w-md">
+    <div className="relative w-full">
       <form onSubmit={handleSubmit}>
         <input
           type="text"
           name="q"
-          className="w-full border rounded p-2"
+          className="w-full border rounded py-2 pl-2 pr-20 md:w-[700px]"
           placeholder="Enter product name..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
           autoComplete="off"
         />
+        <span className="absolute right-1 top-1 p-2 bg-red-300 rounded">
+          <SearchIcon />
+        </span>
       </form>
 
       {suggestions.length > 0 && (
@@ -80,4 +84,4 @@ const SearchBox = () => {
   )
 }
 
-export default SearchBox
+export default Search

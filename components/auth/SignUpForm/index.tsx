@@ -1,12 +1,12 @@
 'use client'
 
-import { useActionState, useEffect } from 'react'
 import { registerCustomer } from '@/actions/register'
-import type { RegisterState } from '@/types/auth'
+import PasswordInput from '@/components/common/PasswordInput'
+import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Label } from '@/components/ui/Label'
-import { Button } from '@/components/ui/Button'
-import PasswordInput from '@/components/common/PasswordInput'
+import type { RegisterState } from '@/types/auth'
+import { useActionState } from 'react'
 
 const initialState: RegisterState = {
   success: false,

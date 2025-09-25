@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import "tw-animate-css";
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -37,7 +37,13 @@
   --sidebar-accent: oklch(0.97 0 0);
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0)
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+body {
+  --max-container-width: 1440px;
+  --max-container-width-small: 1200px;
+  --default-width: 100%;
 }
 
 @theme inline {
@@ -128,4 +134,22 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+input {
+  outline: 0;
+}
+
+/* base css */
+.main-width {
+  width: var(--default-width);
+  max-width: var(--max-container-width);
+  padding: 0 15px;
+  margin: 0 auto;
 }
