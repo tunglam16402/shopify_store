@@ -2,14 +2,14 @@
 
 import CartIcon from '@/components/cart/CartIcon'
 import CartSideBar from '@/components/cart/CartSidebar'
-import { Navbar, AccountDropdown, NavbarMobile } from '@/components/menu'
+import { Logo } from '@/components/icons'
 import Search from '@/components/layout/MainHeader/Search'
+import { AccountDropdown, NavbarMobile } from '@/components/menu'
 import { useUI } from '@/lib/hooks/useContext'
 import cn from 'classnames'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { FaBars } from 'react-icons/fa'
-import { Logo } from '@/components/icons'
 
 type Props = {
   menuItems: { title: string; url: string }[]
@@ -18,24 +18,45 @@ type Props = {
 const MainHeader = ({ menuItems }: Props) => {
   const [isOpenMobile, setIsOpenMobile] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [visible, setVisible] = useState(true)
+  const [lastScrollY, setLastScrollY] = useState(0)
   const { open, isOpen } = useUI('cart')
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 0)
+      const currentScrollY = window.scrollY
+      const isMobile = window.innerWidth < 768
+
+      setScrolled(currentScrollY > 0)
+
+      if (isMobile) {
+        // Trên mobile: chỉ hiện header khi scroll lên
+        if (currentScrollY < lastScrollY || currentScrollY < 500) {
+          setVisible(true)
+        } else {
+          setVisible(false)
+        }
+      } else {
+        // Trên desktop: luôn hiện header (fixed)
+        setVisible(true)
+      }
+
+      setLastScrollY(currentScrollY)
     }
-    window.addEventListener('scroll', handleScroll)
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [lastScrollY])
 
   return (
     <div
       className={cn(
-        ' fixed left-0 w-full z-50 transition-[top] duration-300 ease-out bg-white shadow-md !py-2',
-        scrolled ? 'top-0' : 'top-10'
+        'fixed left-0 w-full z-50 transition-all duration-300 ease-out bg-white shadow-md !py-2',
+        scrolled ? 'top-0' : 'top-10',
+        !visible && 'md:translate-y-0 -translate-y-full'
       )}
     >
-      <div className=" main-width">
+      <div className="main-width">
         <div className="flex justify-between items-center">
           <button
             onClick={() => setIsOpenMobile(!isOpenMobile)}
@@ -59,11 +80,9 @@ const MainHeader = ({ menuItems }: Props) => {
           </div>
 
           {/* Search desktop */}
-          <div className="hidden md:block ">
+          <div className="hidden md:block">
             <Search />
           </div>
-          {/* Navbar desktop */}
-          {/* <Navbar menuItems={menuItems} /> */}
 
           {/* Icons bên phải */}
           <div className="flex items-center">

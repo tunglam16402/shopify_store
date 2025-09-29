@@ -1,18 +1,20 @@
 import { Header } from '@/components/layout'
 import { GlobalUIProvider } from '@/context/GlobalUI'
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Tangerine, Literata, Source_Serif_4 } from 'next/font/google'
 import './globals.css'
 import StoreProvider from './StoreProvider'
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const tangerineFont = Tangerine({
+  variable: '--font-tangerine-sans',
   subsets: ['latin'],
+  weight: ['400', '700'],
 })
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+const literataFont = Source_Serif_4({
+  variable: '--font-literata-sans',
   subsets: ['latin'],
+  weight: ['200', '700'],
 })
 
 export const metadata: Metadata = {
@@ -28,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={` ${tangerineFont.variable} ${literataFont.variable} antialiased`}
       >
         <StoreProvider>
           <GlobalUIProvider>
