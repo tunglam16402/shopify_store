@@ -1,3 +1,6 @@
+  "use server"
+
+
 import {
   CartCreateMutation,
   CartLinesAddMutation,
@@ -11,6 +14,7 @@ import cartLineAddMutation from '../utils/mutation/cart-lines-add'
 import cartLinesUpdateMutation from '../utils/mutation/cart-lines-update'
 import cartLinesRemoveMutation from '../utils/mutation/cart-lines-remove'
 import getCheckoutQuery from '../utils/query/get-checkout-query'
+import { cookies } from 'next/headers'
 
 export async function createCart() {
   const data = await shopifyFetch<CartCreateMutation>({
@@ -35,6 +39,12 @@ export async function addCartLine(
   variantId: string,
   quantity = 1
 ) {
+  // get shopify cookies
+
+  const cookie = await cookies()
+  const shopifyY = cookie?.get('_shopify_y')?.value
+  const shopifyS = cookie?.get('_shopify_s')?.value
+
   const data = await shopifyFetch<CartLinesAddMutation>({
     query: cartLineAddMutation,
     variables: {
@@ -45,6 +55,12 @@ export async function addCartLine(
           quantity,
         },
       ],
+    },
+    headers: {
+      ...(shopifyY &&
+        shopifyS && {
+          cookie: `_shopify_y=${shopifyY}; _shopify_s=${shopifyS};`,
+        }),
     },
   })
 

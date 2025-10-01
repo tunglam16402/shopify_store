@@ -5,9 +5,9 @@ const nextConfig: NextConfig = {
   images: {
     domains: ['cdn.shopify.com'],
   },
-  experimental: {
-    ppr: 'incremental',
-  },
+  // experimental: {
+  //   ppr: 'incremental',
+  // },
 }
 
 export default nextConfig

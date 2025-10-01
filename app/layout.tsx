@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { Tangerine, Literata, Source_Serif_4 } from 'next/font/google'
 import './globals.css'
 import StoreProvider from './StoreProvider'
+import ShopifyAnalytics from '@/components/layout/Analytics'
 
 const tangerineFont = Tangerine({
   variable: '--font-tangerine-sans',
@@ -36,6 +37,7 @@ export default function RootLayout({
           <GlobalUIProvider>
             <Header />
             {children}
+            <ShopifyAnalytics />
           </GlobalUIProvider>
         </StoreProvider>
       </body>

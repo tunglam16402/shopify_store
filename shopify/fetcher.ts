@@ -6,11 +6,15 @@ export const SHOPIFY_TOKEN = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN!
 interface ShopifyFetchParams {
   query: string
   variables?: Record<string, any>
+  headers?: Record<string, string>
+  cache?: RequestCache
 }
 
 export async function shopifyFetch<T>({
   query,
   variables,
+  headers,
+  cache = 'no-store',
 }: ShopifyFetchParams): Promise<T> {
   const res = await fetch(
     `https://${SHOPIFY_DOMAIN}/api/2025-07/graphql.json`,
@@ -19,9 +23,10 @@ export async function shopifyFetch<T>({
       headers: {
         'Content-Type': 'application/json',
         'X-Shopify-Storefront-Access-Token': SHOPIFY_TOKEN,
+        ...headers,
       },
       body: JSON.stringify({ query, variables }),
-      cache: 'no-store',
+      cache,
     }
   )
 
