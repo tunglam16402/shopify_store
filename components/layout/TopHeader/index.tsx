@@ -39,6 +39,7 @@ const TopHeader: React.FC = () => {
     return () => {
       clearTimeout(t)
       if (resizeObserverRef.current && itemRef.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         resizeObserverRef.current.unobserve(itemRef.current)
       }
     }

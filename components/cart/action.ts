@@ -9,11 +9,13 @@ type AddItemResponse = {
   success: boolean;
   message?: string;
   error?: string;
+  item?: any; 
 };
 
 export async function addItem(
   prevState: any,
- variantId: string | undefined): Promise<AddItemResponse> {
+  variantId: string | undefined
+): Promise<AddItemResponse> {
   let cartId = (await cookies()).get('cartId')?.value;
   let cart;
 
@@ -40,10 +42,13 @@ export async function addItem(
   if (!cartId) {
     return { success: false, message: 'Missing cart ID' };
   }
+
   try {
     await addCartLine(cartId, variantId, 1);
-    // revalidateTag(TAGS.cart);
-    return { success: true, cartId };
+    const updatedCart = await getCartById(cartId);
+    const newItem = updatedCart?.lines?.edges?.slice(-1)[0]?.node;
+
+    return { success: true, cartId, item: newItem };
   } catch (error) {
     return { success: false, message: 'Error adding item to cart', error: String(error) };
   }

@@ -1,5 +1,3 @@
-import { Carousel } from '@/components/common/Carousel'
-import React from 'react'
 import ShowCaseItem from './ShowCaseItem'
 
 const ShowCase = () => {

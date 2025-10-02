@@ -46,38 +46,45 @@
 import { addItem } from '@/components/cart/action'
 import { useShopifyAnalytics } from '@/shopify/hooks/use-shopify-analytics'
 import { useActionState, useEffect } from 'react'
-import { useFormState } from 'react-dom'
 
-const AddToCartButton = ({
-  variantId,
-  // availableForSale,
-}: {
-  variantId: string
-  // availableForSale: boolean
-}) => {
+const AddToCartButton = ({ variantId }: { variantId: string }) => {
   const { sendAddToCart } = useShopifyAnalytics()
   const [response, formAction] = useActionState(addItem, null)
 
   const actionWithVariant = formAction.bind(null, variantId)
 
   useEffect(() => {
-    if (response?.success && response.cartId) {
+    if (response?.success && response.cartId && response.item) {
+      const product = response.item?.merchandise?.product
+      const variant = response.item?.merchandise
+
       sendAddToCart({
         cartId: response.cartId,
-        // Optionally: product info, value...
+        totalValue: Number(variant?.price?.amount ?? 0),
+        products: [
+          {
+            productGid: product?.id,
+            variantGid: variant?.id,
+            name: product?.title,
+            variantName: variant?.title,
+            brand: product?.vendor,
+            category: product?.productType,
+            price: variant?.price?.amount ?? 0,
+            sku: variant?.sku ?? undefined,
+            quantity: response.item?.quantity ?? 1,
+          },
+        ],
       })
     }
-  }, [response?.success, response?.cartId, sendAddToCart])
+  }, [response, sendAddToCart])
 
   return (
     <form action={actionWithVariant}>
       <button
         type="submit"
-        // disabled={!availableForSale}
         className="px-4 py-2 bg-black text-white rounded"
       >
-        {/* {availableForSale ? "Add to Cart" : "Sold Out"} */}
-       Add to Cart
+        Add to Cart
       </button>
       {response?.message && (
         <p aria-live="polite" className="sr-only" role="status">

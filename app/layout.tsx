@@ -1,10 +1,10 @@
-import { Header } from '@/components/layout'
 import { GlobalUIProvider } from '@/context/GlobalUI'
 import type { Metadata } from 'next'
-import { Tangerine, Literata, Source_Serif_4 } from 'next/font/google'
+import { Tangerine, Literata } from 'next/font/google'
 import './globals.css'
 import StoreProvider from './StoreProvider'
 import ShopifyAnalytics from '@/components/layout/Analytics'
+import Header from '@/components/layout/header'
 
 const tangerineFont = Tangerine({
   variable: '--font-tangerine-sans',
@@ -12,7 +12,7 @@ const tangerineFont = Tangerine({
   weight: ['400', '700'],
 })
 
-const literataFont = Source_Serif_4({
+const literataFont = Literata({
   variable: '--font-literata-sans',
   subsets: ['latin'],
   weight: ['200', '700'],
