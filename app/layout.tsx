@@ -34,22 +34,557 @@ export default function RootLayout({
       <body
         className={`${tangerineFont.variable} ${literataFont.variable} antialiased`}
       >
+        <Script
+          id="web-pixels-manager-setup"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+         (function e(e, d, r, n, o) {
+        if (
+          (void 0 === o && (o = {}),
+          !Boolean(
+            null ===
+              (a =
+                null === (i = window.Shopify) || void 0 === i
+                  ? void 0
+                  : i.analytics) || void 0 === a
+              ? void 0
+              : a.replayQueue
+          ))
+        ) {
+          var i, a;
+          window.Shopify = window.Shopify || {};
+          var t = window.Shopify;
+          t.analytics = t.analytics || {};
+          var s = t.analytics;
+          (s.replayQueue = []),
+            (s.publish = function (e, d, r) {
+              return s.replayQueue.push([e, d, r]), !0;
+            });
+          try {
+            self.performance.mark("wpm:start");
+          } catch (e) {}
+          var l = (function () {
+              var e = {
+                  modern:
+                    /Edge?\/(1{2}[4-9]|1[2-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|Firefox\/(1{2}[4-9]|1[2-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|Chrom(ium|e)\/(9{2}|\d{3,})\.\d+(\.\d+|)|(Maci|X1{2}).+ Version\/(15\.\d+|(1[6-9]|[2-9]\d|\d{3,})\.\d+)([,.]\d+|)( \(\w+\)|)( Mobile\/\w+|) Safari\/|Chrome.+OPR\/(9{2}|\d{3,})\.\d+\.\d+|(CPU[ +]OS|iPhone[ +]OS|CPU[ +]iPhone|CPU IPhone OS|CPU iPad OS)[ +]+(15[._]\d+|(1[6-9]|[2-9]\d|\d{3,})[._]\d+)([._]\d+|)|Android:?[ /-](13[3-9]|1[4-9]\d|[2-9]\d{2}|\d{4,})(\.\d+|)(\.\d+|)|Android.+Firefox\/(13[5-9]|1[4-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|Android.+Chrom(ium|e)\/(13[3-9]|1[4-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|SamsungBrowser\/([2-9]\d|\d{3,})\.\d+/,
+                  legacy:
+                    /Edge?\/(1[6-9]|[2-9]\d|\d{3,})\.\d+(\.\d+|)|Firefox\/(5[4-9]|[6-9]\d|\d{3,})\.\d+(\.\d+|)|Chrom(ium|e)\/(5[1-9]|[6-9]\d|\d{3,})\.\d+(\.\d+|)([\d.]+$|.*Safari\/(?![\d.]+ Edge\/[\d.]+$))|(Maci|X1{2}).+ Version\/(10\.\d+|(1[1-9]|[2-9]\d|\d{3,})\.\d+)([,.]\d+|)( \(\w+\)|)( Mobile\/\w+|) Safari\/|Chrome.+OPR\/(3[89]|[4-9]\d|\d{3,})\.\d+\.\d+|(CPU[ +]OS|iPhone[ +]OS|CPU[ +]iPhone|CPU IPhone OS|CPU iPad OS)[ +]+(10[._]\d+|(1[1-9]|[2-9]\d|\d{3,})[._]\d+)([._]\d+|)|Android:?[ /-](13[3-9]|1[4-9]\d|[2-9]\d{2}|\d{4,})(\.\d+|)(\.\d+|)|Mobile Safari.+OPR\/([89]\d|\d{3,})\.\d+\.\d+|Android.+Firefox\/(13[5-9]|1[4-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|Android.+Chrom(ium|e)\/(13[3-9]|1[4-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|Android.+(UC? ?Browser|UCWEB|U3)[ /]?(15\.([5-9]|\d{2,})|(1[6-9]|[2-9]\d|\d{3,})\.\d+)\.\d+|SamsungBrowser\/(5\.\d+|([6-9]|\d{2,})\.\d+)|Android.+MQ{2}Browser\/(14(\.(9|\d{2,})|)|(1[5-9]|[2-9]\d|\d{3,})(\.\d+|))(\.\d+|)|K[Aa][Ii]OS\/(3\.\d+|([4-9]|\d{2,})\.\d+)(\.\d+|)/,
+                },
+                d = e.modern,
+                r = e.legacy,
+                n = navigator.userAgent;
+              return n.match(d) ? "modern" : n.match(r) ? "legacy" : "unknown";
+            })(),
+            u = "modern" === l ? "modern" : "legacy",
+            c = (null != n ? n : { modern: "", legacy: "" })[u],
+            f = (function (e) {
+              return [
+                e.baseUrl,
+                "/wpm",
+                "/b",
+                e.hashVersion,
+                "modern" === e.buildTarget ? "m" : "l",
+                ".js",
+              ].join("");
+            })({ baseUrl: d, hashVersion: r, buildTarget: u }),
+            m = (function (e) {
+              var d = e.version,
+                r = e.bundleTarget,
+                n = e.surface,
+                o = e.pageUrl,
+                i = e.monorailEndpoint;
+              return {
+                emit: function (e) {
+                  var a = e.status,
+                    t = e.errorMsg,
+                    s = new Date().getTime(),
+                    l = JSON.stringify({
+                      metadata: { event_sent_at_ms: s },
+                      events: [
+                        {
+                          schema_id: "web_pixels_manager_load/3.1",
+                          payload: {
+                            version: d,
+                            bundle_target: r,
+                            page_url: o,
+                            status: a,
+                            surface: n,
+                            error_msg: t,
+                          },
+                          metadata: { event_created_at_ms: s },
+                        },
+                      ],
+                    });
+                  if (!i)
+                    return (
+                      console &&
+                        console.warn &&
+                        console.warn(
+                          "[Web Pixels Manager] No Monorail endpoint provided, skipping logging."
+                        ),
+                      !1
+                    );
+                  try {
+                    return self.navigator.sendBeacon.bind(self.navigator)(i, l);
+                  } catch (e) {}
+                  var u = new XMLHttpRequest();
+                  try {
+                    return (
+                      u.open("POST", i, !0),
+                      u.setRequestHeader("Content-Type", "text/plain"),
+                      u.send(l),
+                      !0
+                    );
+                  } catch (e) {
+                    return (
+                      console &&
+                        console.warn &&
+                        console.warn(
+                          "[Web Pixels Manager] Got an unhandled error while logging to Monorail."
+                        ),
+                      !1
+                    );
+                  }
+                },
+              };
+            })({
+              version: r,
+              bundleTarget: l,
+              surface: e.surface,
+              pageUrl: self.location.href,
+              monorailEndpoint: e.monorailEndpoint,
+            });
+          try {
+            (o.browserTarget = l),
+              (function (e) {
+                var d = e.src,
+                  r = e.async,
+                  n = void 0 === r || r,
+                  o = e.onload,
+                  i = e.onerror,
+                  a = e.sri,
+                  t = e.scriptDataAttributes,
+                  s = void 0 === t ? {} : t,
+                  l = document.createElement("script"),
+                  u = document.querySelector("head"),
+                  c = document.querySelector("body");
+                if (
+                  ((l.async = n),
+                  (l.src = d),
+                  a && ((l.integrity = a), (l.crossOrigin = "anonymous")),
+                  s)
+                )
+                  for (var f in s)
+                    if (Object.prototype.hasOwnProperty.call(s, f))
+                      try {
+                        l.dataset[f] = s[f];
+                      } catch (e) {}
+                if (
+                  (o && l.addEventListener("load", o),
+                  i && l.addEventListener("error", i),
+                  u)
+                )
+                  u.appendChild(l);
+                else {
+                  if (!c)
+                    throw new Error(
+                      "Did not find a head or body element to append the script"
+                    );
+                  c.appendChild(l);
+                }
+              })({
+                src: f,
+                async: !0,
+                onload: function () {
+                  if (
+                    !(function () {
+                      var e, d;
+                      return Boolean(
+                        null ===
+                          (d =
+                            null === (e = window.Shopify) || void 0 === e
+                              ? void 0
+                              : e.analytics) || void 0 === d
+                          ? void 0
+                          : d.initialized
+                      );
+                    })()
+                  ) {
+                    var d = window.webPixelsManager.init(e) || void 0;
+                    if (d) {
+                      var r = window.Shopify.analytics;
+                      r.replayQueue.forEach(function (e) {
+                        var r = e[0],
+                          n = e[1],
+                          o = e[2];
+                        d.publishCustomEvent(r, n, o);
+                      }),
+                        (r.replayQueue = []),
+                        (r.publish = d.publishCustomEvent),
+                        (r.visitor = d.visitor),
+                        (r.initialized = !0);
+                    }
+                  }
+                },
+                onerror: function () {
+                  return m.emit({
+                    status: "failed",
+                    errorMsg: "".concat(f, " has failed to load"),
+                  });
+                },
+                sri: (function (e) {
+                  var d = /^sha384-[A-Za-z0-9+/=]+$/;
+                  return "string" == typeof e && d.test(e);
+                })(c)
+                  ? c
+                  : "",
+                scriptDataAttributes: o,
+              }),
+              m.emit({ status: "loading" });
+          } catch (e) {
+            m.emit({
+              status: "failed",
+              errorMsg: (null == e ? void 0 : e.message) || "Unknown error",
+            });
+          }
+        }
+      })(
+        {
+          shopId: 94567858492,
+          storefrontBaseUrl: "https://shopif-y-dev-store.myshopify.com",
+          extensionsBaseUrl:
+            "https://extensions.shopifycdn.com/cdn/shopifycloud/web-pixels-manager",
+          monorailEndpoint:
+            "https://monorail-edge.shopifysvc.com/unstable/produce_batch",
+          surface: "storefront-renderer",
+          enabledBetaFlags: [],
+          webPixelsConfigList: [
+            {
+              id: "205259068",
+              eventPayloadVersion: "1",
+              runtimeContext: "LAX",
+              scriptVersion: "14",
+              type: "CUSTOM",
+              privacyPurposes: [
+                "ANALYTICS",
+                "MARKETING",
+                "PREFERENCES",
+                "SALE_OF_DATA",
+              ],
+              name: "Event tracking",
+            },
+            {
+              id: "shopify-app-pixel",
+              configuration: "{}",
+              eventPayloadVersion: "v1",
+              runtimeContext: "STRICT",
+              scriptVersion: "0450",
+              apiClientId: "shopify-pixel",
+              type: "APP",
+              privacyPurposes: ["ANALYTICS", "MARKETING"],
+            },
+            {
+              id: "shopify-custom-pixel",
+              eventPayloadVersion: "v1",
+              runtimeContext: "LAX",
+              scriptVersion: "0450",
+              apiClientId: "shopify-pixel",
+              type: "CUSTOM",
+              privacyPurposes: ["ANALYTICS", "MARKETING"],
+            },
+          ],
+          isMerchantRequest: false,
+          initData: {
+            shop: {
+              name: "shopif_y_dev_store",
+              paymentSettings: { currencyCode: "USD" },
+              myshopifyDomain: "shopif-y-dev-store.myshopify.com",
+              countryCode: "VN",
+              storefrontUrl: "https:\/\/shopif-y-dev-store.myshopify.com",
+            },
+            customer: null,
+            cart: null,
+            checkout: null,
+            productVariants: [],
+            purchasingCompany: null,
+          },
+        },
+        "https://shopif-y-dev-store.myshopify.com/cdn",
+        "a678f985wf512d8e4p074b229bma05a5fb0",
+        { modern: "", legacy: "" },
+        {
+          shopId: "94567858492",
+          storefrontBaseUrl: "https:\/\/shopif-y-dev-store.myshopify.com",
+          extensionBaseUrl:
+            "https:\/\/extensions.shopifycdn.com\/cdn\/shopifycloud\/web-pixels-manager",
+          surface: "storefront-renderer",
+          enabledBetaFlags: "[]",
+          isMerchantRequest: "false",
+          hashVersion: "a678f985wf512d8e4p074b229bma05a5fb0",
+          publish: "custom",
+          events: '[["page_viewed",{}]]',
+        }
+      );
+      `,
+          }}
+        ></Script>
+
+        <Script
+          strategy="beforeInteractive"
+          async
+          src="https://shopif-y-dev-store.myshopify.com/cdn/wpm/ba678f985wf512d8e4p074b229bma05a5fb0m.js"
+          data-shop-id="94567858492"
+          data-storefront-base-url="https://shopif-y-dev-store.myshopify.com"
+          data-extension-base-url="https://extensions.shopifycdn.com/cdn/shopifycloud/web-pixels-manager"
+          data-surface="storefront-renderer"
+          data-enabled-beta-flags="[]"
+          data-is-merchant-request="false"
+          data-hash-version="a678f985wf512d8e4p074b229bma05a5fb0"
+          data-publish="custom"
+          data-events='[["page_viewed",{}]]'
+          data-browser-target="modern"
+        ></Script>
+
+        <Script
+          id="a2"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+                  window.ShopifyAnalytics = window.ShopifyAnalytics || {};
+      window.ShopifyAnalytics.meta = window.ShopifyAnalytics.meta || {};
+      window.ShopifyAnalytics.meta.currency = "USD";
+      var meta = { page: { pageType: "home" } };
+      for (var attr in meta) {
+        window.ShopifyAnalytics.meta[attr] = meta[attr];
+      }
+              `,
+          }}
+        />
+
+        <Script
+          id="a3"
+          dangerouslySetInnerHTML={{
+            __html: `
+               (function () {
+        var customDocumentWrite = function (content) {
+          var jquery = null;
+
+          if (window.jQuery) {
+            jquery = window.jQuery;
+          } else if (window.Checkout && window.Checkout.$) {
+            jquery = window.Checkout.$;
+          }
+
+          if (jquery) {
+            jquery("body").append(content);
+          }
+        };
+
+        var hasLoggedConversion = function (token) {
+          if (token) {
+            return document.cookie.indexOf("loggedConversion=" + token) !== -1;
+          }
+          return false;
+        };
+
+        var setCookieIfConversion = function (token) {
+          if (token) {
+            var twoMonthsFromNow = new Date(Date.now());
+            twoMonthsFromNow.setMonth(twoMonthsFromNow.getMonth() + 2);
+
+            document.cookie =
+              "loggedConversion=" + token + "; expires=" + twoMonthsFromNow;
+          }
+        };
+
+        var trekkie =
+          (window.ShopifyAnalytics.lib =
+          window.trekkie =
+            window.trekkie || []);
+        if (trekkie.integrations) {
+          return;
+        }
+        trekkie.methods = [
+          "identify",
+          "page",
+          "ready",
+          "track",
+          "trackForm",
+          "trackLink",
+        ];
+        trekkie.factory = function (method) {
+          return function () {
+            var args = Array.prototype.slice.call(arguments);
+            args.unshift(method);
+            trekkie.push(args);
+            return trekkie;
+          };
+        };
+        for (var i = 0; i < trekkie.methods.length; i++) {
+          var key = trekkie.methods[i];
+          trekkie[key] = trekkie.factory(key);
+        }
+        trekkie.load = function (config) {
+          trekkie.config = config || {};
+          trekkie.config.initialDocumentCookie = document.cookie;
+          var first = document.getElementsByTagName("script")[0];
+          var script = document.createElement("script");
+          script.type = "text/javascript";
+          script.onerror = function (e) {
+            var scriptFallback = document.createElement("script");
+            scriptFallback.type = "text/javascript";
+            scriptFallback.onerror = function (error) {
+              var Monorail = {
+                produce: function produce(monorailDomain, schemaId, payload) {
+                  var currentMs = new Date().getTime();
+                  var event = {
+                    schema_id: schemaId,
+                    payload: payload,
+                    metadata: {
+                      event_created_at_ms: currentMs,
+                      event_sent_at_ms: currentMs,
+                    },
+                  };
+                  return Monorail.sendRequest(
+                    "https://" + monorailDomain + "/v1/produce",
+                    JSON.stringify(event)
+                  );
+                },
+                sendRequest: function sendRequest(endpointUrl, payload) {
+                  // Try the sendBeacon API
+                  if (
+                    window &&
+                    window.navigator &&
+                    typeof window.navigator.sendBeacon === "function" &&
+                    typeof window.Blob === "function" &&
+                    !Monorail.isIos12()
+                  ) {
+                    var blobData = new window.Blob([payload], {
+                      type: "text/plain",
+                    });
+
+                    if (window.navigator.sendBeacon(endpointUrl, blobData)) {
+                      return true;
+                    } // sendBeacon was not successful
+                  } // XHR beacon
+
+                  var xhr = new XMLHttpRequest();
+
+                  try {
+                    xhr.open("POST", endpointUrl);
+                    xhr.setRequestHeader("Content-Type", "text/plain");
+                    xhr.send(payload);
+                  } catch (e) {
+                    console.log(e);
+                  }
+
+                  return false;
+                },
+                isIos12: function isIos12() {
+                  return (
+                    window.navigator.userAgent.lastIndexOf(
+                      "iPhone; CPU iPhone OS 12_"
+                    ) !== -1 ||
+                    window.navigator.userAgent.lastIndexOf(
+                      "iPad; CPU OS 12_"
+                    ) !== -1
+                  );
+                },
+              };
+              Monorail.produce(
+                "monorail-edge.shopifysvc.com",
+                "trekkie_storefront_load_errors/1.1",
+                {
+                  shop_id: 94567858492,
+                  theme_id: 180142866748,
+                  app_name: "storefront",
+                  context_url: window.location.href,
+                  source_url:
+                    "//shopif-y-dev-store.myshopify.com/cdn/s/trekkie.storefront.10b9e06bd1980b2ce8435c2fe6c8f07eb6305ae4.min.js",
+                }
+              );
+            };
+            scriptFallback.async = true;
+            scriptFallback.src =
+              "//shopif-y-dev-store.myshopify.com/cdn/s/trekkie.storefront.10b9e06bd1980b2ce8435c2fe6c8f07eb6305ae4.min.js";
+            first.parentNode.insertBefore(scriptFallback, first);
+          };
+          script.async = true;
+          script.src =
+            "//shopif-y-dev-store.myshopify.com/cdn/s/trekkie.storefront.10b9e06bd1980b2ce8435c2fe6c8f07eb6305ae4.min.js";
+          first.parentNode.insertBefore(script, first);
+        };
+        trekkie.load({
+          Trekkie: {
+            appName: "storefront",
+            development: false,
+            defaultAttributes: {
+              shopId: 94567858492,
+              isMerchantRequest: null,
+              themeId: 180142866748,
+              themeCityHash: "455217328145928092",
+              contentLanguage: "en",
+              currency: "USD",
+              eventMetadataId: "e856d4e6-f423-435d-b817-745ea87e46cc",
+            },
+            isServerSideCookieWritingEnabled: true,
+            monorailRegion: "shop_domain",
+          },
+          "Session Attribution": {},
+          S2S: {
+            facebookCapiEnabled: false,
+            source: "trekkie-storefront-renderer",
+            apiClientId: 580111,
+          },
+        });
+
+        var loaded = false;
+        trekkie.ready(function () {
+          if (loaded) return;
+          loaded = true;
+
+          window.ShopifyAnalytics.lib = window.trekkie;
+
+          var originalDocumentWrite = document.write;
+          document.write = customDocumentWrite;
+          try {
+            window.ShopifyAnalytics.merchantGoogleAnalytics.call(this);
+          } catch (error) {}
+          document.write = originalDocumentWrite;
+
+          window.ShopifyAnalytics.lib.page(null, {
+            pageType: "home",
+            shopifyEmitted: true,
+          });
+
+          var match = window.location.pathname.match(
+            /checkouts\/(.+)\/(thank_you|post_purchase)/
+          );
+          var token = match ? match[1] : undefined;
+          if (!hasLoggedConversion(token)) {
+            setCookieIfConversion(token);
+          }
+        });
+
+        var eventsListenerScript = document.createElement("script");
+        eventsListenerScript.async = true;
+        eventsListenerScript.src =
+          "//shopif-y-dev-store.myshopify.com/cdn/shopifycloud/storefront/assets/shop_events_listener-abeef7a0.js";
+        document
+          .getElementsByTagName("head")[0]
+          .appendChild(eventsListenerScript);
+      })();
+              
+              `,
+          }}
+        ></Script>
+
         <StoreProvider>
           <GlobalUIProvider>
             <Header />
             <ShopifyAnalyticsClient />
-            <Script
-              id="shopify-wpm"
-              src={`https://${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}/wpm.js`}
-              strategy="afterInteractive"
-            />
-            {/* Load Shopify Pixel (Web Pixel Manager) */}
-            <Script
-              id="shopify-pixel"
-              src={`https://${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}/wpm.js`}
-              strategy="afterInteractive"
-            />
-      
+
             {children}
           </GlobalUIProvider>
         </StoreProvider>
