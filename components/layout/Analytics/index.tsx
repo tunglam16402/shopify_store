@@ -62,6 +62,8 @@ export default function ShopifyAnalyticsClient({
   const cookieDomain = computeCookieDomain()
 
   console.log('cookieDomain :>> ', cookieDomain);
+  console.log('shopDomain :>> ', shopDomain);
+  console.log('shopId :>> ', shopId);
 
   useShopifyCookies({
     hasUserConsent: true,
