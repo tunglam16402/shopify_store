@@ -1,10 +1,11 @@
+import ShopifyAnalyticsClient from '@/components/layout/Analytics'
+import Header from '@/components/layout/header'
 import { GlobalUIProvider } from '@/context/GlobalUI'
 import type { Metadata } from 'next'
-import { Tangerine, Literata } from 'next/font/google'
+import { Literata, Tangerine } from 'next/font/google'
 import './globals.css'
 import StoreProvider from './StoreProvider'
-import ShopifyAnalytics from '@/components/layout/Analytics'
-import Header from '@/components/layout/header'
+import Script from 'next/script'
 
 const tangerineFont = Tangerine({
   variable: '--font-tangerine-sans',
@@ -31,13 +32,66 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={` ${tangerineFont.variable} ${literataFont.variable} antialiased`}
+        className={`${tangerineFont.variable} ${literataFont.variable} antialiased`}
       >
         <StoreProvider>
           <GlobalUIProvider>
             <Header />
+            <ShopifyAnalyticsClient />
+            <Script
+              id="shopify-wpm"
+              src={`https://${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}/wpm.js`}
+              strategy="afterInteractive"
+            />
+
+            <Script id="shopify-analytics-listener" strategy="afterInteractive">
+              {`
+    document.addEventListener("DOMContentLoaded", function () {
+      if (typeof analytics !== "undefined") {
+        analytics.subscribe("page_viewed", (event) => {
+          console.log("Headless Page Viewed:", event);
+        });
+      } else {
+        console.warn("analytics is undefined even after wpm.js");
+      }
+    });
+  `}
+            </Script>
+
+            {/* Load Shopify Pixel (Web Pixel Manager) */}
+            <Script
+              id="shopify-pixel"
+              src={`https://${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}/wpm.js`}
+              strategy="afterInteractive"
+            />
+
+            {/* Stub customerPrivacy API để pixel có thể hoạt động */}
+            <Script
+              id="shopify-customer-privacy"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.Shopify = window.Shopify || {};
+                  window.Shopify.customerPrivacy = window.Shopify.customerPrivacy || {
+                    getTrackingConsent: function() {
+                      return localStorage.getItem('trackingConsent') || 'denied';
+                    },
+                    setTrackingConsent: function(consent) {
+                      localStorage.setItem('trackingConsent', consent);
+                      document.cookie = "_tracking_consent=" + consent + "; path=/; SameSite=None; Secure";
+                      document.dispatchEvent(new Event("trackingConsentChanged"));
+                    },
+                    subscribe: function(callback) {
+                      document.addEventListener("trackingConsentChanged", function() {
+                        callback(window.Shopify.customerPrivacy.getTrackingConsent());
+                      });
+                    }
+                  };
+                `,
+              }}
+            />
+
             {children}
-            <ShopifyAnalytics />
           </GlobalUIProvider>
         </StoreProvider>
       </body>

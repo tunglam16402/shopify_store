@@ -4,6 +4,18 @@ import type * as prismic from '@prismicio/client'
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] }
 
+declare global {
+  interface Window {
+    Shopify?: {
+      customerPrivacy?: {
+        setTrackingConsent?: (consent: boolean | 'granted' | 'denied' | 'preferences') => void
+      }
+    }
+  }
+}
+
+export {}
+
 type PickContentRelationshipFieldData<
   TRelationship extends
     | prismic.CustomTypeModelFetchCustomTypeLevel1

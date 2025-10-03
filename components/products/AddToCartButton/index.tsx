@@ -44,39 +44,39 @@
 'use client'
 
 import { addItem } from '@/components/cart/action'
-import { useShopifyAnalytics } from '@/shopify/hooks/use-shopify-analytics'
-import { useActionState, useEffect } from 'react'
+// import { useShopifyAnalytics } from '@/shopify/hooks/use-shopify-analytics'
+import { useActionState } from 'react'
 
 const AddToCartButton = ({ variantId }: { variantId: string }) => {
-  const { sendAddToCart } = useShopifyAnalytics()
+  // const { sendAddToCart } = useShopifyAnalytics()
   const [response, formAction] = useActionState(addItem, null)
 
   const actionWithVariant = formAction.bind(null, variantId)
 
-  useEffect(() => {
-    if (response?.success && response.cartId && response.item) {
-      const product = response.item?.merchandise?.product
-      const variant = response.item?.merchandise
+  // useEffect(() => {
+  //   if (response?.success && response.cartId && response.item) {
+  //     const product = response.item?.merchandise?.product
+  //     const variant = response.item?.merchandise
 
-      sendAddToCart({
-        cartId: response.cartId,
-        totalValue: Number(variant?.price?.amount ?? 0),
-        products: [
-          {
-            productGid: product?.id,
-            variantGid: variant?.id,
-            name: product?.title,
-            variantName: variant?.title,
-            brand: product?.vendor,
-            category: product?.productType,
-            price: variant?.price?.amount ?? 0,
-            sku: variant?.sku ?? undefined,
-            quantity: response.item?.quantity ?? 1,
-          },
-        ],
-      })
-    }
-  }, [response, sendAddToCart])
+  //     sendAddToCart({
+  //       cartId: response.cartId,
+  //       totalValue: Number(variant?.price?.amount ?? 0),
+  //       products: [
+  //         {
+  //           productGid: product?.id,
+  //           variantGid: variant?.id,
+  //           name: product?.title,
+  //           variantName: variant?.title,
+  //           brand: product?.vendor,
+  //           category: product?.productType,
+  //           price: variant?.price?.amount ?? 0,
+  //           sku: variant?.sku ?? undefined,
+  //           quantity: response.item?.quantity ?? 1,
+  //         },
+  //       ],
+  //     })
+  //   }
+  // }, [response, sendAddToCart])
 
   return (
     <form action={actionWithVariant}>

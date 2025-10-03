@@ -11,7 +11,7 @@ import { useUI } from '@/lib/hooks/useContext'
 
 const CartSideBar = () => {
   const cart = useAppSelector((state) => state.cart.cart)
-  const { isOpen, close } = useUI('cart') // <-- key 'cart'
+  const { isOpen, close } = useUI('cart') 
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
