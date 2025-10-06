@@ -1,0 +1,49 @@
+{
+  "format": "custom",
+  "id": "homepage",
+  "label": "Homepage",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {
+      "hero_banners": {
+        "type": "Link",
+        "config": {
+          "label": "hero_banners",
+          "select": "document",
+          "repeat": false,
+          "customtypes": [
+            {
+              "id": "banner",
+              "fields": [
+                {
+                  "id": "banner_image",
+                  "fields": [
+                    "image",
+                    "banner_title",
+                    "banner_subtitle",
+                    "banner_title2",
+                    "banner_text",
+                    "cta_text",
+                    "cta_link"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "slices": {
+        "type": "Slices",
+        "fieldset": "Slice Zone",
+        "config": {
+          "choices": {
+            "hero": {
+              "type": "SharedSlice"
+            }
+          }
+        }
+      }
+    }
+  }
+}

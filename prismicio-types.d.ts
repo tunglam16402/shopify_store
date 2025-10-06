@@ -4,18 +4,6 @@ import type * as prismic from '@prismicio/client'
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] }
 
-declare global {
-  interface Window {
-    Shopify?: {
-      customerPrivacy?: {
-        setTrackingConsent?: (consent: boolean | 'granted' | 'denied' | 'preferences') => void
-      }
-    }
-  }
-}
-
-export {}
-
 type PickContentRelationshipFieldData<
   TRelationship extends
     | prismic.CustomTypeModelFetchCustomTypeLevel1
@@ -40,8 +28,7 @@ type PickContentRelationshipFieldData<
       TSubRelationship['customtypes'],
       TLang
     >
-  } & // Group
-  {
+  } & { // Group
     [TGroup in Extract<
       TRelationship['fields'][number],
       | prismic.CustomTypeModelFetchGroupLevel1
@@ -53,8 +40,7 @@ type PickContentRelationshipFieldData<
           PickContentRelationshipFieldData<TGroup, TGroupData, TLang>
         >
       : never
-  } & // Other fields
-  {
+  } & { // Other fields
     [TFieldKey in Extract<
       TRelationship['fields'][number],
       string
@@ -81,68 +67,288 @@ type ContentRelationshipFieldWithData<
   >
 }[Exclude<TCustomType[number], string>['id']]
 
-type HomeDocumentDataSlicesSlice = never
-
 /**
- * Content for Home documents
+ * Item in *Banner → Banner*
  */
-interface HomeDocumentData {
+export interface BannerDocumentDataBannerImageItem {
   /**
-   * Slice Zone field in *Home*
-   *
-   * - **Field Type**: Slice Zone
-   * - **Placeholder**: *None*
-   * - **API ID Path**: home.slices[]
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/slices
-   */
-  slices: prismic.SliceZone<HomeDocumentDataSlicesSlice> /**
-   * Meta Title field in *Home*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: A title of the page used for social media and search engines
-   * - **API ID Path**: home.meta_title
-   * - **Tab**: SEO & Metadata
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  meta_title: prismic.KeyTextField
-
-  /**
-   * Meta Description field in *Home*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: A brief summary of the page
-   * - **API ID Path**: home.meta_description
-   * - **Tab**: SEO & Metadata
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  meta_description: prismic.KeyTextField
-
-  /**
-   * Meta Image field in *Home*
+   * Image field in *Banner → Banner*
    *
    * - **Field Type**: Image
    * - **Placeholder**: *None*
-   * - **API ID Path**: home.meta_image
-   * - **Tab**: SEO & Metadata
+   * - **API ID Path**: banner.banner_image[].image
    * - **Documentation**: https://prismic.io/docs/fields/image
    */
-  meta_image: prismic.ImageField<never>
+  image: prismic.ImageField<never>
+
+  /**
+   * Banner_title field in *Banner → Banner*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: banner.banner_image[].banner_title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  banner_title: prismic.KeyTextField
+
+  /**
+   * Banner_subtitle field in *Banner → Banner*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: banner.banner_image[].banner_subtitle
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  banner_subtitle: prismic.KeyTextField
+
+  /**
+   * Banner_title2 field in *Banner → Banner*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: banner.banner_image[].banner_title2
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  banner_title2: prismic.KeyTextField
+
+  /**
+   * Banner_text field in *Banner → Banner*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: banner.banner_image[].banner_text
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  banner_text: prismic.KeyTextField
+
+  /**
+   * CTA_text field in *Banner → Banner*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: banner.banner_image[].cta_text
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  cta_text: prismic.KeyTextField
+
+  /**
+   * CTA_link field in *Banner → Banner*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: banner.banner_image[].cta_link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  cta_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >
 }
 
 /**
- * Home document from Prismic
+ * Content for Banner documents
+ */
+interface BannerDocumentData {
+  /**
+   * Banner field in *Banner*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: banner.banner_image[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  banner_image: prismic.GroupField<Simplify<BannerDocumentDataBannerImageItem>>
+}
+
+/**
+ * Banner document from Prismic
  *
- * - **API ID**: `home`
+ * - **API ID**: `banner`
  * - **Repeatable**: `false`
  * - **Documentation**: https://prismic.io/docs/content-modeling
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type HomeDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithoutUID<Simplify<HomeDocumentData>, 'home', Lang>
+export type BannerDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<BannerDocumentData>,
+    'banner',
+    Lang
+  >
 
-export type AllDocumentTypes = HomeDocument
+type HomepageDocumentDataSlicesSlice = HeroSlice
+
+/**
+ * Content for Homepage documents
+ */
+interface HomepageDocumentData {
+  /**
+   * hero_banners field in *Homepage*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.hero_banners
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   */
+  hero_banners: ContentRelationshipFieldWithData<
+    [
+      {
+        id: 'banner'
+        fields: [
+          {
+            id: 'banner_image'
+            fields: [
+              'image',
+              'banner_title',
+              'banner_subtitle',
+              'banner_title2',
+              'banner_text',
+              'cta_text',
+              'cta_link',
+            ]
+          },
+        ]
+      },
+    ]
+  >
+
+  /**
+   * Slice Zone field in *Homepage*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<HomepageDocumentDataSlicesSlice>
+}
+
+/**
+ * Homepage document from Prismic
+ *
+ * - **API ID**: `homepage`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type HomepageDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<HomepageDocumentData>,
+    'homepage',
+    Lang
+  >
+
+export type AllDocumentTypes = BannerDocument | HomepageDocument
+
+/**
+ * Item in *Hero → Default → Primary → Banner*
+ */
+export interface HeroSliceDefaultPrimaryBannerItem {
+  /**
+   * Image field in *Hero → Default → Primary → Banner*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.default.primary.banner[].image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  image: prismic.ImageField<never>
+
+  /**
+   * Title field in *Hero → Default → Primary → Banner*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.default.primary.banner[].title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField
+
+  /**
+   * Sub_title field in *Hero → Default → Primary → Banner*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.default.primary.banner[].sub_title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  sub_title: prismic.KeyTextField
+
+  /**
+   * CTA_text field in *Hero → Default → Primary → Banner*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.default.primary.banner[].cta_text
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  cta_text: prismic.KeyTextField
+
+  /**
+   * CTA_link field in *Hero → Default → Primary → Banner*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.default.primary.banner[].cta_link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  cta_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >
+}
+
+/**
+ * Primary content in *Hero → Default → Primary*
+ */
+export interface HeroSliceDefaultPrimary {
+  /**
+   * Banner field in *Hero → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.default.primary.banner[]
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  banner: prismic.GroupField<Simplify<HeroSliceDefaultPrimaryBannerItem>>
+}
+
+/**
+ * Default variation for Hero Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type HeroSliceDefault = prismic.SharedSliceVariation<
+  'default',
+  Simplify<HeroSliceDefaultPrimary>,
+  never
+>
+
+/**
+ * Slice variation for *Hero*
+ */
+type HeroSliceVariation = HeroSliceDefault
+
+/**
+ * Hero Shared Slice
+ *
+ * - **API ID**: `hero`
+ * - **Description**: Hero
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type HeroSlice = prismic.SharedSlice<'hero', HeroSliceVariation>
 
 declare module '@prismicio/client' {
   interface CreateClient {
@@ -165,10 +371,18 @@ declare module '@prismicio/client' {
 
   namespace Content {
     export type {
-      HomeDocument,
-      HomeDocumentData,
-      HomeDocumentDataSlicesSlice,
+      BannerDocument,
+      BannerDocumentData,
+      BannerDocumentDataBannerImageItem,
+      HomepageDocument,
+      HomepageDocumentData,
+      HomepageDocumentDataSlicesSlice,
       AllDocumentTypes,
+      HeroSlice,
+      HeroSliceDefaultPrimaryBannerItem,
+      HeroSliceDefaultPrimary,
+      HeroSliceVariation,
+      HeroSliceDefault,
     }
   }
 }

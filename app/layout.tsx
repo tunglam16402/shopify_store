@@ -34,7 +34,7 @@ export default function RootLayout({
       <body
         className={`${tangerineFont.variable} ${literataFont.variable} antialiased`}
       >
-        <Script
+        {/* <Script
           id="web-pixels-manager-setup"
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
@@ -152,7 +152,7 @@ export default function RootLayout({
               version: r,
               bundleTarget: l,
               surface: e.surface,
-              pageUrl: self.location.href,
+              pageUrl: "https://shopif-y-dev-store.myshopify.com/",
               monorailEndpoint: e.monorailEndpoint,
             });
           try {
@@ -499,7 +499,7 @@ export default function RootLayout({
                   shop_id: 94567858492,
                   theme_id: 180142866748,
                   app_name: "storefront",
-                  context_url: window.location.href,
+                  context_url: "https://shopif-y-dev-store.myshopify.com/",
                   source_url:
                     "//shopif-y-dev-store.myshopify.com/cdn/s/trekkie.storefront.10b9e06bd1980b2ce8435c2fe6c8f07eb6305ae4.min.js",
                 }
@@ -578,7 +578,7 @@ export default function RootLayout({
               
               `,
           }}
-        ></Script>
+        ></Script> */}
 
         <StoreProvider>
           <GlobalUIProvider>

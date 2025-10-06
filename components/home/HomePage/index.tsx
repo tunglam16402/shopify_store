@@ -1,10 +1,15 @@
+import { HomepageDocumentData, Simplify } from '@/prismicio-types'
 import HeroSection from '../HeroSection'
 import ShowCase from '../ShowCase'
 
-const HomePage = () => {
+interface IHomePage {
+  data: Simplify<HomepageDocumentData>
+}
+
+const HomePage: React.FC<IHomePage> = ({ data }) => {
   return (
     <div>
-      <HeroSection />
+      <HeroSection banners={data.hero_banners} />
       <ShowCase />
     </div>
   )
