@@ -5,32 +5,21 @@
   "repeatable": false,
   "status": true,
   "json": {
-    "Main": {
+    "Banner": {
       "hero_banners": {
         "type": "Link",
         "config": {
           "label": "hero_banners",
           "select": "document",
           "repeat": false,
-          "customtypes": [
-            {
-              "id": "banner",
-              "fields": [
-                {
-                  "id": "banner_image",
-                  "fields": [
-                    "image",
-                    "banner_title",
-                    "banner_subtitle",
-                    "banner_title2",
-                    "banner_text",
-                    "cta_text",
-                    "cta_link"
-                  ]
-                }
-              ]
-            }
-          ]
+          "customtypes": ["banner_management"]
+        }
+      },
+      "selected_banners": {
+        "type": "Text",
+        "config": {
+          "label": "selected_banners",
+          "placeholder": ""
         }
       },
       "slices": {
@@ -44,6 +33,9 @@
           }
         }
       }
-    }
+    },
+    "Collections": {},
+    "Latest": {},
+    "Suggestions": {}
   }
 }

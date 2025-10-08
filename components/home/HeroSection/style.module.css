@@ -1,7 +1,6 @@
 .hero_banner {
   display: flex;
   flex-direction: column;
-  margin-top: 100;
   height: calc(100vh - 100px);
   background-color: #4f141f;
   gap: 32px;

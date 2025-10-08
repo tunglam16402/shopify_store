@@ -28,7 +28,8 @@ type PickContentRelationshipFieldData<
       TSubRelationship['customtypes'],
       TLang
     >
-  } & { // Group
+  } & // Group
+  {
     [TGroup in Extract<
       TRelationship['fields'][number],
       | prismic.CustomTypeModelFetchGroupLevel1
@@ -40,7 +41,8 @@ type PickContentRelationshipFieldData<
           PickContentRelationshipFieldData<TGroup, TGroupData, TLang>
         >
       : never
-  } & { // Other fields
+  } & // Other fields
+  {
     [TFieldKey in Extract<
       TRelationship['fields'][number],
       string
@@ -180,6 +182,40 @@ export type BannerDocument<Lang extends string = string> =
     Lang
   >
 
+type BannerManagementDocumentDataSlicesSlice = HeroSlice
+
+/**
+ * Content for Banner Management documents
+ */
+interface BannerManagementDocumentData {
+  /**
+   * Slice Zone field in *Banner Management*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: banner_management.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<BannerManagementDocumentDataSlicesSlice>
+}
+
+/**
+ * Banner Management document from Prismic
+ *
+ * - **API ID**: `banner_management`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type BannerManagementDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<BannerManagementDocumentData>,
+    'banner_management',
+    Lang
+  >
+
 type HomepageDocumentDataSlicesSlice = HeroSlice
 
 /**
@@ -192,30 +228,21 @@ interface HomepageDocumentData {
    * - **Field Type**: Content Relationship
    * - **Placeholder**: *None*
    * - **API ID Path**: homepage.hero_banners
-   * - **Tab**: Main
+   * - **Tab**: Banner
    * - **Documentation**: https://prismic.io/docs/fields/content-relationship
    */
-  hero_banners: ContentRelationshipFieldWithData<
-    [
-      {
-        id: 'banner'
-        fields: [
-          {
-            id: 'banner_image'
-            fields: [
-              'image',
-              'banner_title',
-              'banner_subtitle',
-              'banner_title2',
-              'banner_text',
-              'cta_text',
-              'cta_link',
-            ]
-          },
-        ]
-      },
-    ]
-  >
+  hero_banners: prismic.ContentRelationshipField<'banner_management'>
+
+  /**
+   * selected_banners field in *Homepage*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.selected_banners
+   * - **Tab**: Banner
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  selected_banners: prismic.KeyTextField
 
   /**
    * Slice Zone field in *Homepage*
@@ -223,7 +250,7 @@ interface HomepageDocumentData {
    * - **Field Type**: Slice Zone
    * - **Placeholder**: *None*
    * - **API ID Path**: homepage.slices[]
-   * - **Tab**: Main
+   * - **Tab**: Banner
    * - **Documentation**: https://prismic.io/docs/slices
    */
   slices: prismic.SliceZone<HomepageDocumentDataSlicesSlice>
@@ -245,86 +272,98 @@ export type HomepageDocument<Lang extends string = string> =
     Lang
   >
 
-export type AllDocumentTypes = BannerDocument | HomepageDocument
+export type AllDocumentTypes =
+  | BannerDocument
+  | BannerManagementDocument
+  | HomepageDocument
 
 /**
- * Item in *Hero → Default → Primary → Banner*
+ * Primary content in *HeroBanner → Hero Banner → Primary*
  */
-export interface HeroSliceDefaultPrimaryBannerItem {
+export interface HeroSliceDefaultPrimary {
   /**
-   * Image field in *Hero → Default → Primary → Banner*
+   * Image field in *HeroBanner → Hero Banner → Primary*
    *
    * - **Field Type**: Image
    * - **Placeholder**: *None*
-   * - **API ID Path**: hero.default.primary.banner[].image
+   * - **API ID Path**: hero.default.primary.image
    * - **Documentation**: https://prismic.io/docs/fields/image
    */
-  image: prismic.ImageField<never>
+  image: prismic.ImageField<'mobile'>
 
   /**
-   * Title field in *Hero → Default → Primary → Banner*
+   * Title field in *HeroBanner → Hero Banner → Primary*
    *
    * - **Field Type**: Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: hero.default.primary.banner[].title
+   * - **API ID Path**: hero.default.primary.title
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   title: prismic.KeyTextField
 
   /**
-   * Sub_title field in *Hero → Default → Primary → Banner*
+   * Sub_title field in *HeroBanner → Hero Banner → Primary*
    *
    * - **Field Type**: Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: hero.default.primary.banner[].sub_title
+   * - **API ID Path**: hero.default.primary.sub_title
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   sub_title: prismic.KeyTextField
 
   /**
-   * CTA_text field in *Hero → Default → Primary → Banner*
+   * CTA_text field in *HeroBanner → Hero Banner → Primary*
    *
    * - **Field Type**: Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: hero.default.primary.banner[].cta_text
+   * - **API ID Path**: hero.default.primary.cta_text
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   cta_text: prismic.KeyTextField
 
   /**
-   * CTA_link field in *Hero → Default → Primary → Banner*
+   * Link field in *HeroBanner → Hero Banner → Primary*
    *
    * - **Field Type**: Link
    * - **Placeholder**: *None*
-   * - **API ID Path**: hero.default.primary.banner[].cta_link
+   * - **API ID Path**: hero.default.primary.link
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
-  cta_link: prismic.LinkField<
-    string,
-    string,
-    unknown,
-    prismic.FieldState,
-    never
-  >
-}
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>
 
-/**
- * Primary content in *Hero → Default → Primary*
- */
-export interface HeroSliceDefaultPrimary {
   /**
-   * Banner field in *Hero → Default → Primary*
+   * Start_date field in *HeroBanner → Hero Banner → Primary*
    *
-   * - **Field Type**: Group
+   * - **Field Type**: Date
    * - **Placeholder**: *None*
-   * - **API ID Path**: hero.default.primary.banner[]
-   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   * - **API ID Path**: hero.default.primary.start_date
+   * - **Documentation**: https://prismic.io/docs/fields/date
    */
-  banner: prismic.GroupField<Simplify<HeroSliceDefaultPrimaryBannerItem>>
+  start_date: prismic.DateField
+
+  /**
+   * End_date field in *HeroBanner → Hero Banner → Primary*
+   *
+   * - **Field Type**: Date
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.default.primary.end_date
+   * - **Documentation**: https://prismic.io/docs/fields/date
+   */
+  end_date: prismic.DateField
+
+  /**
+   * Banner_ID field in *HeroBanner → Hero Banner → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.default.primary.banner_id
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  banner_id: prismic.KeyTextField
 }
 
 /**
- * Default variation for Hero Slice
+ * Hero Banner variation for HeroBanner Slice
  *
  * - **API ID**: `default`
  * - **Description**: Default
@@ -337,12 +376,12 @@ export type HeroSliceDefault = prismic.SharedSliceVariation<
 >
 
 /**
- * Slice variation for *Hero*
+ * Slice variation for *HeroBanner*
  */
 type HeroSliceVariation = HeroSliceDefault
 
 /**
- * Hero Shared Slice
+ * HeroBanner Shared Slice
  *
  * - **API ID**: `hero`
  * - **Description**: Hero
@@ -374,12 +413,14 @@ declare module '@prismicio/client' {
       BannerDocument,
       BannerDocumentData,
       BannerDocumentDataBannerImageItem,
+      BannerManagementDocument,
+      BannerManagementDocumentData,
+      BannerManagementDocumentDataSlicesSlice,
       HomepageDocument,
       HomepageDocumentData,
       HomepageDocumentDataSlicesSlice,
       AllDocumentTypes,
       HeroSlice,
-      HeroSliceDefaultPrimaryBannerItem,
       HeroSliceDefaultPrimary,
       HeroSliceVariation,
       HeroSliceDefault,
