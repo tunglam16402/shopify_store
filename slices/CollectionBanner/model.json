@@ -1,0 +1,135 @@
+{
+  "id": "collection_banner",
+  "type": "SharedSlice",
+  "name": "CollectionBanner",
+  "description": "CollectionBanner",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "image": {
+          "type": "Image",
+          "config": {
+            "label": "Banner",
+            "constraint": {
+              "width": 4220,
+              "height": 1088
+            },
+            "thumbnails": [
+              {
+                "name": "Mobile",
+                "width": 600,
+                "height": 150
+              }
+            ]
+          }
+        },
+        "pathname": {
+          "type": "Text",
+          "config": {
+            "label": "Pathname",
+            "placeholder": ""
+          }
+        },
+        "tile_banner": {
+          "type": "Group",
+          "config": {
+            "label": "Tile Banner",
+            "repeat": true,
+            "fields": {
+              "tile_banner_image": {
+                "type": "Image",
+                "config": {
+                  "label": "Tile Banner Image",
+                  "constraint": {
+                    "width": 250,
+                    "height": 430
+                  },
+                  "thumbnails": [
+                    {
+                      "name": "Mobile",
+                      "width": 157,
+                      "height": 437
+                    }
+                  ]
+                }
+              },
+              "tile_pathame": {
+                "type": "Text",
+                "config": {
+                  "label": "Tile Banner Pathname",
+                  "placeholder": ""
+                }
+              },
+              "tile_banner_button_label": {
+                "type": "Text",
+                "config": {
+                  "label": "Tile Banner Button Label",
+                  "placeholder": ""
+                }
+              }
+            }
+          }
+        },
+        "start_date": {
+          "type": "Date",
+          "config": {
+            "label": "Start Date",
+            "placeholder": ""
+          }
+        },
+        "end_date": {
+          "type": "Date",
+          "config": {
+            "label": "End Date",
+            "placeholder": ""
+          }
+        },
+        "collection": {
+          "type": "Group",
+          "config": {
+            "label": "Collection",
+            "repeat": true,
+            "fields": {
+              "collection_pathname": {
+                "type": "Text",
+                "config": {
+                  "label": "Collection Pathname",
+                  "placeholder": ""
+                }
+              }
+            }
+          }
+        },
+        "hidenz": {
+          "type": "Boolean",
+          "config": {
+            "label": "hidenz",
+            "placeholder_false": "false",
+            "placeholder_true": "true",
+            "default_value": false
+          }
+        },
+        "site": {
+          "type": "Select",
+          "config": {
+            "label": "site",
+            "placeholder": "",
+            "options": [
+              "ALL",
+              "AU",
+              "NZ"
+            ],
+            "default_value": "ALL"
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

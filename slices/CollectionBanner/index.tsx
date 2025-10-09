@@ -3,20 +3,22 @@ import { Content } from '@prismicio/client'
 import { SliceComponentProps } from '@prismicio/react'
 
 /**
- * Props for `Hero`.
+ * Props for `CollectionBanner`.
  */
-export type HeroProps = SliceComponentProps<Content.HeroSlice>
+export type CollectionBannerProps =
+  SliceComponentProps<Content.CollectionBannerSlice>
 
 /**
- * Component for "Hero" Slices.
+ * Component for "CollectionBanner" Slices.
  */
-const Hero: FC<HeroProps> = ({ slice }) => {
+const CollectionBanner: FC<CollectionBannerProps> = ({ slice }) => {
   return (
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
     >
-      Placeholder component for hero (variation: {slice.variation}) slices.
+      Placeholder component for collection_banner (variation: {slice.variation})
+      slices.
       <br />
       <strong>You can edit this slice directly in your code editor.</strong>
       {/**
@@ -49,4 +51,4 @@ const Hero: FC<HeroProps> = ({ slice }) => {
   )
 }
 
-export default Hero
+export default CollectionBanner

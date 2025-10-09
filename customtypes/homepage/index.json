@@ -7,28 +7,69 @@
   "json": {
     "Banner": {
       "hero_banners": {
-        "type": "Link",
+        "type": "Group",
         "config": {
-          "label": "hero_banners",
-          "select": "document",
-          "repeat": false,
-          "customtypes": ["banner_management"]
-        }
-      },
-      "selected_banners": {
-        "type": "Text",
-        "config": {
-          "label": "selected_banners",
-          "placeholder": ""
-        }
-      },
-      "slices": {
-        "type": "Slices",
-        "fieldset": "Slice Zone",
-        "config": {
-          "choices": {
-            "hero": {
-              "type": "SharedSlice"
+          "label": "Hero Banners",
+          "repeat": true,
+          "fields": {
+            "image": {
+              "type": "Image",
+              "config": {
+                "label": "Image",
+                "constraint": {
+                  "width": 1500,
+                  "height": 1500
+                },
+                "thumbnails": [
+                  {
+                    "name": "Mobile",
+                    "width": 430,
+                    "height": 430
+                  }
+                ]
+              }
+            },
+            "title": {
+              "type": "Text",
+              "config": {
+                "label": "Title",
+                "placeholder": ""
+              }
+            },
+            "lower_title": {
+              "type": "Text",
+              "config": {
+                "label": "Lower Title",
+                "placeholder": ""
+              }
+            },
+            "text": {
+              "type": "Text",
+              "config": {
+                "label": "Text",
+                "placeholder": ""
+              }
+            },
+            "title_2": {
+              "type": "Text",
+              "config": {
+                "label": "Title 2",
+                "placeholder": ""
+              }
+            },
+            "button_text": {
+              "type": "Text",
+              "config": {
+                "label": "Button Text",
+                "placeholder": ""
+              }
+            },
+            "pathname": {
+              "type": "Text",
+              "config": {
+                "label": "Pathname",
+                "placeholder": ""
+              }
             }
           }
         }

@@ -5,13 +5,12 @@ import ShowCase from '../ShowCase'
 
 interface IHomePage {
   data: Simplify<HomepageDocumentData>
-  banners: any[]
 }
 
-const HomePage: React.FC<IHomePage> = ({ data, banners }) => {
+const HomePage: React.FC<IHomePage> = ({ data}) => {
   return (
     <div>
-      <HeroSection banners={banners} />
+      <HeroSection banners={data.hero_banners} />
       <ShowCase />
     </div>
   )

@@ -1,22 +1,24 @@
-import { ProductList } from '@/components/products'
+import CollectionPage from '@/components/collection/CollectionPage'
+import { getBannerData } from '@/components/collection/CollectionPage/helper'
 import { getCollectionProductsByHandle } from '@/shopify/api/operations/get-collection'
-
-export const experimental_ppr = true
 
 type Props = {
   params: Promise<{ handle: string }>
 }
 
-const CollectionPage = async ({ params }: Props) => {
+const Collection = async ({ params }: Props) => {
   const { handle } = await params
 
-  const product = await getCollectionProductsByHandle(handle)
+  const products = await getCollectionProductsByHandle(handle)
+  const bannerData = await getBannerData(`/collections/${handle}`)
+
+  console.log('bannerData :>> ', bannerData);
 
   return (
-    <main className="p-6 max-w-5xl mx-auto">
-      <ProductList products={product} />
+    <main>
+      <CollectionPage products={products} bannerData={bannerData} />
     </main>
   )
 }
 
-export default CollectionPage
+export default Collection
