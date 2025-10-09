@@ -7,20 +7,19 @@ import { Button } from '@/components/ui/Button'
 
 interface IHeroBannerItem {
   data: any
-  index: number
 }
 
-const HeroBannerItem: React.FC<IHeroBannerItem> = ({ data, index }) => {
+const HeroBannerItem: React.FC<IHeroBannerItem> = ({ data }) => {
   return (
     <div
-      key={data.banner_id || index}
+      key={data.banner_id}
       className="relative h-[60%] md:flex-1 md:h-full"
     >
       <PrismicNextImage
         field={data.image}
         fill
         className="object-cover"
-        priority={index === 0}
+        priority
       />
 
       <div className="flex flex-1 h-[40%] flex-col items-center px-8 md:h-full md:justify-center md:px-3">

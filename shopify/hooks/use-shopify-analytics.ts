@@ -11,6 +11,7 @@ import { usePathname } from 'next/navigation'
 import { currency, defaultLanguage } from '../../lib/constants'
 
 const SHOP_ID = '94567858492'
+const SHOP_DOMAIN = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN
 
 type SendPageViewPayload = {
   pageType?: string
@@ -42,12 +43,14 @@ export function useShopifyAnalytics() {
       currency,
       acceptedLanguage: defaultLanguage,
       ...payload,
+      analyticsAllowed: true,
+      marketingAllowed: true
     }
 
     return sendShopifyAnalytics({
       eventName,
       payload: eventPayload,
-    },'shopif-y-dev-store.myshopify.com')
+    },SHOP_DOMAIN)
   }
 
   // Send add to cart event
@@ -73,15 +76,15 @@ export function useShopifyAnalytics() {
         eventName: AnalyticsEventName.ADD_TO_CART,
         payload,
       },
-      'shopif-y-dev-store.myshopify.com'
+      SHOP_DOMAIN
     )
   }
 
   // Set up cookies for Shopify analytics & enable user consent
   useShopifyCookies({
     hasUserConsent: true,
-    domain: 'shopif-y-dev-store.myshopify.com',
-    checkoutDomain: 'shopif-y-dev-store.myshopify.com',
+    domain: SHOP_DOMAIN,
+    checkoutDomain: SHOP_DOMAIN,
   })
 
   return {
