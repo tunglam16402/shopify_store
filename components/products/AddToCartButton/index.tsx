@@ -32,7 +32,7 @@ const AddToCartButton = ({ variantId, quantity = 1 }: AddToCartButtonProps) => {
     <Button
       onClick={handleAddToCart}
       disabled={loading}
-      className="w-full py-2 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold hover:from-indigo-600 hover:to-purple-600 transition-all duration-300"
+      className="w-full py-2 rounded-lg text-black border hover:text-white font-semibold transition-all duration-300"
     >
       {loading ? 'Adding...' : 'Add to Cart'}
     </Button>

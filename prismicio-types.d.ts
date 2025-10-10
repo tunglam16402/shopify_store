@@ -179,6 +179,81 @@ export interface HomepageDocumentDataHeroBannersItem {
 }
 
 /**
+ * Item in *Homepage → Collections*
+ */
+export interface HomepageDocumentDataCollectionsItem {
+  /**
+   * Collection field in *Homepage → Collections*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.collections[].collection
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  collection: prismic.ImageField<'Mobile'>
+
+  /**
+   * Title Top field in *Homepage → Collections*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.collections[].title_top
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title_top: prismic.KeyTextField
+
+  /**
+   * Sub Title Top field in *Homepage → Collections*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.collections[].sub_title_top
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  sub_title_top: prismic.KeyTextField
+
+  /**
+   * Title Bottom field in *Homepage → Collections*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.collections[].title_bottom
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title_bottom: prismic.KeyTextField
+
+  /**
+   * Sub Title Bottom field in *Homepage → Collections*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.collections[].sub_title_bottom
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  sub_title_bottom: prismic.KeyTextField
+
+  /**
+   * Pathname field in *Homepage → Collections*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.collections[].pathname
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  pathname: prismic.KeyTextField
+
+  /**
+   * Button Text field in *Homepage → Collections*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.collections[].button_text
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  button_text: prismic.KeyTextField
+}
+
+/**
  * Content for Homepage documents
  */
 interface HomepageDocumentData {
@@ -193,7 +268,16 @@ interface HomepageDocumentData {
    */
   hero_banners: prismic.GroupField<
     Simplify<HomepageDocumentDataHeroBannersItem>
-  >
+  > /**
+   * Collections field in *Homepage*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.collections[]
+   * - **Tab**: Collections
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  collections: prismic.GroupField<Simplify<HomepageDocumentDataCollectionsItem>>
 }
 
 /**
@@ -412,6 +496,7 @@ declare module '@prismicio/client' {
       HomepageDocument,
       HomepageDocumentData,
       HomepageDocumentDataHeroBannersItem,
+      HomepageDocumentDataCollectionsItem,
       AllDocumentTypes,
       CollectionBannerSlice,
       CollectionBannerSliceDefaultPrimaryTileBannerItem,

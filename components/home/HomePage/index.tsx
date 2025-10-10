@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { HomepageDocumentData, Simplify } from '@/prismicio-types'
 import HeroSection from '../HeroSection'
-import ShowCase from '../ShowCase'
+import FeaturedCollections from '../FeaturedCollection'
 
 interface IHomePage {
   data: Simplify<HomepageDocumentData>
@@ -11,7 +11,7 @@ const HomePage: React.FC<IHomePage> = ({ data}) => {
   return (
     <div>
       <HeroSection banners={data.hero_banners} />
-      <ShowCase />
+      <FeaturedCollections collections={data.collections}/>
     </div>
   )
 }

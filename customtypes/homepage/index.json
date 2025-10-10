@@ -75,7 +75,76 @@
         }
       }
     },
-    "Collections": {},
+    "Collections": {
+      "collections": {
+        "type": "Group",
+        "config": {
+          "label": "Collections",
+          "repeat": true,
+          "fields": {
+            "collection": {
+              "type": "Image",
+              "config": {
+                "label": "Collection",
+                "constraint": {
+                  "width": 613,
+                  "height": 674
+                },
+                "thumbnails": [
+                  {
+                    "name": "Mobile",
+                    "width": 400,
+                    "height": 438
+                  }
+                ]
+              }
+            },
+            "title_top": {
+              "type": "Text",
+              "config": {
+                "label": "Title Top",
+                "placeholder": ""
+              }
+            },
+            "sub_title_top": {
+              "type": "Text",
+              "config": {
+                "label": "Sub Title Top",
+                "placeholder": ""
+              }
+            },
+            "title_bottom": {
+              "type": "Text",
+              "config": {
+                "label": "Title Bottom",
+                "placeholder": ""
+              }
+            },
+            "sub_title_bottom": {
+              "type": "Text",
+              "config": {
+                "label": "Sub Title Bottom",
+                "placeholder": ""
+              }
+            },
+            "pathname": {
+              "type": "Text",
+              "config": {
+                "label": "Pathname",
+                "placeholder": ""
+              }
+            },
+            "button_text": {
+              "type": "Text",
+              "config": {
+                "label": "Button Text",
+                "placeholder": ""
+              }
+            }
+          }
+        }
+      }
+    },
     "Latest": {},
     "Suggestions": {}
   }

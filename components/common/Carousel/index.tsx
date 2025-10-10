@@ -207,7 +207,7 @@ export function Carousel<T>({
   return (
     <div className="relative w-full overflow-hidden">
       {items.length === 0 ? (
-        <div className="flex justify-center items-center h-64 text-gray-500 text-lg">
+        <div className="flex justify-center  items-center h-64 text-gray-500 text-lg">
           There is no item
         </div>
       ) : (

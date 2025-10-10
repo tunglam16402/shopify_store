@@ -152,7 +152,7 @@ input {
   width: var(--default-width);
   max-width: var(--max-container-width);
   padding: 0 15px;
-  /* margin: 0 auto; */
+  margin: 0 auto;
 }
 
 @media (min-width: 768px) {
