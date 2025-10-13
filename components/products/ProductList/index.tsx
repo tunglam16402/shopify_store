@@ -28,7 +28,7 @@ const ProductList = ({ products, tiles = [] }: ProductListProps) => {
   })
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 md:gap-4">
       {combined.map((item, i) =>
         item.type === 'product' ? (
           <ProductCard key={`product-${item.data.id}`} product={item.data} />

@@ -19,8 +19,8 @@ const ProductDetail = ({ product }: ProductDetailProps) => {
               key={node.url}
               src={node.url}
               alt={node.altText || product.title}
-              width={600}
-              height={600}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover rounded"
             />
           ))}

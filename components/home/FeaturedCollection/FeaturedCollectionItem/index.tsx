@@ -24,6 +24,7 @@ const FeaturedCollectionItem: React.FC<IFeaturedCollectionItem> = ({
             alt=""
             fill
             className="object-contain w-full"
+            loading='lazy'
           />
         </Link>
       )}

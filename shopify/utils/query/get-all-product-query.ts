@@ -6,6 +6,9 @@ const getProductsQuery = /* GraphQL */ `
         title
         handle
         description
+        category {
+          name
+        }
         images(first: 1) {
           nodes {
             url

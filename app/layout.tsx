@@ -3,7 +3,6 @@ import Header from '@/components/layout/header'
 import { GlobalUIProvider } from '@/context/GlobalUI'
 import type { Metadata } from 'next'
 import { Literata, Tangerine } from 'next/font/google'
-import Script from 'next/script'
 import './globals.css'
 import StoreProvider from './StoreProvider'
 

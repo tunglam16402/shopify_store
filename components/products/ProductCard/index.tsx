@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import AddToCartButton from '../AddToCartButton'
+import { BorderHeart } from '@/components/icons/BorderHeart'
 
 export type ProductCardProps = {
   product: {
@@ -11,6 +12,7 @@ export type ProductCardProps = {
     title: string
     handle: string
     description: string
+    category?: string
     imageUrl?: string
     altText?: string | null
     basePrice: number
@@ -22,41 +24,45 @@ export type ProductCardProps = {
 
 const ProductCard = ({ product }: ProductCardProps) => {
   return (
-    <div className="group relative rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden hover:shadow-xl transition-shadow duration-300">
-      {product.discountPercent > 0 && (
-        <span className="absolute top-3 left-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-lg z-10">
-          -{product.discountPercent}%
-        </span>
-      )}
-
-      {product.imageUrl && (
-        <Link
-          href={`/products/${product.handle}`}
-          className="block overflow-hidden"
-        >
+    <div className="relative">
+      <Link
+        href={`/products/${product.handle}`}
+        className="block relative aspect-[4/5]"
+      >
+        {product.imageUrl && (
           <Image
             src={product.imageUrl}
             alt={product.altText || product.title}
-            width={400}
-            height={400}
-            className="object-cover w-full h-64 transition-transform duration-300 group-hover:scale-105"
+            fill
+            className="object-contain"
           />
-        </Link>
-      )}
+        )}
+      </Link>
 
-      <div className="p-5 flex flex-col justify-between h-[220px]">
-        {/* Title & description */}
+      <div className="flex justify-between absolute top-4 left-2 right-2">
         <div>
-          <h2 className="text-lg font-semibold text-gray-900 truncate">
-            {product.title}
-          </h2>
-          <p className="text-sm text-gray-500 mt-1 line-clamp-2">
-            {product.description}
-          </p>
+          {product.discountPercent > 0 && (
+            <span className=" bg-red-600 text-white text-xs font-semibold px-2 py-1 rounded-md z-10">
+              -{product.discountPercent}%
+            </span>
+          )}
         </div>
+        <div>
+          <BorderHeart className='size-6' />
+        </div>
+      </div>
 
-        {/* Giá */}
-        <div className="mt-3">
+      <div className="flex flex-col gap-2">
+        {product.category && (
+          <p className="text-xs font-medium text-gray-400 uppercase tracking-wide">
+            {product.category}
+          </p>
+        )}
+
+        <h2 className="text-sm font-semibold text-gray-900 line-clamp-2">
+          {product.title}
+        </h2>
+        <div className="mt-auto">
           {product.discountPercent > 0 ? (
             <div className="flex items-center gap-2">
               {product.compareAtPrice && (
@@ -64,7 +70,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
                   {product.compareAtPrice} {product.currency}
                 </span>
               )}
-              <span className="text-red-600 font-bold text-lg">
+              <span className=" font-bold">
                 {product.basePrice} {product.currency}
               </span>
             </div>
@@ -75,10 +81,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           )}
         </div>
 
-        {/* Button */}
-        <div className="mt-4">
-          <AddToCartButton variantId={product.variantId} />
-        </div>
+        <AddToCartButton variantId={product.variantId} />
       </div>
     </div>
   )

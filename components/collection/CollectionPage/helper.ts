@@ -1,5 +1,4 @@
 import { createClient } from '@/prismicio'
-import { Content } from '@prismicio/client'
 
 const isValidTime = (start?: string | null, end?: string | null) => {
   const now = Date.now()

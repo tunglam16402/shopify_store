@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HomepageDocumentData, Simplify } from '@/prismicio-types'
 import HeroSection from '../HeroSection'
 import FeaturedCollections from '../FeaturedCollection'

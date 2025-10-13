@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 
 import { useShopifyAnalytics } from '@/shopify/hooks/use-shopify-analytics'

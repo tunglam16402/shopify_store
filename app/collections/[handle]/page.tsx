@@ -15,7 +15,7 @@ const Collection = async ({ params }: Props) => {
   console.log('bannerData :>> ', bannerData);
 
   return (
-    <main>
+    <main className='mt-[100px] md:mt-0'>
       <CollectionPage products={products} bannerData={bannerData} />
     </main>
   )
