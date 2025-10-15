@@ -5,6 +5,7 @@ import type { Metadata } from 'next'
 import { Literata, Tangerine } from 'next/font/google'
 import './globals.css'
 import StoreProvider from './StoreProvider'
+import { primaryFont } from './font'
 
 const tangerineFont = Tangerine({
   variable: '--font-tangerine-sans',
@@ -31,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${tangerineFont.variable} ${literataFont.variable} antialiased`}
+        className={`${tangerineFont.variable} ${literataFont.variable} ${primaryFont.variable} antialiased`}
       >
         <StoreProvider>
           <GlobalUIProvider>

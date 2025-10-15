@@ -16,7 +16,7 @@ const FeaturedProductGroup: React.FC<ClientProps> = ({ sections }) => {
   return (
     <>
       {sections.map(({ widgetId, section, items }) => (
-        <section key={widgetId} className="main-width">
+        <section key={widgetId} className="">
           <h2 className="text-3xl md:text-5xl text-center mt-4">
             <span className="uppercase">{section.heading_title}</span>
             {section.sub_title && (
@@ -40,7 +40,7 @@ const FeaturedProductGroup: React.FC<ClientProps> = ({ sections }) => {
             responsiveConfig={[
               { breakpoint: 768, slidesToShow: 2 },
               { breakpoint: 1024, slidesToShow: 3, showArrows: true },
-              { breakpoint: 1280, slidesToShow: 3, showArrows: true },
+              { breakpoint: 1280, slidesToShow: 4, showArrows: true },
             ]}
           />
         </section>

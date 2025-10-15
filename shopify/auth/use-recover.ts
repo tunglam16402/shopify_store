@@ -28,11 +28,7 @@ export async function resetPasswordByUrl(resetUrl: string, password: string) {
     },
   })
 
-  console.log('Reset password response >>>', JSON.stringify(data, null, 2))
-
   const result = data.customerResetByUrl
-
-  console.log('result :>> ', result)
 
   if (result?.customerUserErrors?.length) {
     return { success: false, errors: result.customerUserErrors }

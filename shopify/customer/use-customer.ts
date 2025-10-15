@@ -1,12 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { parseShopifyErrors } from '@/lib/helper'
 import { shopifyFetch } from '../fetcher'
 import { CustomerUpdateMutation, GetCustomerQuery } from '../types/graphql'
 import { customerUpdateMutation } from '../utils/mutation'
 import getCustomerQuery from '../utils/query/get-customer-query'
 
 export async function getCustomer(accessToken: string) {
-  console.log('Getting customer with token:', accessToken)
 
   try {
     const data = await shopifyFetch<GetCustomerQuery>({

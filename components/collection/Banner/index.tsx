@@ -19,8 +19,6 @@ interface BannerData {
 const Banner = ({ bannerData }: { bannerData: BannerData }) => {
   const { image, pathname } = bannerData
 
-  console.log('image :>> ', image)
-
   return (
     <section className={styles.wrapper}>
       <Link href={pathname || '#'} className={styles.mainBanner}>

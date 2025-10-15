@@ -84,8 +84,6 @@ export async function updateCartLine(
     },
   })
 
-  console.log('updateCartLine raw response:', JSON.stringify(data, null, 2))
-
   if (data?.cartLinesUpdate?.userErrors?.length) {
     console.error('Cart update errors:', data.cartLinesUpdate.userErrors)
   }

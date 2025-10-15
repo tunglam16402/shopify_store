@@ -24,10 +24,10 @@ export type ProductCardProps = {
 
 const ProductCard = ({ product }: ProductCardProps) => {
   return (
-    <div className="relative w-full  flex flex-col h-full">
+    <div className="relative w-full flex flex-col h-full mx-2">
       <Link
         href={`/products/${product.handle}`}
-        className="block relative aspect-[4/5]"
+        className="relative aspect-[4/5]"
       >
         {product.imageUrl && (
           <Image
@@ -48,7 +48,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <BorderHeart className="size-6" />
       </div>
 
-      {/* layout dạng grid nội bộ */}
       <div className="grid grid-rows-[auto_minmax(2.5rem,auto)_auto_auto] flex-1 mt-3">
         {/* category */}
         <div className="min-h-[1rem]">

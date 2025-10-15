@@ -44,6 +44,7 @@ body {
   --max-container-width: 1440px;
   --max-container-width-small: 1200px;
   --default-width: 100%;
+  /* font-family: var(--primary-font); */
 }
 
 @theme {
@@ -161,6 +162,9 @@ input {
   }
 }
 
-h1 {
+h1,
+h2,
+h3,
+h4 {
   font-family: --font-literata;
 }

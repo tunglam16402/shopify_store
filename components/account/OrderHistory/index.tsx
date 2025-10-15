@@ -10,8 +10,6 @@ const OrderHistory = () => {
 
   const orders = customer?.orders?.nodes
 
-  console.log('orders :>> ', orders)
-
   if (orders?.length === 0) {
     return <p className="text-gray-500">You have no orders yet.</p>
   }

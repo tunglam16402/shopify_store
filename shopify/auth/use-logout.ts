@@ -6,8 +6,6 @@ export async function deleteCustomerAccessToken(accessToken: string) {
   try {
     if (!accessToken) throw new Error('No access token provided')
 
-    console.log('Starting deleteCustomerAccessToken with token:', accessToken)
-
     const data = await shopifyFetch<CustomerAccessTokenDeleteMutation>({
       query: customerAccessTokenDeleteMutation,
       variables: { customerAccessToken: accessToken },

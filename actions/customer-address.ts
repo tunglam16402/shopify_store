@@ -37,7 +37,6 @@ export async function createCustomerAddressAction(
     }
   }
 
-  console.log('accessToken :>> ', accessToken)
 
   const result = await createCustomerAddress(accessToken, {
     firstName,
@@ -51,8 +50,6 @@ export async function createCustomerAddressAction(
     country,
     zip,
   })
-
-  console.log('result :>> ', result)
 
   if (!result || !result.data?.customerAddress) {
     return {

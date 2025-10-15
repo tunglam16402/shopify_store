@@ -10,7 +10,7 @@ const Logo = () => {
       <defs>
         <style
           dangerouslySetInnerHTML={{
-            __html: `.cls-1 { fill: #000; stroke-width: 0px; }`,
+            __html: `.cls-1 { fill: #000; strokeWidth: 0px; }`,
           }}
         />
       </defs>

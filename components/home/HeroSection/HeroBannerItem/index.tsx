@@ -20,7 +20,7 @@ const HeroBannerItem: React.FC<IHeroBannerItem> = ({ data }) => {
           alt=""
           className="object-cover"
           loading='lazy'
-          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 100vw, 50vw"
+          sizes="(max-width: 768px) 100vw, 50vw"
         />
       </div>
 
