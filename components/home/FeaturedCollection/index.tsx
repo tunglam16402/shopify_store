@@ -41,12 +41,6 @@ const FeaturedCollections: React.FC<IFeaturedCollections> = ({
           },
         ]}
       />
-      {/* {collections.map((collection) => (
-        <FeaturedCollectionItem
-          key={collection.pathname}
-          collection={collection}
-        />
-      ))} */}
     </div>
   )
 }

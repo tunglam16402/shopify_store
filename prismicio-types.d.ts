@@ -254,6 +254,106 @@ export interface HomepageDocumentDataCollectionsItem {
 }
 
 /**
+ * Item in *Homepage → Product Section*
+ */
+export interface HomepageDocumentDataProductSectionItem {
+  /**
+   * Heading Title field in *Homepage → Product Section*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.product_section[].heading_title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  heading_title: prismic.KeyTextField
+
+  /**
+   * Sub Title field in *Homepage → Product Section*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.product_section[].sub_title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  sub_title: prismic.KeyTextField
+
+  /**
+   * Heading Title 2 field in *Homepage → Product Section*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.product_section[].heading_title_2
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  heading_title_2: prismic.KeyTextField
+
+  /**
+   * Widget ID field in *Homepage → Product Section*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.product_section[].widget_id
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  widget_id: prismic.KeyTextField
+}
+
+/**
+ * Item in *Homepage → Video Banner*
+ */
+export interface HomepageDocumentDataVideoBannerItem {
+  /**
+   * Video field in *Homepage → Video Banner*
+   *
+   * - **Field Type**: Embed
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.video_banner[].video
+   * - **Documentation**: https://prismic.io/docs/fields/embed
+   */
+  video: prismic.EmbedField
+
+  /**
+   * Title field in *Homepage → Video Banner*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.video_banner[].title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField
+
+  /**
+   * Sub Title field in *Homepage → Video Banner*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.video_banner[].sub_title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  sub_title: prismic.KeyTextField
+
+  /**
+   * Button Text field in *Homepage → Video Banner*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.video_banner[].button_text
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  button_text: prismic.KeyTextField
+
+  /**
+   * Pathname field in *Homepage → Video Banner*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.video_banner[].pathname
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  pathname: prismic.KeyTextField
+}
+
+/**
  * Content for Homepage documents
  */
 interface HomepageDocumentData {
@@ -277,7 +377,31 @@ interface HomepageDocumentData {
    * - **Tab**: Collections
    * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
    */
-  collections: prismic.GroupField<Simplify<HomepageDocumentDataCollectionsItem>>
+  collections: prismic.GroupField<
+    Simplify<HomepageDocumentDataCollectionsItem>
+  > /**
+   * Product Section field in *Homepage*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.product_section[]
+   * - **Tab**: Suggestions
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  product_section: prismic.GroupField<
+    Simplify<HomepageDocumentDataProductSectionItem>
+  > /**
+   * Video Banner field in *Homepage*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.video_banner[]
+   * - **Tab**: Video Banner
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  video_banner: prismic.GroupField<
+    Simplify<HomepageDocumentDataVideoBannerItem>
+  >
 }
 
 /**
@@ -497,6 +621,8 @@ declare module '@prismicio/client' {
       HomepageDocumentData,
       HomepageDocumentDataHeroBannersItem,
       HomepageDocumentDataCollectionsItem,
+      HomepageDocumentDataProductSectionItem,
+      HomepageDocumentDataVideoBannerItem,
       AllDocumentTypes,
       CollectionBannerSlice,
       CollectionBannerSliceDefaultPrimaryTileBannerItem,

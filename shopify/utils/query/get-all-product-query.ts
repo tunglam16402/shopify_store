@@ -6,6 +6,7 @@ const getProductsQuery = /* GraphQL */ `
         title
         handle
         description
+        publishedAt
         category {
           name
         }

@@ -145,7 +145,90 @@
         }
       }
     },
-    "Latest": {},
-    "Suggestions": {}
+    "Suggestions": {
+      "product_section": {
+        "type": "Group",
+        "config": {
+          "label": "Product Section",
+          "repeat": true,
+          "fields": {
+            "heading_title": {
+              "type": "Text",
+              "config": {
+                "label": "Heading Title",
+                "placeholder": ""
+              }
+            },
+            "sub_title": {
+              "type": "Text",
+              "config": {
+                "label": "Sub Title",
+                "placeholder": ""
+              }
+            },
+            "heading_title_2": {
+              "type": "Text",
+              "config": {
+                "label": "Heading Title 2",
+                "placeholder": ""
+              }
+            },
+            "widget_id": {
+              "type": "Text",
+              "config": {
+                "label": "Widget ID",
+                "placeholder": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    "Video Banner": {
+      "video_banner": {
+        "type": "Group",
+        "config": {
+          "label": "Video Banner",
+          "repeat": true,
+          "fields": {
+            "video": {
+              "type": "Embed",
+              "config": {
+                "label": "Video",
+                "placeholder": ""
+              }
+            },
+            "title": {
+              "type": "Text",
+              "config": {
+                "label": "Title",
+                "placeholder": ""
+              }
+            },
+            "sub_title": {
+              "type": "Text",
+              "config": {
+                "label": "Sub Title",
+                "placeholder": ""
+              }
+            },
+            "button_text": {
+              "type": "Text",
+              "config": {
+                "label": "Button Text",
+                "placeholder": ""
+              }
+            },
+            "pathname": {
+              "type": "Text",
+              "config": {
+                "label": "Pathname",
+                "placeholder": ""
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }

@@ -33,6 +33,7 @@ export function mappingDiscountPrice(
     title: product.title,
     handle: product.handle,
     description: product.description,
+    publishedAt: product.publishedAt,
     category: product.category?.name,
     imageUrl: image?.url,
     altText: image?.altText || null,
