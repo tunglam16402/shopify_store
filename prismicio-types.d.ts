@@ -305,12 +305,12 @@ export interface HomepageDocumentDataVideoBannerItem {
   /**
    * Video field in *Homepage → Video Banner*
    *
-   * - **Field Type**: Embed
+   * - **Field Type**: Link to Media
    * - **Placeholder**: *None*
    * - **API ID Path**: homepage.video_banner[].video
-   * - **Documentation**: https://prismic.io/docs/fields/embed
+   * - **Documentation**: https://prismic.io/docs/fields/link-to-media
    */
-  video: prismic.EmbedField
+  video: prismic.LinkToMediaField<prismic.FieldState, never>
 
   /**
    * Title field in *Homepage → Video Banner*

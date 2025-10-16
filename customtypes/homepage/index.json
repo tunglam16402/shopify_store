@@ -189,13 +189,15 @@
         "type": "Group",
         "config": {
           "label": "Video Banner",
-          "repeat": true,
+          "repeat": false,
           "fields": {
             "video": {
-              "type": "Embed",
+              "type": "Link",
               "config": {
                 "label": "Video",
-                "placeholder": ""
+                "placeholder": "",
+                "select": "media",
+                "allowText": true
               }
             },
             "title": {

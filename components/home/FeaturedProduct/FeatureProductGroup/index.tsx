@@ -26,6 +26,20 @@ const FeaturedProductGroup: React.FC<ClientProps> = ({ sections }) => {
             )}
             {section.heading_title_2 && section.heading_title_2}
           </h2>
+          <video
+            playsInline
+            autoPlay
+            muted
+            loop
+            width="800"
+            height="740"
+            preload="none"
+          >
+            <source
+              src="https://cdn.shopify.com/videos/c/o/v/ea4656ae3bca451ea82dea87b80ff64a.mp4"
+              type="video/mp4"
+            />
+          </video>
 
           <Carousel
             items={items}
