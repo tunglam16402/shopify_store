@@ -16,7 +16,7 @@ const FeaturedCollections: React.FC<IFeaturedCollections> = ({
   collections,
 }) => {
   return (
-    <div className="mt-5">
+    <div className="mt-5 md:mx-5">
       <Carousel
         items={collections}
         renderItem={(collection) => (
@@ -29,7 +29,7 @@ const FeaturedCollections: React.FC<IFeaturedCollections> = ({
         itemsToScroll={1}
         loop={true}
         autoPlay={false}
-        showDots
+        showDots={false}
         responsiveConfig={[
           { breakpoint: 768, slidesToShow: 2 },
           { breakpoint: 1024, slidesToShow: 3, showArrows: true },

@@ -20,11 +20,15 @@ const HomePage: React.FC<IHomePage> = ({ data }) => {
     <div>
       <HeroSection banners={data.hero_banners} />
       <FeaturedCollections collections={data.collections} />
-      {/* {bestSellerSection && <FeaturedProduct products={[bestSellerSection]} />} */}
-      <VideoSection videos={data.video_banner} />
-
 
       {latestSection && <FeaturedProduct products={[latestSection]} />}
+      <VideoSection videos={data.video_banner} />
+      <HeroSection banners={data.hero_banners} />
+      <section className='max-w-[1440px] mx-auto'>
+        {latestSection && <FeaturedProduct products={[latestSection]} />}
+      </section>
+
+      {/* {bestSellerSection && <FeaturedProduct products={[bestSellerSection]} />} */}
     </div>
   )
 }

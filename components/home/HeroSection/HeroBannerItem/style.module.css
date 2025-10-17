@@ -18,6 +18,8 @@
   .hero_banner_item {
     flex-direction: row;
     gap: 0;
+    height: 100vh ;
+
   }
 
   .hero_text {

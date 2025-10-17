@@ -70,6 +70,13 @@
                 "label": "Pathname",
                 "placeholder": ""
               }
+            },
+            "background_color": {
+              "type": "Text",
+              "config": {
+                "label": "Background Color",
+                "placeholder": "#4f141f"
+              }
             }
           }
         }
@@ -226,6 +233,14 @@
               "config": {
                 "label": "Pathname",
                 "placeholder": ""
+              }
+            },
+            "banner": {
+              "type": "Image",
+              "config": {
+                "label": "Banner",
+                "constraint": {},
+                "thumbnails": []
               }
             }
           }

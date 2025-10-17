@@ -176,6 +176,16 @@ export interface HomepageDocumentDataHeroBannersItem {
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   pathname: prismic.KeyTextField
+
+  /**
+   * Background Color field in *Homepage → Hero Banners*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: #4f141f
+   * - **API ID Path**: homepage.hero_banners[].background_color
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  background_color: prismic.KeyTextField
 }
 
 /**
@@ -351,6 +361,16 @@ export interface HomepageDocumentDataVideoBannerItem {
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   pathname: prismic.KeyTextField
+
+  /**
+   * Banner field in *Homepage → Video Banner*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.video_banner[].banner
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  banner: prismic.ImageField<never>
 }
 
 /**

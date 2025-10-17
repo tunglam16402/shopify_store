@@ -1,23 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
+import { ImageField } from "@prismicio/client"
+import { PrismicNextImage } from "@prismicio/next"
+
 interface IVideoBanner {
-  src: string
-  className: any
+  field?: ImageField | null
 }
 
-const VideoBanner = ({ src, className }: IVideoBanner) => {
+const VideoBanner = ({ field }: IVideoBanner) => {
+  if (!field) return null
 
   return (
-    <video
-      className={className}
-      src={src}
-      autoPlay
-      muted
-      loop
-      playsInline
-      preload="metadata"
-    />
+    <PrismicNextImage alt="" field={field} className="relative object-cover h-[240px] md:h-full"/>
   )
 }
 

@@ -6,6 +6,7 @@
 :root {
   /* --background: #ffffff;
   --foreground: #171717; */
+  --bg-primary: #f89540;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -144,6 +145,10 @@ body {
   box-sizing: border-box;
 }
 
+.bg-primary {
+  background-color: var(--bg-primary);
+}
+
 input {
   outline: 0;
 }
@@ -155,6 +160,8 @@ input {
   padding: 0 15px;
   margin: 0 auto;
 }
+
+
 
 @media (min-width: 768px) {
   .main-width {

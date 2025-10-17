@@ -8,9 +8,10 @@ import FeaturedProductGroup from './FeatureProductGroup'
 
 interface IFeaturedProductServer {
   products: GroupField<Simplify<HomepageDocumentDataProductSectionItem>>
+  width?: string
 }
 
-const FeaturedProductServer = async ({ products }: IFeaturedProductServer) => {
+const FeaturedProductServer = async ({ products, width }: IFeaturedProductServer) => {
   if (!products?.length) return null
 
   const allData = await Promise.all(
@@ -25,7 +26,11 @@ const FeaturedProductServer = async ({ products }: IFeaturedProductServer) => {
 
   if (!validSections.length) return null
 
-  return <FeaturedProductGroup sections={validSections} />
+  return (
+    <section className={width}>
+      <FeaturedProductGroup sections={validSections} />
+    </section>
+  )
 }
 
 export default FeaturedProductServer

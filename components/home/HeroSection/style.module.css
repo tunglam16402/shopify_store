@@ -12,5 +12,6 @@
     flex-direction: row;
     margin-top: 0;
     gap: 0;
+    height: 100vh ;
   }
 }
