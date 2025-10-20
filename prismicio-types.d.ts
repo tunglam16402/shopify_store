@@ -374,6 +374,76 @@ export interface HomepageDocumentDataVideoBannerItem {
 }
 
 /**
+ * Item in *Homepage → USP*
+ */
+export interface HomepageDocumentDataUspItem {
+  /**
+   * Title field in *Homepage → USP*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.usp[].title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField
+
+  /**
+   * Text field in *Homepage → USP*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.usp[].text
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  text: prismic.KeyTextField
+}
+
+/**
+ * Item in *Homepage → Blog*
+ */
+export interface HomepageDocumentDataBlogItem {
+  /**
+   * Image field in *Homepage → Blog*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.blog[].image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  image: prismic.ImageField<never>
+
+  /**
+   * Title field in *Homepage → Blog*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.blog[].title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField
+
+  /**
+   * Description field in *Homepage → Blog*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.blog[].description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField
+
+  /**
+   * Pathname field in *Homepage → Blog*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.blog[].pathname
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  pathname: prismic.KeyTextField
+}
+
+/**
  * Content for Homepage documents
  */
 interface HomepageDocumentData {
@@ -421,7 +491,67 @@ interface HomepageDocumentData {
    */
   video_banner: prismic.GroupField<
     Simplify<HomepageDocumentDataVideoBannerItem>
-  >
+  > /**
+   * Image field in *Homepage*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.image
+   * - **Tab**: Featured In
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  image: prismic.ImageField<never>
+
+  /**
+   * Mobile Image field in *Homepage*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.mobile_image
+   * - **Tab**: Featured In
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  mobile_image: prismic.ImageField<never> /**
+   * USP field in *Homepage*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.usp[]
+   * - **Tab**: USP
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  usp: prismic.GroupField<Simplify<HomepageDocumentDataUspItem>> /**
+   * Blog field in *Homepage*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.blog[]
+   * - **Tab**: Blogs
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  blog: prismic.GroupField<Simplify<HomepageDocumentDataBlogItem>>
+
+  /**
+   * CTA Button field in *Homepage*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.cta_button
+   * - **Tab**: Blogs
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  cta_button: prismic.KeyTextField
+
+  /**
+   * CTA Pathname field in *Homepage*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.cta_pathname
+   * - **Tab**: Blogs
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  cta_pathname: prismic.KeyTextField
 }
 
 /**
@@ -643,6 +773,8 @@ declare module '@prismicio/client' {
       HomepageDocumentDataCollectionsItem,
       HomepageDocumentDataProductSectionItem,
       HomepageDocumentDataVideoBannerItem,
+      HomepageDocumentDataUspItem,
+      HomepageDocumentDataBlogItem,
       AllDocumentTypes,
       CollectionBannerSlice,
       CollectionBannerSliceDefaultPrimaryTileBannerItem,

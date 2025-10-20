@@ -3,6 +3,9 @@ import HeroSection from '../HeroSection'
 import FeaturedCollections from '../FeaturedCollection'
 import FeaturedProduct from '../FeaturedProduct'
 import VideoSection from '../VideoSection'
+import FeaturedIn from '../FeaturedIn'
+import Blogs from '../Blogs'
+import USPs from '../USPs'
 
 interface IHomePage {
   data: Simplify<HomepageDocumentData>
@@ -27,6 +30,10 @@ const HomePage: React.FC<IHomePage> = ({ data }) => {
       <section className='max-w-[1440px] mx-auto'>
         {latestSection && <FeaturedProduct products={[latestSection]} />}
       </section>
+      {/* <FeaturedIn features/> */}
+      <USPs usps={data.usp}/>
+      <Blogs blogs={data.blog}/>
+
 
       {/* {bestSellerSection && <FeaturedProduct products={[bestSellerSection]} />} */}
     </div>

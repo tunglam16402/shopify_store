@@ -246,6 +246,103 @@
           }
         }
       }
+    },
+    "Featured In": {
+      "image": {
+        "type": "Image",
+        "config": {
+          "label": "Image",
+          "constraint": {},
+          "thumbnails": []
+        }
+      },
+      "mobile_image": {
+        "type": "Image",
+        "config": {
+          "label": "Mobile Image",
+          "constraint": {},
+          "thumbnails": []
+        }
+      }
+    },
+    "USP": {
+      "usp": {
+        "type": "Group",
+        "config": {
+          "label": "USP",
+          "repeat": true,
+          "fields": {
+            "title": {
+              "type": "Text",
+              "config": {
+                "label": "Title",
+                "placeholder": ""
+              }
+            },
+            "text": {
+              "type": "Text",
+              "config": {
+                "label": "Text",
+                "placeholder": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    "Blogs": {
+      "blog": {
+        "type": "Group",
+        "config": {
+          "label": "Blog",
+          "repeat": true,
+          "fields": {
+            "image": {
+              "type": "Image",
+              "config": {
+                "label": "Image",
+                "constraint": {},
+                "thumbnails": []
+              }
+            },
+            "title": {
+              "type": "Text",
+              "config": {
+                "label": "Title",
+                "placeholder": ""
+              }
+            },
+            "description": {
+              "type": "Text",
+              "config": {
+                "label": "Description",
+                "placeholder": ""
+              }
+            },
+            "pathname": {
+              "type": "Text",
+              "config": {
+                "label": "Pathname",
+                "placeholder": ""
+              }
+            }
+          }
+        }
+      },
+      "cta_button": {
+        "type": "Text",
+        "config": {
+          "label": "CTA Button",
+          "placeholder": ""
+        }
+      },
+      "cta_pathname": {
+        "type": "Text",
+        "config": {
+          "label": "CTA Pathname",
+          "placeholder": ""
+        }
+      }
     }
   }
 }
