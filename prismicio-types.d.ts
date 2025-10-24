@@ -374,6 +374,31 @@ export interface HomepageDocumentDataVideoBannerItem {
 }
 
 /**
+ * Item in *Homepage → Feature In*
+ */
+export interface HomepageDocumentDataFeatureInItem {
+  /**
+   * Image field in *Homepage → Feature In*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.feature_in[].image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  image: prismic.ImageField<never>
+
+  /**
+   * Mobile Image field in *Homepage → Feature In*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.feature_in[].mobile_image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  mobile_image: prismic.ImageField<never>
+}
+
+/**
  * Item in *Homepage → USP*
  */
 export interface HomepageDocumentDataUspItem {
@@ -492,26 +517,17 @@ interface HomepageDocumentData {
   video_banner: prismic.GroupField<
     Simplify<HomepageDocumentDataVideoBannerItem>
   > /**
-   * Image field in *Homepage*
+   * Feature In field in *Homepage*
    *
-   * - **Field Type**: Image
+   * - **Field Type**: Group
    * - **Placeholder**: *None*
-   * - **API ID Path**: homepage.image
+   * - **API ID Path**: homepage.feature_in[]
    * - **Tab**: Featured In
-   * - **Documentation**: https://prismic.io/docs/fields/image
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
    */
-  image: prismic.ImageField<never>
-
-  /**
-   * Mobile Image field in *Homepage*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: homepage.mobile_image
-   * - **Tab**: Featured In
-   * - **Documentation**: https://prismic.io/docs/fields/image
-   */
-  mobile_image: prismic.ImageField<never> /**
+  feature_in: prismic.GroupField<
+    Simplify<HomepageDocumentDataFeatureInItem>
+  > /**
    * USP field in *Homepage*
    *
    * - **Field Type**: Group
@@ -530,28 +546,6 @@ interface HomepageDocumentData {
    * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
    */
   blog: prismic.GroupField<Simplify<HomepageDocumentDataBlogItem>>
-
-  /**
-   * CTA Button field in *Homepage*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: homepage.cta_button
-   * - **Tab**: Blogs
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  cta_button: prismic.KeyTextField
-
-  /**
-   * CTA Pathname field in *Homepage*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: homepage.cta_pathname
-   * - **Tab**: Blogs
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  cta_pathname: prismic.KeyTextField
 }
 
 /**
@@ -773,6 +767,7 @@ declare module '@prismicio/client' {
       HomepageDocumentDataCollectionsItem,
       HomepageDocumentDataProductSectionItem,
       HomepageDocumentDataVideoBannerItem,
+      HomepageDocumentDataFeatureInItem,
       HomepageDocumentDataUspItem,
       HomepageDocumentDataBlogItem,
       AllDocumentTypes,

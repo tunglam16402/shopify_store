@@ -18,23 +18,18 @@ interface IUSPs {
 
 const USPs: React.FC<IUSPs> = ({ usps }) => {
   return (
-    <section className="px-4 py-6">
-      <h2 className="text-3xl md:text-5xl text-center mt-12">
-        <span className="uppercase">featured </span>
-        <span className="font-[tangerine] font-bold text-5xl px-2">in</span>
-      </h2>
+    <section className="mt-12">
       <div className="hidden md:grid md:grid-cols-3 md:gap-6">
         {usps?.map((usp) => (
           <USPItem usp={usp} key={usp.title} />
         ))}
       </div>
 
-      {/* 📱 Mobile layout */}
       <div className="md:hidden">
-        <Carousel opts={{ align: 'start', loop: true }}>
+        <Carousel opts={{ align: 'center', loop: true }}>
           <CarouselContent>
             {usps?.map((usp) => (
-              <CarouselItem key={usp.title} className="basis-[80%]">
+              <CarouselItem key={usp.title} >
                 <USPItem usp={usp} />
               </CarouselItem>
             ))}

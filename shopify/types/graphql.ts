@@ -3915,6 +3915,7 @@ export type GetCollectionListQuery = {
         title: string
         handle: string
         description: string
+        publishedAt: string
         category?: { name: string } | null
         images: { nodes: Array<{ url: string; altText?: string | null }> }
         variants: {

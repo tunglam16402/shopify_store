@@ -16,8 +16,6 @@ const VideoSection: React.FC<IVideoSection> = ({ videos }) => {
   const video = videos[0]
   const videoUrl = video?.video && 'url' in video.video ? video.video.url : ''
 
-  console.log('video :>> ', video)
-
   return (
     <div className=' w-full mt-12'>
       <div className="relative">

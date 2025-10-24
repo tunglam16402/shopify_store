@@ -8,6 +8,7 @@ const getProductByCollectionQuery = /* GraphQL */ `
           id
           title
           handle
+          publishedAt
           description
           category {
             name

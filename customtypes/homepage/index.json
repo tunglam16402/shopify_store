@@ -248,20 +248,29 @@
       }
     },
     "Featured In": {
-      "image": {
-        "type": "Image",
+      "feature_in": {
+        "type": "Group",
         "config": {
-          "label": "Image",
-          "constraint": {},
-          "thumbnails": []
-        }
-      },
-      "mobile_image": {
-        "type": "Image",
-        "config": {
-          "label": "Mobile Image",
-          "constraint": {},
-          "thumbnails": []
+          "label": "Feature In",
+          "repeat": true,
+          "fields": {
+            "image": {
+              "type": "Image",
+              "config": {
+                "label": "Image",
+                "constraint": {},
+                "thumbnails": []
+              }
+            },
+            "mobile_image": {
+              "type": "Image",
+              "config": {
+                "label": "Mobile Image",
+                "constraint": {},
+                "thumbnails": []
+              }
+            }
+          }
         }
       }
     },
@@ -327,20 +336,6 @@
               }
             }
           }
-        }
-      },
-      "cta_button": {
-        "type": "Text",
-        "config": {
-          "label": "CTA Button",
-          "placeholder": ""
-        }
-      },
-      "cta_pathname": {
-        "type": "Text",
-        "config": {
-          "label": "CTA Pathname",
-          "placeholder": ""
         }
       }
     }

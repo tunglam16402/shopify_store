@@ -30,7 +30,7 @@ const HomePage: React.FC<IHomePage> = ({ data }) => {
       <section className='max-w-[1440px] mx-auto'>
         {latestSection && <FeaturedProduct products={[latestSection]} />}
       </section>
-      {/* <FeaturedIn features/> */}
+      <FeaturedIn features={data.feature_in}/>
       <USPs usps={data.usp}/>
       <Blogs blogs={data.blog}/>
 

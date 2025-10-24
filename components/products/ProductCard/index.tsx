@@ -49,7 +49,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
       </div>
 
       <div className="grid grid-rows-[auto_minmax(2.5rem,auto)_auto_auto] flex-1 mt-3">
-        {/* category */}
         <div className="min-h-[1rem]">
           {product.category && (
             <p className="text-xs font-medium text-gray-400 uppercase tracking-wide">
