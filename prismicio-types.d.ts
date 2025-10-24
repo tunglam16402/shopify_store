@@ -104,6 +104,169 @@ export type BannerManagementDocument<Lang extends string = string> =
   >
 
 /**
+ * Item in *Footer → Newsletter*
+ */
+export interface FooterDocumentDataNewsletterItem {
+  /**
+   * Title field in *Footer → Newsletter*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer.newsletter[].title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField
+
+  /**
+   * Description field in *Footer → Newsletter*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer.newsletter[].description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField
+}
+
+/**
+ * Item in *Footer → Inspiration*
+ */
+export interface FooterDocumentDataInspirationItem {
+  /**
+   * Title field in *Footer → Inspiration*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer.inspiration[].title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField
+
+  /**
+   * Pathname field in *Footer → Inspiration*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer.inspiration[].pathname
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  pathname: prismic.KeyTextField
+}
+
+/**
+ * Item in *Footer → Customer Care*
+ */
+export interface FooterDocumentDataCustomerCareItem {
+  /**
+   * Title field in *Footer → Customer Care*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer.customer_care[].title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField
+
+  /**
+   * Pathname field in *Footer → Customer Care*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer.customer_care[].pathname
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  pathname: prismic.KeyTextField
+}
+
+/**
+ * Item in *Footer → Policies*
+ */
+export interface FooterDocumentDataPoliciesItem {
+  /**
+   * Title field in *Footer → Policies*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer.policies[].title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField
+
+  /**
+   * Pathname field in *Footer → Policies*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer.policies[].pathname
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  pathname: prismic.KeyTextField
+}
+
+/**
+ * Content for Footer documents
+ */
+interface FooterDocumentData {
+  /**
+   * Newsletter field in *Footer*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer.newsletter[]
+   * - **Tab**: Newsletter
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  newsletter: prismic.GroupField<Simplify<FooterDocumentDataNewsletterItem>> /**
+   * Inspiration field in *Footer*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer.inspiration[]
+   * - **Tab**: Inspiration
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  inspiration: prismic.GroupField<
+    Simplify<FooterDocumentDataInspirationItem>
+  > /**
+   * Customer Care field in *Footer*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer.customer_care[]
+   * - **Tab**: Customer Care
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  customer_care: prismic.GroupField<
+    Simplify<FooterDocumentDataCustomerCareItem>
+  > /**
+   * Policies field in *Footer*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer.policies[]
+   * - **Tab**: Policies
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  policies: prismic.GroupField<Simplify<FooterDocumentDataPoliciesItem>>
+}
+
+/**
+ * Footer document from Prismic
+ *
+ * - **API ID**: `footer`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type FooterDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<FooterDocumentData>,
+    'footer',
+    Lang
+  >
+
+/**
  * Item in *Homepage → Hero Banners*
  */
 export interface HomepageDocumentDataHeroBannersItem {
@@ -564,7 +727,10 @@ export type HomepageDocument<Lang extends string = string> =
     Lang
   >
 
-export type AllDocumentTypes = BannerManagementDocument | HomepageDocument
+export type AllDocumentTypes =
+  | BannerManagementDocument
+  | FooterDocument
+  | HomepageDocument
 
 /**
  * Item in *CollectionBanner → Default → Primary → Tile Banner*
@@ -761,6 +927,12 @@ declare module '@prismicio/client' {
       BannerManagementDocument,
       BannerManagementDocumentData,
       BannerManagementDocumentDataSlicesSlice,
+      FooterDocument,
+      FooterDocumentData,
+      FooterDocumentDataNewsletterItem,
+      FooterDocumentDataInspirationItem,
+      FooterDocumentDataCustomerCareItem,
+      FooterDocumentDataPoliciesItem,
       HomepageDocument,
       HomepageDocumentData,
       HomepageDocumentDataHeroBannersItem,

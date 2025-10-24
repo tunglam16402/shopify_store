@@ -70,7 +70,7 @@ const TopHeader: React.FC = () => {
   const nextIndex = (currentIndex + 1) % messages.length
 
   return (
-    <div className="w-full bg-primary text-white uppercase overflow-hidden">
+    <div className="w-full bg-sub-primary text-white uppercase overflow-hidden">
       <div className="relative" style={{ height: itemHeight }}>
         <div
           style={{

@@ -1,6 +1,6 @@
 'use client'
+import { GlobalUIContext } from '@/components/common/Layout/GlobalUI'
 import { useContext, useCallback } from 'react'
-import { GlobalUIContext } from '@/context/GlobalUI'
 
 // Hook lấy context gốc
 export const useGlobalUI = () => {

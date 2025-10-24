@@ -6,7 +6,13 @@
 :root {
   /* --background: #ffffff;
   --foreground: #171717; */
-  --bg-primary: #f89540;
+  --bg-sub-primary: #f89540;
+  --bg-primary: #4f141f;
+
+
+
+
+
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -147,6 +153,10 @@ body {
 
 .bg-primary {
   background-color: var(--bg-primary);
+}
+
+.bg-sub-primary {
+  background-color: var(--bg-sub-primary);
 }
 
 input {
