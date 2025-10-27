@@ -6,12 +6,10 @@
 :root {
   /* --background: #ffffff;
   --foreground: #171717; */
-  --bg-sub-primary: #f89540;
-  --bg-primary: #4f141f;
-
-
-
-
+  --bg-primary: #4f141f; /* đỏ rượu */
+  --bg-sub-primary: #f89540; /* cam sáng */
+  --bg-accent: #e3c16f; /* vàng ánh kim */
+  --bg-neutral: #f5f2ef; /* be sáng */
 
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -159,6 +157,14 @@ body {
   background-color: var(--bg-sub-primary);
 }
 
+.text-primary {
+  color: var(--bg-primary);
+}
+
+.border-primary {
+  border-color: var(--bg-primary);
+}
+
 input {
   outline: 0;
 }
@@ -170,8 +176,6 @@ input {
   padding: 0 15px;
   margin: 0 auto;
 }
-
-
 
 @media (min-width: 768px) {
   .main-width {

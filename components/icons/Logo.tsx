@@ -1,4 +1,4 @@
-const Logo = () => {
+const Logo = ( {...probs}) => {
   return (
     <svg
       viewBox="0 0 360.71 40.27"
@@ -6,6 +6,7 @@ const Logo = () => {
       width="140"
       height="30"
       id="Lager_1"
+      {...probs}
     >
       <defs>
         <style
