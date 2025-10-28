@@ -1,4 +1,4 @@
-const Logo = ( {...probs}) => {
+const Logo = (props: React.HTMLAttributes<SVGElement>) => {
   return (
     <svg
       viewBox="0 0 360.71 40.27"
@@ -6,7 +6,7 @@ const Logo = ( {...probs}) => {
       width="140"
       height="30"
       id="Lager_1"
-      {...probs}
+      {...props}
     >
       <defs>
         <style

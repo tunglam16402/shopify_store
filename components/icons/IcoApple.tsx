@@ -7,11 +7,11 @@ const IcoApple = (props: React.HTMLAttributes<SVGElement>) => (
     fill="#000000"
     {...props}
   >
-    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+    <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
     <g
       id="SVGRepo_tracerCarrier"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     ></g>
     <g id="SVGRepo_iconCarrier">
       <title>apple [#173]</title> <desc>Created with Sketch.</desc>
@@ -19,13 +19,13 @@ const IcoApple = (props: React.HTMLAttributes<SVGElement>) => (
       <g
         id="Page-1"
         stroke="none"
-        stroke-width="1"
+        strokeWidth="1"
         fill="none"
         fill-rule="evenodd"
       >
         
         <g
-          id="Dribbble-Light-Preview"
+          id="DribbbleLight-Preview"
           transform="translate(-102.000000, -7439.000000)"
           fill="#000000"
         >

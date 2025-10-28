@@ -2,7 +2,14 @@
 
 import { loginCustomer } from '@/actions/login'
 import PasswordInput from '@/components/common/PasswordInput'
-import { IcoApple, IcoArrowRight, IcoEmail, IcoGoogle, IcoPassword, IcoSpin } from '@/components/icons'
+import {
+  IcoApple,
+  IcoArrowRight,
+  IcoEmail,
+  IcoGoogle,
+  IcoPassword,
+  IcoSpin,
+} from '@/components/icons'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Label } from '@/components/ui/Label'
@@ -12,6 +19,7 @@ import type { LoginState } from '@/types/auth'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useActionState, useEffect } from 'react'
+import SocialLoginWrapper from '../SocialLogin/SocialLoginWrapper'
 
 const initialState: LoginState = {
   success: false,
@@ -39,22 +47,12 @@ const SignInForm = () => {
     state.errors.find((err) => err.field[0] === fieldName)?.message
 
   return (
-    <div className="w-full flex items-center justify-center p-6 md:p-12 bg-slate-50">
-      <div className="w-full max-w-[560px]">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-3">
-            Sign In
-          </h1>
-          <p className="text-slate-600">
-            Enter your credentials to access your account
-          </p>
-        </div>
-
+    <div className="w-full flex items-center justify-center mt-6 md:mt-12 main-width">
+      <div className="w-full max-w-[560px] mt-6">
         {/* Form Card */}
         <form action={formAction} className="space-y-4">
-          <div className="bg-white rounded-2xl shadow-xl p-8">
-            <div className="space-y-5">
+          <div className="bg-white rounded-2xl shadow-xl p-4 md:p-8">
+            <div>
               <div className="space-y-2">
                 <Label
                   htmlFor="email"
@@ -81,7 +79,7 @@ const SignInForm = () => {
                   )}
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-2 mt-5">
                   <Label
                     htmlFor="password"
                     className="text-sm font-semibold text-slate-700"
@@ -109,15 +107,10 @@ const SignInForm = () => {
               </div>
 
               {/* Remember Me & Forgot Password */}
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between mt-5">
                 <label className="flex items-center gap-2 cursor-pointer group">
-                  <input
-                    type="checkbox"
-                    className="w-4 h-4 rounded"
-                  />
-                  <span className="text-sm text-slate-600">
-                    Remember me
-                  </span>
+                  <input type="checkbox" className="w-4 h-4 rounded" />
+                  <span className="text-sm text-slate-600">Remember me</span>
                 </label>
                 <Link
                   href="/account/recovery"
@@ -154,23 +147,26 @@ const SignInForm = () => {
               )}
 
               {/* Submit Button */}
-              <Button
-                type="submit"
-                disabled={pending}
-                className="w-full h-12 rounded-xl border border-primary md:cursor-pointer bg-accent text-white font-semibold shadow-lg flex items-center justify-center gap-2"
-              >
-                {pending ? (
-                  <>
-                   <IcoSpin/>
-                    Signing in...
-                  </>
-                ) : (
-                  <>
-                    Sign In
-                   <IcoArrowRight/>
-                  </>
-                )}
-              </Button>
+              <div className="mt-12">
+                <Button
+                  type="submit"
+                  disabled={pending}
+                  variant={'primary'}
+                  className="w-full h-12 font-semibold shadow-lg"
+                >
+                  {pending ? (
+                    <>
+                      <IcoSpin />
+                      Signing in...
+                    </>
+                  ) : (
+                    <>
+                      Sign In
+                      <IcoArrowRight />
+                    </>
+                  )}
+                </Button>
+              </div>
             </div>
 
             {/* Divider */}
@@ -186,16 +182,7 @@ const SignInForm = () => {
             </div>
 
             {/* Social Login */}
-            <div className="grid grid-cols-2 gap-3">
-              <button className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-slate-200 hover:border-slate-300 hover:bg-slate-50 hover:shadow-sm transition-all duration-200 font-medium text-slate-700 group">
-                <IcoGoogle />
-                <span className="hidden sm:inline">Sign in with Google</span>
-              </button>
-              <button className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-slate-200 hover:border-slate-300 hover:bg-slate-50 hover:shadow-sm transition-all duration-200 font-medium text-slate-700 group">
-                <IcoApple className="w-5 h-5" />
-                <span className="hidden sm:inline">Sign in with Apple</span>
-              </button>
-            </div>
+            <SocialLoginWrapper />
           </div>
         </form>
 
