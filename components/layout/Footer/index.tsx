@@ -98,7 +98,7 @@ const Footer: React.FC<IFooter> = ({ data }) => {
                 />
                 <button
                   disabled={status === 'loading'}
-                  className="rounded-md border border-primary md:cursor-pointer bg-[#e3c16f] px-8 py-2 text-sm font-bold text-black hover:bg-white hover:text-primary md:py-2.5 disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="rounded-md border border-primary md:cursor-pointer bg-accent px-8 py-2 text-sm font-bold text-black hover:bg-white hover:text-primary md:py-2.5 disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   {status === 'loading' ? 'Submitting...' : 'Sign up'}
                 </button>

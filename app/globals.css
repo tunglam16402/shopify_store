@@ -157,6 +157,10 @@ body {
   background-color: var(--bg-sub-primary);
 }
 
+.bg-accent {
+  background-color: var(--bg-accent);
+}
+
 .text-primary {
   color: var(--bg-primary);
 }
