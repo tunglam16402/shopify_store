@@ -77,7 +77,7 @@ export async function recoveryCustomerAccount(
       }
     }
 
-    return { success: true, message: 'Recovery email sent successfully.' }
+    return { success: true, message: 'Recovery email sent successfully. Please check your email.' }
   } catch (error) {
     console.error('recoveryCustomerAccount error:', error)
     return {

@@ -3,21 +3,19 @@ import AuthForm from '@/components/common/AuthForm'
 
 const Recovery = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        <h1 className="text-2xl font-semibold text-center mb-6">
-          Forgot Password
-        </h1>
-        <AuthForm
-          label="Email address"
-          placeholder="Enter your email"
-          buttonText="Send recovery email"
-          fieldName="email"
-          type="email"
-          action={recoveryCustomerAccount}
-        />
-      </div>
-    </div>
+    <>
+      <h1 className="text-3xl text-center sm:text-4xl font-bold text-slate-900">
+        Forgot password
+      </h1>
+      <AuthForm
+        label="Email address"
+        placeholder="Enter your email"
+        buttonText="Send recovery email"
+        fieldName="email"
+        type="email"
+        action={recoveryCustomerAccount}
+      />
+    </>
   )
 }
 

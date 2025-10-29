@@ -3,12 +3,10 @@
 import { loginCustomer } from '@/actions/login'
 import PasswordInput from '@/components/common/PasswordInput'
 import {
-  IcoApple,
   IcoArrowRight,
   IcoEmail,
-  IcoGoogle,
   IcoPassword,
-  IcoSpin,
+  IcoSpin
 } from '@/components/icons'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'

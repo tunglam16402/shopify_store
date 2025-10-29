@@ -1,10 +1,15 @@
 import ForgotPassword from '@/components/auth/ForgotPassword'
 import { Suspense } from 'react'
 
-const Reset = () => {
+interface IReset {
+  searchParams: { reset_url?: string }
+}
+
+const Reset = ({ searchParams }: IReset) => {
+  const resetUrl = decodeURIComponent(searchParams.reset_url || '')
   return (
     <Suspense>
-      <ForgotPassword />
+      <ForgotPassword resetUrl={resetUrl}/>
     </Suspense>
   )
 }

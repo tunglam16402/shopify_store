@@ -259,7 +259,7 @@ const SignUpForm = () => {
         <p className="text-center mt-6 text-sm text-slate-600">
           Already have an account?
           <Link
-            href="/account/register"
+            href="/account/login"
             className="font-semibold text-blue-600 hover:text-blue-700 transition-colors duration-200 hover:underline"
           >
             Log In

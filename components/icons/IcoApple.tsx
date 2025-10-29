@@ -21,7 +21,7 @@ const IcoApple = (props: React.HTMLAttributes<SVGElement>) => (
         stroke="none"
         strokeWidth="1"
         fill="none"
-        fill-rule="evenodd"
+        fillRule="evenodd"
       >
         
         <g

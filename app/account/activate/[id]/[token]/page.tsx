@@ -1,4 +1,5 @@
 import ActivateForm from '@/components/auth/ActivateForm'
+import { Logo } from '@/components/icons'
 
 interface ActivatePageProps {
   params: Promise<{
@@ -14,7 +15,14 @@ const Activate = async ({ params }: ActivatePageProps) => {
   const activationUrl =
     id && token ? `${baseUrl}/account/activate/${id}/${token}` : ''
 
-  return <ActivateForm activationUrl={activationUrl} />
+  return (
+    <>
+      <h1 className="text-3xl text-center sm:text-4xl font-bold text-slate-900">
+        Activate Account
+      </h1>
+      <ActivateForm activationUrl={activationUrl} />
+    </>
+  )
 }
 
 export default Activate

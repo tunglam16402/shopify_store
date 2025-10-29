@@ -2,6 +2,10 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { Button } from '@/components/ui/Button'
+import { IcoArrowRight, IcoEmail, IcoSpin } from '@/components/icons'
+import { Label } from '@/components/ui/Label'
+import { Input } from '@/components/ui/Input'
 
 interface ActivateFormProps {
   activationUrl: string
@@ -11,9 +15,11 @@ const ActivateForm: React.FC<ActivateFormProps> = ({ activationUrl }) => {
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
+  const [isSuccess, setIsSuccess] = useState(false)
 
   const handleActivate = async () => {
     if (!activationUrl || !password) {
+      setIsSuccess(false)
       setMessage('Missing activation URL or password')
       return
     }
@@ -27,9 +33,11 @@ const ActivateForm: React.FC<ActivateFormProps> = ({ activationUrl }) => {
       })
       const data = await res.json()
       if (data.success) {
+        setIsSuccess(true)
         setMessage('Account activated! Redirecting to login...')
         setTimeout(() => router.push('/account/login'), 2000)
       } else {
+        setIsSuccess(false)
         setMessage(data.error || 'Activation failed')
       }
     } catch (err) {
@@ -41,23 +49,62 @@ const ActivateForm: React.FC<ActivateFormProps> = ({ activationUrl }) => {
   }
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow rounded">
-      <h1 className="text-xl font-bold mb-4">Activate your account</h1>
-      <input
-        type="password"
-        placeholder="Set your password"
-        className="border p-2 w-full rounded mb-4"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button
-        onClick={handleActivate}
-        disabled={loading}
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-      >
-        {loading ? 'Activating...' : 'Activate'}
-      </button>
-      {message && <p className="mt-4 text-sm text-red-500">{message}</p>}
+    <div className="w-full flex items-center justify-center mt-6 md:mt-12 main-width">
+      <div className="w-full max-w-[560px] mt-6">
+        <div className="bg-white rounded-2xl shadow-xl p-4 md:p-8">
+          <div>
+            <div className="space-y-2">
+              <Label
+                htmlFor="email"
+                className="text-sm font-semibold text-slate-700"
+              >
+                Password
+              </Label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <IcoEmail className="h-5 w-5" />
+                </div>
+                <Input
+                  type="password"
+                  placeholder="Set your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  disabled={loading}
+                  className="h-12 pl-12 rounded-xl"
+                />
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <div className="mt-12">
+              <Button
+                onClick={handleActivate}
+                disabled={loading}
+                variant={'primary'}
+                className="w-full h-12 font-semibold shadow-lg"
+              >
+                {loading ? (
+                  <>
+                    <IcoSpin />
+                    Activating...
+                  </>
+                ) : (
+                  <>Activate</>
+                )}
+              </Button>
+            </div>
+            {message && (
+              <p
+                className={`mt-4 text-sm font-medium ${
+                  isSuccess ? 'text-green-600' : 'text-red-500'
+                }`}
+              >
+                {message}
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
