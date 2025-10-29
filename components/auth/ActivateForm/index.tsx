@@ -1,11 +1,11 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { IcoEmail, IcoSpin } from '@/components/icons'
 import { Button } from '@/components/ui/Button'
-import { IcoArrowRight, IcoEmail, IcoSpin } from '@/components/icons'
-import { Label } from '@/components/ui/Label'
 import { Input } from '@/components/ui/Input'
+import { Label } from '@/components/ui/Label'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 interface ActivateFormProps {
   activationUrl: string

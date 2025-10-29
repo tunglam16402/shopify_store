@@ -1,10 +1,36 @@
 const getMainMenuQuery = /* GraphQL */ `
   query getMainMenu {
-    menu(handle: "main-menu") {
+    menu(handle: "header-menu") {
+      id
+      title
       items {
+        id
         title
-        url
         type
+        url
+        items {
+          id
+          title
+          type
+          url
+          items {
+            id
+            title
+            type
+            url
+            resource {
+              __typename
+              ... on Collection {
+                handle
+                title
+                image {
+                  url
+                  altText
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

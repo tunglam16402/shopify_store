@@ -3897,7 +3897,34 @@ export type GetMainMenuQueryVariables = Exact<{ [key: string]: never }>
 
 export type GetMainMenuQuery = {
   menu?: {
-    items: Array<{ title: string; url?: string | null; type: MenuItemType }>
+    id: string
+    title: string
+    items: Array<{
+      id: string
+      title: string
+      type: MenuItemType
+      url?: string | null
+      items: Array<{
+        id: string
+        title: string
+        type: MenuItemType
+        url?: string | null
+        resource?:
+          | { __typename: 'Article' }
+          | { __typename: 'Blog' }
+          | {
+              __typename: 'Collection'
+              handle: string
+              title: string
+              image?: { url: string; altText?: string | null } | null
+            }
+          | { __typename: 'Metaobject' }
+          | { __typename: 'Page' }
+          | { __typename: 'Product' }
+          | { __typename: 'ShopPolicy' }
+          | null
+      }>
+    }>
   } | null
 }
 
@@ -3914,8 +3941,8 @@ export type GetCollectionListQuery = {
         id: string
         title: string
         handle: string
-        description: string
         publishedAt: string
+        description: string
         category?: { name: string } | null
         images: { nodes: Array<{ url: string; altText?: string | null }> }
         variants: {
