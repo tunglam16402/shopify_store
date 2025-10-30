@@ -34,8 +34,6 @@ const USPs: React.FC<IUSPs> = ({ usps }) => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
         </Carousel>
       </div>
     </section>
