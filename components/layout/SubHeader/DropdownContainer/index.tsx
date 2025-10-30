@@ -9,8 +9,17 @@ interface DropdownContentProps {
   isVisible: boolean
 }
 
-const DropdownContent = ({ menuItem, isVisible }: DropdownContentProps) => {
+const DropdownContent = ({ menuItem }: DropdownContentProps) => {
   const children = menuItem.children || []
+  const isVisible = true
+
+  const allImages =
+    children
+      .flatMap((child) => child.children || [])
+      .flatMap((grand) => grand.image || []) || []
+
+  const images = allImages.slice(0, 3)
+  const emptySlots = 3 - images.length
 
   return (
     <div
@@ -18,15 +27,13 @@ const DropdownContent = ({ menuItem, isVisible }: DropdownContentProps) => {
         isVisible ? 'opacity-100' : 'opacity-0'
       }`}
     >
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Cột 1 + 2: nhóm danh mục con */}
-        <div className="md:col-span-2">
+      <div className="grid grid-cols-5 gap-6">
+        <div className="col-span-2">
           {children.length > 0 ? (
-            <ul className="space-y-4">
+            <ul className="flex flex-wrap gap-20">
               {children.map((child, index) => (
                 <li key={index}>
-                  {/* Tiêu đề cấp 2 */}
-                  <p className="font-medium text-gray-900 mb-1">
+                  <p className="text-sm font-medium uppercase">
                     <Link
                       href={child.url}
                       className="hover:text-gray-700 transition-colors"
@@ -35,14 +42,13 @@ const DropdownContent = ({ menuItem, isVisible }: DropdownContentProps) => {
                     </Link>
                   </p>
 
-                  {/* Danh mục cấp 3 */}
-                  {child.children && child.children.length > 0 && (
-                    <ul className="flex flex-col gap-2 text-sm text-gray-700">
+                  {child.children && child.children?.length > 0 && (
+                    <ul className="flex flex-col gap-1 text-sm mt-4">
                       {child.children.map((grand, index) => (
                         <li key={index}>
                           <Link
                             href={grand.url}
-                            className="hover:text-gray-900 transition-colors"
+                            className="hover:text-[#f89540] font-light uppercase transition-colors"
                           >
                             {grand.title}
                           </Link>
@@ -54,34 +60,30 @@ const DropdownContent = ({ menuItem, isVisible }: DropdownContentProps) => {
               ))}
             </ul>
           ) : (
-            <p className="text-sm text-gray-500 italic">Chưa có danh mục con</p>
+            <p className="text-sm italic text-gray-500">Chưa có danh mục con</p>
           )}
         </div>
 
-        {/* Cột 3: ảnh preview của các collection cấp 3 */}
-        {children.some((child) =>
-          child.children?.some((g) => g.image?.length)
-        ) && (
-          <div className="grid grid-cols-3 gap-2">
-            {children
-              .flatMap((child) => child.children || [])
-              .flatMap((grand) => grand.image || [])
-              .slice(0, 3)
-              .map((src, i) => (
-                <div
-                  key={i}
-                  className="relative w-full aspect-square overflow-hidden rounded-lg"
-                >
-                  <Image
-                    src={src}
-                    alt={`${menuItem.title} preview ${i + 1}`}
-                    fill
-                    className="object-cover hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-              ))}
-          </div>
-        )}
+        <div className="col-span-3 grid grid-cols-3 gap-4 place-items-center">
+          {Array.from({ length: emptySlots }).map((_, i) => (
+            <div key={`empty-${i}`} className="w-full aspect-square bg-transparent" />
+          ))}
+          {images.map((src, i) => (
+            <div
+              key={i}
+              className="relative w-full aspect-square overflow-hidden"
+            >
+              <Link href={menuItem.url}>
+                <Image
+                  src={src}
+                  alt={`${menuItem.title} preview ${i + 1}`}
+                  fill
+                  className="object-contain hover:scale-105 transition-transform duration-300"
+                />
+              </Link>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )

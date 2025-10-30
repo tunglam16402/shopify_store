@@ -161,8 +161,17 @@ body {
   background-color: var(--bg-accent);
 }
 
+.text-accent {
+  color: var(--bg-accent);
+
+}
+
 .text-primary {
   color: var(--bg-primary);
+}
+
+.text-sub-primary {
+  color: var(--bg-sub-primary);
 }
 
 .border-primary {

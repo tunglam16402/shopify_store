@@ -12,9 +12,9 @@ interface IHomePage {
 }
 
 const HomePage: React.FC<IHomePage> = ({ data }) => {
-  const bestSellerSection = data.product_section?.find(
-    (s) => s.widget_id === 'bestseller'
-  )
+  // const bestSellerSection = data.product_section?.find(
+  //   (s) => s.widget_id === 'bestseller'
+  // )
   const latestSection = data.product_section?.find(
     (s) => s.widget_id === 'latest'
   )

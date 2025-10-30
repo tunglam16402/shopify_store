@@ -1,5 +1,4 @@
 import ActivateForm from '@/components/auth/ActivateForm'
-import { Logo } from '@/components/icons'
 
 interface ActivatePageProps {
   params: Promise<{

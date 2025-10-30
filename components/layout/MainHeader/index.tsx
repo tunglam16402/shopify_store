@@ -11,8 +11,11 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { FaBars } from 'react-icons/fa'
 
+type Props = {
+  menuItems: { title: string; url: string }[]
+}
 
-const MainHeader = () => {
+const MainHeader = ({ menuItems }: Props) => {
   const [isOpenMobile, setIsOpenMobile] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [visible, setVisible] = useState(true)
@@ -81,7 +84,6 @@ const MainHeader = () => {
             <Search />
           </div>
 
-          {/* Icons bên phải */}
           <div className="flex items-center">
             <CartIcon onClick={open} />
             <AccountDropdown />
@@ -96,13 +98,13 @@ const MainHeader = () => {
         <div>{isOpen && <CartSideBar />}</div>
       </div>
       {/* Navbar mobile */}
-      {/* {isOpenMobile && (
+      {isOpenMobile && (
         <NavbarMobile
           isOpen={isOpenMobile}
           onClose={() => setIsOpenMobile(false)}
           menuItems={menuItems}
         />
-      )} */}
+      )}
     </div>
   )
 }

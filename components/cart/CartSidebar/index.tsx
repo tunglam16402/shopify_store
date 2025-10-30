@@ -2,12 +2,12 @@
 
 import { useEffect } from 'react'
 import { Button } from '@/components/ui/Button'
-import { X } from 'lucide-react'
 import Link from 'next/link'
 import { CartItem } from '../CartItem'
 import CartSubtotal from '../CartSubtotal'
 import { useAppSelector } from '@/lib/hooks/useAppSelector'
 import { useUI } from '@/lib/hooks/useContext'
+import { IcoClose } from '@/components/icons'
 
 const CartSideBar = () => {
   const cart = useAppSelector((state) => state.cart.cart)
@@ -47,7 +47,7 @@ const CartSideBar = () => {
         <div className="flex items-center justify-between pt-6 pb-2 px-6 border-b">
           <h2 className="text-lg font-bold">Your Cart</h2>
           <button onClick={close} aria-label="Close">
-            <X className="w-6 h-6 cursor-pointer" />
+            <IcoClose className="w-5 h-5 cursor-pointer" />
           </button>
         </div>
 

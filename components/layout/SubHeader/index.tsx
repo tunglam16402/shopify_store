@@ -50,7 +50,7 @@ const SubHeader = ({ menuItems }: Props) => {
   return (
     <nav
       ref={navRef}
-      className="relative bg-gray-200 mt-15"
+      className="relative bg-gray-100 mt-15"
       onMouseLeave={handleMouseLeave}
     >
       <ul className="hidden md:flex items-center justify-center">
@@ -62,15 +62,15 @@ const SubHeader = ({ menuItems }: Props) => {
           >
             <Link
               href={`${col.url}`}
-              className={`text-gray-800 font-medium transition-colors duration-200 ${
-                activeIndex === index ? 'text-gray-900' : 'hover:text-gray-900'
+              className={`text-gray-800 uppercase transition-colors duration-200 ${
+                activeIndex === index ? 'text-sub-primary' : 'hover:text-sub-primary'
               }`}
             >
               {col.title}
             </Link>
 
             <div
-              className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gray-900 transition-all duration-300 ${
+              className={`absolute bottom-0 left-0 right-0 h-0.5 bg-sub-primary transition-all duration-300 ${
                 activeIndex === index
                   ? 'opacity-100 scale-x-100'
                   : 'opacity-0 scale-x-0'

@@ -14,7 +14,7 @@ const MainLayout = async ({ children }: { children: React.ReactNode }) => {
   const header = (
     <header>
       <TopHeader />
-      <MainHeader />
+      <MainHeader menuItems={menuItems} />
       <SubHeader menuItems={menuItems} />
     </header>
   )
