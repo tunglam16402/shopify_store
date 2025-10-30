@@ -5,7 +5,7 @@ import Dropdown from '@/components/ui/Dropdown'
 import { MenuItem } from '@/types/collection/menuCollection'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 type Props = {
   isOpen: boolean
@@ -15,6 +15,13 @@ type Props = {
 
 const NavbarMobile = ({ isOpen, onClose, menuItems }: Props) => {
   const [selectedMenu, setSelectedMenu] = useState<MenuItem | null>(null)
+
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isOpen])
 
   const getPreviewImage = (menu: MenuItem) => {
     for (const child of menu.children || []) {
@@ -37,7 +44,7 @@ const NavbarMobile = ({ isOpen, onClose, menuItems }: Props) => {
             ? 'opacity-100 pointer-events-auto'
             : 'opacity-0 pointer-events-none'
         }`}
-        onClick={close}
+        onClick={onClose}
       />
       <div
         className={`fixed inset-0 w-[350px] bg-white z-40 transform transition-transform duration-300 ease-in-out uppercase ${

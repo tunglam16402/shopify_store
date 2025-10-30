@@ -36,7 +36,7 @@ const CartSideBar = () => {
       <div
         className={`
           fixed top-0 right-0 h-full 
-          w-full sm:w-[480px] bg-white shadow-xl z-50
+          w-[380px] sm:w-[480px] bg-white shadow-xl z-50
           rounded-tl-[40px] rounded-bl-[40px]
           flex flex-col
           transform transition-transform duration-300 ease-in-out
