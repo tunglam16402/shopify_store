@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react'
 import Link from 'next/link'
 import DropdownContent from './DropdownContainer'
 import { MenuItem } from '@/types/collection/menuCollection'
@@ -13,73 +13,81 @@ const SubHeader = ({ menuItems }: Props) => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const [isDropdownVisible, setIsDropdownVisible] = useState(false)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
-  const navRef = useRef<HTMLElement>(null)
 
-  console.log('menuItems :>> ', menuItems)
-  // Xử lý delay khi hover
-  const handleMouseEnter = (index: number) => {
+  const itemsWithDropdown = useMemo(
+    () => menuItems.map((item) => Boolean(item.children?.length)),
+    [menuItems]
+  )
+
+  const clearPendingTimeout = useCallback(() => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current)
-    }
-    setActiveIndex(index)
-    setIsDropdownVisible(true)
-  }
-
-  const handleMouseLeave = () => {
-    timeoutRef.current = setTimeout(() => {
-      setIsDropdownVisible(false)
-      setTimeout(() => setActiveIndex(null), 300)
-    }, 100)
-  }
-
-  const handleDropdownEnter = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current)
-    }
-  }
-
-  // Cleanup timeout khi unmount
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current)
-      }
+      timeoutRef.current = null
     }
   }, [])
 
+  const handleMouseEnter = useCallback(
+    (index: number) => {
+      clearPendingTimeout()
+      setActiveIndex(index)
+      setIsDropdownVisible(itemsWithDropdown[index])
+    },
+    [clearPendingTimeout, itemsWithDropdown]
+  )
+
+  const handleMouseLeave = useCallback(() => {
+    clearPendingTimeout()
+    timeoutRef.current = setTimeout(() => {
+      setIsDropdownVisible(false)
+      timeoutRef.current = setTimeout(() => {
+        setActiveIndex(null)
+      }, 300)
+    }, 200)
+  }, [clearPendingTimeout])
+
+  const handleDropdownEnter = useCallback(() => {
+    clearPendingTimeout()
+  }, [clearPendingTimeout])
+
+  useEffect(() => {
+    return () => clearPendingTimeout()
+  }, [clearPendingTimeout])
+
+  const activeMenuItem = useMemo(
+    () => (activeIndex !== null ? menuItems[activeIndex] : null),
+    [activeIndex, menuItems]
+  )
+
   return (
-    <nav
-      ref={navRef}
-      className="relative bg-gray-100 mt-15"
-      onMouseLeave={handleMouseLeave}
-    >
+    <nav className="relative bg-gray-100 mt-15" onMouseLeave={handleMouseLeave}>
       <ul className="hidden md:flex items-center justify-center">
-        {menuItems.map((col, index) => (
-          <li
-            key={col.url}
-            className="py-4 px-3 relative"
-            onMouseEnter={() => handleMouseEnter(index)}
-          >
-            <Link
-              href={`${col.url}`}
-              className={`text-gray-800 uppercase transition-colors duration-200 ${
-                activeIndex === index ? 'text-sub-primary' : 'hover:text-sub-primary'
-              }`}
+        {menuItems.map((item, index) => {
+          const isActive = activeIndex === index
+
+          return (
+            <li
+              key={item.url}
+              className="py-4 px-3 relative cursor-pointer"
+              onMouseEnter={() => handleMouseEnter(index)}
             >
-              {col.title}
-            </Link>
-
-            <div
-              className={`absolute bottom-0 left-0 right-0 h-0.5 bg-sub-primary transition-all duration-300 ${
-                activeIndex === index
-                  ? 'opacity-100 scale-x-100'
-                  : 'opacity-0 scale-x-0'
-              }`}
-            />
-          </li>
-        ))}
+              <Link
+                href={item.url}
+                className={`text-gray-800 uppercase transition-colors duration-200 ${
+                  isActive ? 'text-sub-primary' : 'hover:text-sub-primary'
+                }`}
+              >
+                {item.title}
+              </Link>
+              <span
+                className={`absolute bottom-0 left-0 right-0 h-0.5 bg-sub-primary transition-all duration-300 ${
+                  isActive ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0'
+                }`}
+                aria-hidden="true"
+              />
+            </li>
+          )
+        })}
       </ul>
-
       <div
         className={`absolute left-0 right-0 bg-white shadow-lg overflow-hidden transition-all duration-300 ease-in-out z-10 ${
           isDropdownVisible ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
@@ -91,14 +99,14 @@ const SubHeader = ({ menuItems }: Props) => {
         onMouseEnter={handleDropdownEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <div className="container mx-auto px-4 py-8">
-          {activeIndex !== null && (
+        {activeMenuItem?.children?.length && (
+          <div className="container mx-auto px-4 py-8">
             <DropdownContent
-              menuItem={menuItems[activeIndex]}
+              menuItem={activeMenuItem}
               isVisible={isDropdownVisible}
             />
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </nav>
   )

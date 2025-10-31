@@ -29,44 +29,43 @@ const DropdownContent = ({ menuItem }: DropdownContentProps) => {
     >
       <div className="grid grid-cols-5 gap-6">
         <div className="col-span-2">
-          {children.length > 0 ? (
-            <ul className="flex flex-wrap gap-20">
-              {children.map((child, index) => (
-                <li key={index}>
-                  <p className="text-sm font-medium uppercase">
-                    <Link
-                      href={child.url}
-                      className="hover:text-gray-700 transition-colors"
-                    >
-                      {child.title}
-                    </Link>
-                  </p>
+          <ul className="flex flex-wrap gap-20">
+            {children.map((child, index) => (
+              <li key={index}>
+                <p className="text-sm font-medium uppercase">
+                  <Link
+                    href={child.url}
+                    className="hover:text-gray-700 transition-colors"
+                  >
+                    {child.title}
+                  </Link>
+                </p>
 
-                  {child.children && child.children?.length > 0 && (
-                    <ul className="flex flex-col gap-1 text-sm mt-4">
-                      {child.children.map((grand, index) => (
-                        <li key={index}>
-                          <Link
-                            href={grand.url}
-                            className="hover:text-[#f89540] font-light uppercase transition-colors"
-                          >
-                            {grand.title}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-sm italic text-gray-500">Chưa có danh mục con</p>
-          )}
+                {child.children && child.children?.length > 0 && (
+                  <ul className="flex flex-col gap-1 text-sm mt-4">
+                    {child.children.map((grand, index) => (
+                      <li key={index}>
+                        <Link
+                          href={grand.url}
+                          className="hover:text-[#f89540] font-light uppercase transition-colors"
+                        >
+                          {grand.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))}
+          </ul>
         </div>
 
         <div className="col-span-3 grid grid-cols-3 gap-4 place-items-center">
           {Array.from({ length: emptySlots }).map((_, i) => (
-            <div key={`empty-${i}`} className="w-full aspect-square bg-transparent" />
+            <div
+              key={`empty-${i}`}
+              className="w-full aspect-square bg-transparent"
+            />
           ))}
           {images.map((src, i) => (
             <div
