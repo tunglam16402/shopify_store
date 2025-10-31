@@ -10,6 +10,7 @@ import cn from 'classnames'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { FaBars } from 'react-icons/fa'
+import SearchInput from './Search/SearchInput'
 
 type Props = {
   menuItems: { title: string; url: string }[]
@@ -81,7 +82,7 @@ const MainHeader = ({ menuItems }: Props) => {
 
           {/* Search desktop */}
           <div className="hidden md:block">
-            <Search />
+            <SearchInput />
           </div>
 
           <div className="flex items-center">
@@ -91,7 +92,7 @@ const MainHeader = ({ menuItems }: Props) => {
         </div>
 
         <div className="mt-2 block md:hidden w-full">
-          <Search />
+          <SearchInput />
         </div>
 
         {/* Cart sidebar */}

@@ -1,27 +1,37 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
 import { GetPredictiveSearchQuery } from '@/shopify/types/graphql'
-import Image from 'next/image'
 import { SearchIcon } from '@/components/icons'
+import SearchContainer from '../SearchContainer'
 
-const Search = () => {
+const SearchInput = () => {
   const [input, setInput] = useState('')
   const [suggestions, setSuggestions] = useState<
     NonNullable<GetPredictiveSearchQuery['predictiveSearch']>['products']
   >([])
-
+  const [isOpen, setIsOpen] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
 
+  // Đóng khi click ra ngoài
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setIsOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  // Gọi predictive search
   useEffect(() => {
     const timeout = setTimeout(async () => {
       if (input.length >= 2) {
         try {
-          const res = await fetch(
-            `/api/predictive-search?q=${encodeURIComponent(input)}`
-          )
+          const res = await fetch(`/api/predictive-search?q=${encodeURIComponent(input)}`)
           const json = await res.json()
           setSuggestions(json.products)
         } catch (error) {
@@ -31,8 +41,7 @@ const Search = () => {
       } else {
         setSuggestions([])
       }
-    }, 500)
-
+    }, 400)
     return () => clearTimeout(timeout)
   }, [input])
 
@@ -40,18 +49,20 @@ const Search = () => {
     e.preventDefault()
     if (input.trim()) {
       router.push(`/search-result?q=${encodeURIComponent(input.trim())}`)
+      setIsOpen(false)
     }
   }
 
   return (
-    <div className="relative w-full">
+    <div ref={containerRef} className="relative w-full md:w-[700px]">
       <form onSubmit={handleSubmit}>
         <input
           type="text"
           name="q"
-          className="w-full border rounded py-2 pl-2 pr-20 md:w-[700px]"
+          className="w-full border rounded py-2 pl-2 pr-20"
           placeholder="Enter product name..."
           value={input}
+          onFocus={() => setIsOpen(true)}
           onChange={(e) => setInput(e.target.value)}
           autoComplete="off"
         />
@@ -60,28 +71,19 @@ const Search = () => {
         </span>
       </form>
 
-      {suggestions.length > 0 && (
-        <ul className="absolute z-10 bg-white border shadow-md w-full mt-1 rounded max-h-60 overflow-y-auto gid grid-row-s">
-          {suggestions.map((product) => (
-            <li key={product.id}>
-              <Link
-                href={`/products/${product.handle}`}
-                className="block px-4 py-2 hover:bg-gray-100"
-              >
-                {product.title}
-                <Image
-                  src={product.featuredImage?.url || ''}
-                  alt=""
-                  width={100}
-                  height={200}
-                />
-              </Link>
-            </li>
-          ))}
-        </ul>
+      {isOpen && (
+        <SearchContainer
+          input={input}
+          suggestions={suggestions}
+          onSelect={(term) => {
+            setInput(term)
+            router.push(`/search-result?q=${encodeURIComponent(term)}`)
+            setIsOpen(false)
+          }}
+        />
       )}
     </div>
   )
 }
 
-export default Search
+export default SearchInput
