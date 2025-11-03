@@ -6,6 +6,7 @@ import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 import SuggestionSearch from './SuggestionSearch'
 import SuggestionProducts from './SugggestionProducts'
+import { mappingDiscountPrice } from '@/lib/helper'
 
 type Props = {
   input: string
@@ -38,6 +39,10 @@ const SearchContainer = ({
   const isTyping = input.trim().length > 0
   const hasResults = suggestions.length > 0
 
+  const mappedSuggestions = hasResults
+    ? suggestions.map(mappingDiscountPrice)
+    : []
+
   return (
     <div className="fixed left-0 right-0 z-40" style={{ top }}>
       {/* Overlay */}
@@ -60,8 +65,12 @@ const SearchContainer = ({
           {hasResults ? (
             // 🔹 Kết quả tìm kiếm sản phẩm
             <div className="divide-y">
-              {suggestions.map((product) => (
-                <ProductCard key={product.id} product={product} showCTA={false} />
+              {mappedSuggestions.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  showCTA={false}
+                />
               ))}
             </div>
           ) : (

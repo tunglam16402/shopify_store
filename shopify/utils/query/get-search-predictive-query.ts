@@ -5,17 +5,35 @@ const getPredictiveSearchQuery = /* GraphQL */ `
         id
         title
         handle
+        description
+        publishedAt
+        category {
+          name
+        }
         images(first: 1) {
           nodes {
             url
+            altText
           }
         }
-        featuredImage {
-          url
+        variants(first: 1) {
+          edges {
+            node {
+              id
+              title
+              price {
+                amount
+                currencyCode
+              }
+              compareAtPrice {
+                amount
+                currencyCode
+              }
+            }
+          }
         }
       }
     }
   }
 `
-
 export default getPredictiveSearchQuery
