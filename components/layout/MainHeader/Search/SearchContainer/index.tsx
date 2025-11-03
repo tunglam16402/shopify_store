@@ -1,8 +1,11 @@
 'use client'
 
+import ProductCard from '@/components/products/ProductCard'
 import { GetPredictiveSearchQuery } from '@/shopify/types/graphql'
-import Image from 'next/image'
-import Link from 'next/link'
+import clsx from 'clsx'
+import { useEffect, useState } from 'react'
+import SuggestionSearch from './SuggestionSearch'
+import SuggestionProducts from './SugggestionProducts'
 
 type Props = {
   input: string
@@ -10,38 +13,70 @@ type Props = {
     GetPredictiveSearchQuery['predictiveSearch']
   >['products']
   onSelect: (term: string) => void
+  onClose: () => void
+  top: number
 }
 
-const SearchContainer = ({ input, suggestions, onSelect }: Props) => {
+const SearchContainer = ({
+  input,
+  suggestions,
+  onSelect,
+  onClose,
+  top,
+}: Props) => {
+  const [visible, setVisible] = useState(false)
+
+  console.log('suggestions :>> ', suggestions)
+
+  useEffect(() => {
+    setVisible(true)
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [])
+
+  const isTyping = input.trim().length > 0
+  const hasResults = suggestions.length > 0
+
   return (
-    <div className="absolute left-1/2 top-full z-20 mt-2 w-[900px] -translate-x-1/2 bg-white border shadow-md rounded p-3 max-h-80 overflow-y-auto">
-      {suggestions.length > 0 ? (
-        <ul className="divide-y">
-          {suggestions.map((product) => (
-            <li key={product.id} className="py-2">
-              <Link
-                href={`/products/${product.handle}`}
-                onClick={() => onSelect(product.title)}
-                className="flex items-center gap-3 hover:bg-gray-100 p-2 rounded"
-              >
-                <Image
-                  src={product.featuredImage?.url || ''}
-                  alt={product.title}
-                  width={60}
-                  height={60}
-                  className="rounded object-cover"
-                />
-                <span className="text-sm">{product.title}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        // 👇 Hiển thị trạng thái mặc định khi vừa click vào
-        <div className="text-sm text-gray-500 p-2">
-          Start typing to search products...
+    <div className="fixed left-0 right-0 z-40" style={{ top }}>
+      {/* Overlay */}
+      <div
+        className={clsx(
+          'fixed inset-0 top-[var(--header-height,140px)] md:top-[var(--header-height,100px)] bg-black/40 transition-opacity duration-600',
+          visible ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        )}
+        onClick={onClose}
+      />
+
+      {/* Container */}
+      <div
+        className={clsx(
+          'relative w-full bg-white shadow-lg transition-transform duration-600 ease-in-out',
+          visible ? 'translate-y-0' : '-translate-y-5 opacity-0'
+        )}
+      >
+        <div className="max-w-6xl mx-auto p-4">
+          {hasResults ? (
+            // 🔹 Kết quả tìm kiếm sản phẩm
+            <div className="divide-y">
+              {suggestions.map((product) => (
+                <ProductCard key={product.id} product={product} showCTA={false} />
+              ))}
+            </div>
+          ) : (
+            // 🔹 Gợi ý tìm kiếm & sản phẩm
+            <div className="flex flex-col md:flex-row gap-6 border-t border-sub-primary">
+              <div className="flex-1 min-w-[250px] mt-4">
+                <SuggestionSearch isTyping={isTyping} onSelect={onSelect} />
+              </div>
+              <div className="flex-1 min-w-[250px]">
+                <SuggestionProducts isTyping={isTyping} onSelect={onSelect} />
+              </div>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   )
 }

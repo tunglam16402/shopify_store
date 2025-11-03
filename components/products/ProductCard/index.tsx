@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import Image from 'next/image'
 import Link from 'next/link'
 import AddToCartButton from '../AddToCartButton'
 import { BorderHeart } from '@/components/icons'
+import { getCookie, setCookie } from '@/utils/set-cookie'
 
 export type ProductCardProps = {
   product: {
@@ -20,14 +22,43 @@ export type ProductCardProps = {
     currency: string
     discountPercent: number
   }
+  showCTA?: boolean
 }
 
-const ProductCard = ({ product }: ProductCardProps) => {
+const ProductCard = ({ product, showCTA = true }: ProductCardProps) => {
+  const handleProductClick = () => {
+    try {
+      const raw = getCookie('recentlyViewed')
+      const existing = raw ? JSON.parse(raw) : []
+
+      // Loại trùng và thêm mới lên đầu
+      const updated = [
+        {
+          id: product.id,
+          handle: product.handle,
+          title: product.title,
+          imageUrl: product.imageUrl,
+          basePrice: product.basePrice,
+          currency: product.currency,
+          discountPercent: product.discountPercent,
+        },
+        ...existing.filter((p: any) => p.id !== product.id),
+      ].slice(0, 5)
+
+      setCookie('recentlyViewed', JSON.stringify(updated), {
+        path: '/',
+        expires: 30,
+      })
+    } catch (error) {
+      console.error('Failed to save recent product:', error)
+    }
+  }
   return (
     <div className="relative w-full flex flex-col h-full mx-2">
       <Link
-        href={`/products/${product.handle}`}
+        href={`/products/${product?.handle}`}
         className="relative aspect-[4/5]"
+        onClick={handleProductClick}
       >
         {product.imageUrl && (
           <Image
@@ -59,9 +90,14 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
         {/* title */}
         <div>
-          <h2 className="text-sm font-semibold text-gray-900 line-clamp-2 min-h-[2.5rem]">
-            {product.title}
-          </h2>
+          <Link
+            href={`/products/${product?.handle}`}
+            onClick={handleProductClick}
+          >
+            <h2 className="text-sm font-semibold text-gray-900 line-clamp-2 min-h-[2.5rem]">
+              {product.title}
+            </h2>
+          </Link>
         </div>
 
         {/* price */}
@@ -85,9 +121,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
         </div>
 
         {/* button */}
-        <div className="mt-3 self-end">
-          <AddToCartButton variantId={product.variantId} />
-        </div>
+        {showCTA && (
+          <div className="mt-3 self-end">
+            <AddToCartButton variantId={product.variantId} />
+          </div>
+        )}
       </div>
     </div>
   )
