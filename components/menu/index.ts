@@ -1,5 +1,5 @@
 export { default as CategoryMenu } from './CategoryMenu'
 export { default as Navbar } from './Navbar'
 export { default as NavbarMobile } from './NavbarMobile'
-export { default as Search } from '../layout/MainHeader/Search'
+// export { default as Search } from '../layout/MainHeader/Search'
 export { default as AccountDropdown } from '../layout/MainHeader/AccountDropdown'

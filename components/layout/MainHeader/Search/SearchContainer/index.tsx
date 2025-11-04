@@ -1,12 +1,11 @@
 'use client'
 
-import ProductCard from '@/components/products/ProductCard'
+import { mappingDiscountPrice } from '@/lib/helper'
 import { GetPredictiveSearchQuery } from '@/shopify/types/graphql'
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useMemo, useState } from 'react'
 import SuggestionSearch from './SuggestionSearch'
 import SuggestionProducts from './SugggestionProducts'
-import { mappingDiscountPrice } from '@/lib/helper'
 
 type Props = {
   input: string
@@ -27,61 +26,62 @@ const SearchContainer = ({
 }: Props) => {
   const [visible, setVisible] = useState(false)
 
-  console.log('suggestions :>> ', suggestions)
-
   useEffect(() => {
-    setVisible(true)
+    const t = setTimeout(() => setVisible(true), 10)
     return () => {
+      clearTimeout(t)
       document.body.style.overflow = ''
     }
   }, [])
 
-  const isTyping = input.trim().length > 0
-  const hasResults = suggestions.length > 0
+  const isTyping = useMemo(() => input.trim().length > 0, [input])
 
-  const mappedSuggestions = hasResults
-    ? suggestions.map(mappingDiscountPrice)
-    : []
+  const mappedProducts = useMemo(
+    () => suggestions.map(mappingDiscountPrice),
+    [suggestions]
+  )
+
+  const mappedQueries = useMemo(
+    () => suggestions.map((q) => q.title),
+    [suggestions]
+  )
 
   return (
-    <div className="fixed left-0 right-0 z-40" style={{ top }}>
+    <div className="fixed  left-0 right-0 z-40" style={{ top }}>
+      {/* Overlay */}
       <div
         className={clsx(
-          'fixed inset-0 top-[var(--header-height,140px)] md:top-[var(--header-height,100px)] bg-black/40 transition-opacity duration-600',
+          'fixed inset-0 top-[var(--header-height,140px)] md:top-[var(--header-height,100px)] bg-black/40 transition-opacity duration-500',
           visible ? 'opacity-100' : 'opacity-0 pointer-events-none'
         )}
         onClick={onClose}
       />
 
-      {/* Container */}
       <div
         className={clsx(
-          'relative w-full bg-white shadow-lg transition-transform duration-600 ease-in-out',
-          visible ? 'translate-y-0' : '-translate-y-5 opacity-0'
+          'relative w-full bg-white shadow-lg transition-transform duration-500 ease-in-out',
+          visible ? 'translate-y-0 opacity-100' : '-translate-y-5 opacity-0'
         )}
       >
-        <div className="main-width">
+        <div className="main-width h-[100vh] md:h-full">
           <div className='py-4'>
-            {hasResults ? (
-              <div className="divide-y">
-                {mappedSuggestions.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    showCTA={false}
-                  />
-                ))}
+            <div className="flex flex-col md:flex-row gap-6 border-t border-sub-primary ">
+              <div className="flex-4 min-w-[250px] mt-4">
+                <SuggestionSearch
+                  isTyping={isTyping}
+                  predictiveTerms={mappedQueries}
+                  onSelect={onSelect}
+                />
               </div>
-            ) : (
-              <div className="flex flex-col md:flex-row gap-6 border-t border-sub-primary">
-                <div className="flex-4 min-w-[250px] mt-4">
-                  <SuggestionSearch isTyping={isTyping} onSelect={onSelect} />
-                </div>
-                <div className="flex-6 min-w-[250px] md:mt-4">
-                  <SuggestionProducts isTyping={isTyping} onSelect={onSelect} />
-                </div>
+
+              <div className="flex-6 min-w-[250px] md:mt-4">
+                <SuggestionProducts
+                  isTyping={isTyping}
+                  predictiveProducts={mappedProducts}
+                  onSelect={onSelect}
+                />
               </div>
-            )}
+            </div>
           </div>
         </div>
       </div>
@@ -89,4 +89,4 @@ const SearchContainer = ({
   )
 }
 
-export default SearchContainer
+export default memo(SearchContainer)

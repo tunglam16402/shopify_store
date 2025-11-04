@@ -2,16 +2,22 @@
 
 import { IcoClose } from '@/components/icons'
 import { getCookie, setCookie } from '@/utils/set-cookie'
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 
 type Props = {
   isTyping: boolean
+  predictiveTerms?: string[]
   onSelect: (term: string) => void
 }
 
-const SuggestionSearch = ({ isTyping, onSelect }: Props) => {
+const SuggestionSearch = ({
+  isTyping,
+  onSelect,
+  predictiveTerms = [],
+}: Props) => {
   const [recentSearches, setRecentSearches] = useState<string[]>([])
 
+  console.log('predictiveTerms :>> ', predictiveTerms)
   const popularSearches = [
     'bags',
     'jeans',
@@ -20,7 +26,6 @@ const SuggestionSearch = ({ isTyping, onSelect }: Props) => {
     'sneakers',
   ]
 
-  // Lấy dữ liệu từ cookie khi mount
   useEffect(() => {
     try {
       const raw = getCookie('recentSearches')
@@ -36,21 +41,32 @@ const SuggestionSearch = ({ isTyping, onSelect }: Props) => {
     setCookie('recentSearches', JSON.stringify(updated))
   }
 
-  const displayList = isTyping
-    ? []
-    : recentSearches.length > 0
-      ? recentSearches
-      : popularSearches
+  const hasPredictive = predictiveTerms.length > 0
+  const hasRecent = recentSearches.length > 0
+
+  let displayList
+  if (isTyping) {
+    displayList = hasPredictive ? predictiveTerms : popularSearches
+  } else {
+    displayList = hasRecent ? recentSearches : popularSearches
+  }
 
   return (
     <div className="relative">
-      <h3 className=" text-3xl md:text-5xl">
+      <h3 className=" text-3xl md:text-4xl">
         {isTyping ? (
-          <>
-            <span className="font-[tangerine] font-bold pr-2">Search</span>
-            <span className="uppercase font-light">suggestions</span>
-          </>
-        ) : recentSearches.length > 0 ? (
+          hasPredictive ? (
+            <>
+              <span className="font-[tangerine] font-bold pr-2">Search</span>
+              <span className="uppercase font-light">suggestions</span>
+            </>
+          ) : (
+            <>
+              <span className="uppercase font-light">Popular</span>
+              <span className="font-[tangerine] font-bold px-2">Searches</span>
+            </>
+          )
+        ) : hasRecent ? (
           <>
             <span className="font-[tangerine] font-bold pr-2">Recent</span>
             <span className="uppercase font-light">searches</span>
@@ -63,22 +79,15 @@ const SuggestionSearch = ({ isTyping, onSelect }: Props) => {
         )}
       </h3>
 
-      {isTyping ? (
-        <p className="text-sm text-gray-500">Keep typing to see results...</p>
-      ) : (
-        <ul className="space-y-2">
+        <ul className="space-y-2 mt-2">
           {displayList.map((term) => (
-            <li
-              key={term}
-              className="flex justify-between items-center text-gray-700 hover:text-orange-500 transition group"
-            >
+            <li key={term} className="flex justify-between items-center">
               <button
                 onClick={() => onSelect(term)}
-                className="flex-1 text-left"
+                className="text-gray-700 hover:text-orange-500 transition text-left"
               >
                 {term}
               </button>
-
               {!isTyping && recentSearches.includes(term) && (
                 <button
                   type="button"
@@ -91,9 +100,8 @@ const SuggestionSearch = ({ isTyping, onSelect }: Props) => {
             </li>
           ))}
         </ul>
-      )}
     </div>
   )
 }
 
-export default SuggestionSearch
+export default memo(SuggestionSearch)

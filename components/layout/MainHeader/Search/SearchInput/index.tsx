@@ -1,11 +1,12 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { GetPredictiveSearchQuery } from '@/shopify/types/graphql'
 import { IcoClose, SearchIcon } from '@/components/icons'
 import SearchContainer from '../SearchContainer'
 import { getCookie, setCookie } from '@/utils/set-cookie'
+import { useDebounceCallback } from '@/shopify/hooks/useDebounce'
 
 const MAX_RECENT = 5
 
@@ -19,39 +20,49 @@ const SearchInput = () => {
   const inputRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
 
-  // 🔹 Lưu từ khóa vào cookie (tối đa 5)
-  const saveRecentSearch = (term: string) => {
+  const saveRecentSearch = useCallback((term: string) => {
     const raw = getCookie('recentSearches')
     let existing: string[] = []
-
     try {
       existing = raw ? JSON.parse(raw) : []
     } catch {
       existing = []
     }
 
-    const updated = [term, ...existing.filter((t) => t !== term)].slice(0, MAX_RECENT)
-    setCookie('recentSearches', JSON.stringify(updated), { path: '/', expires: 30 })
-  }
+    const updated = [term, ...existing.filter((t) => t !== term)].slice(
+      0,
+      MAX_RECENT
+    )
+    setCookie('recentSearches', JSON.stringify(updated), {
+      path: '/',
+      expires: 30,
+    })
+  }, [])
 
-  // 🔹 Predictive search fetch
+  const fetchPredictiveSearch = useCallback(async (term: string) => {
+    if (term.length < 2) {
+      setSuggestions([])
+      return
+    }
+    try {
+      const res = await fetch(
+        `/api/predictive-search?q=${encodeURIComponent(term)}`
+      )
+      const json = await res.json()
+      setSuggestions(json.products)
+    } catch (error) {
+      console.error('Predictive search error:', error)
+      setSuggestions([])
+    }
+  }, [])
+
+  // Debounce callback (delay 400ms)
+  const debouncedSearch = useDebounceCallback(fetchPredictiveSearch, 400)
+
   useEffect(() => {
-    const timeout = setTimeout(async () => {
-      if (input.length >= 2) {
-        try {
-          const res = await fetch(`/api/predictive-search?q=${encodeURIComponent(input)}`)
-          const json = await res.json()
-          setSuggestions(json.products)
-        } catch (error) {
-          console.error('Predictive search error:', error)
-          setSuggestions([])
-        }
-      } else {
-        setSuggestions([])
-      }
-    }, 400)
-    return () => clearTimeout(timeout)
-  }, [input])
+    if (input.trim()) debouncedSearch(input)
+    else setSuggestions([])
+  }, [input, debouncedSearch])
 
   useEffect(() => {
     if (isOpen && inputRef.current) {
@@ -64,16 +75,22 @@ const SearchInput = () => {
     e.preventDefault()
     const term = input.trim()
     if (!term) return
+    debouncedSearch.cancel()
     saveRecentSearch(term)
     router.push(`/search-result?q=${encodeURIComponent(term)}`)
     setIsOpen(false)
   }
 
   const handleSelect = (term: string) => {
+    debouncedSearch.cancel()
     setInput(term)
     saveRecentSearch(term)
     router.push(`/search-result?q=${encodeURIComponent(term)}`)
     setIsOpen(false)
+  }
+
+  const clearInputValue = () => {
+    setInput('')
   }
 
   return (
@@ -90,7 +107,7 @@ const SearchInput = () => {
         )}
 
         <div
-          className={`relative w-full transition-all duration-300 ${
+          className={`relative w-full transition-all flex items-center duration-300 ${
             isOpen ? 'ml-10 md:ml-0' : ''
           }`}
         >
@@ -104,6 +121,15 @@ const SearchInput = () => {
             onChange={(e) => setInput(e.target.value)}
             autoComplete="off"
           />
+          {input.length > 0 && (
+            <button
+              type="button"
+              onClick={clearInputValue}
+              className="absolute right-10 p-1.5 text-center text-sm"
+            >
+              Clear
+            </button>
+          )}
           <span className="absolute right-1 top-1.5 p-1.5 bg-orange-300 rounded">
             <SearchIcon />
           </span>

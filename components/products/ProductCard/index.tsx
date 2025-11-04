@@ -25,6 +25,7 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
           id: product.id,
           handle: product.handle,
           title: product.title,
+          category: product.category,
           imageUrl: product.imageUrl,
           basePrice: product.basePrice,
           currency: product.currency,

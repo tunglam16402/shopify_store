@@ -1,18 +1,24 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { getCookie, setCookie } from '@/utils/set-cookie'
-import SuggestionItem, { ViewedProduct } from '../SuggestionItem'
-import ProductCard from '@/components/products/ProductCard'
 import { IcoClose } from '@/components/icons'
+import ProductCard from '@/components/products/ProductCard'
+import { Button } from '@/components/ui/Button'
 import { ProductCardProps } from '@/types/product/productCard'
+import { getCookie, setCookie } from '@/utils/set-cookie'
+import Link from 'next/link'
+import { memo, useEffect, useState } from 'react'
 
 type Props = {
   isTyping: boolean
+  predictiveProducts?: ProductCardProps[]
   onSelect: (term: string) => void
 }
 
-const SuggestionProducts = ({ isTyping, onSelect }: Props) => {
+const SuggestionProducts = ({
+  isTyping,
+  predictiveProducts = [],
+  onSelect,
+}: Props) => {
   const [recentProducts, setRecentProducts] = useState<ProductCardProps[]>([])
 
   console.log('recentProducts :>> ', recentProducts)
@@ -60,17 +66,31 @@ const SuggestionProducts = ({ isTyping, onSelect }: Props) => {
     setCookie('recentlyViewed', JSON.stringify(updated))
   }
 
-  const displayList =
-    recentProducts.length > 0 ? recentProducts : popularProducts
+  const hasPredictive = isTyping && predictiveProducts.length > 0
+  const hasRecent = recentProducts.length > 0
+
+  let displayList
+  if (isTyping) {
+    displayList = hasPredictive ? predictiveProducts : popularProducts
+  } else {
+    displayList = hasRecent ? recentProducts : popularProducts
+  }
 
   return (
     <div>
-      <h3 className="text-3xl md:text-5xl">
+      <h3 className="text-3xl md:text-4xl">
         {isTyping ? (
-          <>
-            <span className="uppercase font-light">Products</span>
-          </>
-        ) : recentProducts.length > 0 ? (
+          hasPredictive ? (
+            <>
+              <span className="uppercase font-light">Product</span>
+            </>
+          ) : (
+            <>
+              <span className="uppercase font-light">Popular</span>
+              <span className="font-[tangerine] font-bold px-2">products</span>
+            </>
+          )
+        ) : hasRecent ? (
           <>
             <span className="font-[tangerine] font-bold pr-2">Recently</span>
             <span className="uppercase font-light">viewed</span>
@@ -88,7 +108,7 @@ const SuggestionProducts = ({ isTyping, onSelect }: Props) => {
         {displayList.map((product) => {
           return (
             <div key={product.id} className="relative">
-              {recentProducts && (
+              {displayList === recentProducts && (
                 <button
                   type="button"
                   onClick={() => onRemove?.(product.handle)}
@@ -103,8 +123,18 @@ const SuggestionProducts = ({ isTyping, onSelect }: Props) => {
           )
         })}
       </div>
+      <div className="text-center mt-4">
+        <Link href={`/collections/${predictiveProducts[0]?.category}`}>
+          <Button
+            variant={'underline'}
+            className="px-10 text-center uppercase cursor-pointer relative"
+          >
+            + see all results
+          </Button>
+        </Link>
+      </div>
     </div>
   )
 }
 
-export default SuggestionProducts
+export default memo(SuggestionProducts)
