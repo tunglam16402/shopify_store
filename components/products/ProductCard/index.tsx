@@ -6,26 +6,14 @@ import Link from 'next/link'
 import AddToCartButton from '../AddToCartButton'
 import { BorderHeart } from '@/components/icons'
 import { getCookie, setCookie } from '@/utils/set-cookie'
+import { ProductCardProps } from '@/types/product/productCard'
 
-export type ProductCardProps = {
-  product: {
-    id: string
-    variantId: string
-    title: string
-    handle: string
-    description: string
-    category?: string
-    imageUrl?: string
-    altText?: string | null
-    basePrice: number
-    compareAtPrice?: number
-    currency: string
-    discountPercent: number
-  }
+interface IProductCardProps {
+  product: ProductCardProps
   showCTA?: boolean
 }
 
-const ProductCard = ({ product, showCTA = true }: ProductCardProps) => {
+const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
   const handleProductClick = () => {
     try {
       const raw = getCookie('recentlyViewed')
@@ -41,6 +29,7 @@ const ProductCard = ({ product, showCTA = true }: ProductCardProps) => {
           basePrice: product.basePrice,
           currency: product.currency,
           discountPercent: product.discountPercent,
+          compareAtPrice: product.compareAtPrice,
         },
         ...existing.filter((p: any) => p.id !== product.id),
       ].slice(0, 5)

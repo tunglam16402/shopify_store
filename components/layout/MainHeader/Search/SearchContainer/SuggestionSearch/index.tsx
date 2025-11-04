@@ -44,7 +44,7 @@ const SuggestionSearch = ({ isTyping, onSelect }: Props) => {
 
   return (
     <div className="relative">
-      <h3 className="font-medium text-3xl md:text-5xl text-gray-800 mb-2">
+      <h3 className=" text-3xl md:text-5xl">
         {isTyping ? (
           <>
             <span className="font-[tangerine] font-bold pr-2">Search</span>

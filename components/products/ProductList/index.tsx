@@ -3,7 +3,8 @@
 
 import { PrismicNextImage } from '@prismicio/next'
 import Link from 'next/link'
-import ProductCard, { ProductCardProps } from '../ProductCard'
+import ProductCard from '../ProductCard'
+import { ProductCardProps } from '@/types/product/productCard'
 
 type Tile = {
   pathname: string
@@ -12,7 +13,7 @@ type Tile = {
 }
 
 type ProductListProps = {
-  products: ProductCardProps['product'][]
+  products: ProductCardProps[]
   tiles?: Tile[]
 }
 

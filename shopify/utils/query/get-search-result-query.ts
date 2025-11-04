@@ -1,6 +1,6 @@
 const getSearchResultQuery = /* GraphQL */ `
   query getSearchResult($query: String!) {
-    search(query: $query, types: PRODUCT, first: 6) {
+    search(query: $query, types: PRODUCT, first: 50) {
       edges {
         node {
           ... on Product {

@@ -3,7 +3,6 @@
 import CartIcon from '@/components/cart/CartIcon'
 import CartSideBar from '@/components/cart/CartSidebar'
 import { Logo } from '@/components/icons'
-import Search from '@/components/layout/MainHeader/Search'
 import { AccountDropdown, NavbarMobile } from '@/components/menu'
 import { useUI } from '@/lib/hooks/useContext'
 import cn from 'classnames'

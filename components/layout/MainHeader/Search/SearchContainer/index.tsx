@@ -45,7 +45,6 @@ const SearchContainer = ({
 
   return (
     <div className="fixed left-0 right-0 z-40" style={{ top }}>
-      {/* Overlay */}
       <div
         className={clsx(
           'fixed inset-0 top-[var(--header-height,140px)] md:top-[var(--header-height,100px)] bg-black/40 transition-opacity duration-600',
@@ -61,29 +60,29 @@ const SearchContainer = ({
           visible ? 'translate-y-0' : '-translate-y-5 opacity-0'
         )}
       >
-        <div className="max-w-6xl mx-auto p-4">
-          {hasResults ? (
-            // 🔹 Kết quả tìm kiếm sản phẩm
-            <div className="divide-y">
-              {mappedSuggestions.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  showCTA={false}
-                />
-              ))}
-            </div>
-          ) : (
-            // 🔹 Gợi ý tìm kiếm & sản phẩm
-            <div className="flex flex-col md:flex-row gap-6 border-t border-sub-primary">
-              <div className="flex-1 min-w-[250px] mt-4">
-                <SuggestionSearch isTyping={isTyping} onSelect={onSelect} />
+        <div className="main-width">
+          <div className='py-4'>
+            {hasResults ? (
+              <div className="divide-y">
+                {mappedSuggestions.map((product) => (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    showCTA={false}
+                  />
+                ))}
               </div>
-              <div className="flex-1 min-w-[250px]">
-                <SuggestionProducts isTyping={isTyping} onSelect={onSelect} />
+            ) : (
+              <div className="flex flex-col md:flex-row gap-6 border-t border-sub-primary">
+                <div className="flex-4 min-w-[250px] mt-4">
+                  <SuggestionSearch isTyping={isTyping} onSelect={onSelect} />
+                </div>
+                <div className="flex-6 min-w-[250px] md:mt-4">
+                  <SuggestionProducts isTyping={isTyping} onSelect={onSelect} />
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </div>
