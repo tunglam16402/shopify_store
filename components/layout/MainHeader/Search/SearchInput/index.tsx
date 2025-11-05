@@ -70,7 +70,7 @@ const SearchInput = () => {
       setContainerTop(rect.bottom)
     }
   }, [isOpen])
-
+  
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const term = input.trim()
@@ -92,6 +92,27 @@ const SearchInput = () => {
   const clearInputValue = () => {
     setInput('')
   }
+
+  useEffect(() => {
+    if (!isOpen) return
+
+    function handleClickOutside(e: MouseEvent) {
+      const inputEl = inputRef.current
+      const containerEl = document.getElementById('search-container')
+
+      if (
+        inputEl?.contains(e.target as Node) ||
+        containerEl?.contains(e.target as Node)
+      ) {
+        return
+      }
+
+      setIsOpen(false)
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [isOpen])
 
   return (
     <div ref={inputRef} className="relative w-full md:w-[700px]">
@@ -125,12 +146,12 @@ const SearchInput = () => {
             <button
               type="button"
               onClick={clearInputValue}
-              className="absolute right-10 p-1.5 text-center text-sm"
+              className="absolute right-10 p-1.5 text-center text-sm text-gray-600 underline"
             >
               Clear
             </button>
           )}
-          <span className="absolute right-1 top-1.5 p-1.5 bg-orange-300 rounded">
+          <span className="absolute right-1 p-1.5 bg-orange-300 rounded">
             <SearchIcon />
           </span>
         </div>

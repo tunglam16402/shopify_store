@@ -3,6 +3,11 @@
 import { IcoClose } from '@/components/icons'
 import ProductCard from '@/components/products/ProductCard'
 import { Button } from '@/components/ui/Button'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from '@/components/ui/Carousel'
 import { ProductCardProps } from '@/types/product/productCard'
 import { getCookie, setCookie } from '@/utils/set-cookie'
 import Link from 'next/link'
@@ -11,13 +16,15 @@ import { memo, useEffect, useState } from 'react'
 type Props = {
   isTyping: boolean
   predictiveProducts?: ProductCardProps[]
-  onSelect: (term: string) => void
+  onClose: () => void
+  inputValue: string
 }
 
 const SuggestionProducts = ({
   isTyping,
   predictiveProducts = [],
-  onSelect,
+  onClose,
+  inputValue,
 }: Props) => {
   const [recentProducts, setRecentProducts] = useState<ProductCardProps[]>([])
 
@@ -76,6 +83,13 @@ const SuggestionProducts = ({
     displayList = hasRecent ? recentProducts : popularProducts
   }
 
+  let seeAllUrl = '/collections/best-seller'
+  if (displayList === predictiveProducts && inputValue) {
+    seeAllUrl = `/search-result?q=${encodeURIComponent(inputValue)}`
+  } else if (displayList === recentProducts) {
+    seeAllUrl = '/account/recent-viewed'
+  }
+
   return (
     <div>
       <h3 className="text-3xl md:text-4xl">
@@ -104,30 +118,43 @@ const SuggestionProducts = ({
         )}
       </h3>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-6">
-        {displayList.map((product) => {
-          return (
-            <div key={product.id} className="relative">
-              {displayList === recentProducts && (
-                <button
-                  type="button"
-                  onClick={() => onRemove?.(product.handle)}
-                  className="absolute top-[-13px] right-[-20px] bg-sub-primary rounded-full p-1 cursor-pointer z-10"
-                  title="Remove"
-                >
-                  <IcoClose className="h-4 w-4 text-gray-600 hover:text-red-500" />
-                </button>
-              )}
-              <ProductCard product={product} showCTA={false} />
-            </div>
-          )
-        })}
+      <div>
+        <Carousel className="w-full ">
+          <CarouselContent className="pt-6">
+            {displayList.map((product) => (
+              <CarouselItem
+                key={product.id}
+                className="basis-1/2 md:basis-1/4 pl-2 md:pl-4 relative overflow-visible"
+                onClick={() => onClose()}
+              >
+                {displayList === recentProducts && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      onRemove?.(product.handle)
+                    }}
+                    className="absolute top-[-13px] right-[-20px] bg-sub-primary rounded-full p-1 cursor-pointer z-11 hover:scale-110"
+                    title="Remove"
+                  >
+                    <IcoClose className="h-4 w-4 text-gray-600 hover:text-red-500" />
+                  </button>
+                )}
+
+                <div className="relative z-10">
+                  <ProductCard product={product} showCTA={false} />
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
       </div>
       <div className="text-center mt-4">
-        <Link href={`/collections/${predictiveProducts[0]?.category}`}>
+        <Link href={seeAllUrl}>
           <Button
             variant={'underline'}
-            className="px-10 text-center uppercase cursor-pointer relative"
+            className="px-10 text-center uppercase relative"
+            onClick={onClose}
           >
             + see all results
           </Button>

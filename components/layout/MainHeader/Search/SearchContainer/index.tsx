@@ -27,7 +27,9 @@ const SearchContainer = ({
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    const t = setTimeout(() => setVisible(true), 10)
+    document.body.style.overflow = 'hidden'
+    const t = setTimeout(() => setVisible(true), 100)
+
     return () => {
       clearTimeout(t)
       document.body.style.overflow = ''
@@ -47,11 +49,14 @@ const SearchContainer = ({
   )
 
   return (
-    <div className="fixed  left-0 right-0 z-40" style={{ top }}>
-      {/* Overlay */}
+    <div
+      className="fixed left-0 right-0 z-40"
+      style={{ top }}
+      id="search-container"
+    >
       <div
         className={clsx(
-          'fixed inset-0 top-[var(--header-height,140px)] md:top-[var(--header-height,100px)] bg-black/40 transition-opacity duration-500',
+          'fixed inset-0 top-[var(--header-height,140px)] md:top-[var(--header-height,100px)] bg-black/40 transition-opacity duration-500 ',
           visible ? 'opacity-100' : 'opacity-0 pointer-events-none'
         )}
         onClick={onClose}
@@ -64,8 +69,8 @@ const SearchContainer = ({
         )}
       >
         <div className="main-width h-[100vh] md:h-full">
-          <div className='py-4'>
-            <div className="flex flex-col md:flex-row gap-6 border-t border-sub-primary ">
+          <div className="py-6">
+            <div className="flex flex-col md:flex-row gap-8 border-t border-sub-primary ">
               <div className="flex-4 min-w-[250px] mt-4">
                 <SuggestionSearch
                   isTyping={isTyping}
@@ -78,7 +83,8 @@ const SearchContainer = ({
                 <SuggestionProducts
                   isTyping={isTyping}
                   predictiveProducts={mappedProducts}
-                  onSelect={onSelect}
+                  onClose={onClose}
+                  inputValue={input}
                 />
               </div>
             </div>

@@ -187,6 +187,10 @@ input {
   outline: 0;
 }
 
+button {
+  cursor: pointer;
+}
+
 /* base css */
 .main-width {
   width: var(--default-width);

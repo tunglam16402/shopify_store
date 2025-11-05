@@ -92,7 +92,7 @@ const SuggestionSearch = ({
                 <button
                   type="button"
                   onClick={() => onRemove(term)}
-                  className="ml-2 cursor-pointer flex items-center justify-center"
+                  className="ml-2 flex items-center justify-center"
                 >
                   <IcoClose className="h-4 w-4 text-gray-600 hover:text-red-500" />
                 </button>

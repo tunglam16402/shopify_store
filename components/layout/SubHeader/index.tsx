@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, useCallback, useMemo } from 'react'
 import Link from 'next/link'
 import DropdownContent from './DropdownContainer'
 import { MenuItem } from '@/types/collection/menuCollection'
+import { usePathname } from 'next/navigation'
 
 type Props = {
   menuItems: MenuItem[]
@@ -12,6 +13,7 @@ type Props = {
 const SubHeader = ({ menuItems }: Props) => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const [isDropdownVisible, setIsDropdownVisible] = useState(false)
+  const pathname = usePathname()
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   const itemsWithDropdown = useMemo(
@@ -58,6 +60,12 @@ const SubHeader = ({ menuItems }: Props) => {
     [activeIndex, menuItems]
   )
 
+
+  useEffect(() => {
+    setIsDropdownVisible(false)
+    setActiveIndex(null)
+  }, [pathname])
+
   return (
     <nav className="relative bg-gray-100 mt-15" onMouseLeave={handleMouseLeave}>
       <ul className="hidden md:flex items-center justify-center">
@@ -67,7 +75,7 @@ const SubHeader = ({ menuItems }: Props) => {
           return (
             <li
               key={item.url}
-              className="py-4 px-3 relative cursor-pointer"
+              className="py-4 px-3 relative cursor-pointer text-sm"
               onMouseEnter={() => handleMouseEnter(index)}
             >
               <Link

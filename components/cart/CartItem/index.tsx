@@ -90,7 +90,7 @@ const CartItemComponent = ({ item, variant = 'sidecart' }: CartItemProps) => {
         <button
           onClick={handleRemove}
           aria-label="Remove from cart"
-          className="mt-2 sm:mt-0 sm:ml-4 p-1 hover:bg-gray-100 rounded cursor-pointer self-start sm:self-auto"
+          className="mt-2 sm:mt-0 sm:ml-4 p-1 hover:bg-gray-100 rounded self-start sm:self-auto"
         >
           <Trash2 className="w-5 h-5 text-red-500" />
         </button>
