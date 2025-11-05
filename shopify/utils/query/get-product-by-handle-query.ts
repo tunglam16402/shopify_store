@@ -1,20 +1,27 @@
+// app/shopify/queries/getProductDetailQuery.ts
 const getProductDetailQuery = /* GraphQL */ `
   query getProductDetail($handle: String!) {
     product(handle: $handle) {
       id
+      handle
       title
       description
+      featuredImage {
+        url
+        altText
+      }
       images(first: 10) {
         nodes {
           url
           altText
         }
       }
-      variants(first: 10) {
+
+      # lấy 1 variant để lấy price / sku / id (dùng cho add-to-cart)
+      variants(first: 1) {
         edges {
           node {
             id
-            title
             sku
             price {
               amount
@@ -24,13 +31,20 @@ const getProductDetailQuery = /* GraphQL */ `
               amount
               currencyCode
             }
-            selectedOptions {
-              name
-              value
-            }
-            image {
-              url
-              altText
+          }
+        }
+      }
+
+      # metafield product reference list (color variants)
+      colorVariants: metafield(namespace: "custom", key: "color_variants") {
+        references(first: 10) {
+          nodes {
+            ... on Product {
+              handle
+              featuredImage {
+                url
+                altText
+              }
             }
           }
         }
