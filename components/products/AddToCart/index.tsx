@@ -6,12 +6,13 @@ import { useUI } from '@/lib/hooks/useContext'
 import { addItem } from '@/store/thunks/cartThunk'
 import { useState } from 'react'
 
-type AddToCartButtonProps = {
+type AddToCartProps = {
   variantId: string
   quantity?: number
+  className?: string
 }
 
-const AddToCartButton = ({ variantId, quantity = 1 }: AddToCartButtonProps) => {
+const AddToCart = ({ variantId, quantity = 1, className }: AddToCartProps) => {
   const dispatch = useAppDispatch()
   const { open } = useUI('cart')
   const [loading, setLoading] = useState(false)
@@ -32,14 +33,14 @@ const AddToCartButton = ({ variantId, quantity = 1 }: AddToCartButtonProps) => {
     <Button
       onClick={handleAddToCart}
       disabled={loading}
-      className="w-full py-2 text-black border  hover:text-white font-semibold transition-all duration-300"
+      className={`py-2 text-black border  hover:text-white font-semibold transition-all duration-300 ${className}`}
     >
       {loading ? 'Adding...' : 'Add to Cart'}
     </Button>
   )
 }
 
-export default AddToCartButton
+export default AddToCart
 
 // 'use client'
 

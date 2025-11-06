@@ -21,7 +21,7 @@ const ProductDetailPage = async ({ params }: Props) => {
   }
 
   return (
-    <main className="mx-auto mt-[105px]">
+    <main className="mx-auto mt-[100px] md:mt-0">
       <div>
         <Suspense fallback={<div>Loading images...</div>}>
           <ProductDetail product={product} menu={menu} />

@@ -3,7 +3,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import AddToCartButton from '../AddToCartButton'
+import AddToCart from '../AddToCart'
 import { BorderHeart } from '@/components/icons'
 import { getCookie, setCookie } from '@/utils/set-cookie'
 import { ProductCardProps } from '@/types/product/productCard'
@@ -113,7 +113,7 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
         {/* button */}
         {showCTA && (
           <div className="mt-3 self-end">
-            <AddToCartButton variantId={product.variantId} />
+            <AddToCart variantId={product.variantId} className='w-full'/>
           </div>
         )}
       </div>

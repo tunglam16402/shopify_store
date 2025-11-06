@@ -1,10 +1,14 @@
 'use client'
 
-import React from 'react'
+import Breadcrumb from '@/components/common/Breadcrumb'
+import { BorderHeart, IcoStarFill } from '@/components/icons'
+import { mappingVariantPrice } from '@/lib/helper'
 import Image from 'next/image'
 import Link from 'next/link'
-import Breadcrumb from '@/components/common/Breadcrumb'
-import { mappingVariantPrice } from '@/lib/helper'
+import { useState } from 'react'
+import AddToCart from '../AddToCart'
+import ProductImage from './ProductImage'
+import { QuantityInput } from '@/components/ui/QuantityInput'
 
 type Variant = ReturnType<typeof mappingVariantPrice> & {
   id: string
@@ -36,13 +40,11 @@ type ProductDetailProps = {
     variant?: Variant
     colorVariants: { handle: string; image: string | null }[]
   }
-  menu: MenuCategory[] 
+  menu: MenuCategory[]
 }
 
 const ProductDetail = ({ product, menu }: ProductDetailProps) => {
   const productPrice = product.variant
-
-  // ✅ tìm collection cha và con dựa theo handle trong menu flattened
   const findCollectionTrail = () => {
     for (const category of menu) {
       const found = category.collections.find((col) =>
@@ -57,95 +59,114 @@ const ProductDetail = ({ product, menu }: ProductDetailProps) => {
 
   const [parent, child] = findCollectionTrail()
 
-  console.log('parent :>> ', parent);
-
-  console.log('child :>> ', child);
-
   const items = [
-    ...(parent
-      ? [{ label: parent.title, href: parent.url.replace(process.env.NEXT_PUBLIC_SITE_URL || '', '') }]
-      : []),
-    ...(child
-      ? [{ label: child.title, href: child.url.replace(process.env.NEXT_PUBLIC_SITE_URL || '', '') }]
-      : []),
+    ...(parent ? [{ label: parent.title, href: parent.url }] : []),
+    ...(child ? [{ label: child.title, href: child.url }] : []),
     { label: product.title },
   ]
 
+  const [quantity, setQuantity] = useState(1)
+  const maxQuantity = 99 // bạn có thể lấy từ inventory nếu có
+
+  const handleChangeQuantity = (newQty: number) => {
+    setQuantity(newQty)
+  }
+
   return (
-    <div className="space-y-6">
-      <Breadcrumb items={items} />
+    <div className="py-8">
+      <div className="main-width">
+        <Breadcrumb items={items} />
+      </div>
 
-      <h1 className="text-4xl font-bold mb-6">{product.title}</h1>
-      <p className="text-gray-600">{product.collection.title}</p>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 mt-6 md:grid-cols-2 gap-10 md:gap-8">
         {/* Images */}
-        <div>
-          {product.images.map((url) => (
-            <Image
-              key={url}
-              src={url}
-              alt={product.altText || product.title}
-              height={500}
-              width={500}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="object-cover rounded"
-            />
-          ))}
+        <div className=" relative">
+          <ProductImage
+            images={product.images}
+            altText={product.altText}
+            title={product.title}
+          />
+          <div className="absolute top-3 right-2 md:right-4 p-2">
+            <BorderHeart className="size-8  md:size-10" />
+          </div>
         </div>
 
         {/* Product info */}
-        <div>
-          <p className="mb-6">{product.description}</p>
-
-          {productPrice && (
-            <>
-              <h2 className="text-2xl font-semibold mb-4">Price</h2>
-              <div className="border p-4 rounded shadow-sm">
-                {productPrice.compareAtPrice &&
-                productPrice.compareAtPrice > productPrice.basePrice ? (
-                  <>
-                    <p className="line-through text-gray-400 text-sm">
-                      {productPrice.compareAtPrice} {productPrice.currency}
-                    </p>
-                    <p className="text-red-600 font-semibold text-lg">
-                      {productPrice.basePrice}
-                      <span className="text-xs ml-1">
-                        (-{productPrice.discountPercent}%)
-                      </span>
-                    </p>
-                  </>
-                ) : (
-                  <p className="font-semibold text-lg">
-                    {productPrice.basePrice} {productPrice.currency}
-                  </p>
-                )}
+        <div className="main-width">
+          <div>
+            <p className="text-gray-600 uppercase text-sm">
+              {product.collection.title}
+            </p>
+            <h1 className="text-4xl mt-1">{product.title}</h1>
+            <div className="flex items-center gap-2 mt-2">
+              <div className="flex">
+                <IcoStarFill className="h-4 w-4 " />
+                <IcoStarFill className="h-4 w-4 " />
+                <IcoStarFill className="h-4 w-4 " />
+                <IcoStarFill className="h-4 w-4 " />
+                <IcoStarFill className="h-4 w-4 " />
               </div>
-            </>
-          )}
+              <div>1 reviews</div>
+            </div>
+          </div>
 
-          {/* Color variants */}
+          <div className="mt-4">
+            {productPrice?.compareAtPrice &&
+            productPrice.compareAtPrice > productPrice.basePrice ? (
+              <div className="flex items-center">
+                <div className="text-red-400 line-through text-2xl ">
+                  {productPrice.compareAtPrice} {productPrice?.currency}
+                </div>
+
+                <div className="mx-3 flex h-7 items-center rounded-3xl border border-sub-primary px-3 text-base text-sub-primary">
+                  {productPrice.discountPercent}% Off
+                </div>
+
+                <div className="text-3xl font-semibold">
+                  {productPrice.basePrice} {productPrice?.currency}
+                </div>
+              </div>
+            ) : (
+              <p className="font-semibold text-3xl">
+                {productPrice?.basePrice} {productPrice?.currency}
+              </p>
+            )}
+          </div>
+
           {product.colorVariants.length > 0 && (
-            <>
-              <h2 className="text-2xl font-semibold mt-6 mb-2">
-                Color Variants
-              </h2>
-              <div className="flex gap-2">
-                {product.colorVariants.map((v) => (
-                  <Link key={v.handle} href={`/products/${v.handle}`}>
-                    <Image
-                      src={v.image || '/placeholder.png'}
-                      alt=""
-                      width={50}
-                      height={50}
-                      className="rounded border object-cover"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
-                  </Link>
-                ))}
-              </div>
-            </>
+            <div className="flex gap-2 mt-10">
+              {product.colorVariants.map((v) => (
+                <Link key={v.handle} href={`/products/${v.handle}`}>
+                  <Image
+                    src={v.image || '/placeholder.png'}
+                    alt=""
+                    width={64}
+                    height={64}
+                    className="rounded border object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                </Link>
+              ))}
+            </div>
           )}
+
+          <div className="flex items-center gap-3 mt-6">
+            <QuantityInput
+              value={quantity}
+              min={1}
+              max={maxQuantity}
+              onChange={handleChangeQuantity}
+            />
+            <div className='w-full'>
+              <AddToCart
+                variantId={product.variant?.id || ''}
+                quantity={quantity}
+                className="w-full"
+              />
+            </div>
+          </div>
+
+          <p className="mb-6">{product.description}</p>
         </div>
       </div>
     </div>

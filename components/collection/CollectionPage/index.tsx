@@ -9,6 +9,8 @@ interface ICollectionPage {
 }
 
 const CollectionPage: React.FC<ICollectionPage> = ({ products, bannerData }) => {
+
+  console.log('products :>> ', products);
   return (
     <div className="main-width mx-auto">
       {bannerData && <Banner bannerData={bannerData} />}

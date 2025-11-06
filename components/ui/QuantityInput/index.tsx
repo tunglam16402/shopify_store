@@ -55,7 +55,7 @@ export const QuantityInput = ({
   return (
     <div className="flex items-center gap-2">
       <Button
-        variant="outline"
+        variant="default"
         size="icon"
         disabled={loading || inputValue <= min}
         onClick={handleDecrease}
@@ -67,8 +67,7 @@ export const QuantityInput = ({
         type="number"
         value={inputValue}
         onChange={handleInputChange}
-        className="w-10 text-center border-none focus:outline-none bg-transparent 
-          appearance-none 
+        className="w-10 text-center border-none focus:outline-none 
           [&::-webkit-outer-spin-button]:appearance-none 
           [&::-webkit-inner-spin-button]:appearance-none 
           [-moz-appearance:textfield]"
@@ -77,7 +76,7 @@ export const QuantityInput = ({
       />
 
       <Button
-        variant="outline"
+        variant="default"
         size="icon"
         disabled={loading || inputValue >= max}
         onClick={handleIncrease}

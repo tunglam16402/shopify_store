@@ -12,6 +12,7 @@ export { default as IcoApple } from './IcoApple';
 export { default as IcoArrowRight } from './IcoArrowRight';
 export { default as IcoSpin } from './IcoSpin';
 export { default as IcoPhone } from './IcoPhone';
+export { default as IcoStarFill } from './IcoStarFill';
 
 export * from './Payments'
 export * from './Accounts'

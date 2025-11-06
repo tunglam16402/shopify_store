@@ -1,20 +1,20 @@
-import React from 'react';
-import { ChevronRight, Home } from 'lucide-react';
-import Link from 'next/link';
+import { IcoFront } from '@/components/icons'
+import Link from 'next/link'
+import React from 'react'
 
 // Type định nghĩa cho breadcrumb item
 export interface BreadcrumbItem {
-  label: string;
-  href?: string;
-  isCurrentPage?: boolean;
+  label: string
+  href?: string
+  isCurrentPage?: boolean
 }
 
 export interface BreadcrumbProps {
-  items: BreadcrumbItem[];
-  separator?: React.ReactNode;
-  showHome?: boolean;
-  homeHref?: string;
-  className?: string;
+  items: BreadcrumbItem[]
+  separator?: React.ReactNode
+  showHome?: boolean
+  homeHref?: string
+  className?: string
 }
 
 const Breadcrumb: React.FC<BreadcrumbProps> = ({
@@ -24,12 +24,15 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({
   homeHref = '/',
   className = '',
 }) => {
-  const defaultSeparator = <ChevronRight className="w-4 h-4 text-gray-400" />;
-  const separatorElement = separator || defaultSeparator;
+  const defaultSeparator = "/"
+  const separatorElement = separator || defaultSeparator
 
   return (
-    <nav aria-label="Breadcrumb" className={`flex items-center text-sm ${className}`}>
-      <ol className="flex items-center flex-wrap gap-2">
+    <nav
+      aria-label="Breadcrumb"
+      className={`flex items-center text-sm md:text-base capitalize ${className}`}
+    >
+      <ol className="flex items-center flex-wrap gap-1 font-light">
         {showHome && (
           <>
             <li className="flex items-center">
@@ -38,7 +41,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({
                 className="flex items-center text-gray-600 hover:text-gray-900 transition-colors"
                 aria-label="Home"
               >
-                <Home className="w-4 h-4" />
+                Home
               </Link>
             </li>
             {items.length > 0 && (
@@ -50,8 +53,8 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({
         )}
 
         {items.map((item, index) => {
-          const isLast = index === items.length - 1;
-          const isCurrent = item.isCurrentPage || isLast;
+          const isLast = index === items.length - 1
+          const isCurrent = item.isCurrentPage || isLast
 
           return (
             <React.Fragment key={index}>
@@ -67,9 +70,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({
                 ) : (
                   <span
                     className={`${
-                      isCurrent
-                        ? 'text-gray-900 font-medium'
-                        : 'text-gray-600'
+                      isCurrent ? 'text-gray-900 font-medium' : 'text-gray-600'
                     }`}
                     aria-current={isCurrent ? 'page' : undefined}
                   >
@@ -83,11 +84,11 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({
                 </li>
               )}
             </React.Fragment>
-          );
+          )
         })}
       </ol>
     </nav>
-  );
-};
+  )
+}
 
 export default Breadcrumb
