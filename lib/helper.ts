@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Cart } from '@/types/cart'
+import { BreadcrumbItem } from '@/components/common/Breadcrumb'
 import {
   GetProductDetailQuery,
   GetProductsQuery,
 } from '@/shopify/types/graphql'
-import { AppError } from '@/types/error'
+import { Cart } from '@/types/cart'
 import { Address } from '@/types/customer/address'
+import { AppError } from '@/types/error'
 
 type VariantFromQuery = NonNullable<
   GetProductDetailQuery['product']
@@ -74,6 +75,27 @@ export function transformShopifyUrl(url?: string | null): string {
   } catch {
     return '/'
   }
+}
+
+export const useBreadcrumb = (
+  pathname: string,
+  customLabels?: Record<string, string>
+) => {
+  const segments = pathname.split('/').filter(Boolean)
+
+  const items: BreadcrumbItem[] = segments.map((segment, index) => {
+    const href = '/' + segments.slice(0, index + 1).join('/')
+    const label =
+      customLabels?.[segment] ||
+      segment
+        .split('-')
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ')
+
+    return { label, href }
+  })
+
+  return items
 }
 
 export function formatDate(

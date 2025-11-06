@@ -9,23 +9,24 @@ function mapMenuItem(item: any): MenuItem {
   const children: ChildItem[] =
     item.items?.map((child: any) => {
       // Mỗi "child" có thể có thêm 1 cấp "grandchild"
-      const grandChildren = child.items?.map((grand: any) => {
-        const images: string[] =
-          grand.resource?.__typename === 'Collection' && grand.resource.image?.url
-            ? [grand.resource.image.url]
-            : []
+      const grandChildren =
+        child.items?.map((grand: any) => {
+          const images: string[] =
+            grand.resource?.__typename === 'Collection' &&
+            grand.resource.image?.url
+              ? [grand.resource.image.url]
+              : []
 
-        return {
-          title: grand.title,
-          url: transformShopifyUrl(grand.url),
-          image: images,
-        }
-      }) || []
+          return {
+            title: grand.title,
+            url: transformShopifyUrl(grand.url),
+            image: images,
+          }
+        }) || []
 
       return {
         title: child.title,
         url: transformShopifyUrl(child.url),
-        // Nếu có cấp 3 thì dùng ảnh của cấp 3, còn nếu không thì rỗng
         image: [],
         children: grandChildren,
       }
@@ -36,6 +37,28 @@ function mapMenuItem(item: any): MenuItem {
     url: transformShopifyUrl(item.url),
     children,
   }
+}
+
+export function flattenMenuForCategories(menu: MenuItem[]) {
+  return menu.map((item) => {
+    const collections =
+      item.children?.flatMap(
+        (child) =>
+          child.children
+            ?.filter((grandChild) => grandChild.url?.includes('/collections/'))
+            .map((grandChild) => ({
+              title: grandChild.title,
+              url: grandChild.url,
+              image: grandChild.image,
+            })) || []
+      ) || []
+
+    return {
+      title: item.title,
+      url: item.url,
+      collections,
+    }
+  })
 }
 
 export async function getMainMenu(): Promise<MenuItem[]> {

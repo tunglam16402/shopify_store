@@ -12,13 +12,14 @@ const ProductDetailPage = async ({ params }: Props) => {
   const { handle } = await params
 
   const product = await getProductByHandle(handle)
+  
 
   if (!product) {
     return <div>Product not found.</div>
   }
 
   return (
-    <main className="max-w-4xl mx-auto p-8">
+    <main className="mx-auto mt-[105px]">
       <div>
         <Suspense fallback={<div>Loading images...</div>}>
           <ProductDetail product={product} />

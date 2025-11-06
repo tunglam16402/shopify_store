@@ -6,6 +6,13 @@ const getProductDetailQuery = /* GraphQL */ `
       handle
       title
       description
+      collections(first: 100) {
+        nodes {
+          id
+          handle
+          title
+        }
+      }
       featuredImage {
         url
         altText

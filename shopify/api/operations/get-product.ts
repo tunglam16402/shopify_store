@@ -33,6 +33,7 @@ export async function getProductByHandle(handle: string) {
     id: product.id,
     handle: product.handle,
     title: product.title,
+    collection: product.collections.nodes[0],
     description: product.description,
     featuredImage: product.featuredImage?.url || null,
     altText: product.featuredImage?.altText || '',
