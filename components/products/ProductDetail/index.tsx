@@ -1,11 +1,26 @@
-import Breadcrumb from '@/components/common/Breadcrumb'
-import { mappingVariantPrice } from '@/lib/helper'
+'use client'
+
+import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import Breadcrumb from '@/components/common/Breadcrumb'
+import { mappingVariantPrice } from '@/lib/helper'
 
 type Variant = ReturnType<typeof mappingVariantPrice> & {
   id: string
   sku: string
+}
+
+type MenuCollection = {
+  title: string
+  url: string
+  image?: string
+}
+
+type MenuCategory = {
+  title: string
+  url: string
+  collections: MenuCollection[]
 }
 
 type ProductDetailProps = {
@@ -14,30 +29,54 @@ type ProductDetailProps = {
     handle: string
     title: string
     description: string
-    collection: {id: string, title: string, handle: string}
+    collection: { id: string; title: string; handle: string }
     featuredImage?: string | null
     altText?: string
     images: string[]
     variant?: Variant
     colorVariants: { handle: string; image: string | null }[]
   }
+  menu: MenuCategory[] 
 }
 
-
-
-const ProductDetail = ({ product }: ProductDetailProps) => {
-
-const items = [
-  { label: product.collection.title, href: `/collections/${product.collection.handle}` },
-  { label: product.title }
-];
-
+const ProductDetail = ({ product, menu }: ProductDetailProps) => {
   const productPrice = product.variant
+
+  // ✅ tìm collection cha và con dựa theo handle trong menu flattened
+  const findCollectionTrail = () => {
+    for (const category of menu) {
+      const found = category.collections.find((col) =>
+        col.url.includes(product.collection.handle)
+      )
+      if (found) {
+        return [category, found]
+      }
+    }
+    return []
+  }
+
+  const [parent, child] = findCollectionTrail()
+
+  console.log('parent :>> ', parent);
+
+  console.log('child :>> ', child);
+
+  const items = [
+    ...(parent
+      ? [{ label: parent.title, href: parent.url.replace(process.env.NEXT_PUBLIC_SITE_URL || '', '') }]
+      : []),
+    ...(child
+      ? [{ label: child.title, href: child.url.replace(process.env.NEXT_PUBLIC_SITE_URL || '', '') }]
+      : []),
+    { label: product.title },
+  ]
+
   return (
-    <div>
+    <div className="space-y-6">
       <Breadcrumb items={items} />
+
       <h1 className="text-4xl font-bold mb-6">{product.title}</h1>
-      <p>{product.collection.title}</p>
+      <p className="text-gray-600">{product.collection.title}</p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Images */}
@@ -57,34 +96,28 @@ const items = [
 
         {/* Product info */}
         <div>
-          
           <p className="mb-6">{product.description}</p>
 
-          {/* Variant info */}
           {productPrice && (
             <>
               <h2 className="text-2xl font-semibold mb-4">Price</h2>
               <div className="border p-4 rounded shadow-sm">
                 {productPrice.compareAtPrice &&
                 productPrice.compareAtPrice > productPrice.basePrice ? (
-                  <div>
+                  <>
                     <p className="line-through text-gray-400 text-sm">
-                      {productPrice.compareAtPrice}
+                      {productPrice.compareAtPrice} {productPrice.currency}
                     </p>
-                    <p className="line-through text-gray-400 text-sm">
-                      {productPrice.currency}
-                    </p>
-
                     <p className="text-red-600 font-semibold text-lg">
                       {productPrice.basePrice}
-                      <span className="text-xs">
+                      <span className="text-xs ml-1">
                         (-{productPrice.discountPercent}%)
                       </span>
                     </p>
-                  </div>
+                  </>
                 ) : (
                   <p className="font-semibold text-lg">
-                    {productPrice.basePrice}
+                    {productPrice.basePrice} {productPrice.currency}
                   </p>
                 )}
               </div>

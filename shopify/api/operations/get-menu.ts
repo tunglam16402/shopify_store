@@ -49,7 +49,9 @@ export function flattenMenuForCategories(menu: MenuItem[]) {
             .map((grandChild) => ({
               title: grandChild.title,
               url: grandChild.url,
-              image: grandChild.image,
+              image: Array.isArray(grandChild.image)
+                ? grandChild.image[0] 
+                : grandChild.image, 
             })) || []
       ) || []
 

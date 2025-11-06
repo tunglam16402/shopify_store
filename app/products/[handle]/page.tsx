@@ -1,5 +1,6 @@
 // app/products/[handle]/page.tsx
 import ProductDetail from '@/components/products/ProductDetail'
+import { flattenMenuForCategories, getMainMenu } from '@/shopify/api/operations/get-menu'
 import { getProductByHandle } from '@/shopify/api/operations/get-product'
 import { Suspense } from 'react'
 
@@ -12,7 +13,8 @@ const ProductDetailPage = async ({ params }: Props) => {
   const { handle } = await params
 
   const product = await getProductByHandle(handle)
-  
+  const menuRaw = await getMainMenu()
+  const menu = flattenMenuForCategories(menuRaw)
 
   if (!product) {
     return <div>Product not found.</div>
@@ -22,7 +24,7 @@ const ProductDetailPage = async ({ params }: Props) => {
     <main className="mx-auto mt-[105px]">
       <div>
         <Suspense fallback={<div>Loading images...</div>}>
-          <ProductDetail product={product} />
+          <ProductDetail product={product} menu={menu} />
         </Suspense>
       </div>
     </main>
