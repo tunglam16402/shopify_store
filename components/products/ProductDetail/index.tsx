@@ -9,6 +9,7 @@ import { useState } from 'react'
 import AddToCart from '../AddToCart'
 import ProductImage from './ProductImage'
 import { QuantityInput } from '@/components/ui/QuantityInput'
+import ProductUSP from './ProductUSP'
 
 type Variant = ReturnType<typeof mappingVariantPrice> & {
   id: string
@@ -143,27 +144,30 @@ const ProductDetail = ({ product, menu }: ProductDetailProps) => {
                     width={64}
                     height={64}
                     className="rounded border object-cover"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    sizes="(max-width: 768px) 20vw, (max-width: 1200px) 10vw, 10vw"
                   />
                 </Link>
               ))}
             </div>
           )}
 
-          <div className="flex items-center gap-3 mt-6">
+          <div className="flex items-center gap-3 mt-8">
             <QuantityInput
               value={quantity}
               min={1}
               max={maxQuantity}
               onChange={handleChangeQuantity}
             />
-            <div className='w-full'>
+            <div className="w-full">
               <AddToCart
                 variantId={product.variant?.id || ''}
                 quantity={quantity}
-                className="w-full"
+                className="w-full py-6"
               />
             </div>
+          </div>
+          <div className='mt-8 '>
+            <ProductUSP />
           </div>
 
           <p className="mb-6">{product.description}</p>

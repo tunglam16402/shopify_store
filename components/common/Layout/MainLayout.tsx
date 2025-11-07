@@ -20,11 +20,11 @@ const MainLayout = async ({ children }: { children: React.ReactNode }) => {
   )
 
   return (
-    <header>
+    <>
       {header}
       <main className="relative">{children}</main>
       <Footer data={footer.data} />
-    </header>
+    </>
   )
 }
 
