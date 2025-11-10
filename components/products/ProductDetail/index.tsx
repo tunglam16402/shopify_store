@@ -68,16 +68,15 @@ const ProductDetail = ({ product, menu }: ProductDetailProps) => {
   ]
 
   useEffect(() => {
-    console.log('product.id :>> ', product.id);
-    trackViewedProduct({
+    const item = {
       id: product.id,
       handle: product.handle,
-      imageURL: product.images[0],
+      imageURL: product?.featuredImage || "",
       title: product.title,
-      // vendor: vendor,
       price: product.variant?.basePrice,
       compareAtPrice: product?.variant?.compareAtPrice,
-    })
+    }
+    trackViewedProduct(item)
   }, [product.id])
 
   const [quantity, setQuantity] = useState(1)
