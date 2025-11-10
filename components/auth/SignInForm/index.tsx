@@ -38,9 +38,9 @@ const SignInForm = () => {
   useEffect(() => {
     if (state.success) {
       dispatch(loadUserFromCookie())
-      // sendEventTracking(EventTracking.TrackLoggedUsers, {
-      //   email:,
-      // })
+      sendEventTracking(EventTracking.TrackLoggedUsers, {
+        email: loginCustomer.name,
+      })
       router.push('/')
     }
   }, [state, router, dispatch])

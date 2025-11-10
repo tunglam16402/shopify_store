@@ -68,6 +68,7 @@ const ProductDetail = ({ product, menu }: ProductDetailProps) => {
   ]
 
   useEffect(() => {
+    console.log('product.id :>> ', product.id);
     trackViewedProduct({
       id: product.id,
       handle: product.handle,
@@ -77,7 +78,7 @@ const ProductDetail = ({ product, menu }: ProductDetailProps) => {
       price: product.variant?.basePrice,
       compareAtPrice: product?.variant?.compareAtPrice,
     })
-  }, [product.variant])
+  }, [product.id])
 
   const [quantity, setQuantity] = useState(1)
   const maxQuantity = 99

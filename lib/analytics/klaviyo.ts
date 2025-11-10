@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const KLAVIYO_API_KEY = process.env.KLAVIYO_LIST_ID
+export const KLAVIYO_API_KEY = process.env.NEXT_PUBLIC_KLAVIYO_API_KEY
 
 export const EventTracking = {
   TrackViewedProduct: ['trackViewedItem'],
@@ -9,15 +9,6 @@ export const EventTracking = {
   HydrogenAddedToCart: ['track', 'Hydrogen Added To Cart'],
 }
 
-// export interface IKlaviyoProduct {
-//   id: string
-//   title: string
-//   imageURL: string
-//   handle: string
-//   vendor: string
-//   price: number
-//   compareAtPrice: number
-// }
 
 export interface IKlaviyoProduct {
   id: string
