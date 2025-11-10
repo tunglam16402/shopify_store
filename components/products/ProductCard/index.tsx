@@ -19,7 +19,6 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
       const raw = getCookie('recentlyViewed')
       const existing = raw ? JSON.parse(raw) : []
 
-      // Loại trùng và thêm mới lên đầu
       const updated = [
         {
           id: product.id,

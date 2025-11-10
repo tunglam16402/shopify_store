@@ -6,6 +6,7 @@ import { Literata, Tangerine } from 'next/font/google'
 import StoreProvider from '../components/common/Layout/StoreProvider'
 import { primaryFont } from './font'
 import './globals.css'
+import MainScript from '@/components/common/MainScript'
 
 const tangerineFont = Tangerine({
   variable: '--font-tangerine-sans',
@@ -40,6 +41,7 @@ export default function RootLayout({
             <MainLayout>{children}</MainLayout>
           </GlobalUIProvider>
         </StoreProvider>
+        <MainScript />
       </body>
     </html>
   )

@@ -6,7 +6,7 @@ import {
   IcoArrowRight,
   IcoEmail,
   IcoPassword,
-  IcoSpin
+  IcoSpin,
 } from '@/components/icons'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
@@ -18,6 +18,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useActionState, useEffect } from 'react'
 import SocialLoginWrapper from '../SocialLogin/SocialLoginWrapper'
+import { EventTracking, sendEventTracking } from '@/lib/analytics/klaviyo'
 
 const initialState: LoginState = {
   success: false,
@@ -37,6 +38,9 @@ const SignInForm = () => {
   useEffect(() => {
     if (state.success) {
       dispatch(loadUserFromCookie())
+      // sendEventTracking(EventTracking.TrackLoggedUsers, {
+      //   email:,
+      // })
       router.push('/')
     }
   }, [state, router, dispatch])

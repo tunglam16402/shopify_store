@@ -5,11 +5,12 @@ import { BorderHeart, IcoStarFill } from '@/components/icons'
 import { mappingVariantPrice } from '@/lib/helper'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import AddToCart from '../AddToCart'
 import ProductImage from './ProductImage'
 import { QuantityInput } from '@/components/ui/QuantityInput'
 import ProductUSP from './ProductUSP'
+import { trackViewedProduct } from '@/lib/analytics/klaviyo'
 
 type Variant = ReturnType<typeof mappingVariantPrice> & {
   id: string
@@ -66,8 +67,20 @@ const ProductDetail = ({ product, menu }: ProductDetailProps) => {
     { label: product.title },
   ]
 
+  useEffect(() => {
+    trackViewedProduct({
+      id: product.id,
+      handle: product.handle,
+      imageURL: product.images[0],
+      title: product.title,
+      // vendor: vendor,
+      price: product.variant?.basePrice,
+      compareAtPrice: product?.variant?.compareAtPrice,
+    })
+  }, [product.variant])
+
   const [quantity, setQuantity] = useState(1)
-  const maxQuantity = 99 // bạn có thể lấy từ inventory nếu có
+  const maxQuantity = 99
 
   const handleChangeQuantity = (newQty: number) => {
     setQuantity(newQty)
@@ -166,7 +179,7 @@ const ProductDetail = ({ product, menu }: ProductDetailProps) => {
               />
             </div>
           </div>
-          <div className='mt-8 '>
+          <div className="mt-8 ">
             <ProductUSP />
           </div>
 

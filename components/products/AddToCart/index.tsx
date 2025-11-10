@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/Button'
+import { trackAddedToCart } from '@/lib/analytics/klaviyo'
 import { useAppDispatch } from '@/lib/hooks/useAppDispatch'
 import { useUI } from '@/lib/hooks/useContext'
 import { addItem } from '@/store/thunks/cartThunk'
@@ -21,6 +22,14 @@ const AddToCart = ({ variantId, quantity = 1, className }: AddToCartProps) => {
     try {
       setLoading(true)
       await dispatch(addItem({ variantId, quantity })).unwrap()
+      trackAddedToCart({
+        id: String(variantId),
+        // compareAtPrice: selectedVariant.compareAtPrice?.amount,
+        // price: selectedVariant.price?.amount,
+        // imageURL: selectedVariant.image?.url,
+        // title: product.title,
+        // vendor: product.vendor,
+      })
       open?.()
     } catch (err) {
       console.error('Add to cart failed', err)
