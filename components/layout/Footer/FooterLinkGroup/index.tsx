@@ -13,20 +13,19 @@ const FooterLinkGroup: React.FC<IFooterLinkGroup> = ({ title, links }) => {
 
   return (
     <div className="text-white space-y-4">
-       <Dropdown
+      <Dropdown
         title={title}
         links={links.map((item) => ({
           title: item.title || '',
           pathname: item.pathname || '',
         }))}
-        className='md:hidden'
+        className="md:hidden"
+        titleClassName="uppercase"
       />
 
       <div className="hidden md:block">
         <div className="">
-          <p className="font-semibold uppercase">
-            { title }
-          </p>
+          <p className="font-semibold uppercase">{title}</p>
         </div>
         <ul className="pt-5 space-y-3">
           {links.map((item, index) => (

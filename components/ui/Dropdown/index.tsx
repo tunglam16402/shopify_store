@@ -9,11 +9,13 @@ interface DropdownLink {
   pathname?: string
 }
 
-interface MobileDropdownProps {
+interface DropdownProps {
   title: string
-  links: DropdownLink[]
+  links?: DropdownLink[]
+  children?: React.ReactNode
   defaultOpen?: boolean
   className?: string
+  titleClassName?: string
   openIcon?: React.ReactNode
   closeIcon?: React.ReactNode
 }
@@ -21,14 +23,16 @@ interface MobileDropdownProps {
 const Dropdown = ({
   title,
   links,
+  children,
   defaultOpen = false,
   className,
+  titleClassName,
   openIcon = <IcoMinus className="w-5 h-5" />,
   closeIcon = <IcoPlus className="w-5 h-5" />,
-}: MobileDropdownProps) => {
+}: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(defaultOpen)
 
-  //   if (!links?.length) return null
+  const hasLinks = links && links.length > 0
 
   return (
     <div className={clsx('border-b border-[#e3c16f] pb-4', className)}>
@@ -36,7 +40,9 @@ const Dropdown = ({
         className="flex items-center justify-between cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <p className="font-semibold uppercase tracking-wide">{title}</p>
+        <p className={clsx('font-semibold tracking-wide', titleClassName)}>
+          {title}
+        </p>
         <button
           type="button"
           className="text-white transition-transform duration-300"
@@ -51,15 +57,23 @@ const Dropdown = ({
           isOpen ? 'max-h-[9999px] opacity-100' : 'max-h-0 opacity-0'
         )}
       >
-        <ul className="pt-4 space-y-3">
-          {links.map((item, index) => (
-            <li key={index}>
-              <a href={item.pathname || '#'} className="text-sm block">
-                {item.title}
-              </a>
-            </li>
-          ))}
-        </ul>
+        {hasLinks ? (
+          <ul className="pt-4 space-y-3 text-sm">
+            {links!.map((item, index) => (
+              <li key={index}>
+                <a href={item.pathname || '#'} className="block">
+                  {item.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          children && (
+            <div className="whitespace-pre-line leading-relaxed">
+              {children}
+            </div>
+          )
+        )}
       </div>
     </div>
   )

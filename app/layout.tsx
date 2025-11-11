@@ -6,6 +6,10 @@ import { Literata, Tangerine } from 'next/font/google'
 import StoreProvider from '../components/common/Layout/StoreProvider'
 import { primaryFont } from './font'
 import './globals.css'
+import 'swiper/css'
+import 'swiper/css/grid'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
 import MainScript from '@/components/common/MainScript'
 
 const tangerineFont = Tangerine({

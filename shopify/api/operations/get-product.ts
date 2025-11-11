@@ -1,8 +1,13 @@
-import { mappingDiscountPrice, mappingVariantPrice } from '@/lib/helper'
+import { mappingDiscountPrice, mappingVariantPrice, parseShopifyErrors } from '@/lib/helper'
 import { shopifyFetch } from '../../fetcher'
-import { GetProductDetailQuery, GetProductsQuery } from '../../types/graphql'
+import {
+  GetProductDetailQuery,
+  GetProductsQuery,
+  GetRelatedProductsQuery,
+} from '../../types/graphql'
 import getProductsQuery from '../../utils/query/get-all-product-query'
 import getProductDetailQuery from '../../utils/query/get-product-by-handle-query'
+import getRelatedProductsQuery from '@/shopify/utils/query/get-product-related'
 
 export async function getProductByHandle(handle: string) {
   const data = await shopifyFetch<GetProductDetailQuery>({
@@ -70,4 +75,33 @@ export async function getAllProduct() {
   const products = data.products?.nodes ?? []
 
   return products.map(mappingDiscountPrice)
+}
+
+export async function getRelatedProduct(productId: string) {
+  try {
+    const data = await shopifyFetch<GetRelatedProductsQuery>({
+      query: getRelatedProductsQuery,
+      variables: { productId },
+    })
+
+    if (!data.productRecommendations) {
+      return null
+    }
+
+    const errors = parseShopifyErrors(data.productRecommendations)
+    if (errors.length > 0) {
+      return { success: false, errors }
+    }
+
+    return {
+      success: true,
+      data: data.productRecommendations.map(mappingDiscountPrice),
+    }
+  } catch (error) {
+    console.error('Error in getRelatedProduct:', error)
+    return {
+      success: false,
+      errors: [{ field: [], message: 'Network error or Shopify unreachable' }],
+    }
+  }
 }

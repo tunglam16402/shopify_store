@@ -2,9 +2,10 @@
 import { ProductList } from '@/components/products'
 import React from 'react'
 import Banner from '../Banner'
+import { ProductCardProps } from '@/types/product/productCard'
 
 interface ICollectionPage {
-  products: any
+  products: ProductCardProps[]
   bannerData: any
 }
 

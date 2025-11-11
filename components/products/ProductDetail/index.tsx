@@ -12,6 +12,8 @@ import { QuantityInput } from '@/components/ui/QuantityInput'
 import ProductUSP from './ProductUSP'
 import { trackViewedProduct } from '@/lib/analytics/klaviyo'
 import ProductInfo from './ProductInfo'
+import ProductRelated from '../ProductRelated'
+import { ProductCardProps } from '@/types/product/productCard'
 
 type Variant = ReturnType<typeof mappingVariantPrice> & {
   id: string
@@ -45,9 +47,14 @@ type ProductDetailProps = {
     colorVariants: { handle: string; image: string | null }[]
   }
   menu: MenuCategory[]
+  relatedProducts: ProductCardProps[]
 }
 
-const ProductDetail = ({ product, menu }: ProductDetailProps) => {
+const ProductDetail = ({
+  product,
+  menu,
+  relatedProducts,
+}: ProductDetailProps) => {
   const productPrice = product.variant
   const findCollectionTrail = () => {
     for (const category of menu) {
@@ -179,12 +186,19 @@ const ProductDetail = ({ product, menu }: ProductDetailProps) => {
               />
             </div>
           </div>
-          <div className="mt-8 ">
+          <div className="mt-8">
             <ProductUSP />
           </div>
 
-          <div>
-            <ProductInfo description={product.description} information={product.information}/>
+          <div className="mt-8">
+            <ProductInfo
+              description={product.description}
+              information={product.information}
+            />
+          </div>
+
+          <div className="mt-8">
+            <ProductRelated relatedProduct={relatedProducts}/>
           </div>
         </div>
       </div>

@@ -4,7 +4,7 @@ const IcoStarFill = (props: React.HTMLAttributes<SVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     fill="#FFD700"
     stroke="#000000"
-    stroke-width="0.0002"
+    strokeWidth="0.0002"
     transform="rotate(0)"
     {...props}
   >
