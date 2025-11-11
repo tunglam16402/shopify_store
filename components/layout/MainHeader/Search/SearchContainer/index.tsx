@@ -2,7 +2,7 @@
 
 import { mappingDiscountPrice } from '@/lib/helper'
 import { GetPredictiveSearchQuery } from '@/shopify/types/graphql'
-import clsx from 'clsx'
+import cn from 'classnames'
 import { memo, useEffect, useMemo, useState } from 'react'
 import SuggestionSearch from './SuggestionSearch'
 import SuggestionProducts from './SugggestionProducts'
@@ -55,7 +55,7 @@ const SearchContainer = ({
       id="search-container"
     >
       <div
-        className={clsx(
+        className={cn(
           'fixed inset-0 top-[var(--header-height,140px)] md:top-[var(--header-height,100px)] bg-black/40 transition-opacity duration-500 ',
           visible ? 'opacity-100' : 'opacity-0 pointer-events-none'
         )}
@@ -63,7 +63,7 @@ const SearchContainer = ({
       />
 
       <div
-        className={clsx(
+        className={cn(
           'relative w-full bg-white shadow-lg transition-transform duration-500 ease-in-out',
           visible ? 'translate-y-0 opacity-100' : '-translate-y-5 opacity-0'
         )}

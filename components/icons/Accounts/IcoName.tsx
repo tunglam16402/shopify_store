@@ -12,7 +12,6 @@ const IcoName = (props: React.HTMLAttributes<SVGElement>) => (
       strokeLinejoin="round"
     ></g>
     <g id="SVGRepo_iconCarrier">
-      {' '}
       <circle
         cx="12"
         cy="6"

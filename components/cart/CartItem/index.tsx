@@ -4,7 +4,7 @@ import { Trash2 } from 'lucide-react'
 import Image from 'next/image'
 import { QuantityInput } from '@/components/ui/QuantityInput'
 import { CartLine } from '@/types/cart'
-import clsx from 'clsx'
+import cn from 'classnames'
 import React from 'react'
 import { useAppDispatch } from '@/lib/hooks/useAppDispatch'
 import { removeItem, updateItem } from '@/store/thunks/cartThunk'
@@ -43,7 +43,7 @@ const CartItemComponent = ({ item, variant = 'sidecart' }: CartItemProps) => {
   return (
     <div className="relative">
       <div
-        className={clsx(
+        className={cn(
           'flex justify-between border-b border-gray-400 py-2 ',
           variant === 'checkout'
             ? 'items-start gap-6 sm:flex-row sm:items-center sm:gap-2'
@@ -59,7 +59,7 @@ const CartItemComponent = ({ item, variant = 'sidecart' }: CartItemProps) => {
         />
 
         <div
-          className={clsx(
+          className={cn(
             'space-y-2',
             variant === 'checkout' &&
               'flex flex-col sm:flex-row sm:items-center sm:justify-center sm:gap-6'

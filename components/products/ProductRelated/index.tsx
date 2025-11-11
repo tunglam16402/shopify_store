@@ -9,7 +9,7 @@ interface IProductRelated {
 const ProductRelated: React.FC<IProductRelated> = ({ relatedProduct }) => {
   return (
     <div>
-      <ProductSwiper data={relatedProduct} />
+      <ProductSwiper data={relatedProduct}/>
     </div>
   )
 }

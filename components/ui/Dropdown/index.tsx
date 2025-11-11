@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import clsx from 'clsx'
+import cn from 'classnames'
 import { IcoMinus, IcoPlus } from '@/components/icons'
 
 interface DropdownLink {
@@ -35,12 +35,12 @@ const Dropdown = ({
   const hasLinks = links && links.length > 0
 
   return (
-    <div className={clsx('border-b border-[#e3c16f] pb-4', className)}>
+    <div className={cn('border-b border-[#e3c16f] pb-4', className)}>
       <div
         className="flex items-center justify-between cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <p className={clsx('font-semibold tracking-wide', titleClassName)}>
+        <p className={cn('font-semibold tracking-wide', titleClassName)}>
           {title}
         </p>
         <button
@@ -52,7 +52,7 @@ const Dropdown = ({
       </div>
 
       <div
-        className={clsx(
+        className={cn(
           'overflow-hidden transition-all duration-300 ease-in-out',
           isOpen ? 'max-h-[9999px] opacity-100' : 'max-h-0 opacity-0'
         )}

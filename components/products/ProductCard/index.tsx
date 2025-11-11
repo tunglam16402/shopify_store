@@ -43,7 +43,7 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
     }
   }
   return (
-    <div className="relative w-full flex flex-col h-full mx-2">
+    <div className="relative w-full flex flex-col h-full">
       <Link
         href={`/products/${product?.handle}`}
         className="relative aspect-[4/5]"
@@ -55,6 +55,7 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
             alt={product.altText || product.title}
             fill
             className="object-contain"
+            loading='lazy'
           />
         )}
       </Link>

@@ -1,0 +1,38 @@
+.pw-swiper {
+  position: relative !important;
+}
+
+/* Navigation Buttons */
+.pw-swiper :global(.swiper-button-next),
+.pw-swiper :global(.swiper-button-prev) {
+    display: none;
+
+}
+
+:global(.pw-swiper-progress) {
+  position: absolute;
+  top: unset !important;
+  bottom: 0px !important;
+  z-index: 100;
+  left: 50% !important;
+  transform: translateX(-50%);
+  width: 120px !important;
+}
+
+:global(.pw-swiper-progress .swiper-pagination-progressbar-fill) {
+  background: black !important;
+}
+
+@media (min-width: 768px) {
+  .pw-swiper :global(.swiper-button-next),
+  .pw-swiper :global(.swiper-button-prev) {
+    display: block;
+    width: 28px;
+    height: 28px;
+    color: black;
+  }
+
+  :global(.pw-swiper-progress) {
+    width: 220px !important;
+  }
+}

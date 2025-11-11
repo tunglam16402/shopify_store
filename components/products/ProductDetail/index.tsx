@@ -196,11 +196,12 @@ const ProductDetail = ({
               information={product.information}
             />
           </div>
-
-          <div className="mt-8">
-            <ProductRelated relatedProduct={relatedProducts}/>
-          </div>
         </div>
+      </div>
+
+      {/* related products */}
+      <div className="mt-8">
+        <ProductRelated relatedProduct={relatedProducts} />
       </div>
     </div>
   )
