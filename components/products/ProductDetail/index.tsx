@@ -11,6 +11,7 @@ import ProductImage from './ProductImage'
 import { QuantityInput } from '@/components/ui/QuantityInput'
 import ProductUSP from './ProductUSP'
 import { trackViewedProduct } from '@/lib/analytics/klaviyo'
+import ProductInfo from './ProductInfo'
 
 type Variant = ReturnType<typeof mappingVariantPrice> & {
   id: string
@@ -35,6 +36,7 @@ type ProductDetailProps = {
     handle: string
     title: string
     description: string
+    information: string
     collection: { id: string; title: string; handle: string }
     featuredImage?: string | null
     altText?: string
@@ -71,7 +73,7 @@ const ProductDetail = ({ product, menu }: ProductDetailProps) => {
     const item = {
       id: product.id,
       handle: product.handle,
-      imageURL: product?.featuredImage || "",
+      imageURL: product?.featuredImage || '',
       title: product.title,
       price: product.variant?.basePrice,
       compareAtPrice: product?.variant?.compareAtPrice,
@@ -92,8 +94,7 @@ const ProductDetail = ({ product, menu }: ProductDetailProps) => {
         <Breadcrumb items={items} />
       </div>
 
-      <div className="grid grid-cols-1 mt-6 md:grid-cols-2 gap-10 md:gap-8">
-        {/* Images */}
+      <div className="grid grid-cols-1 mt-6 md:grid-cols-2 gap-10 md:gap-14">
         <div className=" relative">
           <ProductImage
             images={product.images}
@@ -105,7 +106,6 @@ const ProductDetail = ({ product, menu }: ProductDetailProps) => {
           </div>
         </div>
 
-        {/* Product info */}
         <div className="main-width">
           <div>
             <p className="text-gray-600 uppercase text-sm">
@@ -164,7 +164,7 @@ const ProductDetail = ({ product, menu }: ProductDetailProps) => {
             </div>
           )}
 
-          <div className="flex items-center gap-3 mt-8">
+          <div className="flex items-center gap-3 mt-8 md:gap-8">
             <QuantityInput
               value={quantity}
               min={1}
@@ -175,7 +175,7 @@ const ProductDetail = ({ product, menu }: ProductDetailProps) => {
               <AddToCart
                 variantId={product.variant?.id || ''}
                 quantity={quantity}
-                className="w-full py-6"
+                className="w-full py-6 text-base md:text-lg"
               />
             </div>
           </div>
@@ -183,7 +183,9 @@ const ProductDetail = ({ product, menu }: ProductDetailProps) => {
             <ProductUSP />
           </div>
 
-          <p className="mb-6">{product.description}</p>
+          <div>
+            <ProductInfo description={product.description} information={product.information}/>
+          </div>
         </div>
       </div>
     </div>

@@ -3224,7 +3224,7 @@ export type GetProductDetailQueryVariables = Exact<{
 }>;
 
 
-export type GetProductDetailQuery = { product?: { id: string, handle: string, title: string, description: string, collections: { nodes: Array<{ id: string, handle: string, title: string }> }, featuredImage?: { url: string, altText?: string | null } | null, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, sku?: string | null, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> }, colorVariants?: { references?: { nodes: Array<{ handle: string, featuredImage?: { url: string, altText?: string | null } | null } | {}> } | null } | null } | null };
+export type GetProductDetailQuery = { product?: { id: string, handle: string, title: string, description: string, collections: { nodes: Array<{ id: string, handle: string, title: string }> }, featuredImage?: { url: string, altText?: string | null } | null, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, sku?: string | null, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> }, colorVariants?: { references?: { nodes: Array<{ handle: string, featuredImage?: { url: string, altText?: string | null } | null } | {}> } | null } | null, productInfo?: { value: string, type: string } | null } | null };
 
 export type GetPredictiveSearchQueryVariables = Exact<{
   query: Scalars['String']['input'];

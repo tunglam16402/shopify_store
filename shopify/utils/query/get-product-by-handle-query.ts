@@ -56,6 +56,11 @@ const getProductDetailQuery = /* GraphQL */ `
           }
         }
       }
+
+      productInfo: metafield(namespace: "custom", key: "product_information") {
+        value
+        type
+      }
     }
   }
 `

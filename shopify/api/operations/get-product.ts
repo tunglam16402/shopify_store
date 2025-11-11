@@ -28,27 +28,32 @@ export async function getProductByHandle(handle: string) {
         (p): p is { handle: string; featuredImage?: { url: string } } =>
           !!p && 'handle' in p
       )
-      .map((p) => ({ handle: p.handle, image: p.featuredImage?.url || null })) ?? []
+      .map((p) => ({
+        handle: p.handle,
+        image: p.featuredImage?.url || null,
+      })) ?? []
 
-  // ✅ chọn collection "con" nhất (ví dụ: board-games thay vì games)
+  const productInfo = product.productInfo?.value ?? ''
+
   let selectedCollection = null
 
   if (product.collections?.nodes?.length) {
-    // Ưu tiên collection có slug chi tiết hơn (dài hơn)
-    selectedCollection = product.collections.nodes.reduce((deepest, current) => {
-      const currentDepth = current.handle.split('-').length
-      const deepestDepth = deepest?.handle.split('-').length ?? 0
-      return currentDepth > deepestDepth ? current : deepest
-    })
+    selectedCollection = product.collections.nodes.reduce(
+      (deepest, current) => {
+        const currentDepth = current.handle.split('-').length
+        const deepestDepth = deepest?.handle.split('-').length ?? 0
+        return currentDepth > deepestDepth ? current : deepest
+      }
+    )
   }
 
   return {
     id: product.id,
     handle: product.handle,
     title: product.title,
-    // ✅ luôn có collection chính xác
     collection: selectedCollection ?? product.collections.nodes[0],
     description: product.description,
+    information: productInfo,
     featuredImage: product.featuredImage?.url || null,
     altText: product.featuredImage?.altText || '',
     images: product.images?.nodes?.map((img) => img.url) || [],
@@ -56,7 +61,6 @@ export async function getProductByHandle(handle: string) {
     colorVariants,
   }
 }
-
 
 export async function getAllProduct() {
   const data = await shopifyFetch<GetProductsQuery>({

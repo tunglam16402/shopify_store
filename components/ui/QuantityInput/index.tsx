@@ -60,14 +60,14 @@ export const QuantityInput = ({
         disabled={loading || inputValue <= min}
         onClick={handleDecrease}
       >
-        <Minus className="w-4 h-4" />
+        <Minus className="w-4 h-4"/>
       </Button>
 
       <input
         type="number"
         value={inputValue}
         onChange={handleInputChange}
-        className="w-10 text-center border-none focus:outline-none 
+        className="w-6 md:w-10 text-center border-none focus:outline-none 
           [&::-webkit-outer-spin-button]:appearance-none 
           [&::-webkit-inner-spin-button]:appearance-none 
           [-moz-appearance:textfield]"

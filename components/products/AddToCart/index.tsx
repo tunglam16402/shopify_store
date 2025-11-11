@@ -41,9 +41,9 @@ const AddToCart = ({ variantId, quantity = 1, className }: AddToCartProps) => {
   return (
     <Button
       onClick={handleAddToCart}
-      variant={'outline'}
+      variant={'destructive'}
       disabled={loading}
-      className={`py-2 text-black border  hover:text-white font-semibold transition-all duration-300 ${className}`}
+      className={`uppercase font-semibold ${className}`}
     >
       {loading ? 'Adding...' : 'Add to Cart'}
     </Button>
