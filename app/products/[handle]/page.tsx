@@ -6,7 +6,7 @@ import {
 } from '@/shopify/api/operations/get-menu'
 import {
   getProductByHandle,
-  getRelatedProduct,
+  getProductRecommendations,
 } from '@/shopify/api/operations/get-product'
 import { Suspense } from 'react'
 
@@ -23,11 +23,12 @@ const ProductDetailPage = async ({ params }: Props) => {
   if (!product) {
     return <div>Product not found.</div>
   }
+  const [menuRaw, recommendations] = await Promise.all([
+    getMainMenu(),
+    getProductRecommendations(product.id),
+  ])
 
-  const menuRaw = await getMainMenu()
   const menu = flattenMenuForCategories(menuRaw)
-
-  const relatedProduct = await getRelatedProduct(product?.id)
 
   return (
     <main className="mx-auto mt-[100px] md:mt-0">
@@ -36,7 +37,8 @@ const ProductDetailPage = async ({ params }: Props) => {
           <ProductDetail
             product={product}
             menu={menu}
-            relatedProducts={relatedProduct?.data || []}
+            relatedProducts={recommendations?.data?.related ?? []}
+            complementaryProducts={recommendations?.data?.complementary ?? []}
           />
         </Suspense>
       </div>

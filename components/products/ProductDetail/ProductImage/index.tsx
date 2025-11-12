@@ -42,7 +42,6 @@ const ProductImage = ({ images, altText, title }: ProductImageProps) => {
 
       {/* Desktop */}
       <div className="hidden md:grid grid-cols-2">
-        {/* Ảnh đầu tiên chiếm toàn bộ 2 cột */}
         {images[0] && (
           <div className="col-span-2">
             <Image
@@ -57,7 +56,6 @@ const ProductImage = ({ images, altText, title }: ProductImageProps) => {
           </div>
         )}
 
-        {/* Các ảnh còn lại chia đều 2 cột */}
         {images.slice(1).map((url, index) => (
           <div key={url} className="w-full">
             <Image

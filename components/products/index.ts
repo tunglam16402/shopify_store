@@ -1,3 +1,6 @@
 export { default as ProdCard } from './ProductCard'
 export { default as ProductList } from './ProductList'
 export { default as ProductDetail } from './ProductDetail'
+export { default as AddToCart } from './AddToCart'
+export { default as ProductRecommend } from './ProductRecommend'
+export { default as ProductSwiper } from './ProductSwiper'

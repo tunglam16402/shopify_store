@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
-import ProductSwiper from '@/components/products/ProductSwipper'
+import ProductSwiper from '@/components/products/ProductSwiper'
 
 interface ClientProps {
   sections: {
