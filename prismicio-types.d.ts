@@ -363,7 +363,7 @@ export interface HomepageDocumentDataCollectionsItem {
    * - **API ID Path**: homepage.collections[].collection
    * - **Documentation**: https://prismic.io/docs/fields/image
    */
-  collection: prismic.ImageField<'Mobile'>
+  collection: prismic.ImageField<never>
 
   /**
    * Title Top field in *Homepage → Collections*

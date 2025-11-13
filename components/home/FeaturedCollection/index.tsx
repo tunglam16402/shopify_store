@@ -1,46 +1,48 @@
 'use client'
 
+import PWSwiper from '@/components/ui/Swiper'
 import {
   HomepageDocumentDataCollectionsItem,
   Simplify,
 } from '@/prismicio-types'
-import FeaturedCollectionItem from './FeaturedCollectionItem'
-import { Carousel } from '@/components/common/Carousel'
 import { GroupField } from '@prismicio/client'
+import FeaturedCollectionItem from './FeaturedCollectionItem'
 
 interface IFeaturedCollections {
   collections: GroupField<Simplify<HomepageDocumentDataCollectionsItem>>
+}
+
+const COLLECTION_HOME_BREAKPOINT = {
+  0: {
+    slidesPerView: 1,
+    slidesPerGroup: 1,
+    spaceBetween: 8,
+  },
+  768: {
+    slidesPerView: 2,
+    slidesPerGroup: 1,
+    spaceBetween: 8,
+  },
+  1024: {
+    slidesPerView: 3,
+    slidesPerGroup: 1,
+    spaceBetween: 24,
+  },
 }
 
 const FeaturedCollections: React.FC<IFeaturedCollections> = ({
   collections,
 }) => {
   return (
-    <div className="mt-5 md:mx-5">
-      <Carousel
-        items={collections}
-        renderItem={(collection) => (
+    <div className="mt-5 mx-3 md:mx-5">
+      <PWSwiper breakpoints={COLLECTION_HOME_BREAKPOINT} pagination={false}>
+        {collections.map((collection) => (
           <FeaturedCollectionItem
             key={collection.pathname}
             collection={collection}
           />
-        )}
-        slidesToShow={1}
-        itemsToScroll={1}
-        loop={true}
-        autoPlay={false}
-        showDots={false}
-        responsiveConfig={[
-          { breakpoint: 768, slidesToShow: 2 },
-          { breakpoint: 1024, slidesToShow: 3, showArrows: true },
-          {
-            breakpoint: 1280,
-            slidesToShow: 3,
-            itemsToScroll: 1,
-            showArrows: true,
-          },
-        ]}
-      />
+        ))}
+      </PWSwiper>
     </div>
   )
 }

@@ -9,6 +9,7 @@ import { useEffect } from 'react'
 import ProductRecommend from '../ProductRecommend'
 import ProductImage from './ProductImage'
 import ProductInformation from './ProductInformation'
+import TopCollection from './TopCollection'
 
 type Variant = ReturnType<typeof mappingVariantPrice> & {
   id: string
@@ -82,6 +83,7 @@ const ProductDetail = ({
       compareAtPrice: product?.variant?.compareAtPrice,
     }
     trackViewedProduct(item)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product.id])
 
   return (
@@ -110,11 +112,17 @@ const ProductDetail = ({
         <ProductRecommend type="related" relatedProduct={relatedProducts} />
       </div>
       {/* complentary product */}
-      <div className="mt-12 md:mt-20">
-        <ProductRecommend
-          type="complementary"
-          complementaryProduct={complementaryProducts}
-        />
+      {complementaryProducts.length > 0 && (
+        <div className="mt-12 md:mt-20">
+          <ProductRecommend
+            type="complementary"
+            complementaryProduct={complementaryProducts}
+          />
+        </div>
+      )}
+
+      <div className="main-width !mt-12 md:!mt-20">
+        <TopCollection />
       </div>
     </div>
   )

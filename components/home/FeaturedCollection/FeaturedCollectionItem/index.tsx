@@ -1,7 +1,7 @@
 'use client'
 
 import { HomepageDocumentDataCollectionsItem } from '@/prismicio-types'
-import { PrismicNextImage } from '@prismicio/next'
+import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
@@ -16,14 +16,15 @@ const FeaturedCollectionItem: React.FC<IFeaturedCollectionItem> = ({
   const href = collection.pathname || '#'
 
   return (
-    <div className="relative w-full mx-3">
+    <div className="relative w-full">
       {imageField && (
         <div className="relative w-full">
-          <Link href={href} className="block">
-            <PrismicNextImage
-              field={imageField}
+          <Link href={href} className="block aspect-[9/10]">
+            <Image
+              src={imageField.url || ""}
               alt=""
-              className="w-full h-auto"
+              fill
+              className="w-full h-auto object-contain"
               loading="lazy"
             />
           </Link>
