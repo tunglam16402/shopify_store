@@ -17,8 +17,8 @@ const ProductRecommend: React.FC<IProductRecommend> = ({
   const data = type === 'related' ? relatedProduct : complementaryProduct
   if (!data?.length) return null
   return (
-    <div>
-      <div className="text-center">
+    <>
+      <div className='text-center'>
         <StyledHeading
           text={
             type === 'related' ? 'Related products' : 'Complementary products'
@@ -28,7 +28,7 @@ const ProductRecommend: React.FC<IProductRecommend> = ({
         />
       </div>
       <ProductSwiper data={data} className="mt-4" />
-    </div>
+    </>
   )
 }
 

@@ -31,7 +31,7 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
           discountPercent: product.discountPercent,
           compareAtPrice: product.compareAtPrice,
         },
-        ...existing.filter((p: any) => p.id !== product.id),
+        ...existing?.filter((p: any) => p.id !== product.id),
       ].slice(0, 5)
 
       setCookie('recentlyViewed', JSON.stringify(updated), {

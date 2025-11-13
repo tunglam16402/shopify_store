@@ -73,9 +73,9 @@ const MainHeader = ({ menuItems }: Props) => {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/">
-              <span className="w-10">
+              {/* <span className="w-10"> */}
                 <Logo />
-              </span>
+              {/* </span> */}
             </Link>
           </div>
 

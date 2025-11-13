@@ -6,11 +6,12 @@
 :root {
   /* --background: #ffffff;
   --foreground: #171717; */
-  --bg-primary: #4f141f; /* đỏ rượu */
+  --bg-primary: #4f141f; 
   /* #7c0214 */
-  --bg-sub-primary: #f89540; /* cam sáng */
-  --bg-accent: #e3c16f; /* vàng ánh kim */
-  --bg-neutral: #f5f2ef; /* be sáng */
+  /* #f89540 */
+  --bg-sub-primary: #7c0214; 
+  --bg-accent: #e3c16f; 
+  --bg-neutral: #f5f2ef; 
 
   --radius: 0.625rem;
   --background: oklch(1 0 0);

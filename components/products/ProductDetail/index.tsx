@@ -83,7 +83,7 @@ const ProductDetail = ({
       compareAtPrice: product?.variant?.compareAtPrice,
     }
     trackViewedProduct(item)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product.id])
 
   return (
@@ -124,6 +124,7 @@ const ProductDetail = ({
       <div className="main-width !mt-12 md:!mt-20">
         <TopCollection />
       </div>
+
     </div>
   )
 }

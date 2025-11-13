@@ -70,7 +70,7 @@ const SearchInput = () => {
       setContainerTop(rect.bottom)
     }
   }, [isOpen])
-  
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const term = input.trim()
@@ -135,7 +135,7 @@ const SearchInput = () => {
           <input
             type="text"
             name="q"
-            className="w-full border rounded py-2 pl-2 pr-10"
+            className="w-full border focus:border-[#7c0214] rounded-md py-3 pl-2 pr-10"
             placeholder="Enter product name..."
             value={input}
             onFocus={() => setIsOpen(true)}
@@ -146,14 +146,17 @@ const SearchInput = () => {
             <button
               type="button"
               onClick={clearInputValue}
-              className="absolute right-10 p-1.5 text-center text-sm text-gray-600 underline"
+              className="absolute right-12 p-1.5 text-center text-sm text-gray-600 underline"
             >
               Clear
             </button>
           )}
-          <span className="absolute right-1 p-1.5 bg-orange-300 rounded">
+          <button
+            className="absolute right-1.5 p-2 bg-primary rounded hover:opacity-80 cursor-pointer"
+            onClick={handleSubmit}
+          >
             <SearchIcon />
-          </span>
+          </button>
         </div>
       </form>
 

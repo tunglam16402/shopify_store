@@ -1,4 +1,4 @@
-const SearchIcon = () => {
+const SearchIcon = ({ ...props }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -10,7 +10,8 @@ const SearchIcon = () => {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="lucide lucide-search-icon lucide-search"
+      className="lucide lucide-search-icon lucide-search text-white"
+      {...props}
     >
       <path d="m21 21-4.34-4.34" />
       <circle cx="11" cy="11" r="8" />
