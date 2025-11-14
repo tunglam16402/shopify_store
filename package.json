@@ -21,6 +21,8 @@
     "@reduxjs/toolkit": "^2.9.0",
     "@shopify/hydrogen-react": "^2025.7.0",
     "@slicemachine/manager": "^0.25.4",
+    "@supabase/ssr": "^0.7.0",
+    "@supabase/supabase-js": "^2.81.1",
     "class-variance-authority": "^0.7.1",
     "classnames": "^2.5.1",
     "clsx": "^2.1.1",

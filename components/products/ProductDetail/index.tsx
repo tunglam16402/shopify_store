@@ -10,6 +10,7 @@ import ProductRecommend from '../ProductRecommend'
 import ProductImage from './ProductImage'
 import ProductInformation from './ProductInformation'
 import TopCollection from './TopCollection'
+import ProductReview from '../ProductReview'
 
 type Variant = ReturnType<typeof mappingVariantPrice> & {
   id: string
@@ -125,6 +126,9 @@ const ProductDetail = ({
         <TopCollection />
       </div>
 
+      <div>
+        <ProductReview productId={product.id} />
+      </div>
     </div>
   )
 }

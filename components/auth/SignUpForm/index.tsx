@@ -36,7 +36,6 @@ const SignUpForm = () => {
   return (
     <div className="w-full flex items-center justify-center mt-6 md:mt-12 main-width">
       <div className="w-full max-w-[560px] mt-6">
-        {/* Form Card */}
         <form action={formAction} className="space-y-4">
           <div className="bg-white rounded-2xl shadow-xl p-4 md:p-8">
             <div>
@@ -173,21 +172,7 @@ const SignUpForm = () => {
                     )}
                   </div>
                 </div>
-              </div>
-
-              {/* Remember Me & Forgot Password */}
-              {/* <div className="flex items-center justify-between mt-5">
-                <label className="flex items-center gap-2 cursor-pointer group">
-                  <input type="checkbox" className="w-4 h-4 rounded" />
-                  <span className="text-sm text-slate-600">Remember me</span>
-                </label>
-                <Link
-                  href="/account/recovery"
-                  className="text-sm font-medium text-primary hover:opacity-80 transition-colors duration-200"
-                >
-                  Forgot password?
-                </Link>
-              </div> */}
+              </div>    
 
               {/* General Errors */}
               {state.errors.some((e) => e.field.length === 0) && (
