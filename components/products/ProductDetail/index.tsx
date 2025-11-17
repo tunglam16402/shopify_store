@@ -108,11 +108,9 @@ const ProductDetail = ({
         <ProductInformation product={product} />
       </div>
 
-      {/* related product */}
       <div className="mt-12 md:mt-20">
         <ProductRecommend type="related" relatedProduct={relatedProducts} />
       </div>
-      {/* complentary product */}
       {complementaryProducts.length > 0 && (
         <div className="mt-12 md:mt-20">
           <ProductRecommend
@@ -122,11 +120,11 @@ const ProductDetail = ({
         </div>
       )}
 
-      <div className="main-width !mt-12 md:!mt-20">
+      <div className=" mt-6 md:mt-20">
         <TopCollection />
       </div>
 
-      <div>
+      <div className='mt-12 md:mt-20'>
         <ProductReview productId={product.id} />
       </div>
     </div>

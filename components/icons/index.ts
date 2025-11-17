@@ -13,6 +13,8 @@ export { default as IcoArrowRight } from './IcoArrowRight';
 export { default as IcoSpin } from './IcoSpin';
 export { default as IcoPhone } from './IcoPhone';
 export { default as IcoStarFill } from './IcoStarFill';
+export { default as IcoStarHalfFill } from './IcoStarHalfFill';
+export { default as IcoStarEmpty } from './IcoStarEmpty';
 
 export * from './Payments'
 export * from './Accounts'

@@ -32,8 +32,8 @@ const COLLECTION_LIST: ICollectionItem[] = [
 
 const TopCollection: React.FC = () => {
   return (
-    <>
-      <div className="text-center mb-6">
+    <div className='md:main-width'>
+      <div className="text-center">
         <StyledHeading
           text={'DISCOVER our TOP categories'}
           normalClass="uppercase text-3xl md:text-4xl"
@@ -41,7 +41,7 @@ const TopCollection: React.FC = () => {
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
         {COLLECTION_LIST.map((collection, idx) => (
           <div
             key={idx}
@@ -70,7 +70,7 @@ const TopCollection: React.FC = () => {
           </div>
         ))}
       </div>
-    </>
+    </div>
   )
 }
 

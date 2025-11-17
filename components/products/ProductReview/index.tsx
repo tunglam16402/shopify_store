@@ -6,6 +6,7 @@ import TotalRating from './TotalRating'
 import CustomerReview from './CustomerReview'
 import ReviewForm from './ReviewForm'
 import { Reviews } from '@/types/reviews'
+import StyledHeading from '@/components/ui/StyledHeading'
 
 interface ProductReviewProps {
   productId: string
@@ -32,8 +33,8 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
   const handleSuccess = () => fetchReviews()
 
   return (
-    <div className="mt-6">
-      <h3 className="text-lg font-bold mb-4">Reviews</h3>
+    <div className='main-width'>
+      <h3 className="text-2xl font-light uppercase text-center">Customer Reviews</h3>
       <TotalRating reviews={reviews} onOpenForm={() => setShowForm(true)} />
       <CustomerReview reviews={reviews} />
       {showForm && (
