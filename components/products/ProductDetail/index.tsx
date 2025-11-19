@@ -120,7 +120,7 @@ const ProductDetail = ({
         </div>
       )}
 
-      <div className=" mt-6 md:mt-20">
+      <div className="mt-6 md:mt-20 md:main-width">
         <TopCollection />
       </div>
 

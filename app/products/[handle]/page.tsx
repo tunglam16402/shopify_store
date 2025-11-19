@@ -10,7 +10,6 @@ import {
 } from '@/shopify/api/operations/get-product'
 import { Suspense } from 'react'
 
-export const experimental_ppr = true
 interface Props {
   params: Promise<{ handle: string }>
 }

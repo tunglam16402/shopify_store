@@ -13,12 +13,14 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'images.cdn.prismic.io',
       },
-            {
+      {
         protocol: 'https',
         hostname: 'encrypted-tbn0.gstatic.com',
       },
     ],
   },
+  // reactCompiler: true,
+  cacheComponents: true,
   // experimental: {
   //   ppr: 'incremental',
   // },

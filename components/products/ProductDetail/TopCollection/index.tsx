@@ -32,7 +32,7 @@ const COLLECTION_LIST: ICollectionItem[] = [
 
 const TopCollection: React.FC = () => {
   return (
-    <div className='md:main-width'>
+    <div className='w-full md:main-width'>
       <div className="text-center">
         <StyledHeading
           text={'DISCOVER our TOP categories'}
