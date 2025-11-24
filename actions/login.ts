@@ -29,14 +29,16 @@ export async function loginCustomer(
 
   if (result.success && result.accessToken) {
     const cookieStore = await cookies()
+
+    const expires = result.expiresAt
+      ? new Date(result.expiresAt)
+      : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) 
     cookieStore.set('shopify_customer_token', result.accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
-      expires: new Date(
-        result.expiresAt || Date.now() + 30 * 24 * 60 * 60 * 1000
-      ),
+      expires,
     })
   }
 
@@ -77,7 +79,10 @@ export async function recoveryCustomerAccount(
       }
     }
 
-    return { success: true, message: 'Recovery email sent successfully. Please check your email.' }
+    return {
+      success: true,
+      message: 'Recovery email sent successfully. Please check your email.',
+    }
   } catch (error) {
     console.error('recoveryCustomerAccount error:', error)
     return {

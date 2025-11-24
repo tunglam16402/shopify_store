@@ -1,4 +1,3 @@
-// app/products/[handle]/page.tsx
 import ProductDetail from '@/components/products/ProductDetail'
 import {
   flattenMenuForCategories,

@@ -1,16 +1,14 @@
 'use client'
 
-import React from 'react'
-import { HomepageDocumentDataUspItem, Simplify } from '@/prismicio-types'
-import { GroupField } from '@prismicio/client'
-import USPItem from './USPItem'
 import {
   Carousel,
   CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
+  CarouselItem
 } from '@/components/ui/Carousel'
+import { HomepageDocumentDataUspItem, Simplify } from '@/prismicio-types'
+import { GroupField } from '@prismicio/client'
+import React from 'react'
+import USPItem from './USPItem'
 
 interface IUSPs {
   usps: GroupField<Simplify<HomepageDocumentDataUspItem>>

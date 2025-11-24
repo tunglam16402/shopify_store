@@ -8,7 +8,6 @@ import { ChildItem, MenuItem } from '@/types/collection/menuCollection'
 function mapMenuItem(item: any): MenuItem {
   const children: ChildItem[] =
     item.items?.map((child: any) => {
-      // Mỗi "child" có thể có thêm 1 cấp "grandchild"
       const grandChildren =
         child.items?.map((grand: any) => {
           const images: string[] =
