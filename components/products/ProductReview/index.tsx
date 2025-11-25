@@ -1,12 +1,11 @@
-// components/review/ProductReview.tsx
 'use client'
 
+import { Reviews } from '@/types/reviews'
 import React, { useEffect, useState } from 'react'
-import TotalRating from './TotalRating'
 import CustomerReview from './CustomerReview'
 import ReviewForm from './ReviewForm'
-import { Reviews } from '@/types/reviews'
-import StyledHeading from '@/components/ui/StyledHeading'
+import TotalRating from './TotalRating'
+import Modal from '@/components/common/Modal'
 
 interface ProductReviewProps {
   productId: string
@@ -30,20 +29,23 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
     fetchReviews()
   }, [productId])
 
-  const handleSuccess = () => fetchReviews()
 
   return (
-    <div className='main-width'>
-      <h3 className="text-2xl font-light uppercase text-center">Customer Reviews</h3>
+    <div className="main-width">
+      <h3 className="text-2xl font-light uppercase text-center">
+        Customer Reviews
+      </h3>
+
       <TotalRating reviews={reviews} onOpenForm={() => setShowForm(true)} />
       <CustomerReview reviews={reviews} />
-      {showForm && (
+
+      <Modal isOpen={showForm} onClose={() => setShowForm(false)}>
         <ReviewForm
           productId={productId}
-          onSuccess={handleSuccess}
+          onSuccess={() => fetchReviews()}
           onClose={() => setShowForm(false)}
         />
-      )}
+      </Modal>
     </div>
   )
 }

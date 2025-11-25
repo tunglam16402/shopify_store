@@ -19,7 +19,7 @@ export async function loginCustomer(
       accessToken: null,
       expiresAt: null,
       errors: parseResult.error.issues.map((issue) => ({
-        field: issue.path.map(String), // ví dụ ['email']
+        field: issue.path.map(String), 
         message: issue.message,
       })),
     }

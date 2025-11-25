@@ -9,9 +9,14 @@ export async function createReviewAction(
   productId: string
 ): Promise<ReviewFormState> {
   try {
-    const username = formData.get('username') as string
-    const comment = formData.get('comment') as string
     const rating = Number(formData.get('rating'))
+    const comment = formData.get('comment') as string
+    const headline = formData.get('headline') as string
+    const username = formData.get('username') as string
+    const email = formData.get('email') as string
+    const files = formData.getAll('media') as File[]
+
+    const validFiles = files.filter(f => f instanceof File && f.size > 0 && f.name !== 'undefined')
 
     if (!username || !rating) {
       return {
@@ -20,32 +25,88 @@ export async function createReviewAction(
       }
     }
 
-    const supabase = await createClient()
-    const { data, error } = await supabase
-      .from('reviews')
-      .insert([{ product_id: productId, username, comment, rating }])
-      .select()
-      .single()
-
-    if (error || !data) {
+    if (validFiles.length > 3) {
       return {
         success: false,
-        errors: [{ field: [], message: error?.message || 'Insert failed' }],
+        errors: [{ field: ['media'], message: 'Maximum 3 files allowed' }],
       }
     }
 
-    return { success: true, review: data }
+    const supabase = await createClient()
+
+    const { data: review, error: reviewError } = await supabase
+      .from('reviews')
+      .insert([
+        {
+          product_id: productId,
+          username,
+          comment,
+          rating,
+          headline,
+          email,
+        },
+      ])
+      .select()
+      .single()
+
+    if (reviewError || !review) {
+      return {
+        success: false,
+        errors: [{ field: [], message: reviewError?.message || 'Failed to create review' }],
+      }
+    }
+
+    for (const file of validFiles) {
+      try {
+        const ext = file.name.split('.').pop()
+        const fileName = `${review.id}/${Date.now()}-${Math.random().toString(36).substring(7)}.${ext}`
+
+        const buffer = new Uint8Array(await file.arrayBuffer())
+
+        const { error: uploadError } = await supabase.storage
+          .from('review-media')
+          .upload(fileName, buffer, {
+            contentType: file.type,
+            cacheControl: '3600',
+            upsert: false,
+          })
+
+        if (uploadError) continue
+
+        const { data: urlData } = supabase.storage
+          .from('review-media')
+          .getPublicUrl(fileName)
+
+        await supabase.from('review_media').insert({
+          review_id: review.id,
+          url: urlData.publicUrl,
+          type: file.type.startsWith('image') ? 'image' : 'video',
+        })
+      } catch {
+        continue
+      }
+    }
+
+    return { success: true, review }
+
   } catch (err) {
-    return { success: false, errors: [{ field: [], message: 'Server error' }] }
+    return {
+      success: false,
+      errors: [{
+        field: [],
+        message: err instanceof Error ? err.message : 'An unexpected error occurred',
+      }],
+    }
   }
 }
+
 
 export async function updateReviewAction(
   formData: FormData
 ): Promise<ReviewFormState> {
   try {
     const id = formData.get('id') as string
-    const comment = formData.get('comment') as string
+    const review = formData.get('review') as string
     const rating = Number(formData.get('rating'))
 
     if (!id) {
@@ -58,7 +119,7 @@ export async function updateReviewAction(
     const supabase = await createClient()
     const { data, error } = await supabase
       .from('reviews')
-      .update({ comment, rating })
+      .update({ review, rating })
       .eq('id', id)
       .select()
       .single()
@@ -76,9 +137,7 @@ export async function updateReviewAction(
   }
 }
 
-export async function deleteReviewAction(
-  id: string
-): Promise<ReviewFormState> {
+export async function deleteReviewAction(id: string): Promise<ReviewFormState> {
   try {
     if (!id)
       return {

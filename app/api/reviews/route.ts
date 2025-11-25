@@ -12,13 +12,19 @@ export async function GET(req: NextRequest) {
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('reviews')
-    .select('*')
+    .select(
+      `
+      *,
+      review_media(*)
+    `
+    )
     .eq('product_id', product_id)
     .order('created_at', { ascending: false })
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
-
-  return NextResponse.json(data)
+  const reviews = data.map((reivew) => ({
+    ...reivew,
+    media: reivew.review_media ?? [],
+  }))
+  return NextResponse.json(reviews)
 }
-
-
