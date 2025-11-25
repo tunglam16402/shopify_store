@@ -1,11 +1,8 @@
 const IcoStarFill = (props: React.HTMLAttributes<SVGElement>) => (
   <svg
-    viewBox="0 0 20.00 20.00"
+    viewBox="0 0 24 24"
+    fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    fill="#FFD700"
-    stroke="#000000"
-    strokeWidth="0.0002"
-    transform="rotate(0)"
     {...props}
   >
     <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
@@ -13,16 +10,15 @@ const IcoStarFill = (props: React.HTMLAttributes<SVGElement>) => (
       id="SVGRepo_tracerCarrier"
       strokeLinecap="round"
       strokeLinejoin="round"
-      stroke="#CCCCCC"
-      strokeWidth="1.04"
     ></g>
     <g id="SVGRepo_iconCarrier">
-      {' '}
-      <rect x="0" fill="none" width="20" height="20"></rect>{' '}
-      <g>
-        {' '}
-        <path d="M10 1l3 6 6 .75-4.12 4.62L16 19l-6-3-6 3 1.13-6.63L1 7.75 7 7z"></path>{' '}
-      </g>{' '}
+      <path
+        d="M14.65 8.93274L12.4852 4.30901C12.2923 3.89699 11.7077 3.897 11.5148 4.30902L9.35002 8.93274L4.45559 9.68243C4.02435 9.74848 3.84827 10.2758 4.15292 10.5888L7.71225 14.2461L6.87774 19.3749C6.80571 19.8176 7.27445 20.1487 7.66601 19.9317L12 17.5299L16.334 19.9317C16.7256 20.1487 17.1943 19.8176 17.1223 19.3749L16.2878 14.2461L19.8471 10.5888C20.1517 10.2758 19.9756 9.74848 19.5444 9.68243L14.65 8.93274Z"
+        stroke="#FFD700"
+        fill="#FFD700"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></path>
     </g>
   </svg>
 )
