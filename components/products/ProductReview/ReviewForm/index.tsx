@@ -7,7 +7,9 @@ import { Label } from '@/components/ui/Label'
 import { useActionState } from 'react'
 import { createReviewAction } from '@/actions/review'
 import { ReviewFormState } from '@/types/reviews'
-import StarRating from './StarRating'
+import StarRatingField from './StarRatingField'
+import { OptionSelector } from './SelectField'
+import { FormInput } from '@/components/ui/FormInput'
 
 interface ReviewFormProps {
   productId: string
@@ -28,6 +30,10 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
 }) => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
   const [rating, setRating] = useState(0)
+  const [ageRange, setAgeRange] = useState(0)
+  const [quality, setQuality] = useState(0)
+  const [recommend, setEecommend] = useState(0)
+  const [value, setValue] = useState(0)
 
   const [state, formAction, pending] = useActionState(
     (state: ReviewFormState, formData: FormData) =>
@@ -80,10 +86,10 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
       <p className="text-2xl text-center ">Share your thought</p>
 
       <form action={formAction} className="flex flex-col gap-2 mt-6 ">
-        <div className="space-y-4">
+        <div className="space-y-8">
           <div>
             <Label htmlFor="rating">Rate your experience *</Label>
-            <StarRating
+            <StarRatingField
               rating={rating}
               disabled={pending}
               onChange={setRating}
@@ -144,9 +150,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
           </div>
 
           <div>
-            <Label className="text-lg" htmlFor="media">
-              Add Media (Optional)
-            </Label>
+            <Label htmlFor="media">Add Media (Optional)</Label>
             <Input
               type="file"
               id="media"
@@ -178,11 +182,49 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
               </div>
             )}
           </div>
-        </div>
 
-        <Button type="submit" disabled={pending} className="mt-4 w-full h-12">
-          {pending ? 'Submitting...' : 'Submit Review'}
-        </Button>
+          <OptionSelector
+            label="How would you rate the quality of this product? (Choose 1)"
+            name="quality"
+            value={quality}
+            onChange={setQuality}
+          />
+
+          <OptionSelector
+            label="How would you rate the value of this product? (Choose 1)"
+            name="quality"
+            value={value}
+            onChange={setValue}
+          />
+
+          <OptionSelector
+            label="What is your Age Range? (Choose 1)"
+            name="ageRange"
+            value={ageRange}
+            options={['<18', '18-25', '26-35', '36-45', '46-55', '56+']}
+            onChange={setAgeRange}
+          />
+
+          <OptionSelector
+            label="Would you recommend this product to a friend? (Choose 1)"
+            name="quality"
+            value={recommend}
+            options={['Yes', 'No']}
+            onChange={setEecommend}
+          />
+
+        </div>
+        <div className='flex items-center justify-between gap-6 mt-4 md:mt-6'>
+          <p className='text-sm '>Required fields are marked with *</p>
+          <Button
+            type="submit"
+            disabled={pending}
+            variant={'primary'}
+            className=" w-[40%] h-12"
+          >
+            {pending ? 'Sending...' : 'Send Review'}
+          </Button>
+        </div>
       </form>
     </div>
   )

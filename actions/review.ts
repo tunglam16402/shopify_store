@@ -18,13 +18,6 @@ export async function createReviewAction(
 
     const validFiles = files.filter(f => f instanceof File && f.size > 0 && f.name !== 'undefined')
 
-    if (!username || !rating) {
-      return {
-        success: false,
-        errors: [{ field: [], message: 'Username and rating are required' }],
-      }
-    }
-
     if (validFiles.length > 3) {
       return {
         success: false,

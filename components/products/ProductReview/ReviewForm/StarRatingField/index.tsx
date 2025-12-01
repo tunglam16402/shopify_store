@@ -9,7 +9,7 @@ interface StarRatingProps {
   onChange?: (rating: number) => void
 }
 
-const StarRating: React.FC<StarRatingProps> = ({
+const StarRatingField: React.FC<StarRatingProps> = ({
   rating,
   disabled = false,
   onChange,
@@ -25,8 +25,6 @@ const StarRating: React.FC<StarRatingProps> = ({
   }
 
   const displayLabel = hover || rating
-
-  console.log('StarRating render', { rating, hover })
 
   return (
     <div className="flex items-center mt-2">
@@ -56,4 +54,4 @@ const StarRating: React.FC<StarRatingProps> = ({
   )
 }
 
-export default React.memo(StarRating)
+export default React.memo(StarRatingField)
