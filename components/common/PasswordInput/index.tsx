@@ -2,18 +2,17 @@
 
 import { useRef, useState } from 'react'
 
+import { IcoEye, IcoEyeOff } from '@/components/icons'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
-import { Eye, EyeOff } from 'lucide-react'
-
 
 interface PasswordInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   disabled?: boolean
 }
 
- const PasswordInput = ({ disabled, ...props }: PasswordInputProps) => {
- const [showPassword, setShowPassword] = useState(false)
+const PasswordInput = ({ disabled, ...props }: PasswordInputProps) => {
+  const [showPassword, setShowPassword] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
   const togglePasswordVisibility = () => {
@@ -31,7 +30,7 @@ interface PasswordInputProps
         type={showPassword ? 'text' : 'password'}
         className="pr-10"
         disabled={disabled}
-        {...props} 
+        {...props}
       />
       <Button
         type="button"
@@ -43,9 +42,9 @@ interface PasswordInputProps
         aria-label={showPassword ? 'Hide password' : 'Show password'}
       >
         {showPassword ? (
-          <EyeOff className="h-5 w-5 text-gray-500" />
+          <IcoEyeOff className="h-5 w-5 text-gray-500" />
         ) : (
-          <Eye className="h-5 w-5 text-gray-500" />
+          <IcoEye className="h-5 w-5 text-gray-500" />
         )}
       </Button>
     </div>

@@ -15,8 +15,14 @@ export async function createReviewAction(
     const username = formData.get('username') as string
     const email = formData.get('email') as string
     const files = formData.getAll('media') as File[]
+    const quality = Number(formData.get('quality'))
+    const value = Number(formData.get('value'))
+    const age_range = formData.get('age_range') as string
+    const recommend = formData.get('recommend') as string
 
-    const validFiles = files.filter(f => f instanceof File && f.size > 0 && f.name !== 'undefined')
+    const validFiles = files.filter(
+      (f) => f instanceof File && f.size > 0 && f.name !== 'undefined'
+    )
 
     if (validFiles.length > 3) {
       return {
@@ -37,6 +43,10 @@ export async function createReviewAction(
           rating,
           headline,
           email,
+          quality,
+          value,
+          age_range,
+          recommend,
         },
       ])
       .select()
@@ -45,7 +55,12 @@ export async function createReviewAction(
     if (reviewError || !review) {
       return {
         success: false,
-        errors: [{ field: [], message: reviewError?.message || 'Failed to create review' }],
+        errors: [
+          {
+            field: [],
+            message: reviewError?.message || 'Failed to create review',
+          },
+        ],
       }
     }
 
@@ -81,18 +96,19 @@ export async function createReviewAction(
     }
 
     return { success: true, review }
-
   } catch (err) {
     return {
       success: false,
-      errors: [{
-        field: [],
-        message: err instanceof Error ? err.message : 'An unexpected error occurred',
-      }],
+      errors: [
+        {
+          field: [],
+          message:
+            err instanceof Error ? err.message : 'An unexpected error occurred',
+        },
+      ],
     }
   }
 }
-
 
 export async function updateReviewAction(
   formData: FormData

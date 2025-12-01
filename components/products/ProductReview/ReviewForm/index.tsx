@@ -1,20 +1,18 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import { createReviewAction } from '@/actions/review'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Label } from '@/components/ui/Label'
-import { useActionState } from 'react'
-import { createReviewAction } from '@/actions/review'
 import { ReviewFormState } from '@/types/reviews'
-import StarRatingField from './StarRatingField'
+import React, { useActionState, useEffect, useState } from 'react'
 import { OptionSelector } from './SelectField'
-import { FormInput } from '@/components/ui/FormInput'
+import StarRatingField from './StarRatingField'
+import UploadMediaField from './UploadMediaField'
 
 interface ReviewFormProps {
   productId: string
   onSuccess?: (reviewId: string) => void
-  onClose?: () => void
 }
 
 const initialState: ReviewFormState = {
@@ -26,13 +24,11 @@ const initialState: ReviewFormState = {
 const ReviewForm: React.FC<ReviewFormProps> = ({
   productId,
   onSuccess,
-  onClose,
 }) => {
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([])
   const [rating, setRating] = useState(0)
-  const [ageRange, setAgeRange] = useState(0)
+  const [ageRange, setAgeRange] = useState<string>('')
+  const [recommend, setRecommend] = useState<string>('')
   const [quality, setQuality] = useState(0)
-  const [recommend, setEecommend] = useState(0)
   const [value, setValue] = useState(0)
 
   const [state, formAction, pending] = useActionState(
@@ -44,32 +40,9 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
   useEffect(() => {
     if (state.success && state.review) {
       onSuccess?.(state.review.id)
-      onClose?.()
     }
-  }, [state, onSuccess, onClose])
+  }, [state, onSuccess])
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || [])
-
-    if (files.length > 3) {
-      alert('You can choose maximum 3 files')
-      e.target.value = ''
-      return
-    }
-
-    for (const file of files) {
-      const maxSize = file.type.startsWith('video')
-        ? 100 * 1024 * 1024
-        : 5 * 1024 * 1024
-      if (file.size > maxSize) {
-        alert(`File ${file.name} exceeding the allowable size`)
-        e.target.value = ''
-        return
-      }
-    }
-
-    setSelectedFiles(files)
-  }
 
   return (
     <div className="pt-4">
@@ -149,57 +122,31 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
             />
           </div>
 
-          <div>
-            <Label htmlFor="media">Add Media (Optional)</Label>
-            <Input
-              type="file"
-              id="media"
-              name="media"
-              multiple
-              accept="image/*,video/*"
-              disabled={pending}
-              onChange={handleFileChange}
-              className="h-12"
-            />
-            <p className="text-xs md:text-sm mt-2 text-gray-600">
-              Upload up to 3 images (max. 5MB each) or 1 video (max. 100MB).
-            </p>
-
-            {selectedFiles.length > 0 && (
-              <div className="mt-2 space-y-1">
-                {selectedFiles.map((file, idx) => (
-                  <div
-                    key={idx}
-                    className="text-xs text-gray-700 flex items-center gap-2"
-                  >
-                    <span>📎</span>
-                    <span>{file.name}</span>
-                    <span className="text-gray-500">
-                      ({(file.size / 1024 / 1024).toFixed(2)} MB)
-                    </span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+          <UploadMediaField
+            disabled={pending}
+            name="media"
+            label="Add Media"
+          />
 
           <OptionSelector
             label="How would you rate the quality of this product? (Choose 1)"
             name="quality"
             value={quality}
+            options={[1, 2, 3, 4, 5]}
             onChange={setQuality}
           />
 
           <OptionSelector
             label="How would you rate the value of this product? (Choose 1)"
-            name="quality"
+            name="value"
             value={value}
+            options={[1, 2, 3, 4, 5]}
             onChange={setValue}
           />
 
           <OptionSelector
             label="What is your Age Range? (Choose 1)"
-            name="ageRange"
+            name="age_range"
             value={ageRange}
             options={['<18', '18-25', '26-35', '36-45', '46-55', '56+']}
             onChange={setAgeRange}
@@ -207,15 +154,14 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
 
           <OptionSelector
             label="Would you recommend this product to a friend? (Choose 1)"
-            name="quality"
+            name="recommend"
             value={recommend}
             options={['Yes', 'No']}
-            onChange={setEecommend}
+            onChange={setRecommend}
           />
-
         </div>
-        <div className='flex items-center justify-between gap-6 mt-4 md:mt-6'>
-          <p className='text-sm '>Required fields are marked with *</p>
+        <div className="flex items-center justify-between gap-6 mt-4 md:mt-6">
+          <p className="text-sm ">Required fields are marked with *</p>
           <Button
             type="submit"
             disabled={pending}

@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { Minus, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { IcoMinus, IcoPlus } from '@/components/icons'
 
 interface QuantityInputProps {
   value: number
@@ -60,7 +60,7 @@ export const QuantityInput = ({
         disabled={loading || inputValue <= min}
         onClick={handleDecrease}
       >
-        <Minus className="w-4 h-4"/>
+        <IcoMinus className="w-4 h-4"/>
       </Button>
 
       <input
@@ -81,7 +81,7 @@ export const QuantityInput = ({
         disabled={loading || inputValue >= max}
         onClick={handleIncrease}
       >
-        <Plus className="w-4 h-4" />
+        <IcoPlus className="w-4 h-4" />
       </Button>
     </div>
   )

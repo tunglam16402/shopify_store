@@ -1,9 +1,9 @@
 'use client'
 
+import { IcoUser } from '@/components/icons'
 import { useAppDispatch } from '@/lib/hooks/useAppDispatch'
 import { logoutUser } from '@/store/slices/userSlice'
 import { RootState } from '@/store/store'
-import { User } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -31,7 +31,7 @@ const AccountDropdown = () => {
         onClick={toggleDropdown}
         className="flex items-center gap-2 py-2 rounded hover:bg-gray-100 transition"
       >
-        <User className="w-6 h-6" />
+        <IcoUser className="w-7 h-7" />
         {isLoggedIn && <span>{userName}</span>}
       </button>
 

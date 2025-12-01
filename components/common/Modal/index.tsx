@@ -4,12 +4,16 @@ import { IcoClose } from '@/components/icons'
 import React, { ReactNode, useEffect } from 'react'
 
 interface ModalProps {
-  isOpen: boolean
+  isOpen?: boolean
   onClose: () => void
   children: ReactNode
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
+const Modal: React.FC<ModalProps> = ({
+  isOpen = 'true',
+  onClose,
+  children,
+}) => {
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
     return () => {
@@ -32,7 +36,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-900"
           onClick={onClose}
         >
-          <IcoClose className='w-5 h-5'/>
+          <IcoClose className="w-5 h-5" />
         </button>
         {children}
       </div>

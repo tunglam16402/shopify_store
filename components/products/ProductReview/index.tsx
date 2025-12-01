@@ -1,7 +1,7 @@
 'use client'
 
 import { Reviews } from '@/types/reviews'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Activity } from 'react'
 import CustomerReview from './CustomerReview'
 import ReviewForm from './ReviewForm'
 import TotalRating from './TotalRating'
@@ -29,7 +29,6 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
     fetchReviews()
   }, [productId])
 
-
   return (
     <div className="main-width">
       <h3 className="text-2xl font-light uppercase text-center">
@@ -39,13 +38,11 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
       <TotalRating reviews={reviews} onOpenForm={() => setShowForm(true)} />
       <CustomerReview reviews={reviews} />
 
-      <Modal isOpen={showForm} onClose={() => setShowForm(false)}>
-        <ReviewForm
-          productId={productId}
-          onSuccess={() => fetchReviews()}
-          onClose={() => setShowForm(false)}
-        />
-      </Modal>
+      <Activity mode={showForm ? 'visible' : 'hidden'}>
+        <Modal onClose={() => setShowForm(false)}>
+          <ReviewForm productId={productId} onSuccess={() => fetchReviews()} />
+        </Modal>
+      </Activity>
     </div>
   )
 }

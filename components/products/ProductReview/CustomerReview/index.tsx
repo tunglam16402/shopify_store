@@ -25,6 +25,25 @@ const CustomerReview: React.FC<CustomerReviewProps> = ({ reviews }) => {
           <p className="mb-1">{r.comment}</p>
           <p className="mb-1 font-medium">{r.headline}</p>
           <p className="mb-2 text-sm text-gray-600">{r.email}</p>
+          <div>
+            <span>Age Range: </span>
+            <span>{r.age_range}</span>
+          </div>
+
+          <div>
+            <span>Recommend for friend: </span>
+            <span>{r.recommend}</span>
+          </div>
+
+          <div>
+            <span>Quality: </span>
+            <span>{r.quality}</span>
+          </div>
+
+          <div>
+            <span>Value: </span>
+            <span>{r.value}</span>
+          </div>
 
           {r.media?.length > 0 && (
             <div className="flex gap-2 mt-2 flex-wrap">

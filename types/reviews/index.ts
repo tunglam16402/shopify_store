@@ -13,6 +13,10 @@ export interface Reviews {
   comment: string
   headline: string
   email: string
+  quality: number
+  value: number
+  age_range: string
+  recommend: string
   media: ReviewMedia[]
   created_at: string
   product_id: string
