@@ -12,7 +12,7 @@ const CustomerReview: React.FC<CustomerReviewProps> = ({ reviews }) => {
   if (!reviews || reviews.length === 0) return null
 
   return (
-    <div className="mb-6">
+    <div className="mt-8 md:mt-12 pt-8 md:pt-12 border-t-2">
       {reviews.map((r) => (
         <div key={r.id} className="mb-4 border-b pb-2">
           <div className="flex justify-between items-center mb-1">

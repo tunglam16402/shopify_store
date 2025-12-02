@@ -60,7 +60,7 @@ export const QuantityInput = ({
         disabled={loading || inputValue <= min}
         onClick={handleDecrease}
       >
-        <IcoMinus className="w-4 h-4"/>
+        <IcoMinus className="w-4 h-4" color='black'/>
       </Button>
 
       <input
@@ -81,7 +81,7 @@ export const QuantityInput = ({
         disabled={loading || inputValue >= max}
         onClick={handleIncrease}
       >
-        <IcoPlus className="w-4 h-4" />
+        <IcoPlus className="w-4 h-4" color='black'/>
       </Button>
     </div>
   )

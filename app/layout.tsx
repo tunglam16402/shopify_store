@@ -1,6 +1,5 @@
 import { GlobalUIProvider } from '@/components/common/Layout/GlobalUI'
 import MainLayout from '@/components/common/Layout/MainLayout'
-import ShopifyAnalyticsClient from '@/components/layout/Analytics'
 import type { Metadata } from 'next'
 import { Literata, Tangerine } from 'next/font/google'
 import StoreProvider from '../components/common/Layout/StoreProvider'
@@ -41,7 +40,7 @@ export default function RootLayout({
       >
         <StoreProvider>
           <GlobalUIProvider>
-            <ShopifyAnalyticsClient />
+            {/* <ShopifyAnalyticsClient /> */}
             <MainLayout>{children}</MainLayout>
           </GlobalUIProvider>
         </StoreProvider>

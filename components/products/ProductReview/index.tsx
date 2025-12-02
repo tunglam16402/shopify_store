@@ -6,6 +6,8 @@ import CustomerReview from './CustomerReview'
 import ReviewForm from './ReviewForm'
 import TotalRating from './TotalRating'
 import Modal from '@/components/common/Modal'
+import SearchReview from './SearchReview'
+import FilterReview from './FilterReview'
 
 interface ProductReviewProps {
   productId: string
@@ -32,10 +34,15 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
   return (
     <div className="main-width">
       <h3 className="text-2xl font-light uppercase text-center">
-        Customer Reviews
+        Ratings and Reviews
       </h3>
 
       <TotalRating reviews={reviews} onOpenForm={() => setShowForm(true)} />
+      <div className='flex flex-col md:flex-row justify-between mt-8 md:mt-12 border-t pt-8 md:pt-12'>
+        <SearchReview />
+        <FilterReview />
+      </div>
+
       <CustomerReview reviews={reviews} />
 
       <Activity mode={showForm ? 'visible' : 'hidden'}>
