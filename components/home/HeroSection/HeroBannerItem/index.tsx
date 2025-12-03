@@ -19,6 +19,7 @@ const HeroBannerItem: React.FC<IHeroBannerItem> = ({ data }) => {
           fill
           alt=""
           className="object-cover"
+          preload
           fetchPriority='high'
           sizes="(max-width: 768px) 100vw, 50vw"
         />

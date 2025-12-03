@@ -10,6 +10,8 @@ const Page = () => {
       <Image
         src="/hero_banner_fall.webp"
         alt="Banner"
+
+
         fill
         sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 100vw"
       />

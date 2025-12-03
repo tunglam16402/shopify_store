@@ -13,6 +13,7 @@ import UploadMediaField from './UploadMediaField'
 interface ReviewFormProps {
   productId: string
   onSuccess?: (reviewId: string) => void
+  onClose?: () => void
 }
 
 const initialState: ReviewFormState = {
@@ -24,6 +25,7 @@ const initialState: ReviewFormState = {
 const ReviewForm: React.FC<ReviewFormProps> = ({
   productId,
   onSuccess,
+  onClose,
 }) => {
   const [rating, setRating] = useState(0)
   const [ageRange, setAgeRange] = useState<string>('')
@@ -40,9 +42,9 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
   useEffect(() => {
     if (state.success && state.review) {
       onSuccess?.(state.review.id)
+      onClose?.()
     }
-  }, [state, onSuccess])
-
+  }, [state, onSuccess, onClose])
 
   return (
     <div className="pt-4">
@@ -76,9 +78,9 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
               id="comment"
               name="comment"
               disabled={pending}
-              placeholder="Tell us what you like or dislike (max. 100 characters)"
+              placeholder="Tell us what you like or dislike (min. 10 characters)"
               className="border p-2 h-30 rounded-xl w-full"
-              maxLength={100}
+              minLength={10}
               required
             />
           </div>
@@ -118,15 +120,10 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
               disabled={pending}
               placeholder="Example: youremail@gmail.com"
               className="h-12"
-              required
             />
           </div>
 
-          <UploadMediaField
-            disabled={pending}
-            name="media"
-            label="Add Media"
-          />
+          <UploadMediaField disabled={pending} name="media" label="Add Media" />
 
           <OptionSelector
             label="How would you rate the quality of this product? (Choose 1)"

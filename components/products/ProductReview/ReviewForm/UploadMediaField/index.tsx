@@ -57,7 +57,6 @@ const UploadMediaField: React.FC<UploadMediaFieldProps> = ({
     setSelectedFiles(newFiles)
     setPreviewUrls(newUrls)
 
-    // reset input để onChange được trigger khi chọn lại file
     if (fileInputRef.current) {
       fileInputRef.current.value = ''
     }
@@ -133,7 +132,7 @@ const UploadMediaField: React.FC<UploadMediaFieldProps> = ({
                   onClick={() => onRemoveFile(idx)}
                   className="absolute top-1 right-1 z-10 bg-black/50 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition"
                 >
-                  <IcoClose className="w-5 h-5" />
+                  <IcoClose className="w-5 h-5" color='white' />
                 </button>
 
                 {isVideo ? (

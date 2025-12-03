@@ -6,12 +6,12 @@
 :root {
   /* --background: #ffffff;
   --foreground: #171717; */
-  --bg-primary: #4f141f; 
+  --bg-primary: black;
   /* #7c0214 */
   /* #f89540 */
-  --bg-sub-primary: #7c0214; 
-  --bg-accent: #e3c16f; 
-  --bg-neutral: #f5f2ef; 
+  --bg-sub-primary: rgb(172, 6, 36);
+  --bg-accent: #e3c16f;
+  --bg-neutral: #f5f2ef;
 
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -165,7 +165,6 @@ body {
 
 .text-accent {
   color: var(--bg-accent);
-
 }
 
 .text-primary {
@@ -190,6 +189,13 @@ input {
 
 button {
   cursor: pointer;
+}
+
+.line-clamp-6 {
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* base css */

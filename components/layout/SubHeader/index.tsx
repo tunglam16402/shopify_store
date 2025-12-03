@@ -67,7 +67,7 @@ const SubHeader = ({ menuItems }: Props) => {
   }, [pathname])
 
   return (
-    <nav className="relative bg-gray-100 mt-15" onMouseLeave={handleMouseLeave}>
+    <nav className="relative mt-15" onMouseLeave={handleMouseLeave}>
       <ul className="hidden md:flex items-center justify-center">
         {menuItems.map((item, index) => {
           const isActive = activeIndex === index

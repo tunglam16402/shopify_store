@@ -1,13 +1,12 @@
 'use client'
 
+import Modal from '@/components/common/Modal'
 import { Reviews } from '@/types/reviews'
-import React, { useEffect, useState, Activity } from 'react'
-import CustomerReview from './CustomerReview'
+import React, { Activity, useEffect, useState } from 'react'
+import CustomerReview from './ReviewContainer'
 import ReviewForm from './ReviewForm'
 import TotalRating from './TotalRating'
-import Modal from '@/components/common/Modal'
-import SearchReview from './SearchReview'
-import FilterReview from './FilterReview'
+import CustomerRating from './CustomerRating'
 
 interface ProductReviewProps {
   productId: string
@@ -38,18 +37,28 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
       </h3>
 
       <TotalRating reviews={reviews} onOpenForm={() => setShowForm(true)} />
-      <div className='flex flex-col md:flex-row justify-between mt-8 md:mt-12 border-t pt-8 md:pt-12'>
-        <SearchReview />
-        <FilterReview />
-      </div>
+
+      <CustomerRating reviews={reviews} />
 
       <CustomerReview reviews={reviews} />
-
+{/* 
       <Activity mode={showForm ? 'visible' : 'hidden'}>
         <Modal onClose={() => setShowForm(false)}>
-          <ReviewForm productId={productId} onSuccess={() => fetchReviews()} />
+          <ReviewForm
+            productId={productId}
+            onSuccess={() => fetchReviews()}
+            onClose={() => setShowForm(false)}
+          />
         </Modal>
-      </Activity>
+      </Activity> */}
+
+      <Modal isOpen={showForm} onClose={() => setShowForm(false)}>
+        <ReviewForm
+          productId={productId}
+          onSuccess={() => fetchReviews()}
+          onClose={() => setShowForm(false)}
+        />
+      </Modal>
     </div>
   )
 }

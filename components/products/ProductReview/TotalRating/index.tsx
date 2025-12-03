@@ -1,6 +1,6 @@
 'use client'
 
-import { IcoStarEmpty, IcoStarFill, IcoStarHalfFill } from '@/components/icons'
+import { IcoStarEmpty, IcoStarFill, IcoStarHalfFill, IcoWrite } from '@/components/icons'
 import { Button } from '@/components/ui/Button'
 import { Reviews } from '@/types/reviews'
 import React, { useMemo } from 'react'
@@ -69,9 +69,9 @@ const TotalRating: React.FC<TotalRatingProps> = ({ reviews, onOpenForm }) => {
         <Button
           variant="primary"
           onClick={onOpenForm}
-          className="px-8 md:px-16 md:py-4 capitalize font-semibold"
+          className="px-8 md:px-12 md:py-5 md:text-base capitalize font-semibold"
         >
-          Write a review
+          Write a review 
         </Button>
       </div>
     </div>

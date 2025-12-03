@@ -12,12 +12,12 @@ const options = [
 const FilterReview = () => {
   const [value, setValue] = useState('')
   return (
-    <div className='flex items-center gap-4 md:gap-6 max-w-lg w-full'>
+    <div className='flex items-center gap-4 md:gap-6 max-w-lg w-full mt-4 md:mt-0'>
       <Select
         options={options}
         value={value}
         onChange={setValue}
-        placeholder="Choose an option"
+        placeholder="Filter"
         icon={<IcoFilter className='w-5 h-5'/>}
       />
 
@@ -25,7 +25,7 @@ const FilterReview = () => {
         options={options}
         value={value}
         onChange={setValue}
-        placeholder="Choose an option"
+        placeholder="Sort"
         icon={<IcoSort className='w-5 h-5'/>}
 
       />
