@@ -125,14 +125,16 @@ const UploadMediaField: React.FC<UploadMediaFieldProps> = ({
             return (
               <div
                 key={idx}
-                className="relative w-32 md:w-40 aspect-square overflow-hidden border group"
+                className="relative w-32 md:w-40 aspect-square md:overflow-hidden border group"
               >
                 <button
                   type="button"
                   onClick={() => onRemoveFile(idx)}
-                  className="absolute top-1 right-1 z-10 bg-black/50 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition"
+                  className="absolute -top-3 -right-3 md:right-1 md:top-1 z-10 
+                  bg-black/50 text-white rounded-full p-1 md:opacity-0 
+                  group-hover:opacity-100 transition"
                 >
-                  <IcoClose className="w-5 h-5" color='white' />
+                  <IcoClose className="w-5 h-5" color="white" />
                 </button>
 
                 {isVideo ? (

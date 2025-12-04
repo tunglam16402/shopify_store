@@ -1,5 +1,10 @@
 'use client'
-import { IcoFilter, IcoSort } from '@/components/icons'
+import {
+  IcoAgeRange,
+  IcoMedia,
+  IcoRating,
+  IcoThumbUp
+} from '@/components/icons'
 import Select from '@/components/ui/Select'
 import { useState } from 'react'
 
@@ -12,22 +17,37 @@ const options = [
 const FilterReview = () => {
   const [value, setValue] = useState('')
   return (
-    <div className='flex items-center gap-4 md:gap-6 max-w-lg w-full mt-4 md:mt-0'>
+    <div className="flex flex-wrap md:flex-row gap-4 md:gap-6 mt-6">
       <Select
         options={options}
         value={value}
         onChange={setValue}
-        placeholder="Filter"
-        icon={<IcoFilter className='w-5 h-5'/>}
+        placeholder="Ratings"
+        icon={<IcoRating className="w-5 h-5" />}
       />
 
       <Select
         options={options}
         value={value}
         onChange={setValue}
-        placeholder="Sort"
-        icon={<IcoSort className='w-5 h-5'/>}
+        placeholder="Age Range"
+        icon={<IcoAgeRange className="w-5 h-5" />}
+      />
 
+      <Select
+        options={options}
+        value={value}
+        onChange={setValue}
+        placeholder="Recommeded"
+        icon={<IcoThumbUp className="w-5 h-5" />}
+      />
+
+      <Select
+        options={options}
+        value={value}
+        onChange={setValue}
+        placeholder="With media"
+        icon={<IcoMedia className="w-5 h-5" />}
       />
     </div>
   )

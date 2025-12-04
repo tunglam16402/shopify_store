@@ -88,7 +88,7 @@ const ProductDetail = ({
   }, [product.id])
 
   return (
-    <div className="py-8">
+    <div className="pt-8">
       <div className="main-width">
         <Breadcrumb items={items} />
       </div>
@@ -120,11 +120,11 @@ const ProductDetail = ({
         </div>
       )}
 
-      <div className="mt-6 md:mt-20">
+      <div className="mt-12 md:mt-20">
         <TopCollection />
       </div>
 
-      <div className='mt-12 md:mt-20'>
+      <div className='mt-20 md:mt-30'>
         <ProductReview productId={product.id} />
       </div>
     </div>

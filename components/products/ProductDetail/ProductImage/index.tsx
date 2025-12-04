@@ -55,7 +55,7 @@ const ProductImage = ({ images, altText, title }: ProductImageProps) => {
               width={500}
               sizes="100vw"
               className="object-contain w-full cursor-pointer"
-              priority={i === 0}
+              fetchPriority={i === 0 ? "high" : "low"}
             />
           </div>
         ))}

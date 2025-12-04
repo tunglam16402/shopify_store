@@ -34,7 +34,6 @@ export function useDebounceCallback<T extends (...args: any[]) => void>(
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   const callbackRef = useRef(callback)
 
-  // Cập nhật callback mới nhất
   useEffect(() => {
     callbackRef.current = callback
   }, [callback])
@@ -64,9 +63,7 @@ export function useDebounceCallback<T extends (...args: any[]) => void>(
     [delay, cancel]
   )
 
-  // Cleanup khi unmount
   useEffect(() => cancel, [cancel])
 
-  // ✅ Trả về cả 3 để linh hoạt hơn
   return Object.assign(debounced, { cancel, flush })
 }

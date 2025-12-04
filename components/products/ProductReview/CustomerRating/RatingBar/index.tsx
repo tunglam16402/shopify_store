@@ -20,7 +20,7 @@ const RatingBar: React.FC<RatingBarProps> = ({ label, value }) => {
         <span className="text-xs text-gray-500">{value}/5</span>
       </div>
 
-      <div className="flex space-x-1 h-4 mt-2 md:mt-3">
+      <div className="flex space-x-1 h-3  mt-2 md:mt-3">
         {Array.from({ length: 5 }).map((_, idx) => {
           let width = '100%' 
           let bgClass = 'bg-gray-200' 

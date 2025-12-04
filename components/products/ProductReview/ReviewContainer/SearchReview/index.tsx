@@ -1,21 +1,54 @@
-import { SearchIcon } from '@/components/icons'
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from '@/components/ui/InputGroup'
-import React from 'react'
+'use client'
 
-const SearchReview = () => {
+import { IcoClose, SearchIcon } from '@/components/icons'
+import { useDebounceValue } from '@/shopify/hooks/useDebounce'
+import { useState, useEffect } from 'react'
+
+interface SearchReviewProps {
+  onSearch: (keyword: string) => void
+}
+
+const SearchReview = ({ onSearch }: SearchReviewProps) => {
+  const [input, setInput] = useState('')
+
+  const debouncedKeyword = useDebounceValue(input, 500)
+
+  useEffect(() => {
+    onSearch(debouncedKeyword.trim())
+  }, [debouncedKeyword, onSearch])
+
+  const clearInputValue = () => {
+    setInput('')
+  }
+
   return (
-    <div className='max-w-md w-full'>
-      <InputGroup className='h-10 text-base' >
-        <InputGroupInput placeholder="Search topics and reviews..."/>
-        <InputGroupAddon></InputGroupAddon>
-        <InputGroupAddon align="inline-end">
-          <SearchIcon className="text-black" />
-        </InputGroupAddon>
-      </InputGroup>
+    <div className="max-w-lg w-full">
+      <div className="relative flex items-center">
+        <div className="relative w-full flex items-center transition-all duration-300">
+          <input
+            type="text"
+            className="w-full border border-gray-400 focus:border-primary rounded-md py-2 px-9"
+            placeholder="Search reviews..."
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            autoComplete="off"
+          />
+
+          {input.length > 0 && (
+            <button
+              type="button"
+              className="absolute right-1 p-2 rounded hover:opacity-80"
+              onClick={clearInputValue}
+            >
+              <IcoClose className="text-primary w-5 h-5" />
+            </button>
+          )}
+
+          <div className="absolute left-0 p-2 ">
+            <SearchIcon className='text-primary'/>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
