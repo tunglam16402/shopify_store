@@ -4,6 +4,7 @@ import {
   getAllArticles,
   getBlogCategories,
 } from '@/shopify/api/operations/get-articles'
+import { Suspense } from 'react'
 
 const Blogs = async () => {
   const blogs = await getAllArticles()
@@ -12,10 +13,14 @@ const Blogs = async () => {
   return (
     <div>
       <aside>
-        <CategoryMenu categoryItems={category} />
+        <Suspense>
+          <CategoryMenu categoryItems={category} />
+        </Suspense>
       </aside>
       <section>
-        <BlogList blogs={blogs} />
+        <Suspense>
+          <BlogList blogs={blogs} />
+        </Suspense>
       </section>
     </div>
   )

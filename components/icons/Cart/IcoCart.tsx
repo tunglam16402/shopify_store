@@ -7,7 +7,7 @@ const IcoCart = (props: React.HTMLAttributes<SVGElement>) => (
     fill="#000000"
     {...props}
   >
-    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+    <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
     <g
       id="SVGRepo_tracerCarrier"
       strokeLinecap="round"
@@ -19,7 +19,7 @@ const IcoCart = (props: React.HTMLAttributes<SVGElement>) => (
       <g
         id="Page-1"
         stroke="none"
-        stroke-width="1"
+        strokeWidth="1"
         fill="none"
         fillRule="evenodd"
       >

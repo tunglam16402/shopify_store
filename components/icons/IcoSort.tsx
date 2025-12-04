@@ -5,11 +5,11 @@ const IcoSort = (props: React.HTMLAttributes<SVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
-    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+    <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
     <g
       id="SVGRepo_tracerCarrier"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     ></g>
     <g id="SVGRepo_iconCarrier">
       {' '}
@@ -17,16 +17,16 @@ const IcoSort = (props: React.HTMLAttributes<SVGElement>) => (
         opacity="0.5"
         d="M16 18L16 6M16 6L20 10.125M16 6L12 10.125"
         stroke="#1C274C"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       ></path>{' '}
       <path
         d="M8 6L8 18M8 18L12 13.875M8 18L4 13.875"
         stroke="#1C274C"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       ></path>{' '}
     </g>
   </svg>

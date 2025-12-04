@@ -1,4 +1,5 @@
 import ActivateForm from '@/components/auth/ActivateForm'
+import { Suspense } from 'react'
 
 interface ActivatePageProps {
   params: Promise<{
@@ -19,7 +20,9 @@ const Activate = async ({ params }: ActivatePageProps) => {
       <h1 className="text-3xl text-center sm:text-4xl font-bold text-slate-900">
         Activate Account
       </h1>
-      <ActivateForm activationUrl={activationUrl} />
+      <Suspense>
+        <ActivateForm activationUrl={activationUrl} />
+      </Suspense>
     </>
   )
 }
