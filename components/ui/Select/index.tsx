@@ -11,7 +11,7 @@ interface SelectOption {
 
 interface SelectProps {
   options: SelectOption[]
-  value: string[]            // luôn là array
+  value: string[]          
   onChange: (value: string[]) => void
   placeholder?: string
   icon?: React.ReactNode
@@ -52,7 +52,6 @@ const Select: React.FC<SelectProps> = ({
 
   return (
     <div ref={ref} className="relative rounded-2xl">
-      {/* BUTTON */}
       <button
         type="button"
         onClick={toggle}
@@ -68,7 +67,6 @@ const Select: React.FC<SelectProps> = ({
         <IcoDown className="w-4 h-4" />
       </button>
 
-      {/* DROPDOWN */}
       {isOpen && (
         <ul className="absolute z-10 w-full mt-1 bg-white border rounded shadow max-h-60 overflow-auto">
           {options.map((opt) => {
@@ -84,7 +82,7 @@ const Select: React.FC<SelectProps> = ({
                   type="checkbox"
                   checked={checked}
                   readOnly
-                  className="w-4 h-4"
+                  className="w-4 h-4 accent-black"
                 />
                 <span>{opt.label}</span>
               </li>

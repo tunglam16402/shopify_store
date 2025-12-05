@@ -28,8 +28,8 @@ export async function POST(req: NextRequest) {
   if (filters.rating?.length) {
     query = query.in(
       'rating',
-      filters.rating.map((r) => Number(r))
-    ) // đảm bảo là number
+      filters.rating.map((r: number) => Number(r))
+    )
   }
 
   if (filters.recommend?.length) {
