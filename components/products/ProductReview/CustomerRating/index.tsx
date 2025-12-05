@@ -6,17 +6,23 @@ interface CustomerRatingProps {
 }
 
 const CustomerRating = ({ reviews }: CustomerRatingProps) => {
-  const avgQuality =
-    reviews
-      .filter((r) => typeof r.quality === 'number')
-      .reduce((sum, r) => sum + (r.quality ?? 0), 0) /
-    Math.max(1, reviews.filter((r) => typeof r.quality === 'number').length)
+  const avgQuality = Number(
+    (
+      reviews
+        .filter((r) => typeof r.quality === 'number')
+        .reduce((sum, r) => sum + (r.quality ?? 0), 0) /
+      Math.max(1, reviews.filter((r) => typeof r.quality === 'number').length)
+    ).toFixed(2)
+  )
 
-  const avgValue =
-    reviews
-      .filter((r) => typeof r.value === 'number')
-      .reduce((sum, r) => sum + (r.value ?? 0), 0) /
-    Math.max(1, reviews.filter((r) => typeof r.value === 'number').length)
+  const avgValue = Number(
+    (
+      reviews
+        .filter((r) => typeof r.value === 'number')
+        .reduce((sum, r) => sum + (r.value ?? 0), 0) /
+      Math.max(1, reviews.filter((r) => typeof r.value === 'number').length)
+    ).toFixed(2)
+  )
 
   return (
     <div className="border-t mt-8 pt-8 md:pt-12 md:mt-12">

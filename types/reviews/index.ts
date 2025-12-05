@@ -17,7 +17,7 @@ export interface Reviews {
   value: number
   age_range: string
   recommend: string
-  media: ReviewMedia[]
+  review_media: ReviewMedia[]
   created_at: string
   product_id: string
 }

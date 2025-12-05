@@ -45,9 +45,9 @@ const ReviewItem = ({ review }: ReviewContainerProps) => {
               />
             </div>
 
-            {review.media?.length > 0 && (
+            {review.review_media?.length > 0 && (
               <div className="flex gap-2 mt-5 flex-wrap">
-                {review.media.map((m) =>
+                {review.review_media.map((m) =>
                   m.type === 'image' ? (
                     <div
                       key={m.id}

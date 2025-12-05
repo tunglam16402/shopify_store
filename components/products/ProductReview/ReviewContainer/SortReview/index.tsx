@@ -2,25 +2,30 @@
 
 import { IcoSort } from '@/components/icons'
 import Select from '@/components/ui/Select'
-import React, { useState } from 'react'
+import React from 'react'
+
 const options = [
-  { label: 'Option 1', value: '1' },
-  { label: 'Option 2', value: '2' },
-  { label: 'Option 3', value: '3' },
+  { label: 'Most relevant', value: 'relevance' },
+  { label: 'Newest', value: 'newest' },
+  { label: 'Highest rating', value: 'high' },
+  { label: 'Lowest rating', value: 'low' }
 ]
 
-const SortReview = () => {
-  const [value, setValue] = useState('')
+interface SortReviewProps {
+  value: string
+  onChange: (value: string) => void
+}
 
+const SortReview: React.FC<SortReviewProps> = ({ value, onChange }) => {
   return (
-    <div className='mt-4 md:mt-0'>
+    <div className="mt-4 md:mt-0">
       <Select
         options={options}
         value={value}
-        onChange={setValue}
-        placeholder="Sort by: Most revelant"
+        onChange={onChange}
+        placeholder="Sort by: Most relevant"
         icon={<IcoSort className="w-5 h-5" />}
-        className='w-full'
+        className="w-full"
       />
     </div>
   )

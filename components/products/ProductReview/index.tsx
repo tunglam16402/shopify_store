@@ -1,37 +1,50 @@
 'use client'
 
 import Modal from '@/components/common/Modal'
-import { Reviews } from '@/types/reviews'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import CustomerRating from './CustomerRating'
-import CustomerReview from './ReviewContainer'
+import ReviewContainer from './ReviewContainer'
 import ReviewForm from './ReviewForm'
 import TotalRating from './TotalRating'
 import { Button } from '@/components/ui/Button'
 import { IcoEmptyReview } from '@/components/icons'
 import StyledHeading from '@/components/ui/StyledHeading'
+import { useReviews } from '@/lib/hooks/useReviews'
 
 interface ProductReviewProps {
   productId: string
 }
 
 const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
-  const [reviews, setReviews] = useState<Reviews[]>([])
   const [showForm, setShowForm] = useState(false)
 
-  const fetchReviews = async () => {
-    try {
-      const res = await fetch(`/api/reviews?product_id=${productId}`)
-      const data = await res.json()
-      setReviews(data)
-    } catch (err) {
-      console.error(err)
-    }
+  // 🔥 Dùng đúng hook như bạn đã viết:
+  const {
+    data,
+    loading,
+    search,
+    setSearch,
+    filters,
+    setFilters,
+    sort,
+    setSort,
+    page,
+    setPage,
+  } = useReviews(productId)
+
+  const reviews = data?.reviews || []
+  const total = data?.total || 0
+  const summary = data?.summary || null
+
+  if (loading) {
+    return (
+      <div className="py-20 text-center">
+        <p className="text-gray-500">Loading reviews...</p>
+      </div>
+    )
   }
 
-  useEffect(() => {
-    fetchReviews()
-  }, [productId])
+  const hasNoReviews = total === 0
 
   return (
     <div className="main-width">
@@ -43,7 +56,7 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
         />
       </div>
 
-      {reviews.length === 0 ? (
+      {hasNoReviews ? (
         <div className="py-16 flex items-center flex-col">
           <IcoEmptyReview className="w-20 h-20" />
           <p className="text-xl md:text-2xl mt-6 md:mt-8">
@@ -62,19 +75,24 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
         </div>
       ) : (
         <>
-          <TotalRating reviews={reviews} onOpenForm={() => setShowForm(true)} />
+          {/* ⭐ Tổng quan đánh giá */}
+          {/* <TotalRating summary={summary} onOpenForm={() => setShowForm(true)} /> */}
 
-          <CustomerRating reviews={reviews} />
+          {/* ⭐ Biểu đồ phân bố rating */}
+          {/* <CustomerRating reviews={summary} /> */}
 
-          <CustomerReview reviews={reviews} />
+          {/* ⭐ Toàn bộ review + filter + search + pagination */}
+          <ReviewContainer productId={productId} />
         </>
       )}
 
       <Modal isOpen={showForm} onClose={() => setShowForm(false)}>
         <ReviewForm
           productId={productId}
-          onSuccess={() => fetchReviews()}
-          onClose={() => setShowForm(false)}
+          onSuccess={() => {
+            setPage(1)
+            setShowForm(false)
+          }}
         />
       </Modal>
     </div>
