@@ -1,65 +1,71 @@
 'use client'
 
-import { IcoStarEmpty, IcoStarFill, IcoStarHalfFill, IcoWrite } from '@/components/icons'
+import { IcoStarEmpty, IcoStarFill, IcoStarHalfFill } from '@/components/icons'
 import { Button } from '@/components/ui/Button'
-import { Reviews } from '@/types/reviews'
 import React, { useMemo } from 'react'
 
+interface Summary {
+  avgRating: number
+  totalReviews: number
+  breakdown: Record<1 | 2 | 3 | 4 | 5, number>
+}
+
 interface TotalRatingProps {
-  reviews: Reviews[]
+  summary: Summary
   onOpenForm: () => void
 }
 
-const TotalRating: React.FC<TotalRatingProps> = ({ reviews, onOpenForm }) => {
-  const stats = useMemo(() => {
-    const total = reviews.length
-    const counts = [5, 4, 3, 2, 1].map(
-      (star) => reviews.filter((r) => r.rating === star).length
-    )
-    const avg = total ? reviews.reduce((a, r) => a + r.rating, 0) / total : 0
-    return { total, counts, avg }
-  }, [reviews])
+const TotalRating: React.FC<TotalRatingProps> = ({ summary, onOpenForm }) => {
+  const { avgRating, totalReviews, breakdown } = summary
 
-  const fullStars = Math.floor(stats.avg)
-  const hasHalfStar = stats.avg - fullStars >= 0.5
-  const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0)
+  const { fullStars, hasHalfStar, emptyStars } = useMemo(() => {
+    const full = Math.floor(avgRating)
+    const half = avgRating - full >= 0.5
+    return {
+      fullStars: full,
+      hasHalfStar: half,
+      emptyStars: 5 - full - (half ? 1 : 0),
+    }
+  }, [avgRating])
 
   return (
     <div className="mt-8 md:px-24 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12">
       <div className="flex items-center justify-center gap-4">
-        <div className="text-6xl font-light">{stats.avg.toFixed(1)}</div>
+        <div className="text-6xl font-light">{avgRating.toFixed(1)}</div>
         <div className="space-y-2 mt-2">
           <div className="flex">
             {[...Array(fullStars)].map((_, i) => (
               <IcoStarFill key={`full-${i}`} className="h-6 w-6" />
             ))}
-            {hasHalfStar && <IcoStarHalfFill key="half" className="h-6 w-6" />}
+            {hasHalfStar && <IcoStarHalfFill className="h-6 w-6" />}
             {[...Array(emptyStars)].map((_, i) => (
               <IcoStarEmpty key={`empty-${i}`} className="h-6 w-6" />
             ))}
           </div>
           <div className="text-sm">
-            Based on {stats.total} review{stats.total > 1 ? 's' : ''}
+            Based on {totalReviews} review{totalReviews > 1 ? 's' : ''}
           </div>
         </div>
       </div>
 
       <div className="space-y-2 w-full text-sm px-10 md:px-0">
-        {[5, 4, 3, 2, 1].map((star, idx) => {
-          const count = stats.counts[idx]
-          const percent = stats.total ? (count / stats.total) * 100 : 0
+        {[5, 4, 3, 2, 1].map((star) => {
+          const count = breakdown[star as 1 | 2 | 3 | 4 | 5] ?? 0
+          const percent = totalReviews ? (count / totalReviews) * 100 : 0
           return (
             <div key={star} className="flex items-center gap-2 md:gap-4">
               <span className="w-10">
                 {star} {star === 1 ? 'star' : 'stars'}
               </span>
+
               <div className="flex-1 bg-gray-200 h-3 rounded-lg overflow-hidden">
                 <div
                   className="bg-primary h-3"
                   style={{ width: `${percent}%` }}
                 />
               </div>
-              <span className=" text-right">{count}</span>
+
+              <span className="text-right">{count}</span>
             </div>
           )
         })}
@@ -71,7 +77,7 @@ const TotalRating: React.FC<TotalRatingProps> = ({ reviews, onOpenForm }) => {
           onClick={onOpenForm}
           className="px-8 md:px-12 md:py-5 md:text-base capitalize font-semibold"
         >
-          Write a review 
+          Write a review
         </Button>
       </div>
     </div>

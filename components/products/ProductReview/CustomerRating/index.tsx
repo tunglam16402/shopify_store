@@ -1,34 +1,22 @@
-import { Reviews } from '@/types/reviews'
 import RatingBar from './RatingBar'
 
 interface CustomerRatingProps {
-  reviews: Reviews[]
+  performance: {
+    avgQuality: number
+    avgValue: number
+  }
 }
-
-const CustomerRating = ({ reviews }: CustomerRatingProps) => {
-  const avgQuality = Number(
-    (
-      reviews
-        .filter((r) => typeof r.quality === 'number')
-        .reduce((sum, r) => sum + (r.quality ?? 0), 0) /
-      Math.max(1, reviews.filter((r) => typeof r.quality === 'number').length)
-    ).toFixed(2)
-  )
-
-  const avgValue = Number(
-    (
-      reviews
-        .filter((r) => typeof r.value === 'number')
-        .reduce((sum, r) => sum + (r.value ?? 0), 0) /
-      Math.max(1, reviews.filter((r) => typeof r.value === 'number').length)
-    ).toFixed(2)
-  )
+const CustomerRating = ({ performance }: CustomerRatingProps) => {
+  console.log('performance quality value:>> ', performance)
 
   return (
     <div className="border-t mt-8 pt-8 md:pt-12 md:mt-12">
       <div className="flex flex-col md:flex-row gap-5 md:gap-16 mx-auto max-w-4xl">
-        <RatingBar label="Average of Product Quality" value={avgQuality} />
-        <RatingBar label="Average of Product Value" value={avgValue} />
+        <RatingBar
+          label="Average of Product Quality"
+          value={performance.avgQuality}
+        />
+        <RatingBar label="Average of Product Value" value={performance.avgValue} />
       </div>
     </div>
   )

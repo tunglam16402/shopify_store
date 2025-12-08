@@ -2,13 +2,13 @@
 
 import { IcoSort } from '@/components/icons'
 import Select from '@/components/ui/Select'
-import React from 'react'
+import React, { memo } from 'react'
 
 const options = [
+  { label: 'Most Recent', value: 'newest' },
   { label: 'Most relevant', value: 'relevance' },
-  { label: 'Newest', value: 'newest' },
   { label: 'Highest rating', value: 'high' },
-  { label: 'Lowest rating', value: 'low' }
+  { label: 'Lowest rating', value: 'low' },
 ]
 
 interface SortReviewProps {
@@ -21,14 +21,15 @@ const SortReview: React.FC<SortReviewProps> = ({ value, onChange }) => {
     <div className="mt-4 md:mt-0">
       <Select
         options={options}
-        value={value}
-        onChange={onChange}
-        placeholder="Sort by: Most relevant"
+        value={[value]} 
+        onChange={(v) => onChange(v[0])}
+        placeholder="Sort by: Newest"
         icon={<IcoSort className="w-5 h-5" />}
         className="w-full"
+        multiple={false}
       />
     </div>
   )
 }
 
-export default SortReview
+export default memo(SortReview)

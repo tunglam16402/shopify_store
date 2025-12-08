@@ -5,21 +5,24 @@ import { useDebounceValue } from '@/shopify/hooks/useDebounce'
 import { useState, useEffect } from 'react'
 
 interface SearchReviewProps {
+  value: string
   onSearch: (keyword: string) => void
 }
 
-const SearchReview = ({ onSearch }: SearchReviewProps) => {
-  const [input, setInput] = useState('')
+const SearchReview = ({ value, onSearch }: SearchReviewProps) => {
+  const [input, setInput] = useState(value)
 
   const debouncedKeyword = useDebounceValue(input, 500)
+
+  useEffect(() => {
+    setInput(value)
+  }, [value])
 
   useEffect(() => {
     onSearch(debouncedKeyword.trim())
   }, [debouncedKeyword, onSearch])
 
-  const clearInputValue = () => {
-    setInput('')
-  }
+  const clearInputValue = () => setInput('')
 
   return (
     <div className="max-w-lg w-full">
@@ -44,8 +47,8 @@ const SearchReview = ({ onSearch }: SearchReviewProps) => {
             </button>
           )}
 
-          <div className="absolute left-0 p-2 ">
-            <SearchIcon className='text-primary'/>
+          <div className="absolute left-0 p-2">
+            <SearchIcon className="text-primary" />
           </div>
         </div>
       </div>

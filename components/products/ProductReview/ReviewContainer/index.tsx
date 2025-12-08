@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useCallback } from 'react'
 import ReviewItem from './ReviewItem'
 import SearchReview from './SearchReview'
 import FilterReview from './FilterReview'
@@ -9,6 +9,7 @@ import ReviewSummary from './ReviewSummary'
 import SortReview from './SortReview'
 import ReviewPagination from './ReviewPagiantion'
 import { useReviews } from '@/lib/hooks/useReviews'
+import { Reviews } from '@/types/reviews'
 
 interface ReviewContainerProps {
   productId: string
@@ -17,7 +18,6 @@ interface ReviewContainerProps {
 const ReviewContainer: React.FC<ReviewContainerProps> = ({ productId }) => {
   const {
     data,
-    loading,
     search,
     setSearch,
     filters,
@@ -28,6 +28,10 @@ const ReviewContainer: React.FC<ReviewContainerProps> = ({ productId }) => {
     setPage,
   } = useReviews(productId)
 
+  console.log('data :>> ', data)
+
+  console.log('page :>> ', page);
+
   if (!data) {
     return (
       <div className="py-10 text-center text-gray-500">Loading reviews...</div>
@@ -37,9 +41,7 @@ const ReviewContainer: React.FC<ReviewContainerProps> = ({ productId }) => {
   const start = (page - 1) * data.limit + 1
   const end = Math.min(page * data.limit, data.total)
 
-  const { reviews, summary, total } = data
-
-  console.log('reviews :>> ', reviews);
+  const { reviews, total } = data
 
   const handleClear = () => {
     setSearch('')
@@ -50,23 +52,19 @@ const ReviewContainer: React.FC<ReviewContainerProps> = ({ productId }) => {
 
   return (
     <div>
-      {/* Controls */}
       <div className="flex flex-col justify-between my-8 md:my-12 md:mb-8 border-t border-b py-8 md:py-12">
-        {/* 🔍 Search */}
-        {/* <SearchReview
+        <SearchReview
           value={search}
           onSearch={(value) => {
             setSearch(value)
             setPage(1)
           }}
-        /> */}
+        />
 
-        {/* 🧹 Filter */}
         <FilterReview filters={filters} setFilters={setFilters} />
 
-        {/* Summary + Sort */}
         <div className="flex flex-col md:flex-row justify-between md:items-center mt-4 md:mt-8">
-          {/* <ReviewSummary start={start} end={end} total={summary} /> */}
+          <ReviewSummary start={start} end={end} total={total} />
 
           <SortReview
             value={sort}
@@ -78,7 +76,6 @@ const ReviewContainer: React.FC<ReviewContainerProps> = ({ productId }) => {
         </div>
       </div>
 
-      {/* No results */}
       {total === 0 ? (
         <div className="text-center w-full">
           <p className="text-gray-500 text-base md:text-lg">
@@ -96,19 +93,13 @@ const ReviewContainer: React.FC<ReviewContainerProps> = ({ productId }) => {
         </div>
       ) : (
         <>
-          {/* List */}
-          {loading ? (
-            <p className="text-gray-500 text-center py-6">Loading...</p>
-          ) : (
-            reviews.map((review: any) => (
-              <ReviewItem key={review.id} review={review} />
-            ))
-          )}
+          {reviews.map((review: Reviews) => (
+            <ReviewItem key={review.id} review={review} />
+          ))}
 
-          {/* Pagination */}
           <ReviewPagination
             page={page}
-            pageSize={10}
+            pageSize={data.limit}
             total={total}
             onChange={(p) => setPage(p)}
           />

@@ -4,7 +4,6 @@ const nextConfig: NextConfig = {
   /* config options here */
   images: {
     domains: ['cdn.shopify.com', 'cvpfzhthbagmelqgibke.supabase.co'],
-
     remotePatterns: [
       {
         protocol: 'https',
@@ -20,11 +19,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // reactCompiler: true,
+  reactCompiler: true,
   cacheComponents: true,
-  // experimental: {
-  //   ppr: 'incremental',
-  // },
+  reactStrictMode: false,
 }
 
 export default nextConfig

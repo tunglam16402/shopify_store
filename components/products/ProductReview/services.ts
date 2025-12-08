@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export async function fetchReviews(payload: any) {
-  const res = await fetch("/api/reviews/query", {
+  const res = await fetch("/api/reviews", {
     method: "POST",
     body: JSON.stringify(payload),
   });

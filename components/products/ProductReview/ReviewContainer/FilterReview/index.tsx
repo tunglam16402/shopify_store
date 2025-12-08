@@ -60,6 +60,7 @@ const FilterReview = ({ filters, setFilters }: FilterReviewProps) => {
   }
 
   const clearAll = () => setFilters({})
+  
   return (
     <div className="flex flex-col">
       <div className="flex flex-wrap md:flex-row gap-4 md:gap-6 mt-6">

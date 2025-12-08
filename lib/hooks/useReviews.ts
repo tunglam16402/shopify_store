@@ -9,15 +9,12 @@ export function useReviews(productId: string) {
   const [search, setSearch] = useState("")
   const [sort, setSort] = useState("newest")
   const [page, setPage] = useState(1)
-  const [limit] = useState(10)
+  const [limit] = useState(8)
 
   const [data, setData] = useState<any>(null)
-  const [loading, setLoading] = useState(false)
 
-  // Fetch reviews
   useEffect(() => {
     let isMounted = true
-    setLoading(true)
 
     fetchReviews({
       productId,
@@ -29,7 +26,6 @@ export function useReviews(productId: string) {
     }).then((res) => {
       if (isMounted) {
         setData(res)
-        setLoading(false)
       }
     })
 
@@ -40,7 +36,6 @@ export function useReviews(productId: string) {
 
   return {
     data,
-    loading,
     filters,
     setFilters,
     search,

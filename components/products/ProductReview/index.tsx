@@ -17,34 +17,10 @@ interface ProductReviewProps {
 
 const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
   const [showForm, setShowForm] = useState(false)
-
-  // 🔥 Dùng đúng hook như bạn đã viết:
   const {
     data,
-    loading,
-    search,
-    setSearch,
-    filters,
-    setFilters,
-    sort,
-    setSort,
-    page,
     setPage,
   } = useReviews(productId)
-
-  const reviews = data?.reviews || []
-  const total = data?.total || 0
-  const summary = data?.summary || null
-
-  if (loading) {
-    return (
-      <div className="py-20 text-center">
-        <p className="text-gray-500">Loading reviews...</p>
-      </div>
-    )
-  }
-
-  const hasNoReviews = total === 0
 
   return (
     <div className="main-width">
@@ -56,7 +32,7 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
         />
       </div>
 
-      {hasNoReviews ? (
+      {!data || data.total === 0 ? (
         <div className="py-16 flex items-center flex-col">
           <IcoEmptyReview className="w-20 h-20" />
           <p className="text-xl md:text-2xl mt-6 md:mt-8">
@@ -75,13 +51,13 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
         </div>
       ) : (
         <>
-          {/* ⭐ Tổng quan đánh giá */}
-          {/* <TotalRating summary={summary} onOpenForm={() => setShowForm(true)} /> */}
+          <TotalRating
+            summary={data?.summary}
+            onOpenForm={() => setShowForm(true)}
+          />
 
-          {/* ⭐ Biểu đồ phân bố rating */}
-          {/* <CustomerRating reviews={summary} /> */}
+          <CustomerRating performance={data?.performance} />
 
-          {/* ⭐ Toàn bộ review + filter + search + pagination */}
           <ReviewContainer productId={productId} />
         </>
       )}
