@@ -55,6 +55,9 @@ export async function POST(req: NextRequest) {
 
   //Sort
   switch (sort) {
+    case 'newest':
+      query = query.order('created_at', { ascending: false })
+      break
     case 'high':
       query = query.order('rating', { ascending: false })
       break
@@ -62,7 +65,9 @@ export async function POST(req: NextRequest) {
       query = query.order('rating', { ascending: true })
       break
     default:
-      query = query.order('created_at', { ascending: false })
+      query = query
+        .order('rating', { ascending: false })
+        .order('vote_up', { ascending: false })
   }
 
   //pagination

@@ -29,7 +29,7 @@ const TotalRating: React.FC<TotalRatingProps> = ({ summary, onOpenForm }) => {
   }, [avgRating])
 
   return (
-    <div className="mt-8 md:px-24 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12">
+    <div className="mt-8 md:px-24 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-10 relative">
       <div className="flex items-center justify-center gap-4">
         <div className="text-6xl font-light">{avgRating.toFixed(1)}</div>
         <div className="space-y-2 mt-2">
@@ -48,6 +48,8 @@ const TotalRating: React.FC<TotalRatingProps> = ({ summary, onOpenForm }) => {
         </div>
       </div>
 
+      <div className="hidden md:block w-px bg-gray-200 h-36" />
+
       <div className="space-y-2 w-full text-sm px-10 md:px-0">
         {[5, 4, 3, 2, 1].map((star) => {
           const count = breakdown[star as 1 | 2 | 3 | 4 | 5] ?? 0
@@ -57,19 +59,19 @@ const TotalRating: React.FC<TotalRatingProps> = ({ summary, onOpenForm }) => {
               <span className="w-10">
                 {star} {star === 1 ? 'star' : 'stars'}
               </span>
-
               <div className="flex-1 bg-gray-200 h-3 rounded-lg overflow-hidden">
                 <div
                   className="bg-primary h-3"
                   style={{ width: `${percent}%` }}
                 />
               </div>
-
               <span className="text-right">{count}</span>
             </div>
           )
         })}
       </div>
+
+      <div className="hidden md:block w-px bg-gray-200 h-36" />
 
       <div className="text-center mt-4 md:mt-0">
         <Button

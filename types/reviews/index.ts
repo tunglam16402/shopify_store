@@ -20,6 +20,8 @@ export interface Reviews {
   review_media: ReviewMedia[]
   created_at: string
   product_id: string
+  vote_up: number
+  vote_down: number
 }
 
 export interface ReviewFormState {
