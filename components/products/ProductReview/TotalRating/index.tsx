@@ -3,6 +3,7 @@
 import { IcoStarEmpty, IcoStarFill, IcoStarHalfFill } from '@/components/icons'
 import { Button } from '@/components/ui/Button'
 import React, { useMemo } from 'react'
+import ReviewButton from './ReviewButton'
 
 interface Summary {
   avgRating: number
@@ -13,9 +14,14 @@ interface Summary {
 interface TotalRatingProps {
   summary: Summary
   onOpenForm: () => void
+  verifiedBuyer: boolean
 }
 
-const TotalRating: React.FC<TotalRatingProps> = ({ summary, onOpenForm }) => {
+const TotalRating: React.FC<TotalRatingProps> = ({
+  summary,
+  onOpenForm,
+  verifiedBuyer,
+}) => {
   const { avgRating, totalReviews, breakdown } = summary
 
   const { fullStars, hasHalfStar, emptyStars } = useMemo(() => {
@@ -72,15 +78,10 @@ const TotalRating: React.FC<TotalRatingProps> = ({ summary, onOpenForm }) => {
       </div>
 
       <div className="hidden md:block w-px bg-gray-200 h-36" />
+      {verifiedBuyer}
 
       <div className="text-center mt-4 md:mt-0">
-        <Button
-          variant="primary"
-          onClick={onOpenForm}
-          className="px-8 md:px-12 md:py-5 md:text-base capitalize font-semibold"
-        >
-          Write a review
-        </Button>
+        <ReviewButton onOpenForm={onOpenForm} verifiedBuyer={verifiedBuyer} />
       </div>
     </div>
   )

@@ -1,7 +1,7 @@
 'use client'
 
 import ExpandableText from '@/components/common/ExpandableText'
-import { IcoStarEmpty, IcoStarFill } from '@/components/icons'
+import { IcoStarEmpty, IcoStarFill, IcoVerify } from '@/components/icons'
 import { Reviews } from '@/types/reviews'
 import Image from 'next/image'
 import RatingBar from '../../CustomerRating/RatingBar'
@@ -18,12 +18,18 @@ const ReviewItem = ({ review }: ReviewContainerProps) => {
       <div className="grid grid-cols-1 md:grid-cols-5 md:gap-16">
         <div className="md:col-span-3">
           <div className="flex justify-between md:flex-col">
-            <strong>{review.username}</strong>
-            <span className="text-sm font-medium text-gray-500">
+            <div>
+              <strong>{review.username}</strong>
+              <div className="flex items-center gap-1">
+                <IcoVerify className="w-5 h-5" />
+                <p className="text-gray-700">Verified Buyer</p>
+              </div>
+            </div>
+            <span className="text-sm font-medium text-gray-500 md:mt-4">
               {new Date(review.created_at).toLocaleDateString()}
             </span>
           </div>
-          <div className="flex mt-2">
+          <div className="flex mt-2 md:mt-4">
             {[...Array(review.rating)].map((_, i) => (
               <IcoStarFill key={`full-${i}`} className="h-7 w-7" />
             ))}
@@ -33,7 +39,7 @@ const ReviewItem = ({ review }: ReviewContainerProps) => {
           </div>
 
           <div>
-            <p className="font-medium text-xl mt-2">{review.headline}</p>
+            <p className="font-medium text-xl mt-2 md:mt-4">{review.headline}</p>
             <ExpandableText
               text={review.comment}
               lineClamp={6}

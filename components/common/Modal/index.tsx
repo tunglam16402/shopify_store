@@ -2,17 +2,22 @@
 
 import { IcoClose } from '@/components/icons'
 import React, { ReactNode, useEffect } from 'react'
+import cn from 'classnames'
 
 interface ModalProps {
   isOpen?: boolean
   onClose: () => void
   children: ReactNode
+  hasClose?: boolean
+  className?: string
 }
 
 const Modal: React.FC<ModalProps> = ({
   isOpen = 'true',
   onClose,
   children,
+  hasClose = 'true',
+  className,
 }) => {
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
@@ -29,15 +34,20 @@ const Modal: React.FC<ModalProps> = ({
       onClick={onClose}
     >
       <div
-        className="bg-white md:rounded-lg shadow-lg p-6 relative max-w-3xl h-[100vh] w-full overflow-auto"
+        className={cn(
+          'bg-white md:rounded-lg shadow-lg p-6 relative max-h-screen overflow-auto',
+          className
+        )}
         onClick={(e) => e.stopPropagation()}
       >
-        <button
-          className="absolute top-4 right-4 text-gray-500 hover:text-gray-900"
-          onClick={onClose}
-        >
-          <IcoClose className="w-5 h-5" />
-        </button>
+        {hasClose && (
+          <button
+            className="absolute top-4 right-4 text-gray-500 hover:text-gray-900"
+            onClick={onClose}
+          >
+            <IcoClose className="w-5 h-5" />
+          </button>
+        )}
         {children}
       </div>
     </div>

@@ -6,7 +6,7 @@ import { Reviews } from '@/types/reviews'
 import React from 'react'
 import FilterReview from './FilterReview'
 import ReviewItem from './ReviewItem'
-import ReviewPagination from './ReviewPagiantion'
+import ReviewPagination from './ReviewPagination'
 import ReviewSummary from './ReviewSummary'
 import SearchReview from './SearchReview'
 import SortReview from './SortReview'
@@ -28,6 +28,8 @@ const ReviewContainer: React.FC<ReviewContainerProps> = ({ productId }) => {
     isLoading,
     setPage,
   } = useReviews(productId)
+
+  console.log('productId :>> ', productId);
 
   console.log('data :>> ', data)
 

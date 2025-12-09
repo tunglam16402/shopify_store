@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/Button'
 import { IcoEmptyReview } from '@/components/icons'
 import StyledHeading from '@/components/ui/StyledHeading'
 import { useReviews } from '@/lib/hooks/useReviews'
+import { useVerifiedBuyer } from './helper'
 
 interface ProductReviewProps {
   productId: string
@@ -18,6 +19,9 @@ interface ProductReviewProps {
 const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
   const [showForm, setShowForm] = useState(false)
   const { data, setPage, mutate } = useReviews(productId)
+  const verifiedBuyer = useVerifiedBuyer(productId)
+
+  console.log('verifiedBuyer :>> ', verifiedBuyer)
 
   return (
     <div className="main-width">
@@ -51,6 +55,7 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
           <TotalRating
             summary={data?.summary}
             onOpenForm={() => setShowForm(true)}
+            verifiedBuyer={verifiedBuyer}
           />
 
           <CustomerRating performance={data?.performance} />
@@ -59,7 +64,11 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
         </>
       )}
 
-      <Modal isOpen={showForm} onClose={() => setShowForm(false)}>
+      <Modal
+        isOpen={showForm}
+        onClose={() => setShowForm(false)}
+        className="w-full md:w-3xl"
+      >
         <ReviewForm
           productId={productId}
           onSuccess={() => {
