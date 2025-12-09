@@ -5,11 +5,11 @@ const IcoAgeRange = (props: React.HTMLAttributes<SVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
-    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+    <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
     <g
       id="SVGRepo_tracerCarrier"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     ></g>
     <g id="SVGRepo_iconCarrier">
       {' '}
@@ -22,8 +22,8 @@ const IcoAgeRange = (props: React.HTMLAttributes<SVGElement>) => (
         fill="#0F0F0F"
       ></path>{' '}
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M13 7C14.1046 7 15 7.89543 15 9V15C15 16.1046 14.1046 17 13 17H11C9.89542 17 8.99999 16.1046 8.99999 15V9C8.99999 7.89543 9.89542 7 11 7H13ZM12 9C12.5523 9 13 9.44772 13 10V14C13 14.5523 12.5523 15 12 15C11.4477 15 11 14.5523 11 14V10C11 9.44772 11.4477 9 12 9Z"
         fill="#0F0F0F"
       ></path>{' '}

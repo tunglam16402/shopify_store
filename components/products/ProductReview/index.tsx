@@ -17,10 +17,7 @@ interface ProductReviewProps {
 
 const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
   const [showForm, setShowForm] = useState(false)
-  const {
-    data,
-    setPage,
-  } = useReviews(productId)
+  const { data, setPage, mutate } = useReviews(productId)
 
   return (
     <div className="main-width">
@@ -68,6 +65,7 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
           onSuccess={() => {
             setPage(1)
             setShowForm(false)
+            mutate()
           }}
         />
       </Modal>

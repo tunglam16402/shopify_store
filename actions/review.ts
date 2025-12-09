@@ -15,8 +15,8 @@ export async function createReviewAction(
     const username = formData.get('username') as string
     const email = formData.get('email') as string
     const files = formData.getAll('media') as File[]
-    const quality = Number(formData.get('quality'))
-    const value = Number(formData.get('value'))
+    const quality = formData.get('quality') || null
+    const value = formData.get('value') || null
     const age_range = formData.get('age_range') as string
     const recommend = formData.get('recommend') as string
 

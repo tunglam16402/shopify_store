@@ -2,7 +2,6 @@
 import { GlobalUIContext } from '@/components/common/Layout/GlobalUI'
 import { useContext, useCallback } from 'react'
 
-// Hook lấy context gốc
 export const useGlobalUI = () => {
   const context = useContext(GlobalUIContext)
   if (!context) {
@@ -11,7 +10,6 @@ export const useGlobalUI = () => {
   return context
 }
 
-// Hook tiện lợi cho từng modal/cart theo key
 export const useUI = (key: string) => {
   const context = useGlobalUI()
 

@@ -2,7 +2,7 @@
 
 import { IcoClose, SearchIcon } from '@/components/icons'
 import { useDebounceValue } from '@/shopify/hooks/useDebounce'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useEffectEvent } from 'react'
 
 interface SearchReviewProps {
   value: string
@@ -11,16 +11,24 @@ interface SearchReviewProps {
 
 const SearchReview = ({ value, onSearch }: SearchReviewProps) => {
   const [input, setInput] = useState(value)
-
   const debouncedKeyword = useDebounceValue(input, 500)
+
+  const onSearchEvent = useEffectEvent(onSearch)
+
+  const firstRun = useRef(true)
 
   useEffect(() => {
     setInput(value)
   }, [value])
 
   useEffect(() => {
-    onSearch(debouncedKeyword.trim())
-  }, [debouncedKeyword, onSearch])
+    if (firstRun.current) {
+      firstRun.current = false
+      return
+    }
+
+    onSearchEvent(debouncedKeyword.trim())
+  }, [debouncedKeyword])
 
   const clearInputValue = () => setInput('')
 

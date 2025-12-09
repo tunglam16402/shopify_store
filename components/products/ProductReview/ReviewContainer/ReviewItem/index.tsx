@@ -1,24 +1,20 @@
 'use client'
 
 import ExpandableText from '@/components/common/ExpandableText'
-import {
-  IcoStarEmpty,
-  IcoStarFill
-} from '@/components/icons'
+import { IcoStarEmpty, IcoStarFill } from '@/components/icons'
 import { Reviews } from '@/types/reviews'
 import Image from 'next/image'
 import RatingBar from '../../CustomerRating/RatingBar'
 import VoteReview from './VoteReview'
+import { memo } from 'react'
 
 interface ReviewContainerProps {
   review: Reviews
 }
 
 const ReviewItem = ({ review }: ReviewContainerProps) => {
-
-  console.log('review :>> ', review);
   return (
-    <div key={review.id} className="mb-8 border-b pb-4 md:pb-8 ">
+    <div key={review.id} className="mb-8 border-b pb-4 md:pb-8">
       <div className="grid grid-cols-1 md:grid-cols-5 md:gap-16">
         <div className="md:col-span-3">
           <div className="flex justify-between md:flex-col">
@@ -74,7 +70,7 @@ const ReviewItem = ({ review }: ReviewContainerProps) => {
         </div>
 
         <div className="md:col-span-2">
-          {review.quality && review.value && (
+          {review.quality !== 0 && review.value !== 0 && (
             <div className="space-y-5 mt-5 md:mt-0">
               <RatingBar
                 label="Quality of this product"
@@ -95,6 +91,7 @@ const ReviewItem = ({ review }: ReviewContainerProps) => {
           )}
         </div>
       </div>
+
       <VoteReview
         reviewId={review.id}
         initialVoteUp={review.vote_up}
@@ -104,4 +101,4 @@ const ReviewItem = ({ review }: ReviewContainerProps) => {
   )
 }
 
-export default ReviewItem
+export default memo(ReviewItem)

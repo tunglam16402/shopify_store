@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
     productId,
     filters = {},
     search = '',
-    sort = 'newest',
+    sort = 'revelant',
     page = 1,
     limit = 8,
   } = body
@@ -64,6 +64,8 @@ export async function POST(req: NextRequest) {
     case 'low':
       query = query.order('rating', { ascending: true })
       break
+    case 'helpful':
+      query = query.order('vote_up', { ascending: false })
     default:
       query = query
         .order('rating', { ascending: false })
@@ -92,9 +94,14 @@ export async function POST(req: NextRequest) {
 
   const totalReviews = allRatings.length
 
-  const calcAvg = (key: 'rating' | 'quality' | 'value') =>
-    allRatings.reduce((sum, r) => sum + (r[key] ?? 0), 0) /
-    Math.max(1, totalReviews)
+  const calcAvg = (key: 'rating' | 'quality' | 'value') => {
+    const valid = allRatings.filter(
+      (r) => r[key] !== null && r[key] !== undefined
+    )
+    if (valid.length === 0) return 0
+    const sum = valid.reduce((total, r) => total + r[key], 0)
+    return sum / valid.length
+  }
 
   const breakdown = [5, 4, 3, 2, 1].reduce(
     (acc, star) => ({

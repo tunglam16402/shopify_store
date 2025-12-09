@@ -7,7 +7,7 @@ const IcoEmptyReview = (props: React.HTMLAttributes<SVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
-    <g clip-path="url(#clip0)">
+    <g clipPath="url(#clip0)">
       <path
         d="M38.813 9.20323L13.2319 34.7843C14.1962 33.82 15.7597 33.82 16.724 34.7843C17.6883 35.7486 17.6883 37.3121 16.724 38.2764L25.3177 29.6826C26.282 28.7183 27.8455 28.7183 28.8098 29.6826C29.7741 30.6469 29.7741 32.2104 28.8098 33.1747L45.8882 16.0963L38.813 9.20323Z"
         fill="#FFF5D7"

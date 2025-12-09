@@ -7,7 +7,7 @@ import {
   IcoThumbUp,
   IcoThumbUpFill,
 } from '@/components/icons'
-import { useState } from 'react'
+import { useState, useEffect, memo, useEffectEvent } from 'react'
 import { voteReview } from '../../../services'
 
 interface VoteReviewProps {
@@ -25,6 +25,22 @@ const VoteReview = ({
   const [voteDown, setVoteDown] = useState(initialVoteDown)
   const [userVote, setUserVote] = useState<'up' | 'down' | null>(null)
 
+  const loadUserVote = useEffectEvent(() => {
+    const match = document.cookie.match(/(?:^|;\s*)review_votes=([^;]*)/)
+    if (!match) return
+
+    try {
+      const votes = JSON.parse(decodeURIComponent(match[1]))
+      if (votes[reviewId]) {
+        setUserVote(votes[reviewId])
+      }
+    } catch {}
+  })
+
+  useEffect(() => {
+    loadUserVote()
+  }, []) 
+
   const handleVote = async (type: 'up' | 'down') => {
     if (userVote === type) return
 
@@ -36,7 +52,7 @@ const VoteReview = ({
       const data = await voteReview({ reviewId, type })
       setVoteUp(data.vote_up)
       setVoteDown(data.vote_down)
-      setUserVote(type)
+      setUserVote(data.userVote)
     } catch (err) {
       console.error(err)
     }
@@ -45,33 +61,27 @@ const VoteReview = ({
   return (
     <div className="flex items-center mt-10 gap-6">
       <button
-        className="flex items-center gap-1"
         onClick={() => handleVote('up')}
+        className="flex items-center gap-1"
       >
-        {!voteUp ? (
-          <>
-            <IcoThumbUp className="w-5 h-5" /> {voteUp}
-          </>
+        {userVote === 'up' ? (
+          <IcoThumbUpFill className="w-5 h-5" />
         ) : (
-          <>
-            <IcoThumbUpFill className="w-5 h-5" /> {voteUp}
-          </>
+          <IcoThumbUp className="w-5 h-5" />
         )}
+        <span>({voteUp})</span>
       </button>
 
-         <button
-        className="flex items-center gap-1"
+      <button
         onClick={() => handleVote('down')}
+        className="flex items-center gap-1"
       >
-        {!voteDown ? (
-          <>
-            <IcoThumbDown className="w-5 h-5" /> {voteDown}
-          </>
+        {userVote === 'down' ? (
+          <IcoThumbDownFill className="w-5 h-5" />
         ) : (
-          <>
-            <IcoThumbDownFill className="w-5 h-5" /> {voteDown}
-          </>
+          <IcoThumbDown className="w-5 h-5" />
         )}
+        <span>({voteDown})</span>
       </button>
 
       <span className="flex items-center text-sm">
@@ -81,4 +91,4 @@ const VoteReview = ({
   )
 }
 
-export default VoteReview
+export default memo(VoteReview)

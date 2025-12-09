@@ -5,10 +5,11 @@ import Select from '@/components/ui/Select'
 import React, { memo } from 'react'
 
 const options = [
+  { label: 'Most Relevant', value: 'relevant' },
   { label: 'Most Recent', value: 'newest' },
-  { label: 'Most relevant', value: 'relevance' },
-  { label: 'Highest rating', value: 'high' },
-  { label: 'Lowest rating', value: 'low' },
+  { label: 'Highest Rating', value: 'high' },
+  { label: 'Lowest Rating', value: 'low' },
+  { label: 'Most Helpful', value: 'helpful' },
 ]
 
 interface SortReviewProps {
@@ -23,7 +24,7 @@ const SortReview: React.FC<SortReviewProps> = ({ value, onChange }) => {
         options={options}
         value={[value]} 
         onChange={(v) => onChange(v[0])}
-        placeholder="Sort by: Newest"
+        placeholder="Sort by: Most Relevant"
         icon={<IcoSort className="w-5 h-5" />}
         className="w-full"
         multiple={false}

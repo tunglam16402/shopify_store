@@ -9,6 +9,7 @@ import React, { useActionState, useEffect, useState } from 'react'
 import { OptionSelector } from './SelectField'
 import StarRatingField from './StarRatingField'
 import UploadMediaField from './UploadMediaField'
+import { useRouter } from 'next/navigation'
 
 interface ReviewFormProps {
   productId: string
@@ -30,8 +31,9 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
   const [rating, setRating] = useState(0)
   const [ageRange, setAgeRange] = useState<string>('')
   const [recommend, setRecommend] = useState<string>('')
-  const [quality, setQuality] = useState(0)
-  const [value, setValue] = useState(0)
+  const [quality, setQuality] = useState('')
+  const [value, setValue] = useState('')
+  const router = useRouter()
 
   const [state, formAction, pending] = useActionState(
     (state: ReviewFormState, formData: FormData) =>
@@ -41,10 +43,11 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
 
   useEffect(() => {
     if (state.success && state.review) {
+      router.refresh()
       onSuccess?.(state.review.id)
       onClose?.()
     }
-  }, [state, onSuccess, onClose])
+  }, [state, onSuccess, onClose, router])
 
   return (
     <div className="pt-4">
@@ -129,7 +132,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
             label="How would you rate the quality of this product? (Choose 1)"
             name="quality"
             value={quality}
-            options={[1, 2, 3, 4, 5]}
+            options={['1', '2', '3', '4', '5']}
             onChange={setQuality}
           />
 
@@ -137,7 +140,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
             label="How would you rate the value of this product? (Choose 1)"
             name="value"
             value={value}
-            options={[1, 2, 3, 4, 5]}
+            options={['1', '2', '3', '4', '5']}
             onChange={setValue}
           />
 

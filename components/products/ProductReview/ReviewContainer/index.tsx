@@ -1,15 +1,15 @@
 'use client'
 
-import React, { useCallback } from 'react'
-import ReviewItem from './ReviewItem'
-import SearchReview from './SearchReview'
-import FilterReview from './FilterReview'
 import { Button } from '@/components/ui/Button'
-import ReviewSummary from './ReviewSummary'
-import SortReview from './SortReview'
-import ReviewPagination from './ReviewPagiantion'
 import { useReviews } from '@/lib/hooks/useReviews'
 import { Reviews } from '@/types/reviews'
+import React from 'react'
+import FilterReview from './FilterReview'
+import ReviewItem from './ReviewItem'
+import ReviewPagination from './ReviewPagiantion'
+import ReviewSummary from './ReviewSummary'
+import SearchReview from './SearchReview'
+import SortReview from './SortReview'
 
 interface ReviewContainerProps {
   productId: string
@@ -25,15 +25,13 @@ const ReviewContainer: React.FC<ReviewContainerProps> = ({ productId }) => {
     sort,
     setSort,
     page,
+    isLoading,
     setPage,
   } = useReviews(productId)
 
   console.log('data :>> ', data)
 
-  console.log('page :>> ', page);
-
-  console.log('sort :>> ', sort);
-  if (!data) {
+  if (isLoading) {
     return (
       <div className="py-10 text-center text-gray-500">Loading reviews...</div>
     )
@@ -47,7 +45,7 @@ const ReviewContainer: React.FC<ReviewContainerProps> = ({ productId }) => {
   const handleClear = () => {
     setSearch('')
     setFilters({})
-    setSort('newest')
+    setSort('revelant')
     setPage(1)
   }
 
