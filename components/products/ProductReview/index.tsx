@@ -11,6 +11,7 @@ import { IcoEmptyReview } from '@/components/icons'
 import StyledHeading from '@/components/ui/StyledHeading'
 import { useReviews } from '@/lib/hooks/useReviews'
 import { useVerifiedBuyer } from './helper'
+import ReviewButton from './TotalRating/ReviewButton'
 
 interface ProductReviewProps {
   productId: string
@@ -42,13 +43,14 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
           <p className="md:text-lg text-gray-500 mt-4">
             Let us know what you think
           </p>
-          <Button
-            onClick={() => setShowForm(true)}
-            variant={'primary'}
-            className="mt-6 md:mt-8 text-base md:text-lg py-6 rounded-3xl"
-          >
-            Be the first to write a review!
-          </Button>
+  
+          <div className="mt-2 md:mt-4">
+            <ReviewButton
+              onOpenForm={() => setShowForm(true)}
+              verifiedBuyer={verifiedBuyer}
+              buttonText={"Be the first to write a review!"}
+            />
+          </div>
         </div>
       ) : (
         <>

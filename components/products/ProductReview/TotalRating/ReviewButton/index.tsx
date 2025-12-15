@@ -7,9 +7,11 @@ import { useState } from 'react'
 const ReviewButton = ({
   verifiedBuyer,
   onOpenForm,
+  buttonText = "Write a review"
 }: {
   verifiedBuyer: boolean
   onOpenForm: () => void
+  buttonText?: string
 }) => {
   const [showModal, setShowModal] = useState(false)
 
@@ -28,7 +30,7 @@ const ReviewButton = ({
         onClick={handleClick}
         className="px-8 md:px-12 md:py-5 md:text-base capitalize font-semibold"
       >
-        Write a review
+        {buttonText}
       </Button>
 
       {showModal && !verifiedBuyer && (
