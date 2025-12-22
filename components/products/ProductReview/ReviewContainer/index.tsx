@@ -10,6 +10,7 @@ import ReviewPagination from './ReviewPagination'
 import ReviewSummary from './ReviewSummary'
 import SearchReview from './SearchReview'
 import SortReview from './SortReview'
+import Loading from '@/components/common/Loading'
 
 interface ReviewContainerProps {
   productId: string
@@ -29,18 +30,8 @@ const ReviewContainer: React.FC<ReviewContainerProps> = ({ productId }) => {
     setPage,
   } = useReviews(productId)
 
-  console.log('productId :>> ', productId);
-
-  console.log('data :>> ', data)
-
-  if (isLoading) {
-    return (
-      <div className="py-10 text-center text-gray-500">Loading reviews...</div>
-    )
-  }
-
-  const start = (page - 1) * data.limit + 1
-  const end = Math.min(page * data.limit, data.total)
+  const start = (page - 1) * data.limit + 1 || 0
+  const end = Math.min(page * data.limit, data.total) || 0
 
   const { reviews, total } = data
 
@@ -76,8 +67,11 @@ const ReviewContainer: React.FC<ReviewContainerProps> = ({ productId }) => {
           />
         </div>
       </div>
-
-      {total === 0 ? (
+      {isLoading ? (
+        <div className="min-h-96 flex items-center justify-center">
+          <Loading />
+        </div>
+      ) : total === 0 ? (
         <div className="text-center w-full">
           <p className="text-gray-500 text-base md:text-lg">
             No matching reviews

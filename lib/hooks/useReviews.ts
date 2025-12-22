@@ -12,7 +12,30 @@ export function useReviews(productId: string) {
   const [page, setPage] = useState(1)
   const limit = 8
 
-  const key = ['reviews', productId, filters, search, sort, page, limit]
+  function normalizeFilters(filters: ReviewFilter): ReviewFilter {
+    const entries = Object.entries(filters)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([key, value]) => {
+        if (Array.isArray(value)) {
+          return [key, [...value].sort()]
+        }
+        return [key, value]
+      })
+
+    return Object.fromEntries(entries) as ReviewFilter
+  }
+
+  const normalizedFilters = normalizeFilters(filters)
+
+  const key = [
+    'reviews',
+    productId,
+    JSON.stringify(normalizedFilters),
+    search,
+    sort,
+    page,
+    limit,
+  ]
 
   const { data, error, isLoading, mutate } = useSWR(
     key,
@@ -29,7 +52,7 @@ export function useReviews(productId: string) {
   )
 
   return {
-    data,
+    data: data ?? [],
     isLoading,
     error,
     filters,

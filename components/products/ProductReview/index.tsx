@@ -1,17 +1,17 @@
 'use client'
 
 import Modal from '@/components/common/Modal'
-import React, { useState } from 'react'
-import CustomerRating from './CustomerRating'
-import ReviewContainer from './ReviewContainer'
-import ReviewForm from './ReviewForm'
-import TotalRating from './TotalRating'
-import { Button } from '@/components/ui/Button'
 import { IcoEmptyReview } from '@/components/icons'
 import StyledHeading from '@/components/ui/StyledHeading'
 import { useReviews } from '@/lib/hooks/useReviews'
+import React, { useState } from 'react'
+import CustomerRating from './CustomerRating'
 import { useVerifiedBuyer } from './helper'
+import ReviewContainer from './ReviewContainer'
+import ReviewForm from './ReviewForm'
+import TotalRating from './TotalRating'
 import ReviewButton from './TotalRating/ReviewButton'
+import Loading from '@/components/common/Loading'
 
 interface ProductReviewProps {
   productId: string
@@ -19,10 +19,8 @@ interface ProductReviewProps {
 
 const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
   const [showForm, setShowForm] = useState(false)
-  const { data, setPage, mutate } = useReviews(productId)
+  const { data, setPage, mutate, isLoading } = useReviews(productId)
   const verifiedBuyer = useVerifiedBuyer(productId)
-
-  console.log('verifiedBuyer :>> ', verifiedBuyer)
 
   return (
     <div className="main-width">
@@ -34,7 +32,11 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
         />
       </div>
 
-      {!data || data.total === 0 ? (
+      {isLoading ? (
+        <div className="min-h-96 flex items-center justify-center">
+          <Loading />
+        </div>
+      ) : !data || data.total === 0 ? (
         <div className="py-16 flex items-center flex-col">
           <IcoEmptyReview className="w-20 h-20" />
           <p className="text-xl md:text-2xl mt-6 md:mt-8">
@@ -43,25 +45,21 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
           <p className="md:text-lg text-gray-500 mt-4">
             Let us know what you think
           </p>
-  
-          <div className="mt-2 md:mt-4">
-            <ReviewButton
-              onOpenForm={() => setShowForm(true)}
-              verifiedBuyer={verifiedBuyer}
-              buttonText={"Be the first to write a review!"}
-            />
-          </div>
+
+          <ReviewButton
+            onOpenForm={() => setShowForm(true)}
+            verifiedBuyer={verifiedBuyer}
+            buttonText="Be the first to write a review!"
+          />
         </div>
       ) : (
         <>
           <TotalRating
-            summary={data?.summary}
+            summary={data.summary}
             onOpenForm={() => setShowForm(true)}
             verifiedBuyer={verifiedBuyer}
           />
-
-          <CustomerRating performance={data?.performance} />
-
+          <CustomerRating performance={data.performance} />
           <ReviewContainer productId={productId} />
         </>
       )}

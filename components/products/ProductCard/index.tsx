@@ -17,7 +17,16 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
   const handleProductClick = () => {
     try {
       const raw = getCookie('recentlyViewed')
-      const existing = raw ? JSON.parse(raw) : []
+
+      const existing = (() => {
+        if (!raw) return []
+        try {
+          const parsed = JSON.parse(raw)
+          return Array.isArray(parsed) ? parsed : []
+        } catch {
+          return []
+        }
+      })()
 
       const updated = [
         {
@@ -46,7 +55,7 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
     <div className="relative w-full flex flex-col h-full">
       <Link
         href={`/products/${product?.handle}`}
-        className="relative aspect-[4/5]"
+        className="relative aspect-4/5"
         onClick={handleProductClick}
       >
         {product.imageUrl && (
@@ -55,14 +64,14 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
             alt={product.altText || product.title}
             fill
             className="object-contain"
-            loading='lazy'
+            loading="lazy"
           />
         )}
       </Link>
 
       <div className="flex justify-between absolute top-4 left-2 right-2">
         {product.discountPercent > 0 && (
-          <span className="bg-red-600 text-white text-xs font-semibold px-2 py-1 rounded-md z-[2]">
+          <span className="bg-red-600 text-white text-xs font-semibold px-2 py-1 rounded-md z-2">
             -{product.discountPercent}%
           </span>
         )}
@@ -70,7 +79,7 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
       </div>
 
       <div className="grid grid-rows-[auto_minmax(2.5rem,auto)_auto_auto] flex-1 mt-3">
-        <div className="min-h-[1rem]">
+        <div className="min-h-4">
           {product.category && (
             <p className="text-xs font-medium text-gray-400 uppercase tracking-wide">
               {product.category}
@@ -84,14 +93,14 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
             href={`/products/${product?.handle}`}
             onClick={handleProductClick}
           >
-            <h2 className="text-sm font-semibold text-gray-900 line-clamp-2 min-h-[2.5rem]">
+            <h2 className="text-sm font-semibold text-gray-900 line-clamp-2 min-h-10">
               {product.title}
             </h2>
           </Link>
         </div>
 
         {/* price */}
-        <div className="min-h-[1.75rem]">
+        <div className="min-h-7">
           {product.discountPercent > 0 ? (
             <div className="flex items-center gap-2">
               {product.compareAtPrice && (
@@ -113,7 +122,7 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
         {/* button */}
         {showCTA && (
           <div className="mt-3 self-end">
-            <AddToCart variantId={product.variantId} className='w-full'/>
+            <AddToCart variantId={product.variantId} className="w-full" />
           </div>
         )}
       </div>

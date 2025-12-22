@@ -9,7 +9,13 @@ interface IReviewSummary {
 const ReviewSummary: React.FC<IReviewSummary> = ({ start, end, total }) => {
   return (
     <div className="text-base font-medium md:text-lg">
-      {start} – {end} of {total} reviews
+      {total ? (
+        <span>
+          {start} – {end} of {total} reviews
+        </span>
+      ) : (
+        <span>0 reviews</span>
+      )}
     </div>
   )
 }

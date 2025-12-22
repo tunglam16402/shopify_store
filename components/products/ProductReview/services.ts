@@ -1,7 +1,10 @@
+import { Reviews } from "./type"
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export async function fetchReviews(payload: any) {
+export async function fetchReviews(payload: Reviews) {
   const res = await fetch('/api/reviews', {
     method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
   })
 
@@ -10,7 +13,10 @@ export async function fetchReviews(payload: any) {
   return res.json()
 }
 
-export async function voteReview(payload: { reviewId: string; type: 'up' | 'down' }) {
+export async function voteReview(payload: {
+  reviewId: string
+  type: 'up' | 'down'
+}) {
   const res = await fetch('/api/reviews/vote', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

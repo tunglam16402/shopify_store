@@ -4,3 +4,12 @@ export interface ReviewFilter {
   recommend?: Array<string>
   withMedia?: boolean
 }
+
+export interface Reviews {
+  productId: string
+  filters: ReviewFilter
+  search: string
+  sort: string
+  page: number
+  limit: number
+}
