@@ -1,6 +1,8 @@
 'use server'
 
 import {
+  CartBuyerIdentityInput,
+  CartBuyerIdentityUpdateMutation,
   CartCreateMutation,
   CartLinesAddMutation,
   CartLinesRemoveMutation,
@@ -8,12 +10,16 @@ import {
   GetCheckoutQuery,
 } from './../types/graphql'
 import { shopifyFetch } from '../fetcher'
-import { cartCreateMutation } from '../utils/mutation'
+import {
+  cartBuyerIdentityUpdateMutation,
+  cartCreateMutation,
+} from '../utils/mutation'
 import cartLineAddMutation from '../utils/mutation/cart-lines-add'
 import cartLinesUpdateMutation from '../utils/mutation/cart-lines-update'
 import cartLinesRemoveMutation from '../utils/mutation/cart-lines-remove'
 import getCheckoutQuery from '../utils/query/get-checkout-query'
 import { cookies } from 'next/headers'
+import { Cart } from '@/types/cart'
 
 export async function createCart() {
   const data = await shopifyFetch<CartCreateMutation>({
@@ -111,4 +117,28 @@ export async function getCartById(cartId: string) {
   })
 
   return data.cart
+}
+
+export async function attachCartToCustomer(
+  cartId: string,
+  buyerIdentity: CartBuyerIdentityInput
+) {
+  const data = await shopifyFetch<CartBuyerIdentityUpdateMutation>({
+    query: cartBuyerIdentityUpdateMutation,
+    variables: {
+      cartId,
+      buyerIdentity,
+    },
+  })
+
+  const cart = data?.cartBuyerIdentityUpdate?.cart
+  const userErrors = data?.cartBuyerIdentityUpdate?.userErrors
+
+  if (!cart)
+    throw new Error('cartBuyerIdentityUpdate returned null or undefined')
+  if (userErrors && userErrors.length > 0) {
+    throw new Error(userErrors.map((e) => e.message).join(', '))
+  }
+
+  return cart
 }

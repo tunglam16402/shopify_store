@@ -13,6 +13,8 @@ const CartSideBar = () => {
   const cart = useAppSelector((state) => state.cart.cart)
   const { isOpen, close } = useUI('cart') 
 
+  console.log('cart :>> ', cart);
+
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
     return () => {
@@ -70,7 +72,7 @@ const CartSideBar = () => {
         {/* Checkout Button */}
         <div className="p-4 flex flex-col items-center justify-center">
           <Link href={'/cart'}>
-            <Button className="!w-[350px]" onClick={close}>
+            <Button className="w-[350px]!" onClick={close}>
               CHECKOUT
             </Button>
           </Link>

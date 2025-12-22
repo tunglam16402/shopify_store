@@ -3040,6 +3040,14 @@ export type WeightUnit =
   /** 1 pound equals 16 ounces. */
   | 'POUNDS';
 
+export type CartBuyerIdentityUpdateMutationVariables = Exact<{
+  buyerIdentity: CartBuyerIdentityInput;
+  cartId: Scalars['ID']['input'];
+}>;
+
+
+export type CartBuyerIdentityUpdateMutation = { cartBuyerIdentityUpdate?: { cart?: { id: string, createdAt: string, updatedAt: string, checkoutUrl: string, lines: { edges: Array<{ node: { id: string, quantity: number, merchandise: { id: string, title: string, sku?: string | null, quantityAvailable?: number | null, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null, selectedOptions: Array<{ name: string, value: string }>, image?: { url: string, altText?: string | null } | null, product: { id: string, handle: string, title: string, totalInventory?: number | null } } } | { id: string, quantity: number, merchandise: { id: string, title: string, sku?: string | null, quantityAvailable?: number | null, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null, selectedOptions: Array<{ name: string, value: string }>, image?: { url: string, altText?: string | null } | null, product: { id: string, handle: string, title: string, totalInventory?: number | null } } } }> }, cost: { totalAmount: { amount: string, currencyCode: CurrencyCode }, subtotalAmount: { amount: string, currencyCode: CurrencyCode } }, attributes: Array<{ key: string, value?: string | null }> } | null, userErrors: Array<{ field?: Array<string> | null, message: string }> } | null };
+
 export type CartCreateMutationVariables = Exact<{
   input: CartInput;
 }>;

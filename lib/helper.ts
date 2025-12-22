@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { BreadcrumbItem } from '@/components/common/Breadcrumb'
+import { attachCartToCustomer } from '@/shopify/cart/use-cart'
 import {
   GetProductDetailQuery,
   GetProductsQuery,
@@ -163,5 +164,20 @@ export function normalizeAddress(address: any): Address {
     phone: address.phone ?? undefined,
     province: address.province ?? undefined,
     zip: address.zip ?? undefined,
+  }
+}
+
+export const mergeGuestCartToCustomer = async (
+  cartId: string,
+  customerAccessToken: string
+) => {
+  try {
+    const updatedCart = await attachCartToCustomer(cartId, {
+      customerAccessToken,
+    })
+    return updatedCart
+  } catch (err) {
+    console.error('Merge guest cart failed', err)
+    return null
   }
 }

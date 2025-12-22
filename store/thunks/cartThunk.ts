@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { mapCartResponse } from '@/lib/helper'
 import {
   addCartLine,
+  attachCartToCustomer,
   createCart,
   getCartById,
   removeCartLine,
@@ -9,9 +10,13 @@ import {
 } from '@/shopify/cart/use-cart'
 import { Cart } from '@/types/cart'
 
-export const hydrateCart = createAsyncThunk<Cart | null>(
+interface HydrateCartArgs {
+  customerAccessToken?: string
+}
+
+export const hydrateCart = createAsyncThunk<Cart | null, HydrateCartArgs>(
   'cart/hydrate',
-  async () => {
+  async ({ customerAccessToken }) => {
     try {
       const data = localStorage.getItem('shopify_cart')
       if (!data) return null
@@ -19,11 +24,18 @@ export const hydrateCart = createAsyncThunk<Cart | null>(
       const parsed = JSON.parse(data)
       if (!parsed.id) return null
 
-      const freshCartRaw = await getCartById(parsed.id)
+      let freshCartRaw = await getCartById(parsed.id)
       if (!freshCartRaw || freshCartRaw.lines.edges.length === 0) {
         localStorage.removeItem('shopify_cart')
         return null
       }
+
+      if (customerAccessToken) {
+        freshCartRaw = await attachCartToCustomer(parsed.id, {
+          customerAccessToken,
+        })
+      }
+
       return mapCartResponse(freshCartRaw)
     } catch (err) {
       console.error('Failed to hydrate cart:', err)
@@ -38,16 +50,20 @@ export const addItem = createAsyncThunk<
   { state: { cart: { cart: Cart | null } } }
 >('cart/addItem', async ({ variantId, quantity = 1 }, { getState }) => {
   let currentCart = getState().cart.cart || null
+
   if (!currentCart) {
+    // Tạo cart mới (guest hoặc login)
     const newCartRaw = await createCart()
     if (!newCartRaw) return null
     currentCart = mapCartResponse(newCartRaw)
   }
 
+  // Add line vào cart
   const response = await addCartLine(currentCart.id, variantId, quantity)
   if (response?.cartLinesAdd?.cart) {
     return mapCartResponse(response.cartLinesAdd.cart)
   }
+
   console.error('Add to cart failed', response)
   return currentCart
 })

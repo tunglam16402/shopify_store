@@ -20,6 +20,7 @@ import { useRouter } from 'next/navigation'
 import { useActionState, useEffect } from 'react'
 import SocialLoginWrapper from '../SocialLogin/SocialLoginWrapper'
 import { EventTracking, sendEventTracking } from '@/lib/analytics/klaviyo'
+import { hydrateCart } from '@/store/thunks/cartThunk'
 
 const initialState: LoginState = {
   success: false,
@@ -36,14 +37,26 @@ const SignInForm = () => {
     initialState
   )
 
+  console.log('accessToken :>> ', state.accessToken)
+
   useEffect(() => {
-    if (state.success) {
-      dispatch(loadUserFromCookie())
-      sendEventTracking(EventTracking.TrackLoggedUsers, {
-        email: loginCustomer.name,
-      })
-      router.push('/')
+    const mergeCart = async () => {
+      if (state.success && state.accessToken) {
+        dispatch(loadUserFromCookie())
+
+        await dispatch(
+          hydrateCart({ customerAccessToken: state.accessToken })
+        ).unwrap()
+
+        sendEventTracking(EventTracking.TrackLoggedUsers, {
+          email: loginCustomer.name,
+        })
+
+        router.push('/')
+      }
     }
+
+    mergeCart()
   }, [state, router, dispatch])
 
   const getFieldError = (fieldName: string) =>

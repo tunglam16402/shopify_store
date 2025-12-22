@@ -24,7 +24,7 @@ export default function StoreProvider({
 function HydrateCart({ children }: { children: React.ReactNode }) {
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(hydrateCart())
+    dispatch(hydrateCart({}))
   }, [dispatch])
 
   return <>{children}</>
