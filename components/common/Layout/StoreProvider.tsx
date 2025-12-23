@@ -14,9 +14,9 @@ export default function StoreProvider({
 }) {
   return (
     <Provider store={store}>
-      <HydrateCart>
-        <GetCustomer>{children}</GetCustomer>
-      </HydrateCart>
+      <GetCustomer>
+        <HydrateCart>{children}</HydrateCart>
+      </GetCustomer>
     </Provider>
   )
 }

@@ -32,8 +32,11 @@ const cartSlice = createSlice({
         hydrateCart.fulfilled,
         (state, action: PayloadAction<Cart | null>) => {
           state.cart = action.payload
-          if (action.payload)
-            localStorage.setItem('shopify_cart', JSON.stringify(action.payload))
+          if (action.payload) {
+            state.cart = action.payload
+            state.cart.id = action.payload.id
+            localStorage.setItem('shopify_cart_id', action.payload.id)
+          }
         }
       )
       .addCase(
