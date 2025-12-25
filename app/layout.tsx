@@ -10,6 +10,9 @@ import 'swiper/css/grid'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import MainScript from '@/components/common/MainScript'
+import { PrismicPreview } from '@prismicio/next'
+import { repositoryName } from '@/prismicio'
+import { PreviewBanner } from '@/components/PreviewBanner'
 
 const tangerineFont = Tangerine({
   variable: '--font-tangerine-sans',
@@ -42,6 +45,8 @@ export default function RootLayout({
           <GlobalUIProvider>
             {/* <ShopifyAnalyticsClient /> */}
             <MainLayout>{children}</MainLayout>
+            <PrismicPreview repositoryName={repositoryName} />
+            {/* <PreviewBanner /> */}
           </GlobalUIProvider>
         </StoreProvider>
         <MainScript />
