@@ -1,10 +1,12 @@
 import CartPage from '@/components/cart/CartPage'
-import React from 'react'
+import React, { Suspense } from 'react'
 
 const Cart = () => {
   return (
     <div>
-      <CartPage></CartPage>
+      <Suspense fallback={null}>
+        <CartPage />
+      </Suspense>
     </div>
   )
 }

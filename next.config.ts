@@ -22,6 +22,7 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
   cacheComponents: true,
   reactStrictMode: false,
+  productionBrowserSourceMaps: false,
 }
 
 export default nextConfig

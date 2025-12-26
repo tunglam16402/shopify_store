@@ -66,6 +66,7 @@ export async function POST(req: NextRequest) {
       break
     case 'helpful':
       query = query.order('vote_up', { ascending: false })
+      break
     default:
       query = query
         .order('rating', { ascending: false })
@@ -90,7 +91,12 @@ export async function POST(req: NextRequest) {
     .select('rating, quality, value')
     .eq('product_id', productId)
 
-  if (!allRatings) return null
+  if (!allRatings) {
+    return NextResponse.json(
+      { error: 'Failed to load ratings' },
+      { status: 500 }
+    )
+  }
 
   const totalReviews = allRatings.length
 

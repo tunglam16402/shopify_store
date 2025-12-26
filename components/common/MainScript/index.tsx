@@ -7,7 +7,6 @@ const MainScript = () => {
     <>
       <Script
         strategy="beforeInteractive"
-        // strategy="afterInteractive"
         async
         type="text/javascript"
         src={`https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=${klaviyo.KLAVIYO_API_KEY}`}
@@ -17,3 +16,4 @@ const MainScript = () => {
 }
 
 export default MainScript
+  

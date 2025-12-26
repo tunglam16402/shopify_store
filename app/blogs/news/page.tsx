@@ -4,9 +4,13 @@ import {
   getAllArticles,
   getBlogCategories,
 } from '@/shopify/api/operations/get-articles'
+import { cacheLife } from 'next/cache'
 import { Suspense } from 'react'
 
 const Blogs = async () => {
+  'use cache'
+  cacheLife('days')
+
   const blogs = await getAllArticles()
   const category = await getBlogCategories()
 

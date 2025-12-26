@@ -1,4 +1,5 @@
 import ActivateForm from '@/components/auth/ActivateForm'
+import { cacheLife } from 'next/cache'
 import { Suspense } from 'react'
 
 interface ActivatePageProps {
@@ -11,6 +12,9 @@ interface ActivatePageProps {
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
 const Activate = async ({ params }: ActivatePageProps) => {
+  'use cache'
+  cacheLife('hours')
+
   const { id, token } = await params
   const activationUrl =
     id && token ? `${baseUrl}/account/activate/${id}/${token}` : ''

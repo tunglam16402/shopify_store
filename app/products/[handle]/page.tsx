@@ -7,6 +7,7 @@ import {
   getProductByHandle,
   getProductRecommendations,
 } from '@/shopify/api/operations/get-product'
+import { cacheLife } from 'next/cache'
 import { Suspense } from 'react'
 
 interface Props {
@@ -14,6 +15,9 @@ interface Props {
 }
 
 const ProductDetailPage = async ({ params }: Props) => {
+  'use cache'
+  cacheLife('hours')
+  
   const { handle } = await params
 
   const product = await getProductByHandle(handle)
