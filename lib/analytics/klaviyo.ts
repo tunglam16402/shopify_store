@@ -1,64 +1,106 @@
-/* eslint-disable prefer-const */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export const KLAVIYO_API_KEY = process.env.NEXT_PUBLIC_KLAVIYO_API_KEY
+export interface IKlaviyoProduct {
+  name: string
+  productID: string
+  imageURL: string
+  handle: string
+  // brand?: string
+  price: string
+  metadata?: {
+    // brand: string
+    price: string
+    compareAtPrice: string
+  }
+}
+
+export interface IKlaviyoWishListProduct {
+  name?: string
+  productID: string
+  imageURL?: string
+  url?: string
+  price?: string
+}
 
 export const EventTracking = {
   TrackLoggedUsers: 'identify',
 }
-export interface IKlaviyoProduct {
-  id: string
-  title?: string
-  // vendor?: string
-  imageURL?: string
-  handle?: string
-  price?: number
-  compareAtPrice?: number | null
-}
 
-export function trackViewedProduct(product: IKlaviyoProduct) {
-  let klaviyo = window.klaviyo || []
-  let item = {
-    Name: product.title,
-    ProductID: product.id.substring(product.id.lastIndexOf('/') + 1),
-    ImageURL: product.imageURL || '',
+export function trackViewedProduct(product: Required<IKlaviyoProduct>) {
+  const klaviyo = window?.klaviyo
+  const item = {
+    Name: product.name,
+    ProductID: product.productID.split('/').pop(),
+    ImageURL: product.imageURL,
     Handle: product.handle,
-    // Brand: product.vendor,
+    // Brand: product.brand,
     Price: product.price,
     Metadata: {
-      // Brand: product.vendor,
-      Price: product.price,
-      CompareAtPrice: product.compareAtPrice,
+      // Brand: product.metadata.brand,
+      Price: product.metadata.price,
+      CompareAtPrice: product.metadata.compareAtPrice,
     },
   }
-
-  try {
-    klaviyo?.track('Viewed Product', item)
-    klaviyo?.trackViewedItem(item)
-    console.log('[Klaviyo] Viewed Product sent:', item)
-  } catch (err) {
-    console.error('[Klaviyo] Failed:', err)
-  }
+  klaviyo?.track('Viewed Product', item)
+  klaviyo?.trackViewedItem(item)
 }
 
 export function trackAddedToCart(product: IKlaviyoProduct) {
-  let klaviyo = window.klaviyo || []
-  let item = {
-    // Name: product.title,
-    ProductID: product.id.substring(product.id.lastIndexOf('/') + 1),
-    // ImageURL: product.imageURL,
-    // // Handle: product.handle,
-    // // Brand: product.vendor,
-    // Price: product.price,
+  const klaviyo = window?.klaviyo
+  const item = {
+    Name: product.name,
+    ProductID: product.productID.split('/').pop(),
+    ImageURL: product.imageURL,
+    Handle: product.handle,
+    // Brand: product.brand,
+    Price: product.price,
   }
 
-  try {
-    klaviyo?.track('Added To Cart', item)
-    console.log('[Klaviyo] Add to cart sent:', item)
-  } catch (err) {
-    console.error('[Klaviyo] Failed:', err)
-  }
+  klaviyo?.track('Added To Cart', item)
 }
 
+export function trackAddedToWishlist(product: IKlaviyoWishListProduct) {
+  const klaviyo = window?.klaviyo
+  const item = {
+    Name: product.name,
+    ProductID: product.productID.split('/').pop(),
+    ImageURL: product.imageURL,
+    URL: product.url,
+    Price: product.price,
+  }
+
+  klaviyo.track('Added To Wishlist', item)
+}
+
+export function trackRemovedFromWishlist(product: IKlaviyoWishListProduct) {
+  const klaviyo = window?.klaviyo
+
+  const item = {
+    Name: product.name,
+    ProductID: product.productID.split('/').pop(),
+    ImageURL: product.imageURL,
+    URL: product.url,
+    Price: product.price,
+  }
+
+  klaviyo.track('Removed From Wishlist', item)
+}
+
+// let identified = false
+
+// export const sendEventTracking = (action: string, item: any) => {
+//   if (identified) return
+
+//   if (
+//     !!item?.email &&
+//     action === EventTracking.TrackLoggedUsers &&
+//     window?.klaviyo
+//   ) {
+//     identified = true
+//     window.klaviyo.identify({ email: item.email })
+//   }
+// }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const sendEventTracking = (action: string, item: any) => {
   if (
     !!item?.email &&

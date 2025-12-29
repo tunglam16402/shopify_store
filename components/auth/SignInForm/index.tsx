@@ -37,21 +37,12 @@ const SignInForm = () => {
     initialState
   )
 
-  console.log('accessToken :>> ', state.accessToken)
-
   useEffect(() => {
     const mergeCart = async () => {
       if (state.success && state.accessToken) {
-        dispatch(loadUserFromCookie())
-
         await dispatch(
           hydrateCart({ customerAccessToken: state.accessToken })
         ).unwrap()
-
-        sendEventTracking(EventTracking.TrackLoggedUsers, {
-          email: loginCustomer.name,
-        })
-
         router.push('/')
       }
     }

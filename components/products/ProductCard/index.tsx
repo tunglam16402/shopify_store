@@ -122,7 +122,7 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
         {/* button */}
         {showCTA && (
           <div className="mt-3 self-end">
-            <AddToCart variantId={product.variantId} className="w-full" />
+            <AddToCart variantId={product.variantId} className="w-full" product={product}/>
           </div>
         )}
       </div>

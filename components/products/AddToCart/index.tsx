@@ -11,9 +11,20 @@ type AddToCartProps = {
   variantId: string
   quantity?: number
   className?: string
+  product?: {
+    title: string
+    featuredImage?: string
+    handle: string
+    basePrice?: number
+  }
 }
 
-const AddToCart = ({ variantId, quantity = 1, className }: AddToCartProps) => {
+const AddToCart = ({
+  variantId,
+  quantity = 1,
+  className,
+  product,
+}: AddToCartProps) => {
   const dispatch = useAppDispatch()
   const { open } = useUI('cart')
   const [loading, setLoading] = useState(false)
@@ -23,12 +34,12 @@ const AddToCart = ({ variantId, quantity = 1, className }: AddToCartProps) => {
       setLoading(true)
       await dispatch(addItem({ variantId, quantity })).unwrap()
       trackAddedToCart({
-        id: String(variantId),
-        // compareAtPrice: selectedVariant.compareAtPrice?.amount,
-        // price: selectedVariant.price?.amount,
-        // imageURL: selectedVariant.image?.url,
-        // title: product.title,
-        // vendor: product.vendor,
+        name: product?.title ?? '',
+        productID: variantId,
+        imageURL: product?.featuredImage ?? '',
+        handle: product?.handle ?? '',
+        // brand: product.vendor,
+        price: String(product?.basePrice),
       })
       open?.()
     } catch (err) {

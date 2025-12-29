@@ -37,7 +37,7 @@ export type ProductDetailProps = {
     description: string
     information: string
     collection: { id: string; title: string; handle: string }
-    featuredImage?: string | null
+    featuredImage?: string
     altText?: string
     images: string[]
     variant?: Variant
@@ -75,15 +75,19 @@ const ProductDetail = ({
   ]
 
   useEffect(() => {
-    const item = {
-      id: product.id,
-      handle: product.handle,
+    trackViewedProduct({
+      name: product.title,
+      productID: product.id,
       imageURL: product?.featuredImage || '',
-      title: product.title,
-      price: product.variant?.basePrice,
-      compareAtPrice: product?.variant?.compareAtPrice,
-    }
-    trackViewedProduct(item)
+      handle: product.handle,
+      // brand: vendor,
+      price: String(product.variant?.basePrice),
+      metadata: {
+        // brand: vendor,
+        price: String(product.variant?.basePrice),
+        compareAtPrice: String(product?.variant?.compareAtPrice),
+      },
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product.id])
 
@@ -124,7 +128,7 @@ const ProductDetail = ({
         <TopCollection />
       </div>
 
-      <div className='mt-20 md:mt-30'>
+      <div className="mt-20 md:mt-30">
         <ProductReview productId={product.id} />
       </div>
     </div>

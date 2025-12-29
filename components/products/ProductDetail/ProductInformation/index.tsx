@@ -139,6 +139,7 @@ const ProductInformation = ({ product }: ProductInformationProps) => {
               variantId={product.variant?.id || ''}
               quantity={quantity}
               className="w-full py-6 text-base md:text-lg"
+              product={product}
             />
           </div>
         </div>
