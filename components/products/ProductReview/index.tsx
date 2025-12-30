@@ -21,7 +21,9 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
   const [showForm, setShowForm] = useState(false)
   const { data, setPage, mutate, isLoading } = useReviews(productId)
   const verifiedBuyer = useVerifiedBuyer(productId)
-  const { hasReviewed } = useHasReviewed(data.reviews)
+  const { hasReviewed, myReview } = useHasReviewed(data.reviews)
+
+  console.log('myReview :>> ', myReview);
 
   return (
     <div className="main-width">
@@ -73,6 +75,7 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
       >
         <ReviewForm
           productId={productId}
+          hasReviewed={myReview}
           onSuccess={() => {
             setPage(1)
             setShowForm(false)

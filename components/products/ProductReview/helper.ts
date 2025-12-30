@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { RootState } from '@/store/store'
 import { useSelector } from 'react-redux'
 
@@ -14,9 +15,7 @@ export function useVerifiedBuyer(productId: string) {
   )
 }
 
-export function useHasReviewed(
-  reviews: { user_id: string }[] | undefined
-) {
+export function useHasReviewed(reviews: any) {
   const { customer } = useSelector((state: RootState) => state.user)
 
   const customerId = customer?.id
@@ -27,9 +26,7 @@ export function useHasReviewed(
     }
   }
 
-  const myReview = reviews.find(
-    (r) => r.user_id === customerId
-  )
+  const myReview = reviews.find((r: any) => r.user_id === customerId)
 
   return {
     myReview,

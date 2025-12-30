@@ -28,29 +28,15 @@ const ReviewButton = ({
     }
   }
 
-  const handleUpdateReview = () => {
-
-  }
-
   return (
     <div className="text-center mt-4 md:mt-0">
-      {!hasReviewed ? (
-        <Button
-          variant="primary"
-          onClick={handleOpenReviewForm}
-          className="px-8 md:px-12 md:py-5 md:text-base capitalize font-semibold"
-        >
-          {buttonText}
-        </Button>
-      ) : (
-        <Button
-          variant="primary"
-          onClick={handleUpdateReview}
-          className="px-8 md:px-12 md:py-5 md:text-base capitalize font-semibold"
-        >
-          Update your review
-        </Button>
-      )}
+      <Button
+        variant="primary"
+        onClick={handleOpenReviewForm}
+        className="px-8 md:px-12 md:py-5 md:text-base capitalize font-semibold"
+      >
+        {hasReviewed ? 'Update your review' : buttonText}
+      </Button>
 
       {showModal && !verifiedBuyer && (
         <Modal

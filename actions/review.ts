@@ -121,38 +121,143 @@ export async function createReviewAction(
 }
 
 export async function updateReviewAction(
-  formData: FormData
+  initialState: ReviewFormState,
+  formData: FormData,
+  reviewId: string
 ): Promise<ReviewFormState> {
   try {
-    const id = formData.get('id') as string
-    const review = formData.get('review') as string
     const rating = Number(formData.get('rating'))
+    const comment = formData.get('comment') as string
+    const headline = formData.get('headline') as string
+    const username = formData.get('username') as string
+    const email = formData.get('email') as string
+    const quality = formData.get('quality') || null
+    const value = formData.get('value') || null
+    const age_range = formData.get('age_range') as string
+    const recommend = formData.get('recommend') as string
 
-    if (!id) {
+    const files = formData.getAll('media') as File[]
+    const removedMediaIds = formData.getAll('removed_media_ids') as string[]
+
+    const validFiles = files.filter(
+      (f) => f instanceof File && f.size > 0 && f.name !== 'undefined'
+    )
+
+    const cookieStore = await cookies()
+    const accessToken =
+      cookieStore.get('shopify_customer_token')?.value || ''
+
+    const user = await getCustomer(accessToken)
+    if (!user) {
       return {
         success: false,
-        errors: [{ field: [], message: 'Review ID is required' }],
+        errors: [{ field: [], message: 'Unauthorized' }],
       }
     }
 
     const supabase = await createClient()
-    const { data, error } = await supabase
+
+    const { data: review, error: reviewError } = await supabase
       .from('reviews')
-      .update({ review, rating })
-      .eq('id', id)
-      .select()
+      .select('id')
+      .eq('id', reviewId)
+      .eq('user_id', user.id)
       .single()
 
-    if (error || !data) {
+    if (reviewError || !review) {
       return {
         success: false,
-        errors: [{ field: [], message: error?.message || 'Update failed' }],
+        errors: [{ field: [], message: 'Review not found' }],
       }
     }
 
-    return { success: true, review: data }
+    const { error: updateError } = await supabase
+      .from('reviews')
+      .update({
+        rating,
+        comment,
+        headline,
+        username,
+        email,
+        quality,
+        value,
+        age_range,
+        recommend,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', reviewId)
+
+    if (updateError) {
+      return {
+        success: false,
+        errors: [{ field: [], message: updateError.message }],
+      }
+    }
+
+    if (removedMediaIds.length > 0) {
+      await supabase
+        .from('review_media')
+        .delete()
+        .in('id', removedMediaIds)
+        .eq('review_id', reviewId)
+    }
+
+    const { count } = await supabase
+      .from('review_media')
+      .select('*', { count: 'exact', head: true })
+      .eq('review_id', reviewId)
+
+    if ((count || 0) + validFiles.length > 3) {
+      return {
+        success: false,
+        errors: [
+          { field: ['media'], message: 'Maximum 3 files allowed' },
+        ],
+      }
+    }
+
+    for (const file of validFiles) {
+      const ext = file.name.split('.').pop()
+      const fileName = `${reviewId}/${Date.now()}-${Math.random()
+        .toString(36)
+        .slice(2)}.${ext}`
+
+      const buffer = new Uint8Array(await file.arrayBuffer())
+
+      const { error: uploadError } = await supabase.storage
+        .from('review-media')
+        .upload(fileName, buffer, {
+          contentType: file.type,
+          upsert: false,
+        })
+
+      if (uploadError) continue
+
+      const { data: urlData } = supabase.storage
+        .from('review-media')
+        .getPublicUrl(fileName)
+
+      await supabase.from('review_media').insert({
+        review_id: reviewId,
+        url: urlData.publicUrl,
+        type: file.type.startsWith('image') ? 'image' : 'video',
+      })
+    }
+
+    return { success: true }
   } catch (err) {
-    return { success: false, errors: [{ field: [], message: 'Server error' }] }
+    return {
+      success: false,
+      errors: [
+        {
+          field: [],
+          message:
+            err instanceof Error
+              ? err.message
+              : 'Unexpected error occurred',
+        },
+      ],
+    }
   }
 }
 
