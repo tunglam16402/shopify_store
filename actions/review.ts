@@ -1,7 +1,9 @@
 'use server'
 
+import { getCustomer } from '@/shopify/customer/use-customer'
 import { ReviewFormState } from '@/types/reviews'
 import { createClient } from '@/utils/supabase/server'
+import { cookies } from 'next/headers'
 
 export async function createReviewAction(
   initialState: ReviewFormState,
@@ -30,13 +32,18 @@ export async function createReviewAction(
         errors: [{ field: ['media'], message: 'Maximum 3 files allowed' }],
       }
     }
+    const cookieStore = await cookies()
+
+    const accessToken = cookieStore.get('shopify_customer_token')?.value || ''
+    const user = await getCustomer(accessToken)
 
     const supabase = await createClient()
 
     const { data: review, error: reviewError } = await supabase
       .from('reviews')
-      .insert([
+      .upsert(
         {
+          user_id: user?.id,
           product_id: productId,
           username,
           comment,
@@ -48,7 +55,10 @@ export async function createReviewAction(
           age_range,
           recommend,
         },
-      ])
+        {
+          onConflict: 'user_id,product_id',
+        }
+      )
       .select()
       .single()
 

@@ -1,17 +1,17 @@
 'use client'
 
+import Loading from '@/components/common/Loading'
 import Modal from '@/components/common/Modal'
 import { IcoEmptyReview } from '@/components/icons'
 import StyledHeading from '@/components/ui/StyledHeading'
 import { useReviews } from '@/lib/hooks/useReviews'
 import React, { useState } from 'react'
 import CustomerRating from './CustomerRating'
-import { useVerifiedBuyer } from './helper'
+import { useHasReviewed, useVerifiedBuyer } from './helper'
 import ReviewContainer from './ReviewContainer'
 import ReviewForm from './ReviewForm'
 import TotalRating from './TotalRating'
 import ReviewButton from './TotalRating/ReviewButton'
-import Loading from '@/components/common/Loading'
 
 interface ProductReviewProps {
   productId: string
@@ -21,6 +21,7 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
   const [showForm, setShowForm] = useState(false)
   const { data, setPage, mutate, isLoading } = useReviews(productId)
   const verifiedBuyer = useVerifiedBuyer(productId)
+  const { hasReviewed } = useHasReviewed(data.reviews)
 
   return (
     <div className="main-width">
@@ -58,6 +59,7 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
             summary={data.summary}
             onOpenForm={() => setShowForm(true)}
             verifiedBuyer={verifiedBuyer}
+            hasReviewed={hasReviewed}
           />
           <CustomerRating performance={data.performance} />
           <ReviewContainer productId={productId} />

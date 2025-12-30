@@ -30,6 +30,8 @@ const ReviewContainer: React.FC<ReviewContainerProps> = ({ productId }) => {
     setPage,
   } = useReviews(productId)
 
+  console.log('data review :>> ', data);
+
   const start = (page - 1) * data.limit + 1 || 0
   const end = Math.min(page * data.limit, data.total) || 0
 

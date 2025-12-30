@@ -4,16 +4,6 @@ import { logoutCustomer } from '@/actions/logout'
 import { LoginState } from '@/types/auth'
 import { Customer } from '@/types/customer'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-
-// export interface Customer {
-//   id: string
-//   email?: string | null
-//   firstName?: string | null
-//   lastName?: string | null
-//   phone?: string | null
-//   createdAt?: string
-// }
-
 interface UserState {
   isLoggedIn: boolean
   customer: Customer | null

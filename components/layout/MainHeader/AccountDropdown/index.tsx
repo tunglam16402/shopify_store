@@ -15,6 +15,8 @@ const AccountDropdown = () => {
   const dispatch = useAppDispatch()
   const { isLoggedIn, customer } = useSelector((state: RootState) => state.user)
 
+  console.log('isLoggedIn :>> ', isLoggedIn);
+
   const toggleDropdown = () => setOpen((prev) => !prev)
 
   const handleLogout = async () => {

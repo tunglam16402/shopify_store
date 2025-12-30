@@ -37,7 +37,7 @@ export type ProductDetailProps = {
     description: string
     information: string
     collection: { id: string; title: string; handle: string }
-    featuredImage?: string
+    featuredImage?: string | null
     altText?: string
     images: string[]
     variant?: Variant

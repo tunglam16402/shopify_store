@@ -1,21 +1,26 @@
 import Modal from '@/components/common/Modal'
 import { IcoReviewBuy } from '@/components/icons'
 import { Button } from '@/components/ui/Button'
+import { RootState } from '@/store/store'
 import Link from 'next/link'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 
 const ReviewButton = ({
   verifiedBuyer,
   onOpenForm,
-  buttonText = "Write a review"
+  buttonText = 'Write a review',
+  hasReviewed,
 }: {
   verifiedBuyer: boolean
   onOpenForm: () => void
   buttonText?: string
+  hasReviewed?: boolean
 }) => {
   const [showModal, setShowModal] = useState(false)
+  const { customer } = useSelector((state: RootState) => state.user)
 
-  const handleClick = () => {
+  const handleOpenReviewForm = () => {
     if (verifiedBuyer) {
       onOpenForm()
     } else {
@@ -23,15 +28,29 @@ const ReviewButton = ({
     }
   }
 
+  const handleUpdateReview = () => {
+
+  }
+
   return (
     <div className="text-center mt-4 md:mt-0">
-      <Button
-        variant="primary"
-        onClick={handleClick}
-        className="px-8 md:px-12 md:py-5 md:text-base capitalize font-semibold"
-      >
-        {buttonText}
-      </Button>
+      {!hasReviewed ? (
+        <Button
+          variant="primary"
+          onClick={handleOpenReviewForm}
+          className="px-8 md:px-12 md:py-5 md:text-base capitalize font-semibold"
+        >
+          {buttonText}
+        </Button>
+      ) : (
+        <Button
+          variant="primary"
+          onClick={handleUpdateReview}
+          className="px-8 md:px-12 md:py-5 md:text-base capitalize font-semibold"
+        >
+          Update your review
+        </Button>
+      )}
 
       {showModal && !verifiedBuyer && (
         <Modal
@@ -53,7 +72,13 @@ const ReviewButton = ({
                 className="text-lg md:text-xl px-10 py-6 rounded-4xl"
                 variant={'primary'}
               >
-                <Link href={'/account/login'}>Go to Login</Link>
+                {customer ? (
+                  <div onClick={() => setShowModal(false)}>
+                    Continue Shopping
+                  </div>
+                ) : (
+                  <Link href={'/account/login'}>Go to Login</Link>
+                )}
               </Button>
 
               <Button
