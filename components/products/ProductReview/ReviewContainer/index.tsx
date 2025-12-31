@@ -1,22 +1,30 @@
 'use client'
 
+import Loading from '@/components/common/Loading'
 import { Button } from '@/components/ui/Button'
 import { useReviews } from '@/lib/hooks/useReviews'
-import { Reviews } from '@/types/reviews'
-import React from 'react'
+import React, { useMemo } from 'react'
+import {
+  getPaginationRange,
+  prioritizeMyReview,
+  useMyReviewed,
+} from '../helper'
 import FilterReview from './FilterReview'
 import ReviewItem from './ReviewItem'
 import ReviewPagination from './ReviewPagination'
 import ReviewSummary from './ReviewSummary'
 import SearchReview from './SearchReview'
 import SortReview from './SortReview'
-import Loading from '@/components/common/Loading'
 
 interface ReviewContainerProps {
   productId: string
+  onOpenForm?: () => void
 }
 
-const ReviewContainer: React.FC<ReviewContainerProps> = ({ productId }) => {
+const ReviewContainer: React.FC<ReviewContainerProps> = ({
+  productId,
+  onOpenForm,
+}) => {
   const {
     data,
     search,
@@ -28,14 +36,22 @@ const ReviewContainer: React.FC<ReviewContainerProps> = ({ productId }) => {
     page,
     isLoading,
     setPage,
+    mutate,
   } = useReviews(productId)
 
-  console.log('data review :>> ', data);
-
-  const start = (page - 1) * data.limit + 1 || 0
-  const end = Math.min(page * data.limit, data.total) || 0
-
   const { reviews, total } = data
+  const { myReview } = useMyReviewed(reviews)
+
+  const orderedReviews = useMemo(
+    () => prioritizeMyReview(reviews, myReview, sort),
+    [reviews, myReview, sort]
+  )
+
+  const { start, end } = getPaginationRange({
+    page,
+    limit: data.limit,
+    total: data.total,
+  })
 
   const handleClear = () => {
     setSearch('')
@@ -90,8 +106,14 @@ const ReviewContainer: React.FC<ReviewContainerProps> = ({ productId }) => {
         </div>
       ) : (
         <>
-          {reviews.map((review: Reviews) => (
-            <ReviewItem key={review.id} review={review} />
+          {orderedReviews.map((review) => (
+            <ReviewItem
+              key={review.id}
+              onOpenForm={onOpenForm}
+              review={review}
+              isMyReview={review.id === myReview?.id}
+              onDeleted={() => mutate()}
+            />
           ))}
 
           <ReviewPagination

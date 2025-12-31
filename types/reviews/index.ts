@@ -8,6 +8,8 @@ export interface ReviewMedia {
 
 export interface Reviews {
   id: string
+  product_id: string
+  user_id: string
   username: string
   rating: number
   comment: string
@@ -19,7 +21,7 @@ export interface Reviews {
   recommend: string
   review_media: ReviewMedia[]
   created_at: string
-  product_id: string
+  updated_at: string
   vote_up: number
   vote_down: number
 }

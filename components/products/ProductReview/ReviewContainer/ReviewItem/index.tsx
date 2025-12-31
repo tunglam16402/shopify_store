@@ -7,14 +7,44 @@ import Image from 'next/image'
 import RatingBar from '../../CustomerRating/RatingBar'
 import VoteReview from './VoteReview'
 import { memo } from 'react'
+import { cn } from '@/lib/utils'
+import DeleteReviewButton from './DeleteReviewButton'
 
-interface ReviewContainerProps {
+interface ReviewItemProps {
   review: Reviews
+  isMyReview?: boolean
+  onOpenForm?: () => void
+  onDeleted: () => void
 }
 
-const ReviewItem = ({ review }: ReviewContainerProps) => {
+const ReviewItem = ({
+  review,
+  isMyReview,
+  onOpenForm,
+  onDeleted,
+}: ReviewItemProps) => {
+  console.log('review.id :>> ', review.id)
   return (
-    <div key={review.id} className="mb-8 border-b pb-4 md:pb-8">
+    <div
+      className={cn(
+        'mb-8 border-b pb-4 md:pb-8',
+        isMyReview && 'border rounded-xl px-4'
+      )}
+    >
+      {isMyReview && (
+        <div className="flex justify-between pt-3 pb-8 ">
+          <div className="text-sm md:text-base font-medium text-primary">
+            Your review
+          </div>
+          {isMyReview && (
+            <div className="flex gap-3">
+              <button onClick={onOpenForm}>Update</button>
+              <DeleteReviewButton reviewId={review.id} onSuccess={onDeleted} />
+            </div>
+          )}
+        </div>
+      )}
+
       <div className="grid grid-cols-1 md:grid-cols-5 md:gap-16">
         <div className="md:col-span-3">
           <div className="flex justify-between md:flex-col">
@@ -25,10 +55,12 @@ const ReviewItem = ({ review }: ReviewContainerProps) => {
                 <p className="text-gray-700">Verified Buyer</p>
               </div>
             </div>
+
             <span className="text-sm font-medium text-gray-500 md:mt-4">
               {new Date(review.created_at).toLocaleDateString()}
             </span>
           </div>
+
           <div className="flex mt-2 md:mt-4">
             {[...Array(review.rating)].map((_, i) => (
               <IcoStarFill key={`full-${i}`} className="h-7 w-7" />
@@ -39,7 +71,9 @@ const ReviewItem = ({ review }: ReviewContainerProps) => {
           </div>
 
           <div>
-            <p className="font-medium text-xl mt-2 md:mt-4">{review.headline}</p>
+            <p className="font-medium text-xl mt-2 md:mt-4">
+              {review.headline}
+            </p>
             <ExpandableText
               text={review.comment}
               lineClamp={6}
@@ -82,11 +116,10 @@ const ReviewItem = ({ review }: ReviewContainerProps) => {
                 label="Quality of this product"
                 value={review.quality}
               />
-              <div className="md:mt-8">
-                <RatingBar label="Value of this product" value={review.value} />
-              </div>
+              <RatingBar label="Value of this product" value={review.value} />
             </div>
           )}
+
           {review.recommend && (
             <div className="mt-5 md:mt-8">
               <span className="text-sm font-medium md:text-base">

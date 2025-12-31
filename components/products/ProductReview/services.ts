@@ -1,4 +1,4 @@
-import { Reviews } from "./type"
+import { Reviews } from "@/types/reviews"
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export async function fetchReviews(payload: Reviews) {

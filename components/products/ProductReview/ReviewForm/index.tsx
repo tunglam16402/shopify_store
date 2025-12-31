@@ -58,8 +58,8 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
     setRating(hasReviewed.rating)
     setAgeRange(hasReviewed.age_range ?? '')
     setRecommend(hasReviewed.recommend ?? '')
-    setQuality(hasReviewed.quality ?? '')
-    setValue(hasReviewed.value ?? '')
+    setQuality(String(hasReviewed.quality ?? ''))
+    setValue(String(hasReviewed.value ?? ''))
   }, [hasReviewed])
 
   useEffect(() => {

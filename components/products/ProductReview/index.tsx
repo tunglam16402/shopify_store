@@ -7,7 +7,7 @@ import StyledHeading from '@/components/ui/StyledHeading'
 import { useReviews } from '@/lib/hooks/useReviews'
 import React, { useState } from 'react'
 import CustomerRating from './CustomerRating'
-import { useHasReviewed, useVerifiedBuyer } from './helper'
+import { useMyReviewed, useVerifiedBuyer } from './helper'
 import ReviewContainer from './ReviewContainer'
 import ReviewForm from './ReviewForm'
 import TotalRating from './TotalRating'
@@ -21,9 +21,9 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
   const [showForm, setShowForm] = useState(false)
   const { data, setPage, mutate, isLoading } = useReviews(productId)
   const verifiedBuyer = useVerifiedBuyer(productId)
-  const { hasReviewed, myReview } = useHasReviewed(data.reviews)
+  const { hasReviewed, myReview } = useMyReviewed(data.reviews)
 
-  console.log('myReview :>> ', myReview);
+  console.log('myReview :>> ', myReview)
 
   return (
     <div className="main-width">
@@ -64,7 +64,10 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
             hasReviewed={hasReviewed}
           />
           <CustomerRating performance={data.performance} />
-          <ReviewContainer productId={productId} />
+          <ReviewContainer
+            productId={productId}
+            onOpenForm={() => setShowForm(true)}
+          />
         </>
       )}
 

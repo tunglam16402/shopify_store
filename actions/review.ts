@@ -144,8 +144,7 @@ export async function updateReviewAction(
     )
 
     const cookieStore = await cookies()
-    const accessToken =
-      cookieStore.get('shopify_customer_token')?.value || ''
+    const accessToken = cookieStore.get('shopify_customer_token')?.value || ''
 
     const user = await getCustomer(accessToken)
     if (!user) {
@@ -210,9 +209,7 @@ export async function updateReviewAction(
     if ((count || 0) + validFiles.length > 3) {
       return {
         success: false,
-        errors: [
-          { field: ['media'], message: 'Maximum 3 files allowed' },
-        ],
+        errors: [{ field: ['media'], message: 'Maximum 3 files allowed' }],
       }
     }
 
@@ -252,31 +249,74 @@ export async function updateReviewAction(
         {
           field: [],
           message:
-            err instanceof Error
-              ? err.message
-              : 'Unexpected error occurred',
+            err instanceof Error ? err.message : 'Unexpected error occurred',
         },
       ],
     }
   }
 }
 
-export async function deleteReviewAction(id: string): Promise<ReviewFormState> {
+export async function deleteReviewAction(reviewId: string) {
   try {
-    if (!id)
+    const cookieStore = await cookies()
+    const accessToken = cookieStore.get('shopify_customer_token')?.value || ''
+
+    const user = await getCustomer(accessToken)
+    if (!user) {
       return {
         success: false,
-        errors: [{ field: [], message: 'Review ID is required' }],
+        error: 'Unauthorized',
       }
+    }
 
     const supabase = await createClient()
-    const { error } = await supabase.from('reviews').delete().eq('id', id)
 
-    if (error)
-      return { success: false, errors: [{ field: [], message: error.message }] }
+    const { data: review, error } = await supabase
+      .from('reviews')
+      .select(
+        `
+        id,
+        review_media (
+          id,
+          url
+        )
+      `
+      )
+      .eq('id', reviewId)
+      .eq('user_id', user.id)
+      .single()
+
+    if (error || !review) {
+      return {
+        success: false,
+        error: 'Review not found',
+      }
+    }
+
+    // Delete media files from storage
+    if (review.review_media?.length) {
+      const paths = review.review_media
+        .map((m) => {
+          const idx = m.url.indexOf('/review-media/')
+          return idx !== -1 ? m.url.slice(idx + '/review-media/'.length) : null
+        })
+        .filter(Boolean) as string[]
+
+      if (paths.length) {
+        await supabase.storage.from('review-media').remove(paths)
+      }
+    }
+
+    // Delete media records
+    await supabase.from('review_media').delete().eq('review_id', reviewId)
+
+    await supabase.from('reviews').delete().eq('id', reviewId)
 
     return { success: true }
   } catch (err) {
-    return { success: false, errors: [{ field: [], message: 'Server error' }] }
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : 'Unexpected error occurred',
+    }
   }
 }
