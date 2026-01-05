@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import PWSwiper from '@/components/ui/Swiper'
 import Image from 'next/image'
 
@@ -23,7 +23,7 @@ const ProductImage = ({ images, altText, title }: ProductImageProps) => {
   useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden'
-    } 
+    }
     return () => {
       document.body.style.overflow = ''
     }
@@ -40,26 +40,28 @@ const ProductImage = ({ images, altText, title }: ProductImageProps) => {
   return (
     <div>
       {/* Mobile */}
-      <PWSwiper
-        className="md:hidden w-full pb-0!"
-        pagination={true}
-        breakpoints={MOBILE_IMAGE}
-        loop={true}
-      >
-        {images.map((url, i) => (
-          <div key={i} onClick={() => openLightbox(i)}>
-            <Image
-              src={url}
-              alt={altText || title}
-              height={500}
-              width={500}
-              sizes="100vw"
-              className="object-contain w-full cursor-pointer"
-              fetchPriority={i === 0 ? "high" : "low"}
-            />
-          </div>
-        ))}
-      </PWSwiper>
+      <Suspense fallback={null}>
+        <PWSwiper
+          className="md:hidden w-full pb-0!"
+          pagination={true}
+          breakpoints={MOBILE_IMAGE}
+          loop={true}
+        >
+          {images.map((url, i) => (
+            <div key={i} onClick={() => openLightbox(i)}>
+              <Image
+                src={url}
+                alt={altText || title}
+                height={500}
+                width={500}
+                sizes="100vw"
+                className="object-contain w-full cursor-pointer"
+                fetchPriority={i === 0 ? 'high' : 'low'}
+              />
+            </div>
+          ))}
+        </PWSwiper>
+      </Suspense>
 
       {/* Desktop */}
       <div className="hidden md:grid grid-cols-2 ">

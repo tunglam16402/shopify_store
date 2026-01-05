@@ -363,7 +363,7 @@ export interface HomepageDocumentDataCollectionsItem {
    * - **API ID Path**: homepage.collections[].collection
    * - **Documentation**: https://prismic.io/docs/fields/image
    */
-  collection: prismic.ImageField<never>
+  collection: prismic.ImageField<'Mobile'>
 
   /**
    * Title Top field in *Homepage → Collections*
@@ -849,17 +849,6 @@ export interface CollectionBannerSliceDefaultPrimary {
   collection: prismic.GroupField<
     Simplify<CollectionBannerSliceDefaultPrimaryCollectionItem>
   >
-
-  /**
-   * hidenz field in *CollectionBanner → Default → Primary*
-   *
-   * - **Field Type**: Boolean
-   * - **Placeholder**: *None*
-   * - **Default Value**: false
-   * - **API ID Path**: collection_banner.default.primary.hidenz
-   * - **Documentation**: https://prismic.io/docs/fields/boolean
-   */
-  hidenz: prismic.BooleanField
 
   /**
    * site field in *CollectionBanner → Default → Primary*

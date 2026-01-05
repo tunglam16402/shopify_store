@@ -106,15 +106,6 @@
             }
           }
         },
-        "hidenz": {
-          "type": "Boolean",
-          "config": {
-            "label": "hidenz",
-            "placeholder_false": "false",
-            "placeholder_true": "true",
-            "default_value": false
-          }
-        },
         "site": {
           "type": "Select",
           "config": {

@@ -7,7 +7,7 @@ import {
 import { cacheLife } from 'next/cache'
 import { Suspense } from 'react'
 
-const Blogs = async () => {
+const BlogsLoader = async () => {
   'use cache'
   cacheLife('days')
 
@@ -17,16 +17,20 @@ const Blogs = async () => {
   return (
     <div>
       <aside>
-        <Suspense>
-          <CategoryMenu categoryItems={category} />
-        </Suspense>
+        <CategoryMenu categoryItems={category} />
       </aside>
       <section>
-        <Suspense>
-          <BlogList blogs={blogs} />
-        </Suspense>
+        <BlogList blogs={blogs} />
       </section>
     </div>
+  )
+}
+
+const Blogs = async () => {
+  return (
+    <Suspense fallback={null}>
+      <BlogsLoader />
+    </Suspense>
   )
 }
 

@@ -1,18 +1,17 @@
 import { GlobalUIProvider } from '@/components/common/Layout/GlobalUI'
 import MainLayout from '@/components/common/Layout/MainLayout'
+import MainScript from '@/components/common/MainScript'
+import { repositoryName } from '@/prismicio'
+import { PrismicPreview } from '@prismicio/next'
 import type { Metadata } from 'next'
 import { Literata, Tangerine } from 'next/font/google'
-import StoreProvider from '../components/common/Layout/StoreProvider'
-import { primaryFont } from './font'
-import './globals.css'
 import 'swiper/css'
 import 'swiper/css/grid'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
-import MainScript from '@/components/common/MainScript'
-import { PrismicPreview } from '@prismicio/next'
-import { repositoryName } from '@/prismicio'
-import { PreviewBanner } from '@/components/PreviewBanner'
+import StoreProvider from '../components/common/Layout/StoreProvider'
+import { primaryFont } from './font'
+import './globals.css'
 
 const tangerineFont = Tangerine({
   variable: '--font-tangerine-sans',
@@ -46,7 +45,6 @@ export default function RootLayout({
             {/* <ShopifyAnalyticsClient /> */}
             <MainLayout>{children}</MainLayout>
             <PrismicPreview repositoryName={repositoryName} />
-            {/* <PreviewBanner /> */}
           </GlobalUIProvider>
         </StoreProvider>
         <MainScript />

@@ -67,7 +67,6 @@
 							[
 								"tile_banner_image",
 								{
-									"__TYPE__": "ImageContent",
 									"origin": {
 										"id": "main",
 										"url": "https://images.unsplash.com/photo-1600804931749-2da4ce26c869",
@@ -86,6 +85,8 @@
 										"background": "transparent"
 									},
 									"alt": "step",
+									"credits": null,
+									"__TYPE__": "ImageContent",
 									"thumbnails": {
 										"Mobile": {
 											"origin": {
@@ -105,7 +106,8 @@
 												},
 												"background": "transparent"
 											},
-											"alt": "put"
+											"alt": "put",
+											"credits": null
 										}
 									}
 								}
@@ -152,10 +154,6 @@
 				"__TYPE__": "FieldContent",
 				"value": "ago",
 				"type": "Text"
-			},
-			"hidenz": {
-				"__TYPE__": "BooleanContent",
-				"value": false
 			},
 			"site": {
 				"__TYPE__": "FieldContent",

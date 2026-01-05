@@ -28,8 +28,6 @@ const SuggestionProducts = ({
 }: Props) => {
   const [recentProducts, setRecentProducts] = useState<ProductCardProps[]>([])
 
-  console.log('recentProducts :>> ', recentProducts)
-
   const popularProducts: ProductCardProps[] = [
     {
       id: '3',

@@ -13,7 +13,7 @@ type AddToCartProps = {
   className?: string
   product?: {
     title: string
-    featuredImage?: string
+    featuredImage?: string | null
     handle: string
     basePrice?: number
   }

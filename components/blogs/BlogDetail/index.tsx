@@ -12,7 +12,7 @@ const BlogDetail = ({ blog }: BlogDetailProps) => {
     <section>
       {blog?.image && (
         <div className="relative w-full h-[500px] md:h-[600px]">
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/10 z-10" />
+          <div className="absolute inset-0 bg-linear-to-b from-black/60 to-black/10 z-10" />
           <Image
             src={blog.image.url}
             alt={blog.title}

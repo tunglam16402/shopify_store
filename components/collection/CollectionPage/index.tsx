@@ -11,7 +11,6 @@ interface ICollectionPage {
 
 const CollectionPage: React.FC<ICollectionPage> = ({ products, bannerData }) => {
 
-  console.log('products :>> ', products);
   console.log('bannerData :>> ', bannerData);
   return (
     <div className="main-width mx-auto">

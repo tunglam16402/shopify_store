@@ -1,7 +1,7 @@
-import { Reviews } from "@/types/reviews"
+import { ReviewQuery } from "./type"
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export async function fetchReviews(payload: Reviews) {
+export async function fetchReviews(payload: ReviewQuery) {
   const res = await fetch('/api/reviews', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

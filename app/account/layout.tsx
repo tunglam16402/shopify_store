@@ -1,5 +1,5 @@
 import { Logo } from '@/components/icons'
-import React from 'react'
+import React, { Suspense } from 'react'
 
 export default function AccountLayout({
   children,
@@ -15,7 +15,7 @@ export default function AccountLayout({
           and relive every joyful move through the games and albums you love.
         </p>
       </div>
-      {children}
+      <Suspense fallback={null}>{children}</Suspense>
     </div>
   )
 }

@@ -7,6 +7,7 @@ import {
 } from '@/prismicio-types'
 import { GroupField } from '@prismicio/client'
 import FeaturedCollectionItem from './FeaturedCollectionItem'
+import { Suspense } from 'react'
 
 interface IFeaturedCollections {
   collections: GroupField<Simplify<HomepageDocumentDataCollectionsItem>>
@@ -35,14 +36,16 @@ const FeaturedCollections: React.FC<IFeaturedCollections> = ({
 }) => {
   return (
     <div className="mt-5 mx-3 md:mx-5">
-      <PWSwiper breakpoints={COLLECTION_HOME_BREAKPOINT} pagination={false}>
-        {collections.map((collection) => (
-          <FeaturedCollectionItem
-            key={collection.pathname}
-            collection={collection}
-          />
-        ))}
-      </PWSwiper>
+      <Suspense fallback={null}>
+        <PWSwiper breakpoints={COLLECTION_HOME_BREAKPOINT} pagination={false}>
+          {collections.map((collection) => (
+            <FeaturedCollectionItem
+              key={collection.pathname}
+              collection={collection}
+            />
+          ))}
+        </PWSwiper>
+      </Suspense>
     </div>
   )
 }

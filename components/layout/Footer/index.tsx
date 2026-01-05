@@ -152,7 +152,7 @@ const Footer: React.FC<IFooter> = ({ data }) => {
           </Link>
         </div>
 
-        <div className="px-[20px] md:px-0 mt-4">
+        <div className="px-5 md:px-0 mt-4">
           <div className="flex flex-wrap items-center justify-center gap-2">
             {paymentMethodsMock.map((method) => (
               <div key={method.id} className="h-4 w-9 md:h-[22px] md:w-12">

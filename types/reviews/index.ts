@@ -8,7 +8,7 @@ export interface ReviewMedia {
 
 export interface Reviews {
   id: string
-  product_id: string
+  productId: string
   user_id: string
   username: string
   rating: number

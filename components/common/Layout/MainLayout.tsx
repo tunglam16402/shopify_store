@@ -5,29 +5,32 @@ import TopHeader from '@/components/layout/TopHeader'
 import { createClient } from '@/prismicio'
 import { getMainMenu } from '@/shopify/api/operations/get-menu'
 import { cacheLife } from 'next/cache'
+import { Suspense } from 'react'
 
 const MainLayout = async ({ children }: { children: React.ReactNode }) => {
   'use cache'
-  cacheLife('hours')
-  
+  cacheLife('days')
+
   const client = createClient()
   const footer = await client.getSingle('footer')
 
   const menuItems = await getMainMenu()
 
-  const header = (
-    <header>
-      <TopHeader />
-      <MainHeader menuItems={menuItems} />
-      <SubHeader menuItems={menuItems} />
-    </header>
-  )
-
   return (
     <>
-      {header}
+      <Suspense fallback={null}>
+        <header>
+          <TopHeader />
+          <MainHeader menuItems={menuItems} />
+          <SubHeader menuItems={menuItems} />
+        </header>
+      </Suspense>
+
       <main className="relative">{children}</main>
-      <Footer data={footer.data} />
+
+      <Suspense fallback={null}>
+        <Footer data={footer.data} />
+      </Suspense>
     </>
   )
 }

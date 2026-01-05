@@ -1,6 +1,6 @@
 import PWSwiper from '@/components/ui/Swiper'
 import { ProductCardProps } from '@/types/product/productCard'
-import React from 'react'
+import React, { Suspense } from 'react'
 import ProductCard from '../ProductCard'
 
 export const PRODUCT_SWIPER_BREAKPOINT = {
@@ -33,13 +33,15 @@ const ProductSwiper: React.FC<ProductSwiperProps> = ({
 }) => {
   return (
     <div className={`product-swiper ${className}`}>
-      <PWSwiper breakpoints={PRODUCT_SWIPER_BREAKPOINT} pagination>
-        {data.map((product) => (
-          <div key={product.id} className="mb-6 md:mb-10">
-            <ProductCard product={product} />
-          </div>
-        ))}
-      </PWSwiper>
+      <Suspense fallback={null}>
+        <PWSwiper breakpoints={PRODUCT_SWIPER_BREAKPOINT} pagination>
+          {data.map((product) => (
+            <div key={product.id} className="mb-6 md:mb-10">
+              <ProductCard product={product} />
+            </div>
+          ))}
+        </PWSwiper>
+      </Suspense>
     </div>
   )
 }
