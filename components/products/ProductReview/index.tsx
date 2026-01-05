@@ -19,11 +19,11 @@ interface ProductReviewProps {
 
 const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
   const [showForm, setShowForm] = useState(false)
-  const { data, setPage, mutate, isLoading } = useReviews(productId)
+  const reviewState = useReviews(productId)
+  const { data, setPage, mutate, isLoading } = reviewState
   const verifiedBuyer = useVerifiedBuyer(productId)
-  const { hasReviewed, myReview } = useMyReviewed(data.reviews)
+  const { hasReviewed, myReview } = useMyReviewed(data?.reviews ?? [])
 
-  console.log('myReview :>> ', myReview)
 
   return (
     <div className="main-width">
@@ -39,7 +39,7 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
         <div className="min-h-96 flex items-center justify-center">
           <Loading />
         </div>
-      ) : !data || data.total === 0 ? (
+      ) : !(data?.summary?.totalReviews > 0) ? (
         <div className="py-16 flex items-center flex-col">
           <IcoEmptyReview className="w-20 h-20" />
           <p className="text-xl md:text-2xl mt-6 md:mt-8">
@@ -57,15 +57,20 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
         </div>
       ) : (
         <>
-          <TotalRating
-            summary={data.summary}
-            onOpenForm={() => setShowForm(true)}
-            verifiedBuyer={verifiedBuyer}
-            hasReviewed={hasReviewed}
-          />
-          <CustomerRating performance={data.performance} />
+          {data?.summary && (
+            <TotalRating
+              summary={data.summary}
+              onOpenForm={() => setShowForm(true)}
+              verifiedBuyer={verifiedBuyer}
+              hasReviewed={hasReviewed}
+            />
+          )}
+          {data?.performance && (
+            <CustomerRating performance={data.performance} />
+          )}
           <ReviewContainer
-            productId={productId}
+            myReview={myReview}
+            reviewState={reviewState}
             onOpenForm={() => setShowForm(true)}
           />
         </>

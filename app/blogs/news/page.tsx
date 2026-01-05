@@ -5,7 +5,6 @@ import {
   getBlogCategories,
 } from '@/shopify/api/operations/get-articles'
 import { cacheLife } from 'next/cache'
-import { Suspense } from 'react'
 
 const BlogsLoader = async () => {
   'use cache'
@@ -28,9 +27,7 @@ const BlogsLoader = async () => {
 
 const Blogs = async () => {
   return (
-    <Suspense fallback={null}>
       <BlogsLoader />
-    </Suspense>
   )
 }
 

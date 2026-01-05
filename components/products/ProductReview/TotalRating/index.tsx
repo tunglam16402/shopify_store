@@ -30,6 +30,10 @@ export default function TotalRating({
 
   const stars = useMemo(() => getStarDistribution(avgRating), [avgRating])
 
+  if (!summary) {
+    return null
+  }
+
   return (
     <div className="relative mt-8 flex flex-col items-center gap-6 md:flex-row md:gap-10 md:px-24">
       {/* Average rating */}

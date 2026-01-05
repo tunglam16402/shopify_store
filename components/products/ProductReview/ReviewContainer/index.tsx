@@ -3,11 +3,11 @@
 import Loading from '@/components/common/Loading'
 import { Button } from '@/components/ui/Button'
 import { useReviews } from '@/lib/hooks/useReviews'
+import { Reviews } from '@/types/reviews'
 import React, { useMemo } from 'react'
 import {
   getPaginationRange,
-  prioritizeMyReview,
-  useMyReviewed,
+  prioritizeMyReview
 } from '../helper'
 import FilterReview from './FilterReview'
 import ReviewItem from './ReviewItem'
@@ -17,13 +17,15 @@ import SearchReview from './SearchReview'
 import SortReview from './SortReview'
 
 interface ReviewContainerProps {
-  productId: string
   onOpenForm?: () => void
+  reviewState: ReturnType<typeof useReviews>
+  myReview: Reviews | undefined
 }
 
 const ReviewContainer: React.FC<ReviewContainerProps> = ({
-  productId,
   onOpenForm,
+  reviewState,
+  myReview,
 }) => {
   const {
     data,
@@ -37,10 +39,9 @@ const ReviewContainer: React.FC<ReviewContainerProps> = ({
     isLoading,
     setPage,
     mutate,
-  } = useReviews(productId)
+  } = reviewState
 
   const { reviews, total } = data
-  const { myReview } = useMyReviewed(reviews)
 
   const orderedReviews = useMemo(
     () => prioritizeMyReview(reviews, myReview, sort),
