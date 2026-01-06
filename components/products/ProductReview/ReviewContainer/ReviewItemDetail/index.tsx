@@ -1,0 +1,115 @@
+import ExpandableText from '@/components/common/ExpandableText'
+import { IcoStarEmpty, IcoStarFill, IcoVerify } from '@/components/icons'
+import PWSwiper from '@/components/ui/Swiper'
+import { Reviews } from '@/types/reviews'
+import Image from 'next/image'
+import React, { Suspense } from 'react'
+import RatingBar from '../../CustomerRating/RatingBar'
+import VoteReview from '../ReviewItem/VoteReview'
+
+interface IReviewItemDetail {
+  review: Reviews
+  startIndex: number
+}
+
+const ReviewItemDetail: React.FC<IReviewItemDetail> = ({
+  review,
+  startIndex,
+}) => {
+  console.log('review :>> ', review)
+  return (
+    <div className="flex flex-col md:flex-row gap-4 mt-12 md:mt-0">
+      <div className="w-full md:w-[520px]">
+        <Suspense fallback={null}>
+          <PWSwiper
+            pagination={false}
+            initialSlide={startIndex}
+            breakpoints={{
+              0: { slidesPerView: 1, slidesPerGroup: 1 },
+            }}
+          >
+            {review.review_media.map((media) =>
+              media.type === 'image' ? (
+                <div
+                  className="relative w-full h-[600px] md:w-[520px] bg-black md:h-[720px]"
+                  key={media.id}
+                >
+                  <Image
+                    src={media.url}
+                    alt="review media"
+                    fill
+                    sizes="max-width: 100vw, 40vw"
+                    className="object-contain"
+                  />
+                </div>
+              ) : (
+                <video
+                  key={media.id}
+                  src={media.url}
+                  controls
+                  className="w-40 h-40 rounded"
+                />
+              )
+            )}
+          </PWSwiper>
+        </Suspense>
+      </div>
+      <div className="p-4">
+        <div className="flex justify-between md:flex-col">
+          <div>
+            <strong>{review.username}</strong>
+            <div className="flex items-center gap-1">
+              <IcoVerify className="w-5 h-5" />
+              <p className="text-gray-700">Verified Buyer</p>
+            </div>
+          </div>
+
+          <span className="text-sm font-medium text-gray-500 md:mt-4">
+            {new Date(review.created_at).toLocaleDateString()}
+          </span>
+        </div>
+
+        <div className="flex -ml-2 mt-4 md:mt-4">
+          {[...Array(review.rating)].map((_, i) => (
+            <IcoStarFill key={`full-${i}`} className="h-9 w-9" />
+          ))}
+          {[...Array(5 - review.rating)].map((_, i) => (
+            <IcoStarEmpty key={`empty-${i}`} className="h-9 w-9" />
+          ))}
+        </div>
+
+        <div>
+          <p className="font-medium text-xl mt-2 md:mt-4">{review.headline}</p>
+          <ExpandableText
+            text={review.comment}
+            lineClamp={6}
+            className="mt-4"
+          />
+        </div>
+        {review.quality !== 0 && review.value !== 0 && (
+          <div className="space-y-5 mt-5 ">
+            <RatingBar label="Quality of this product" value={review.quality} />
+            <RatingBar label="Value of this product" value={review.value} />
+          </div>
+        )}
+
+        {review.recommend && (
+          <div className="mt-5 md:mt-8">
+            <span className="text-sm font-medium md:text-base">
+              Would you recommend this product?:
+            </span>
+            <strong> {review.recommend}</strong>
+          </div>
+        )}
+
+        <VoteReview
+          reviewId={review.id}
+          initialVoteUp={review.vote_up}
+          initialVoteDown={review.vote_down}
+        />
+      </div>
+    </div>
+  )
+}
+
+export default ReviewItemDetail

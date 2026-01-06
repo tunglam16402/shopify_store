@@ -23,6 +23,7 @@ type PWSwiperProps = {
   pagination?: boolean
   breakpoints?: Record<number, Breakpoint>
   className?: string
+  initialSlide?: number
 }
 
 export const DEFAULT_BREAKPOINTS: Record<number, Breakpoint> = {
@@ -39,16 +40,24 @@ const PWSwiper: React.FC<PWSwiperProps> = ({
   loop = false,
   breakpoints = DEFAULT_BREAKPOINTS,
   className = '',
+  initialSlide = 1,
 }) => {
+  const slideCount = React.Children.count(children)
+
+  const enableNavigation = navigation && slideCount > 1
+  const enablePagination = pagination && slideCount > 1
+  const enableLoop = loop && slideCount > 1
+
   return (
     <div className={`${styles['pw-swiper']} ${className}`}>
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
-        navigation={navigation}
+        navigation={enableNavigation}
         speed={500}
-        loop={loop}
+        initialSlide={initialSlide}
+        loop={enableLoop}
         pagination={
-          pagination
+          enablePagination
             ? {
                 el: '.pw-swiper-progress',
                 type: 'progressbar',
@@ -63,7 +72,7 @@ const PWSwiper: React.FC<PWSwiperProps> = ({
         {children.map((child, idx) => (
           <SwiperSlide key={idx}>{child}</SwiperSlide>
         ))}
-        {pagination && <div className="pw-swiper-progress"></div>}
+        {enablePagination && <div className="pw-swiper-progress"></div>}
       </Swiper>
     </div>
   )

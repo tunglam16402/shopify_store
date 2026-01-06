@@ -1,14 +1,16 @@
 'use client'
 
 import ExpandableText from '@/components/common/ExpandableText'
+import Modal from '@/components/common/Modal'
 import { IcoStarEmpty, IcoStarFill, IcoVerify } from '@/components/icons'
+import { cn } from '@/lib/utils'
 import { Reviews } from '@/types/reviews'
 import Image from 'next/image'
+import { memo, useState } from 'react'
 import RatingBar from '../../CustomerRating/RatingBar'
-import VoteReview from './VoteReview'
-import { memo } from 'react'
-import { cn } from '@/lib/utils'
+import ReviewItemDetail from '../ReviewItemDetail'
 import DeleteReviewButton from './DeleteReviewButton'
+import VoteReview from './VoteReview'
 
 interface ReviewItemProps {
   review: Reviews
@@ -23,7 +25,9 @@ const ReviewItem = ({
   onOpenForm,
   onDeleted,
 }: ReviewItemProps) => {
-  console.log('review.id :>> ', review.id)
+  const [open, setOpen] = useState(false)
+  const [startIndex, setStartIndex] = useState(0)
+
   return (
     <div
       className={cn(
@@ -32,16 +36,19 @@ const ReviewItem = ({
       )}
     >
       {isMyReview && (
-        <div className="flex justify-between pt-3 pb-8 ">
-          <div className="text-sm md:text-base font-medium text-primary">
-            Your review
+        <div className="mb-4">
+          <div className="flex justify-between pt-3 pb-4 border-b text-sm md:text-base">
+            <div className="font-medium text-primary">Your review</div>
+            {isMyReview && (
+              <div className="flex gap-3 underline">
+                <button onClick={onOpenForm}>Update</button>
+                <DeleteReviewButton
+                  reviewId={review.id}
+                  onSuccess={onDeleted}
+                />
+              </div>
+            )}
           </div>
-          {isMyReview && (
-            <div className="flex gap-3">
-              <button onClick={onOpenForm}>Update</button>
-              <DeleteReviewButton reviewId={review.id} onSuccess={onDeleted} />
-            </div>
-          )}
         </div>
       )}
 
@@ -83,17 +90,21 @@ const ReviewItem = ({
 
           {review.review_media?.length > 0 && (
             <div className="flex gap-2 mt-5 flex-wrap">
-              {review.review_media.map((m) =>
+              {review.review_media.map((m, index) =>
                 m.type === 'image' ? (
                   <div
                     key={m.id}
+                    onClick={() => {
+                      setStartIndex(index)
+                      setOpen(true)
+                    }}
                     className="w-32 h-32 md:w-40 md:h-40 relative rounded overflow-hidden"
                   >
                     <Image
                       src={m.url}
                       alt="review media"
                       fill
-                      className="object-cover"
+                      className="object-cover cursor-pointer"
                     />
                   </div>
                 ) : (
@@ -136,6 +147,16 @@ const ReviewItem = ({
         initialVoteUp={review.vote_up}
         initialVoteDown={review.vote_down}
       />
+      {/* review detail */}
+      {open && (
+        <Modal
+          isOpen={open}
+          onClose={() => setOpen(false)}
+          className="w-full md:w-4xl p-0!"
+        >
+          <ReviewItemDetail review={review} startIndex={startIndex} />
+        </Modal>
+      )}
     </div>
   )
 }

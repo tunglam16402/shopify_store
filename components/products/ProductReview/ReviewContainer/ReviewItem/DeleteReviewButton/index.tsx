@@ -31,7 +31,7 @@ const DeleteReviewButton = ({ reviewId, onSuccess }: IDeleteReviewButton) => {
     <>
       <button
         onClick={() => setShowModal(true)}
-        className="text-sm text-red-500 font-medium"
+        className=" text-red-500 font-medium"
       >
         Delete
       </button>
