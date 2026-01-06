@@ -727,10 +727,130 @@ export type HomepageDocument<Lang extends string = string> =
     Lang
   >
 
+type TestpageDocumentDataSlicesSlice = BannerTestSlice
+
+/**
+ * Content for TestPage documents
+ */
+interface TestpageDocumentData {
+  /**
+   * Slice Zone field in *TestPage*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: testpage.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<TestpageDocumentDataSlicesSlice>
+}
+
+/**
+ * TestPage document from Prismic
+ *
+ * - **API ID**: `testpage`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type TestpageDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<TestpageDocumentData>,
+    'testpage',
+    Lang
+  >
+
 export type AllDocumentTypes =
   | BannerManagementDocument
   | FooterDocument
   | HomepageDocument
+  | TestpageDocument
+
+/**
+ * Primary content in *BannerTest → Default → Primary*
+ */
+export interface BannerTestSliceDefaultPrimary {
+  /**
+   * image field in *BannerTest → Default → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: banner_test.default.primary.image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  image: prismic.ImageField<never>
+
+  /**
+   * title field in *BannerTest → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: banner_test.default.primary.title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField
+
+  /**
+   * description field in *BannerTest → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: banner_test.default.primary.description
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  description: prismic.RichTextField
+
+  /**
+   * CTAtext field in *BannerTest → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: banner_test.default.primary.ctatext
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  ctatext: prismic.KeyTextField
+
+  /**
+   * CTAlink field in *BannerTest → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: banner_test.default.primary.ctalink
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  ctalink: prismic.KeyTextField
+}
+
+/**
+ * Default variation for BannerTest Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type BannerTestSliceDefault = prismic.SharedSliceVariation<
+  'default',
+  Simplify<BannerTestSliceDefaultPrimary>,
+  never
+>
+
+/**
+ * Slice variation for *BannerTest*
+ */
+type BannerTestSliceVariation = BannerTestSliceDefault
+
+/**
+ * BannerTest Shared Slice
+ *
+ * - **API ID**: `banner_test`
+ * - **Description**: BannerTest
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type BannerTestSlice = prismic.SharedSlice<
+  'banner_test',
+  BannerTestSliceVariation
+>
 
 /**
  * Item in *CollectionBanner → Default → Primary → Tile Banner*
@@ -931,7 +1051,14 @@ declare module '@prismicio/client' {
       HomepageDocumentDataFeatureInItem,
       HomepageDocumentDataUspItem,
       HomepageDocumentDataBlogItem,
+      TestpageDocument,
+      TestpageDocumentData,
+      TestpageDocumentDataSlicesSlice,
       AllDocumentTypes,
+      BannerTestSlice,
+      BannerTestSliceDefaultPrimary,
+      BannerTestSliceVariation,
+      BannerTestSliceDefault,
       CollectionBannerSlice,
       CollectionBannerSliceDefaultPrimaryTileBannerItem,
       CollectionBannerSliceDefaultPrimaryCollectionItem,

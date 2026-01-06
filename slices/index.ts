@@ -3,5 +3,6 @@
 import dynamic from 'next/dynamic'
 
 export const components = {
+  banner_test: dynamic(() => import('./BannerTest')),
   collection_banner: dynamic(() => import('./CollectionBanner')),
 }
