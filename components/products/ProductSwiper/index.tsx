@@ -31,6 +31,7 @@ const ProductSwiper: React.FC<ProductSwiperProps> = ({
   data,
   className = '',
 }) => {
+
   return (
     <div className={`product-swiper ${className}`}>
       <Suspense fallback={null}>

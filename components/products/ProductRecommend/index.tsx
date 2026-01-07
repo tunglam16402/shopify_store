@@ -16,6 +16,7 @@ const ProductRecommend: React.FC<IProductRecommend> = ({
 }) => {
   const data = type === 'related' ? relatedProduct : complementaryProduct
   if (!data?.length) return null
+  
   return (
     <>
       <div className='text-center'>

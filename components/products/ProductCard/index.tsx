@@ -7,6 +7,7 @@ import AddToCart from '../AddToCart'
 import { BorderHeart } from '@/components/icons'
 import { getCookie, setCookie } from '@/utils/set-cookie'
 import { ProductCardProps } from '@/types/product/productCard'
+import { useMemo, useState } from 'react'
 
 interface IProductCardProps {
   product: ProductCardProps
@@ -14,6 +15,17 @@ interface IProductCardProps {
 }
 
 const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
+  const [isHover, setIsHover] = useState(false)
+
+  console.log('product :>> ', product);
+
+  const { image, secondImage } = useMemo(() => {
+    return {
+      image: product.images?.[0]?.url || '',
+      secondImage: product.images?.[1]?.url || '',
+    }
+  }, [product.images])
+
   const handleProductClick = () => {
     try {
       const raw = getCookie('recentlyViewed')
@@ -34,7 +46,7 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
           handle: product.handle,
           title: product.title,
           category: product.category,
-          imageUrl: product.imageUrl,
+          imageUrl: image,
           basePrice: product.basePrice,
           currency: product.currency,
           discountPercent: product.discountPercent,
@@ -51,34 +63,41 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
       console.error('Failed to save recent product:', error)
     }
   }
+
   return (
     <div className="relative w-full flex flex-col h-full">
-      <Link
-        href={`/products/${product?.handle}`}
+      <div
+        onMouseOver={() => setIsHover(true)}
+        onMouseLeave={() => setIsHover(false)}
         className="relative aspect-4/5"
-        onClick={handleProductClick}
       >
-        {product.imageUrl && (
-          <Image
-            src={product.imageUrl}
-            alt={product.altText || product.title}
-            fill
-            className="object-contain"
-            loading="lazy"
-          />
-        )}
-      </Link>
-
-      <div className="flex justify-between absolute top-4 left-2 right-2">
-        {product.discountPercent > 0 && (
-          <span className="bg-red-600 text-white text-xs font-semibold px-2 py-1 rounded-md z-2">
-            -{product.discountPercent}%
-          </span>
-        )}
-        <BorderHeart className="size-6" />
+        <Link
+          href={`/products/${product?.handle}`}
+          onClick={handleProductClick}
+          className="relative block w-full h-full"
+        >
+          {product.images && (
+            <Image
+              src={(isHover && secondImage ? secondImage : image) || ''}
+              alt={product.images[0].altText || product.title}
+              fill
+              className="object-contain"
+              sizes="max-width: 50vw, 25vw"
+              loading={'lazy'}
+            />
+          )}
+        </Link>
+        <div className="flex justify-between absolute top-4 left-2 right-2 z-10">
+          {product.discountPercent > 0 && (
+            <span className="bg-red-600 text-white text-xs font-semibold px-2 py-1 rounded-md z-2">
+              -{product.discountPercent}%
+            </span>
+          )}
+          <BorderHeart className="size-6" />
+        </div>
       </div>
 
-      <div className="grid grid-rows-[auto_minmax(2.5rem,auto)_auto_auto] flex-1 mt-3">
+      <div className="grid grid-rows-[auto_minmax(2.5rem,auto)_auto_auto] flex-1 mt-3 px-2 md:px-0">
         <div className="min-h-4">
           {product.category && (
             <p className="text-xs font-medium text-gray-400 uppercase tracking-wide">
@@ -122,7 +141,11 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
         {/* button */}
         {showCTA && (
           <div className="mt-3 self-end">
-            <AddToCart variantId={product.variantId} className="w-full" product={product}/>
+            <AddToCart
+              variantId={product.variantId}
+              className="w-full"
+              product={product}
+            />
           </div>
         )}
       </div>

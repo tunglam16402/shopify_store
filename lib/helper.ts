@@ -17,8 +17,6 @@ export function mappingDiscountPrice(
   product: GetProductsQuery['products']['nodes'][0]
 ) {
   const variant = product.variants.edges[0]?.node
-  const image = product.images.nodes[0]
-
   const basePrice = parseFloat(variant?.price.amount || '0')
   const compareAt = variant?.compareAtPrice?.amount
     ? parseFloat(variant.compareAtPrice.amount)
@@ -37,8 +35,10 @@ export function mappingDiscountPrice(
     description: product.description,
     publishedAt: product.publishedAt,
     category: product.category?.name,
-    imageUrl: image?.url,
-    altText: image?.altText || null,
+    images: product.images.nodes.map((img) => ({
+      url: img.url,
+      altText: img.altText ?? null,
+    })),
     basePrice,
     compareAtPrice: compareAt,
     currency: variant?.price.currencyCode || 'USD',

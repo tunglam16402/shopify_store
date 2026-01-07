@@ -7,7 +7,7 @@ const getProductRecommendationsQuery = /* GraphQL */ `
       description
       publishedAt
       productType
-      images(first: 1) {
+      images(first: 2) {
         nodes {
           url
           altText
@@ -37,7 +37,7 @@ const getProductRecommendationsQuery = /* GraphQL */ `
       description
       publishedAt
       productType
-      images(first: 1) {
+      images(first: 2) {
         nodes {
           url
           altText

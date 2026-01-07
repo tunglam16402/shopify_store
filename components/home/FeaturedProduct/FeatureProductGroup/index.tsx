@@ -1,17 +1,22 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import ProductSwiper from '@/components/products/ProductSwiper'
+import { ProductCardProps } from '@/types/product/productCard'
 
-interface ClientProps {
+interface ISection {
+  heading_title: string
+  sub_title?: string
+  heading_title_2?: string
+}
+interface IFeaturedProductGroup {
   sections: {
     widgetId: string
-    section: any
-    items: any[]
+    section: ISection
+    items: ProductCardProps[]
   }[]
 }
 
-const FeaturedProductGroup: React.FC<ClientProps> = ({ sections }) => {
+const FeaturedProductGroup: React.FC<IFeaturedProductGroup> = ({ sections }) => {
   return (
     <>
       {sections.map(({ widgetId, section, items }) => (
@@ -25,8 +30,8 @@ const FeaturedProductGroup: React.FC<ClientProps> = ({ sections }) => {
             )}
             {section.heading_title_2 && section.heading_title_2}
           </h2>
-          <div className='mt-6'>
-            <ProductSwiper data={items}/>
+          <div className="mt-6">
+            <ProductSwiper data={items} />
           </div>
         </div>
       ))}

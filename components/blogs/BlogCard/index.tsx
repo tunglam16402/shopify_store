@@ -23,7 +23,7 @@ const BlogCard = ({ blog }: BlogCardProps) => {
       <div className="relative">
         {blog.imageUrl && (
           <Link href={`/blogs/news/${blog.handle}`}>
-            <div className="relative aspect-[16/9] overflow-hidden rounded-lg">
+            <div className="relative aspect-video overflow-hidden rounded-lg">
               <Image
                 src={blog.imageUrl}
                 alt={blog.title}
