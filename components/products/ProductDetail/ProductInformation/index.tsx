@@ -1,17 +1,18 @@
 'use client'
 
+import { QuantityInput } from '@/components/ui/QuantityInput'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
-import { IcoStarFill } from '@/components/icons'
-import { QuantityInput } from '@/components/ui/QuantityInput'
 
 import StyledHeading from '@/components/ui/StyledHeading'
+import { useReviews } from '@/lib/hooks/useReviews'
 import { ProductDetailProps } from '..'
-import ProductUSP from './ProductUSP'
-import ProductInfo from './ProductInfo'
 import AddToCart from '../../AddToCart'
+import StarRating from '../../ProductReview/TotalRating/StarRating'
 import ProductBottomInfo from './ProductBottomInfo'
+import ProductInfo from './ProductInfo'
+import ProductUSP from './ProductUSP'
 
 type ProductInformationProps = {
   product: ProductDetailProps['product']
@@ -25,6 +26,12 @@ const ProductInformation = ({ product }: ProductInformationProps) => {
   const [showBottomInfo, setShowBottomInfo] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   // const footerRef = useRef<HTMLElement | null>(null)
+  const { data } = useReviews(product.id)
+
+  const avgRating = data?.summary?.avgRating ?? 0
+  const totalReviews = data?.summary?.totalReviews ?? 0
+
+  console.log('product detail:>> ', product)
 
   useEffect(() => {
     const footer = document.getElementById('footer')
@@ -70,13 +77,13 @@ const ProductInformation = ({ product }: ProductInformationProps) => {
         />
 
         {/* Ratings */}
-        <div className="flex items-center gap-2 mt-2 md:mt-0">
-          <div className="flex">
-            {[...Array(5)].map((_, i) => (
-              <IcoStarFill key={i} className="h-4 w-4 " />
-            ))}
-          </div>
-          <div>1 reviews</div>
+        <div className="flex items-center gap-2">
+          <StarRating rating={avgRating} size={5} />
+
+          <span className="text-sm md:text-base text-gray-600">
+            {avgRating.toFixed(1)} ({totalReviews} Review
+            {totalReviews !== 1 ? 's' : ''})
+          </span>
         </div>
 
         {/* Price */}
@@ -85,7 +92,8 @@ const ProductInformation = ({ product }: ProductInformationProps) => {
           productPrice.compareAtPrice > productPrice.basePrice ? (
             <div className="flex items-center">
               <div className="text-red-400 line-through text-2xl ">
-                {productPrice.compareAtPrice} {productPrice.currency}
+                {productPrice.currency}
+                {productPrice.compareAtPrice}
               </div>
 
               <div className="mx-3 flex h-7 items-center rounded-3xl border border-sub-primary px-3 text-base text-sub-primary">
@@ -93,12 +101,14 @@ const ProductInformation = ({ product }: ProductInformationProps) => {
               </div>
 
               <div className="text-3xl font-semibold">
-                {productPrice.basePrice} {productPrice.currency}
+                {productPrice.currency}
+                {productPrice.basePrice}
               </div>
             </div>
           ) : (
             <p className="font-semibold text-3xl">
-              {productPrice?.basePrice} {productPrice?.currency}
+              {productPrice?.currency}
+              {productPrice?.basePrice}
             </p>
           )}
         </div>

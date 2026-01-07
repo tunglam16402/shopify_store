@@ -104,7 +104,7 @@ const ProductDetail = ({
             altText={product.altText}
             title={product.title}
           />
-          <div className="absolute top-3 right-2 md:right-4 p-2 z-[1]">
+          <div className="absolute top-3 right-2 md:right-4 p-2 z-1">
             <BorderHeart className="size-8  md:size-10" />
           </div>
         </div>

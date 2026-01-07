@@ -10,6 +10,13 @@ const getProductsQuery = /* GraphQL */ `
         category {
           name
         }
+        collections(first: 1) {
+          nodes {
+            id
+            handle
+            title
+          }
+        }
         images(first: 2) {
           nodes {
             url

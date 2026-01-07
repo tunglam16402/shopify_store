@@ -33,25 +33,37 @@ const SuggestionProducts = ({
       id: '3',
       title: 'Classic Bag',
       handle: 'classic-bag',
-      imageUrl: '/bag.jpg',
+      images: [
+        {
+          url: '/bag.jpg',
+          altText: 'Classic Bag',
+        },
+      ],
       variantId: '',
       description: '',
       basePrice: 0,
-      currency: '',
+      currency: '$',
       discountPercent: 0,
     },
     {
       id: '4',
       title: 'Denim Jacket',
       handle: 'denim-jacket',
-      imageUrl: '/jacket.jpg',
+      images: [
+        {
+          url: '/LogoWhite.webp', 
+          altText: 'Denim Jacket',
+        },
+      ],
       variantId: '',
       description: '',
       basePrice: 0,
-      currency: '',
+      currency: '$',
       discountPercent: 0,
     },
   ]
+
+  console.log('recentProducts :>> ', recentProducts)
 
   useEffect(() => {
     try {
@@ -87,6 +99,8 @@ const SuggestionProducts = ({
   } else if (displayList === recentProducts) {
     seeAllUrl = '/account/recent-viewed'
   }
+
+  console.log('displayList :>> ', displayList)
 
   return (
     <div>
@@ -132,10 +146,10 @@ const SuggestionProducts = ({
                       e.stopPropagation()
                       onRemove?.(product.handle)
                     }}
-                    className="absolute top-[-13px] right-[-20px] bg-sub-primary rounded-full p-1 cursor-pointer z-11 hover:scale-110"
+                    className="absolute -top-2.5 -right-2 bg-sub-primary rounded-full p-1 cursor-pointer z-11 hover:scale-110"
                     title="Remove"
                   >
-                    <IcoClose className="h-4 w-4 text-gray-600 hover:text-red-500" />
+                    <IcoClose className="h-4 w-4" color='white' />
                   </button>
                 )}
 

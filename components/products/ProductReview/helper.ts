@@ -30,7 +30,7 @@ export function useMyReviewed(reviews: Reviews[]) {
 
   return useMemo(() => {
     const customerId = customer?.id
-    
+
     if (!customerId || !reviews?.length) {
       return {
         myReview: undefined,
@@ -53,18 +53,10 @@ export function prioritizeMyReview(
   sort?: string
 ) {
   if (!myReview || sort !== 'relevant') return reviews
-  
+
   if (reviews[0]?.id === myReview.id) return reviews
 
   return [myReview, ...reviews.filter((r) => r.id !== myReview.id)]
-}
-
-export function getStarDistribution(avgRating: number) {
-  const fullStars = Math.floor(avgRating)
-  const hasHalfStar = avgRating - fullStars >= 0.5
-  const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0)
-
-  return { fullStars, hasHalfStar, emptyStars }
 }
 
 export const getPaginationRange = ({ page, limit, total }: PaginationInfo) => {

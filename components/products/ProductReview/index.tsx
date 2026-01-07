@@ -23,7 +23,7 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
   const { data, setPage, mutate, isLoading } = reviewState
   const verifiedBuyer = useVerifiedBuyer(productId)
   const { hasReviewed, myReview } = useMyReviewed(data?.reviews ?? [])
-
+  console.log('productId :>> ', productId);
 
   return (
     <div className="main-width">

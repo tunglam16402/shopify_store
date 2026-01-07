@@ -24,7 +24,6 @@ const getProductDetailQuery = /* GraphQL */ `
         }
       }
 
-      # lấy 1 variant để lấy price / sku / id (dùng cho add-to-cart)
       variants(first: 1) {
         edges {
           node {

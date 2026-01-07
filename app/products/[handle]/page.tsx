@@ -30,6 +30,8 @@ const ProductDetailPage = async ({ params }: Props) => {
     getProductRecommendations(product.id),
   ])
 
+  console.log('recommendations :>> ', recommendations);
+
   const menu = flattenMenuForCategories(menuRaw)
 
   return (

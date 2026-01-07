@@ -1,9 +1,7 @@
 'use client'
 
-import React, { useMemo } from 'react'
 import ReviewButton from './ReviewButton'
 import StarRating from './StarRating'
-import { getStarDistribution } from '../helper'
 
 interface Summary {
   avgRating: number
@@ -28,8 +26,6 @@ export default function TotalRating({
 }: TotalRatingProps) {
   const { avgRating, totalReviews, breakdown } = summary
 
-  const stars = useMemo(() => getStarDistribution(avgRating), [avgRating])
-
   if (!summary) {
     return null
   }
@@ -41,11 +37,7 @@ export default function TotalRating({
         <div className="text-6xl font-light">{avgRating.toFixed(1)}</div>
 
         <div className="mt-2 space-y-2">
-          <StarRating
-            full={stars.fullStars}
-            half={stars.hasHalfStar}
-            empty={stars.emptyStars}
-          />
+          <StarRating rating={avgRating} />
           <div className="text-sm">
             Based on {totalReviews} review{totalReviews !== 1 && 's'}
           </div>

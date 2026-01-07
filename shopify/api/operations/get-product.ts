@@ -91,24 +91,31 @@ export async function getProductRecommendations(productId: string) {
       variables: { productId },
     })
 
-    if (!data.relatedProducts && !data.complementaryProducts) {
-      return null
-    }
-
     const relatedErrors = parseShopifyErrors(data.relatedProducts)
     const complementaryErrors = parseShopifyErrors(data.complementaryProducts)
-    const errors = [...relatedErrors, ...complementaryErrors]
 
+    const errors = [...relatedErrors, ...complementaryErrors]
     if (errors.length > 0) {
       return { success: false, errors }
     }
 
+    const related =
+      data.relatedProducts?.map(mappingDiscountPrice) ?? []
+
+    const complementaryRaw =
+      data.complementaryProducts?.map(mappingDiscountPrice) ?? []
+
+    const complementary =
+      complementaryRaw.length > 0
+        ? complementaryRaw
+        : [...related].reverse()
+
     return {
       success: true,
       data: {
-        related: data.relatedProducts?.map(mappingDiscountPrice) ?? [],
-        complementary:
-          data.complementaryProducts?.map(mappingDiscountPrice) ?? [],
+        related,
+        complementary,
+        isFallback: complementaryRaw.length === 0, // optional flag cho UI
       },
     }
   } catch (error) {

@@ -13,6 +13,14 @@ type VariantFromQuery = NonNullable<
   GetProductDetailQuery['product']
 >['variants']['edges'][number]['node']
 
+const CURRENCY_SYMBOL_MAP: Record<string, string> = {
+  USD: '$',
+  EUR: '€',
+  GBP: '£',
+  JPY: '¥',
+  VND: '₫',
+}
+
 export function mappingDiscountPrice(
   product: GetProductsQuery['products']['nodes'][0]
 ) {
@@ -26,6 +34,8 @@ export function mappingDiscountPrice(
     compareAt > basePrice
       ? Math.round(((compareAt - basePrice) / compareAt) * 100)
       : 0
+
+  const currencyCode = variant?.price.currencyCode || 'USD'
 
   return {
     id: product.id,
@@ -41,13 +51,14 @@ export function mappingDiscountPrice(
     })),
     basePrice,
     compareAtPrice: compareAt,
-    currency: variant?.price.currencyCode || 'USD',
+    currency: CURRENCY_SYMBOL_MAP[currencyCode] ?? currencyCode,
     discountPercent,
   }
 }
 
 export function mappingVariantPrice(variant: VariantFromQuery) {
   const basePrice = parseFloat(variant.price.amount)
+
   const compareAt = variant.compareAtPrice?.amount
     ? parseFloat(variant.compareAtPrice.amount)
     : basePrice
@@ -57,11 +68,13 @@ export function mappingVariantPrice(variant: VariantFromQuery) {
       ? Math.round(((compareAt - basePrice) / compareAt) * 100)
       : 0
 
+  const currencyCode = variant.price.currencyCode
+
   return {
     basePrice,
     compareAtPrice: compareAt,
     discountPercent,
-    currency: variant.price.currencyCode,
+    currency: CURRENCY_SYMBOL_MAP[currencyCode] ?? currencyCode,
   }
 }
 

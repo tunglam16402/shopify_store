@@ -1,12 +1,25 @@
 const getProductRecommendationsQuery = /* GraphQL */ `
   query getProductRecommendations($productId: ID!) {
-    relatedProducts: productRecommendations(productId: $productId, intent: RELATED) {
+    relatedProducts: productRecommendations(
+      productId: $productId
+      intent: RELATED
+    ) {
       id
       title
       handle
       description
       publishedAt
       productType
+      category {
+        name
+      }
+      collections(first: 1) {
+        nodes {
+          id
+          handle
+          title
+        }
+      }
       images(first: 2) {
         nodes {
           url
@@ -30,13 +43,26 @@ const getProductRecommendationsQuery = /* GraphQL */ `
         }
       }
     }
-    complementaryProducts: productRecommendations(productId: $productId, intent: COMPLEMENTARY) {
+    complementaryProducts: productRecommendations(
+      productId: $productId
+      intent: COMPLEMENTARY
+    ) {
       id
       title
       handle
       description
       publishedAt
       productType
+      category {
+        name
+      }
+      collections(first: 1) {
+        nodes {
+          id
+          handle
+          title
+        }
+      }
       images(first: 2) {
         nodes {
           url

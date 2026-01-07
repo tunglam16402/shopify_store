@@ -3182,7 +3182,7 @@ export type GetAllCollectionQuery = { collections: { nodes: Array<{ handle: stri
 export type GetProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetProductsQuery = { products: { nodes: Array<{ id: string, title: string, handle: string, description: string, publishedAt: string, category?: { name: string } | null, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } }> } };
+export type GetProductsQuery = { products: { nodes: Array<{ id: string, title: string, handle: string, description: string, publishedAt: string, category?: { name: string } | null, collections: { nodes: Array<{ id: string, handle: string, title: string }> }, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } }> } };
 
 export type GetArticleListQueryVariables = Exact<{
   handle: Scalars['String']['input'];
@@ -3239,7 +3239,7 @@ export type GetProductRecommendationsQueryVariables = Exact<{
 }>;
 
 
-export type GetProductRecommendationsQuery = { relatedProducts?: Array<{ id: string, title: string, handle: string, description: string, publishedAt: string, productType: string, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } }> | null, complementaryProducts?: Array<{ id: string, title: string, handle: string, description: string, publishedAt: string, productType: string, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } }> | null };
+export type GetProductRecommendationsQuery = { relatedProducts?: Array<{ id: string, title: string, handle: string, description: string, publishedAt: string, productType: string, category?: { name: string } | null, collections: { nodes: Array<{ id: string, handle: string, title: string }> }, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } }> | null, complementaryProducts?: Array<{ id: string, title: string, handle: string, description: string, publishedAt: string, productType: string, category?: { name: string } | null, collections: { nodes: Array<{ id: string, handle: string, title: string }> }, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } }> | null };
 
 export type GetPredictiveSearchQueryVariables = Exact<{
   query: Scalars['String']['input'];
