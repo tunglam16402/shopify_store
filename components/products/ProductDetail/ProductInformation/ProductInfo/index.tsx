@@ -1,4 +1,6 @@
-import React, { useMemo } from 'react'
+'use client'
+
+import React, { useMemo, useState } from 'react'
 import Dropdown from '@/components/ui/Dropdown'
 import { IcoDown, IcoUp } from '@/components/icons'
 
@@ -29,17 +31,26 @@ const FIXED_INFOS = [
       <>
         <strong>Secure and trusted payments with:</strong>
         <br />
-        <br /> Klarna
-        <br /> PayPal
-        <br /> American
-        <br /> Express
-        <br /> Visa
-        <br /> Mastercard
-        <br /> Apple Pay
-        <br /> Google Pay
-        <br /> Maestro
-        <br /> UnionPay
-        <br /> Shop Pay.
+        <br />
+        Klarna
+        <br />
+        PayPal
+        <br />
+        American Express
+        <br />
+        Visa
+        <br />
+        Mastercard
+        <br />
+        Apple Pay
+        <br />
+        Google Pay
+        <br />
+        Maestro
+        <br />
+        UnionPay
+        <br />
+        Shop Pay
       </>
     ),
   },
@@ -62,6 +73,7 @@ const ProductInfo: React.FC<IProductInfo> = ({ description, information }) => {
     ],
     [description, information]
   )
+  const [openId, setOpenId] = useState<number | null>(productInfo[0].id)
 
   return (
     <div className="text-white space-y-4">
@@ -69,11 +81,17 @@ const ProductInfo: React.FC<IProductInfo> = ({ description, information }) => {
         <Dropdown
           key={info.id}
           title={info.title}
-          openIcon={<IcoUp className="h-5 w-5" />}
-          closeIcon={<IcoDown className="h-5 w-5 " />}
+          isOpen={openId === info.id}
+          onToggle={() =>
+            setOpenId((prev) => (prev === info.id ? null : info.id))
+          }
+          openIcon={<IcoDown className="h-5 w-5" />}
+          closeIcon={<IcoDown className="h-5 w-5" />}
           className="text-black text-sm md:text-base"
         >
-          <p className="text-xs md:text-sm mt-3 whitespace-pre-line text-gray-700">{info.description}</p>
+          <p className="text-xs md:text-sm mt-3 whitespace-pre-line text-gray-700">
+            {info.description}
+          </p>
         </Dropdown>
       ))}
     </div>

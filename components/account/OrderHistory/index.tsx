@@ -8,7 +8,6 @@ const OrderHistory = () => {
   const { customer } = useSelector((state: RootState) => state.user)
 
   const orders = customer?.orders?.nodes
-  console.log('customer :>> ', orders)
 
   if (orders?.length === 0) {
     return <p className="text-gray-500">You have no orders yet.</p>

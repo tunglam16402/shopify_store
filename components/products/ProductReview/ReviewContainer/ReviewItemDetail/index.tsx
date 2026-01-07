@@ -16,7 +16,6 @@ const ReviewItemDetail: React.FC<IReviewItemDetail> = ({
   review,
   startIndex,
 }) => {
-  console.log('review :>> ', review)
   return (
     <div className="flex flex-col md:flex-row gap-4 mt-12 md:mt-0">
       <div className="w-full md:w-[520px]">

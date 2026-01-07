@@ -121,7 +121,7 @@ const NavbarMobile = ({ isOpen, onClose, menuItems }: Props) => {
                           pathname: grand.url,
                         })) || []
                       }
-                      openIcon={<IcoUp className="h-5 w-5" />}
+                      openIcon={<IcoDown className="h-5 w-5" />}
                       closeIcon={<IcoDown className="h-5 w-5 " />}
                       className="mb-4"
                     />

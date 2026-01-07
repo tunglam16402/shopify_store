@@ -13,8 +13,6 @@ const CartSideBar = () => {
   const cart = useAppSelector((state) => state.cart.cart)
   const { isOpen, close } = useUI('cart') 
 
-  console.log('cart :>> ', cart);
-
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
     return () => {

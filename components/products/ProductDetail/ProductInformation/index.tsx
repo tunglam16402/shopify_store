@@ -31,8 +31,6 @@ const ProductInformation = ({ product }: ProductInformationProps) => {
   const avgRating = data?.summary?.avgRating ?? 0
   const totalReviews = data?.summary?.totalReviews ?? 0
 
-  console.log('product detail:>> ', product)
-
   useEffect(() => {
     const footer = document.getElementById('footer')
     if (!containerRef.current || !footer) return

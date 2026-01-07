@@ -29,8 +29,6 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
     }
   }, [product.images])
 
-  console.log('product :>> ', product)
-
   const handleProductClick = () => {
     try {
       const raw = getCookie('recentlyViewed')

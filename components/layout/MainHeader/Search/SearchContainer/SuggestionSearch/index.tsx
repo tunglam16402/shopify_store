@@ -16,8 +16,6 @@ const SuggestionSearch = ({
   predictiveTerms = [],
 }: Props) => {
   const [recentSearches, setRecentSearches] = useState<string[]>([])
-
-  console.log('predictiveTerms :>> ', predictiveTerms)
   const popularSearches = [
     'bags',
     'jeans',

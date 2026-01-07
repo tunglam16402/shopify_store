@@ -63,7 +63,6 @@ const SuggestionProducts = ({
     },
   ]
 
-  console.log('recentProducts :>> ', recentProducts)
 
   useEffect(() => {
     try {
@@ -99,8 +98,6 @@ const SuggestionProducts = ({
   } else if (displayList === recentProducts) {
     seeAllUrl = '/account/recent-viewed'
   }
-
-  console.log('displayList :>> ', displayList)
 
   return (
     <div>
