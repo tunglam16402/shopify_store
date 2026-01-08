@@ -19,8 +19,7 @@ interface ProductReviewProps {
 
 const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
   const [showForm, setShowForm] = useState(false)
-  const reviewState = useReviews(productId)
-  const { data, setPage, mutate, isLoading } = reviewState
+  const { data, setPage, mutate, isLoading } = useReviews(productId)
   const verifiedBuyer = useVerifiedBuyer(productId)
   const { hasReviewed, myReview } = useMyReviewed(data?.reviews ?? [])
 
@@ -69,7 +68,7 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
           )}
           <ReviewContainer
             myReview={myReview}
-            reviewState={reviewState}
+            productId={productId}
             onOpenForm={() => setShowForm(true)}
           />
         </>

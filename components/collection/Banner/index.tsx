@@ -22,7 +22,12 @@ const Banner = ({ bannerData }: { bannerData: BannerData }) => {
   return (
     <section className={styles.wrapper}>
       <Link href={pathname || '#'} className={styles.mainBanner}>
-        <PrismicNextImage field={image} className={styles.mainImage} alt="" />
+        <PrismicNextImage
+          field={image}
+          className={styles.mainImage}
+          alt=""
+          fetchPriority="high"
+        />
       </Link>
     </section>
   )

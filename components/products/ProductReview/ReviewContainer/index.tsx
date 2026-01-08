@@ -18,13 +18,13 @@ import SortReview from './SortReview'
 
 interface ReviewContainerProps {
   onOpenForm?: () => void
-  reviewState: ReturnType<typeof useReviews>
+  productId: string
   myReview: Reviews | undefined
 }
 
 const ReviewContainer: React.FC<ReviewContainerProps> = ({
   onOpenForm,
-  reviewState,
+  productId,
   myReview,
 }) => {
   const {
@@ -39,7 +39,7 @@ const ReviewContainer: React.FC<ReviewContainerProps> = ({
     isLoading,
     setPage,
     mutate,
-  } = reviewState
+  } = useReviews(productId)
 
   const { reviews, total } = data
 

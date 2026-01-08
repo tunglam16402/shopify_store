@@ -16,6 +16,7 @@ export async function getCollections() {
     data?.collections?.nodes.map((col) => ({
       handle: col.handle,
       title: col.title,
+      description: col.description,
     })) || []
 
   return collections

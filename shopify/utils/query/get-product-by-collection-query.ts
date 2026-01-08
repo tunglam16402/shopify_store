@@ -13,6 +13,7 @@ const getProductByCollectionQuery = /* GraphQL */ `
           category {
             name
           }
+    
           images(first: 1) {
             nodes {
               url

@@ -56,7 +56,7 @@ const SearchContainer = ({
     >
       <div
         className={cn(
-          'fixed inset-0 top-[var(--header-height,140px)] md:top-[var(--header-height,100px)] bg-black/40 transition-opacity duration-500 ',
+          'fixed inset-0 top-(--header-height,160px) md:top-(--header-height,100px) bg-black/40 transition-opacity duration-500 ',
           visible ? 'opacity-100' : 'opacity-0 pointer-events-none'
         )}
         onClick={onClose}
@@ -68,7 +68,7 @@ const SearchContainer = ({
           visible ? 'translate-y-0 opacity-100' : '-translate-y-5 opacity-0'
         )}
       >
-        <div className="main-width h-[100vh] md:h-full">
+        <div className="main-width h-screen md:h-full">
           <div className="py-6">
             <div className="flex flex-col md:flex-row gap-8 border-t border-sub-primary ">
               <div className="flex-4 min-w-[250px] mt-4">

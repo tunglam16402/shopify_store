@@ -1,8 +1,6 @@
-import { IcoFront } from '@/components/icons'
 import Link from 'next/link'
 import React from 'react'
 
-// Type định nghĩa cho breadcrumb item
 export interface BreadcrumbItem {
   label: string
   href?: string

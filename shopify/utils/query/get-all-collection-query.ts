@@ -4,6 +4,7 @@ const getAllCollectionQuery = /* GraphQL */ `
       nodes {
         handle
         title
+        description
       }
     }
   }
