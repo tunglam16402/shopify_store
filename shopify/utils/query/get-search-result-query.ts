@@ -8,7 +8,7 @@ const getSearchResultQuery = /* GraphQL */ `
             title
             handle
             description
-            images(first: 1) {
+            images(first: 2) {
               nodes {
                 url
                 altText

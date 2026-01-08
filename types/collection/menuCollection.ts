@@ -15,3 +15,9 @@ export type MenuItem = {
   url: string
   children?: ChildItem[]
 }
+
+export interface BreadcrumbItem {
+  label: string
+  href?: string
+  isCurrentPage?: boolean
+}

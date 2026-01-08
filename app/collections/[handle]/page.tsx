@@ -1,13 +1,10 @@
 import CollectionPage from '@/components/collection/CollectionPage'
-import {
-  getBannerData,
-  getBreadcrumbFromMenu,
-} from '@/components/collection/CollectionPage/helper'
+import { getBannerData } from '@/components/collection/CollectionPage/helper'
 import {
   getCollectionProductsByHandle,
   getCollections,
 } from '@/shopify/api/operations/get-collection'
-import { getMainMenu } from '@/shopify/api/operations/get-menu'
+import { flattenMenuForCategories, getMainMenu } from '@/shopify/api/operations/get-menu'
 import { cacheLife } from 'next/cache'
 import { Suspense } from 'react'
 
@@ -16,16 +13,16 @@ type Props = {
 }
 
 const Collection = async ({ params }: Props) => {
-  'use cache'
-  cacheLife('hours')
+  // 'use cache'
+  // cacheLife('hours')
 
   const { handle } = await params
 
   const products = await getCollectionProductsByHandle(handle)
   const collections = await getCollections()
   const bannerData = await getBannerData(`/collections/${handle}`)
-
-  console.log('collections :>> ', collections);
+  const menus = await getMainMenu()
+  const categoryMenus = flattenMenuForCategories(menus)
 
   return (
     <main className="mt-[100px] md:mt-0">
@@ -35,6 +32,7 @@ const Collection = async ({ params }: Props) => {
           bannerData={bannerData}
           handle={handle}
           collections={collections}
+          categoryMenus={categoryMenus}
         />
       </Suspense>
     </main>

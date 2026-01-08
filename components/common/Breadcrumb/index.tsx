@@ -1,11 +1,6 @@
+import { BreadcrumbItem } from '@/types/collection/menuCollection'
 import Link from 'next/link'
 import React from 'react'
-
-export interface BreadcrumbItem {
-  label: string
-  href?: string
-  isCurrentPage?: boolean
-}
 
 export interface BreadcrumbProps {
   items: BreadcrumbItem[]

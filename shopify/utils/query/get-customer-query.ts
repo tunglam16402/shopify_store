@@ -42,6 +42,9 @@ const getCustomerQuery = /* GraphQL */ `
                   id
                   title
                   handle
+                  category {
+                    name
+                  }
                   images(first: 1) {
                     nodes {
                       url

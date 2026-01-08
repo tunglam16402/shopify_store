@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { BreadcrumbItem } from '@/components/common/Breadcrumb'
 import { attachCartToCustomer } from '@/shopify/cart/use-cart'
 import {
   GetProductDetailQuery,
   GetProductsQuery,
 } from '@/shopify/types/graphql'
 import { Cart } from '@/types/cart'
+import { BreadcrumbItem } from '@/types/collection/menuCollection'
 import { Address } from '@/types/customer/address'
 import { AppError } from '@/types/error'
 

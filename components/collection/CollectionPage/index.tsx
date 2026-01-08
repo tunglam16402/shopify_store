@@ -4,15 +4,16 @@ import React from 'react'
 import Banner from '../Banner'
 import { ProductCardProps } from '@/types/product/productCard'
 import Breadcrumb from '@/components/common/Breadcrumb'
-import { getBreadcrumbFromMenu } from './helper'
-import { Collection } from './type'
+import { getBreadcrumbFromMenu, getSubCategory } from './helper'
 import ExpandableText from '@/components/common/ExpandableText'
-
+import { CategoryMenu, Collection } from '../type'
+import ShopByCategory from '../ShopByCategory'
 interface ICollectionPage {
   products: ProductCardProps[]
   bannerData: any
   handle: string
   collections: Collection[]
+  categoryMenus: CategoryMenu[]
 }
 
 const CollectionPage: React.FC<ICollectionPage> = async ({
@@ -20,23 +21,38 @@ const CollectionPage: React.FC<ICollectionPage> = async ({
   bannerData,
   handle,
   collections,
+  categoryMenus,
 }) => {
   const items = await getBreadcrumbFromMenu(handle)
+  const category = getSubCategory(categoryMenus, handle)
+
   const currentCollection = collections.find((item) => item.handle === handle)
-  console.log('collections :>> ', currentCollection)
+  const subCategories = category?.collections ?? []
+
+  console.log('products :>> ', products);
 
   return (
     <div className="main-width pt-8!">
-      <Breadcrumb items={items} />
-      <div className="mt-4">
-        <h1 className="text-3xl uppercase font-light">
+      {bannerData && <Banner bannerData={bannerData} />}
+      <div className="mt-4 md:mt-6">
+        <Breadcrumb items={items} />
+      </div>
+
+      <div className="mt-4 md:mt-6">
+        <h1 className="text-3xl md:text-5xl uppercase font-light">
           {currentCollection?.title}
         </h1>
         {currentCollection?.description && (
-          <ExpandableText text={currentCollection.description} lineClamp={4} className='text-sm md:text-base w-2/3 mt-4'/>
+          <ExpandableText
+            text={currentCollection.description}
+            lineClamp={4}
+            className="text-sm md:text-base md:w-2/3 mt-2 md:mt-6"
+          />
         )}
       </div>
-      {bannerData && <Banner bannerData={bannerData} />}
+      <div className="mt-6 md:mt-10">
+        <ShopByCategory subCategories={subCategories} />
+      </div>
       <ProductList products={products} tiles={bannerData?.tiles} />
     </div>
   )

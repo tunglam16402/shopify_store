@@ -1,5 +1,10 @@
 import { createClient } from '@/prismicio'
-import { getMainMenu } from '@/shopify/api/operations/get-menu'
+import {
+  flattenMenuForCategories,
+  getMainMenu,
+} from '@/shopify/api/operations/get-menu'
+import { BreadcrumbItem } from '@/types/collection/menuCollection'
+import { CategoryMenu } from '../type'
 
 const isValidTime = (start?: string | null, end?: string | null) => {
   const now = Date.now()
@@ -48,46 +53,43 @@ export const getBannerData = async (slug?: string) => {
   }
 }
 
-interface MenuItem {
-  title: string
-  url: string
-  children?: MenuItem[]
-}
-
-interface BreadcrumbItem {
-  label: string
-  href?: string
-  isCurrentPage: boolean
-}
-
 export async function getBreadcrumbFromMenu(
   handle: string
 ): Promise<BreadcrumbItem[]> {
   const menu = await getMainMenu()
-  const currentPath = `/collections/${handle}`
+  const flatMenu = flattenMenuForCategories(menu)
+  const currentUrl = `/collections/${handle}`
 
-  const walk = (
-    items: MenuItem[],
-    trail: MenuItem[] = []
-  ): MenuItem[] | null => {
-    for (const item of items) {
-      const next = [...trail, item]
-      if (item.url === currentPath) return next
-      if (item.children?.length) {
-        const found = walk(item.children, next)
-        if (found) return found
-      }
+  for (const parent of flatMenu) {
+    const current = parent.collections.find(
+      (col) => col.url === currentUrl
+    )
+
+    if (current) {
+      return [
+        { label: parent.title, href: parent.url, isCurrentPage: false },
+        { label: current.title, isCurrentPage: true },
+      ]
     }
-    return null
+
+    if (parent.url === currentUrl) {
+      return [{ label: parent.title, isCurrentPage: true }]
+    }
   }
 
-  const path = walk(menu) || []
+  return []
+}
 
-  const finalPath = path.length >= 3 ? [path[0], path[path.length - 1]] : path
 
-  return finalPath.map((item, i) => ({
-    label: item.title,
-    href: i === finalPath.length - 1 ? undefined : item.url,
-    isCurrentPage: i === finalPath.length - 1,
-  }))
+export function getSubCategory(
+  categoryMenus: CategoryMenu[],
+  handle: string
+): CategoryMenu | null {
+  const currentPath = `/collections/${handle}`
+
+  const category = categoryMenus.find((cat) => cat.url === currentPath)
+
+  if (!category || category?.collections?.length === 0) return null
+
+  return category
 }

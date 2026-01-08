@@ -2,7 +2,6 @@
 'use client'
 import { PrismicNextImage } from '@prismicio/next'
 import Link from 'next/link'
-import styles from './style.module.css'
 
 interface TileBanner {
   pathname: string
@@ -20,14 +19,9 @@ const Banner = ({ bannerData }: { bannerData: BannerData }) => {
   const { image, pathname } = bannerData
 
   return (
-    <section className={styles.wrapper}>
-      <Link href={pathname || '#'} className={styles.mainBanner}>
-        <PrismicNextImage
-          field={image}
-          className={styles.mainImage}
-          alt=""
-          fetchPriority="high"
-        />
+    <section>
+      <Link href={pathname || '#'}>
+        <PrismicNextImage field={image} alt="" fetchPriority="high" className='w-full object-contain rounded-2xl'/>
       </Link>
     </section>
   )
