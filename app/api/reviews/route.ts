@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
       productId,
       filters = {},
       search = '',
-      sort = 'revelant',
+      sort = 'relevant',
       page = 1,
       limit = 8,
     } = body

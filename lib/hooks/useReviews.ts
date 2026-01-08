@@ -8,7 +8,7 @@ import { ReviewFilter } from '@/components/products/ProductReview/type'
 export function useReviews(productId: string) {
   const [filters, setFilters] = useState<ReviewFilter>({})
   const [search, setSearch] = useState('')
-  const [sort, setSort] = useState('revelant')
+  const [sort, setSort] = useState('relevant')
   const [page, setPage] = useState(1)
   const limit = 8
 

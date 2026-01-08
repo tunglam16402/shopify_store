@@ -5,10 +5,7 @@ import { Button } from '@/components/ui/Button'
 import { useReviews } from '@/lib/hooks/useReviews'
 import { Reviews } from '@/types/reviews'
 import React, { useMemo } from 'react'
-import {
-  getPaginationRange,
-  prioritizeMyReview
-} from '../helper'
+import { getPaginationRange, prioritizeMyReview } from '../helper'
 import FilterReview from './FilterReview'
 import ReviewItem from './ReviewItem'
 import ReviewPagination from './ReviewPagination'
@@ -41,23 +38,23 @@ const ReviewContainer: React.FC<ReviewContainerProps> = ({
     mutate,
   } = useReviews(productId)
 
-  const { reviews, total } = data
+  const { reviews, total, limit } = data
 
-  const orderedReviews = useMemo(
-    () => prioritizeMyReview(reviews, myReview, sort),
-    [reviews, myReview, sort]
-  )
+  const orderedReviews = useMemo(() => {
+    const safeReviews = Array.isArray(reviews) ? reviews : []
+    return prioritizeMyReview(safeReviews, myReview, sort)
+  }, [reviews, myReview, sort])
 
   const { start, end } = getPaginationRange({
     page,
-    limit: data.limit,
-    total: data.total,
+    limit,
+    total,
   })
 
   const handleClear = () => {
     setSearch('')
     setFilters({})
-    setSort('revelant')
+    setSort('relevant')
     setPage(1)
   }
 

@@ -48,11 +48,13 @@ export function useMyReviewed(reviews: Reviews[]) {
 }
 
 export function prioritizeMyReview(
-  reviews: Reviews[],
+  reviews: Reviews[] | undefined | null,
   myReview?: Reviews | null,
   sort?: string
 ) {
-  if (!myReview || sort !== 'relevant') return reviews
+  if (!Array.isArray(reviews) || !myReview || sort !== 'relevant') {
+    return reviews ?? []
+  }
 
   if (reviews[0]?.id === myReview.id) return reviews
 
