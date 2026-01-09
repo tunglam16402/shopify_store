@@ -8,12 +8,14 @@ import { getBreadcrumbFromMenu, getSubCategory } from './helper'
 import ExpandableText from '@/components/common/ExpandableText'
 import { CategoryMenu, Collection } from '../type'
 import ShopByCategory from '../ShopByCategory'
+import SortByFilter from '../Filter/SortByFilter'
 interface ICollectionPage {
   products: ProductCardProps[]
   bannerData: any
   handle: string
   collections: Collection[]
   categoryMenus: CategoryMenu[]
+  sort?: any
 }
 
 const CollectionPage: React.FC<ICollectionPage> = async ({
@@ -22,6 +24,7 @@ const CollectionPage: React.FC<ICollectionPage> = async ({
   handle,
   collections,
   categoryMenus,
+  sort,
 }) => {
   const items = await getBreadcrumbFromMenu(handle)
   const category = getSubCategory(categoryMenus, handle)
@@ -29,7 +32,7 @@ const CollectionPage: React.FC<ICollectionPage> = async ({
   const currentCollection = collections.find((item) => item.handle === handle)
   const subCategories = category?.collections ?? []
 
-  console.log('products :>> ', products);
+  console.log('sort :>> ', sort)
 
   return (
     <div className="main-width pt-8!">
@@ -37,7 +40,6 @@ const CollectionPage: React.FC<ICollectionPage> = async ({
       <div className="mt-4 md:mt-6">
         <Breadcrumb items={items} />
       </div>
-
       <div className="mt-4 md:mt-6">
         <h1 className="text-3xl md:text-5xl uppercase font-light">
           {currentCollection?.title}
@@ -52,6 +54,9 @@ const CollectionPage: React.FC<ICollectionPage> = async ({
       </div>
       <div className="mt-6 md:mt-10">
         <ShopByCategory subCategories={subCategories} />
+      </div>
+      <div className="mt-6 md:mt-10">
+        <SortByFilter sort={sort} />
       </div>
       <ProductList products={products} tiles={bannerData?.tiles} />
     </div>

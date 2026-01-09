@@ -8,8 +8,8 @@ import { cacheLife } from 'next/cache'
 import { Suspense } from 'react'
 
 const MainLayout = async ({ children }: { children: React.ReactNode }) => {
-  'use cache'
-  cacheLife('days')
+  // 'use cache'
+  // cacheLife('days')
 
   const client = createClient()
   const footer = await client.getSingle('footer')
