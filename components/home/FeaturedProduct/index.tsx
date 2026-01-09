@@ -11,14 +11,26 @@ interface IFeaturedProductServer {
   width?: string
 }
 
-const FeaturedProductServer = async ({ products, width }: IFeaturedProductServer) => {
+const FeaturedProductServer = async ({
+  products,
+  width,
+}: IFeaturedProductServer) => {
   if (!products?.length) return null
 
   const allData = await Promise.all(
-    products.map(async (section) => {
-      const widgetId = section.widget_id || 'latest'
+    products.map(async (rawSection) => {
+      const widgetId = rawSection.widget_id || 'latest'
       const items = await getProductsByWidget(widgetId)
-      return { section, widgetId, items }
+
+      return {
+        widgetId,
+        section: {
+          heading_title: rawSection.heading_title ?? '',
+          sub_title: rawSection.sub_title ?? undefined,
+          heading_title_2: rawSection.heading_title_2 ?? undefined,
+        },
+        items,
+      }
     })
   )
 
