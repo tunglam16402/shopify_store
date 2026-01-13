@@ -3222,10 +3222,12 @@ export type GetMainMenuQuery = { menu?: { id: string, title: string, items: Arra
 
 export type GetCollectionListQueryVariables = Exact<{
   handle: Scalars['String']['input'];
+  sortKey?: InputMaybe<ProductCollectionSortKeys>;
+  reverse?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 
-export type GetCollectionListQuery = { collection?: { title: string, description: string, products: { nodes: Array<{ id: string, title: string, handle: string, publishedAt: string, description: string, category?: { name: string } | null, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } }> } } | null };
+export type GetCollectionListQuery = { collection?: { id: string, title: string, products: { nodes: Array<{ id: string, title: string, handle: string, publishedAt: string, description: string, category?: { name: string } | null, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } }> } } | null };
 
 export type GetProductDetailQueryVariables = Exact<{
   handle: Scalars['String']['input'];
@@ -3254,12 +3256,3 @@ export type GetSearchResultQueryVariables = Exact<{
 
 
 export type GetSearchResultQuery = { search: { edges: Array<{ node: { id: string, title: string, handle: string, description: string, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } } | {} }> } };
-
-export type GetCollectionWithSortQueryVariables = Exact<{
-  handle: Scalars['String']['input'];
-  sortKey?: InputMaybe<ProductCollectionSortKeys>;
-  reverse?: InputMaybe<Scalars['Boolean']['input']>;
-}>;
-
-
-export type GetCollectionWithSortQuery = { collection?: { id: string, title: string, products: { nodes: Array<{ id: string, title: string, handle: string, createdAt: string, priceRange: { minVariantPrice: { amount: string, currencyCode: CurrencyCode } } }> } } | null };

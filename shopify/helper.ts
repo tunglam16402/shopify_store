@@ -1,13 +1,19 @@
 export function parseSort(sort?: string) {
   switch (sort) {
-    case 'newest':
-      return { sortKey: 'CREATED', reverse: true }
+    case 'best-selling':
+      return { sortKey: 'BEST_SELLING', reverse: false }
 
     case 'price-asc':
       return { sortKey: 'PRICE', reverse: false }
 
     case 'price-desc':
       return { sortKey: 'PRICE', reverse: true }
+
+    case 'date-new-old':
+      return { sortKey: 'CREATED', reverse: true }
+
+    case 'date-old-new':
+      return { sortKey: 'CREATED', reverse: false }
 
     case 'title-asc':
       return { sortKey: 'TITLE', reverse: false }
@@ -16,6 +22,6 @@ export function parseSort(sort?: string) {
       return { sortKey: 'TITLE', reverse: true }
 
     default:
-      return { sortKey: 'BEST_SELLING', reverse: false }
+      return { sortKey: 'COLLECTION_DEFAULT', reverse: false }
   }
 }

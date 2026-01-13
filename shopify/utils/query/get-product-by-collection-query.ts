@@ -1,9 +1,13 @@
 const getProductByCollectionQuery = /* GraphQL */ `
-  query getCollectionList($handle: String!) {
+  query getCollectionList(
+    $handle: String!
+    $sortKey: ProductCollectionSortKeys
+    $reverse: Boolean
+  ) {
     collection(handle: $handle) {
+      id
       title
-      description
-      products(first: 250) {
+      products(first: 250, sortKey: $sortKey, reverse: $reverse) {
         nodes {
           id
           title
@@ -13,7 +17,7 @@ const getProductByCollectionQuery = /* GraphQL */ `
           category {
             name
           }
-    
+
           images(first: 2) {
             nodes {
               url

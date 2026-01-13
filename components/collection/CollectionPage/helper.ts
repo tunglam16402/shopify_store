@@ -1,7 +1,6 @@
 import { createClient } from '@/prismicio'
 import {
-  flattenMenuForCategories,
-  getMainMenu,
+  getCategoryMenus
 } from '@/shopify/api/operations/get-menu'
 import { BreadcrumbItem } from '@/types/collection/menuCollection'
 import { CategoryMenu } from '../type'
@@ -16,7 +15,7 @@ const isValidTime = (start?: string | null, end?: string | null) => {
 export const getBannerManagement = async () => {
   const client = createClient()
   return await client.getSingle('banner_management', {
-    fetchOptions: { next: { revalidate: 600 } },
+    fetchOptions: { cache: 'force-cache' },
   })
 }
 
@@ -56,14 +55,12 @@ export const getBannerData = async (slug?: string) => {
 export async function getBreadcrumbFromMenu(
   handle: string
 ): Promise<BreadcrumbItem[]> {
-  const menu = await getMainMenu()
-  const flatMenu = flattenMenuForCategories(menu)
+  const flatMenu = await getCategoryMenus()
+
   const currentUrl = `/collections/${handle}`
 
   for (const parent of flatMenu) {
-    const current = parent.collections.find(
-      (col) => col.url === currentUrl
-    )
+    const current = parent?.collections?.find((col) => col.url === currentUrl)
 
     if (current) {
       return [
@@ -79,7 +76,6 @@ export async function getBreadcrumbFromMenu(
 
   return []
 }
-
 
 export function getSubCategory(
   categoryMenus: CategoryMenu[],

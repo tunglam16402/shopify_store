@@ -19,6 +19,10 @@
   width: 120px !important;
 }
 
+:global(.full-navigation-mobile .pw-swiper-progress ) {
+  width: 100% !important;
+}
+
 :global(.pw-swiper-progress .swiper-pagination-progressbar-fill) {
   background: black !important;
 }

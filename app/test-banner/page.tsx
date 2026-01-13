@@ -4,6 +4,8 @@ import { components } from '@/slices'
 import { cacheLife } from 'next/cache'
 
 export default async function Page() {
+  'use cache'
+  cacheLife('days')
 
   
   const client = createClient()

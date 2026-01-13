@@ -1,5 +1,6 @@
 import { mappingDiscountPrice } from '@/lib/helper'
 import getProductByCollectionQuery from '@/shopify/utils/query/get-product-by-collection-query'
+import { cacheLife } from 'next/cache'
 import { notFound } from 'next/navigation'
 import { shopifyFetch } from '../../fetcher'
 import {
@@ -7,10 +8,11 @@ import {
   GetCollectionListQuery,
 } from '../../types/graphql'
 import getAllCollectionQuery from '../../utils/query/get-all-collection-query'
-import { GetCollectionWithSortQuery } from './../../types/graphql'
-import getCollectionWithSortQuery from '@/shopify/utils/query/get-sorted-product-query'
 
 export async function getCollections() {
+  'use cache'
+  cacheLife('hours')
+
   const data = await shopifyFetch<GetAllCollectionQuery>({
     query: getAllCollectionQuery,
   })
@@ -24,10 +26,18 @@ export async function getCollections() {
   return collections
 }
 
-export async function getCollectionProductsByHandle(handle: string) {
+export async function getCollectionProductsByHandle({
+  handle,
+  sortKey,
+  reverse,
+}: {
+  handle: string
+  sortKey?: string
+  reverse?: boolean
+}) {
   const data = await shopifyFetch<GetCollectionListQuery>({
     query: getProductByCollectionQuery,
-    variables: { handle },
+    variables: { handle, sortKey, reverse },
   })
 
   const collection = data?.collection?.products?.nodes || []
@@ -37,21 +47,3 @@ export async function getCollectionProductsByHandle(handle: string) {
   return collection.map(mappingDiscountPrice)
 }
 
-export async function getSortedCollectionProducts({
-  handle,
-  sortKey,
-  reverse,
-}: {
-  handle: string
-  sortKey?: string
-  reverse?: boolean
-}) {
-  const data = await shopifyFetch<GetCollectionWithSortQuery>({
-    query: getCollectionWithSortQuery,
-    variables: { handle, sortKey, reverse },
-  })
-
-  console.log('data :>> ', data)
-
-  return data.collection
-}

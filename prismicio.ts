@@ -3,7 +3,7 @@ import {
   type ClientConfig,
   type Route,
 } from '@prismicio/client'
-import { enableAutoPreviews } from '@prismicio/next'
+import { EnableAutoPreviewsConfig } from '@prismicio/next'
 import sm from './slicemachine.config.json'
 
 /**
@@ -24,23 +24,47 @@ const routes: Route[] = [
   // { type: "page", path: "/:uid" },
 ]
 
+export function enableAutoPreviews(
+  config: EnableAutoPreviewsConfig,
+  cookie?: string
+): void {
+  config.client.queryContentFromRef(async () => {
+    // const cookie = (await cookies()).get(prismicCookie.preview)?.value;
+    if (!cookie) {
+      return
+    }
+
+    const isActiveCookie = cookie.includes('websitePreviewId=')
+    if (!isActiveCookie) {
+      return
+    }
+
+    return cookie
+  })
+}
+
 /**
  * Creates a Prismic client for the project's repository. The client is used to
  * query content from the Prismic API.
  *
  * @param config - Configuration for the Prismic client.
  */
-export const createClient = (config: ClientConfig = {}) => {
+export const createClient = (config: ClientConfig = {}, cookie?: string) => {
   const client = baseCreateClient(repositoryName, {
     routes,
-    fetchOptions:
-      process.env.NODE_ENV === 'production'
-        ? { next: { tags: ['prismic'] }, cache: 'force-cache' }
-        : { next: { revalidate: 5 } },
+    fetchOptions: (process.env.NODE_ENV === 'production'
+      ? {
+          next: { tags: ['prismic'] },
+          cache: 'force-cache',
+        }
+      : {
+          next: { revalidate: 5 },
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        }) as any,
     ...config,
   })
 
-  enableAutoPreviews({ client })
+  enableAutoPreviews({ client }, cookie)
 
   return client
 }

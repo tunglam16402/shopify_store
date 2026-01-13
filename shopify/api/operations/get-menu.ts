@@ -4,6 +4,7 @@ import { shopifyFetch } from '../../fetcher'
 import { GetMainMenuQuery } from '../../types/graphql'
 import getMainMenuQuery from '../../utils/query/get-main-menu-query'
 import { ChildItem, MenuItem } from '@/types/collection/menuCollection'
+import { CategoryMenu } from '@/components/collection/type'
 
 function mapMenuItem(item: any): MenuItem {
   const children: ChildItem[] =
@@ -38,7 +39,8 @@ function mapMenuItem(item: any): MenuItem {
   }
 }
 
-export function flattenMenuForCategories(menu: MenuItem[]) {
+
+function flattenMenuForCategories(menu: MenuItem[]) {
   return menu.map((item) => {
     const collections =
       item.children?.flatMap(
@@ -61,6 +63,12 @@ export function flattenMenuForCategories(menu: MenuItem[]) {
     }
   })
 }
+
+export async function getCategoryMenus(): Promise<CategoryMenu[]> {
+  const menu = await getMainMenu()
+  return flattenMenuForCategories(menu)
+}
+
 
 export async function getMainMenu(): Promise<MenuItem[]> {
   const data = await shopifyFetch<GetMainMenuQuery>({

@@ -3,14 +3,9 @@ import { getBannerData } from '@/components/collection/CollectionPage/helper'
 import {
   getCollectionProductsByHandle,
   getCollections,
-  getSortedCollectionProducts,
 } from '@/shopify/api/operations/get-collection'
-import {
-  flattenMenuForCategories,
-  getMainMenu,
-} from '@/shopify/api/operations/get-menu'
+import { getCategoryMenus } from '@/shopify/api/operations/get-menu'
 import { parseSort } from '@/shopify/helper'
-import { cacheLife } from 'next/cache'
 import { Suspense } from 'react'
 
 type Props = {
@@ -19,22 +14,17 @@ type Props = {
 }
 
 const Collection = async ({ params, searchParams }: Props) => {
-  // 'use cache'
-  // cacheLife('hours')
-
   const { handle } = await params
   const { sortKey, reverse } = parseSort((await searchParams)?.sort)
 
-  const products = await getCollectionProductsByHandle(handle)
-  const sort = await getSortedCollectionProducts({
+  const products = await getCollectionProductsByHandle({
     handle,
     sortKey,
     reverse,
   })
   const collections = await getCollections()
   const bannerData = await getBannerData(`/collections/${handle}`)
-  const menus = await getMainMenu()
-  const categoryMenus = flattenMenuForCategories(menus)
+  const categoryMenus = await getCategoryMenus()
 
   return (
     <main className="mt-[100px] md:mt-0">
@@ -45,7 +35,6 @@ const Collection = async ({ params, searchParams }: Props) => {
           handle={handle}
           collections={collections}
           categoryMenus={categoryMenus}
-          sort={sort}
         />
       </Suspense>
     </main>

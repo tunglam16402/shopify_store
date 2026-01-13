@@ -9,13 +9,13 @@ import ExpandableText from '@/components/common/ExpandableText'
 import { CategoryMenu, Collection } from '../type'
 import ShopByCategory from '../ShopByCategory'
 import SortByFilter from '../Filter/SortByFilter'
+import { cacheLife } from 'next/cache'
 interface ICollectionPage {
   products: ProductCardProps[]
   bannerData: any
   handle: string
   collections: Collection[]
   categoryMenus: CategoryMenu[]
-  sort?: any
 }
 
 const CollectionPage: React.FC<ICollectionPage> = async ({
@@ -24,15 +24,15 @@ const CollectionPage: React.FC<ICollectionPage> = async ({
   handle,
   collections,
   categoryMenus,
-  sort,
 }) => {
+  'use cache'
+  cacheLife('hours')
+
   const items = await getBreadcrumbFromMenu(handle)
   const category = getSubCategory(categoryMenus, handle)
 
   const currentCollection = collections.find((item) => item.handle === handle)
   const subCategories = category?.collections ?? []
-
-  console.log('sort :>> ', sort)
 
   return (
     <div className="main-width pt-8!">
@@ -56,7 +56,7 @@ const CollectionPage: React.FC<ICollectionPage> = async ({
         <ShopByCategory subCategories={subCategories} />
       </div>
       <div className="mt-6 md:mt-10">
-        <SortByFilter sort={sort} />
+        <SortByFilter />
       </div>
       <ProductList products={products} tiles={bannerData?.tiles} />
     </div>

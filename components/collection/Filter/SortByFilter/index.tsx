@@ -4,18 +4,24 @@ import { IcoSort } from '@/components/icons'
 import Select from '@/components/ui/Select'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
-const SORT_OPTIONS = [
-  { label: 'Best selling', value: '' },
-  { label: 'Newest', value: 'newest' },
+export const SORT_OPTIONS = [
+  { label: 'Featured', value: '' },
+  { label: 'Best selling', value: 'best-selling' },
   { label: 'Price: Low → High', value: 'price-asc' },
   { label: 'Price: High → Low', value: 'price-desc' },
+  { label: 'Date: New → Old', value: 'date-new-old' },
+  { label: 'Date: Old → New', value: 'date-old-new' },
+  { label: 'Alphabetical: A → Z', value: 'title-asc' },
+  { label: 'Alphabetical: Z → A', value: 'title-desc' },
 ]
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const SortByFilter = ({ sort }: any) => {
+const SortByFilter = ({ sortCollection }: any) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+
+  const sortValue = searchParams.get('sort') ?? ''
 
   function onChange(value: string) {
     const params = new URLSearchParams(searchParams.toString())
@@ -30,13 +36,14 @@ const SortByFilter = ({ sort }: any) => {
       scroll: false,
     })
   }
+
   return (
     <div>
       <Select
         options={SORT_OPTIONS}
-        value={[sort]}
+        value={[sortValue]}
         onChange={(v) => onChange(v[0])}
-        placeholder="Sort by: Most Relevant"
+        placeholder="Featured"
         icon={<IcoSort className="w-5 h-5" />}
         className="w-full"
         multiple={false}

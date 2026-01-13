@@ -1,7 +1,6 @@
 import ProductDetail from '@/components/products/ProductDetail'
 import {
-  flattenMenuForCategories,
-  getMainMenu,
+  getCategoryMenus
 } from '@/shopify/api/operations/get-menu'
 import {
   getProductByHandle,
@@ -17,7 +16,7 @@ interface Props {
 const ProductDetailPage = async ({ params }: Props) => {
   'use cache'
   cacheLife('hours')
-  
+
   const { handle } = await params
 
   const product = await getProductByHandle(handle)
@@ -25,12 +24,9 @@ const ProductDetailPage = async ({ params }: Props) => {
   if (!product) {
     return <div>Product not found.</div>
   }
-  const [menuRaw, recommendations] = await Promise.all([
-    getMainMenu(),
-    getProductRecommendations(product.id),
-  ])
+  const recommendations = await getProductRecommendations(product.id)
 
-  const menu = flattenMenuForCategories(menuRaw)
+  const categoryMenus = await getCategoryMenus()
 
   return (
     <main className="mx-auto mt-[100px] md:mt-0">
@@ -38,7 +34,7 @@ const ProductDetailPage = async ({ params }: Props) => {
         <Suspense fallback={<div>Loading images...</div>}>
           <ProductDetail
             product={product}
-            menu={menu}
+            menu={categoryMenus}
             relatedProducts={recommendations?.data?.related ?? []}
             complementaryProducts={recommendations?.data?.complementary ?? []}
           />

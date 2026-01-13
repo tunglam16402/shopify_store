@@ -11,6 +11,7 @@ import ProductImage from './ProductImage'
 import ProductInformation from './ProductInformation'
 import TopCollection from './TopCollection'
 import ProductReview from '../ProductReview'
+import { CategoryMenu } from '@/components/collection/type'
 
 type Variant = ReturnType<typeof mappingVariantPrice> & {
   id: string
@@ -43,7 +44,7 @@ export type ProductDetailProps = {
     variant?: Variant
     colorVariants: { handle: string; image: string | null }[]
   }
-  menu: MenuCategory[]
+  menu: CategoryMenu[]
   relatedProducts: ProductCardProps[]
   complementaryProducts: ProductCardProps[]
 }
@@ -56,7 +57,7 @@ const ProductDetail = ({
 }: ProductDetailProps) => {
   const findCollectionTrail = () => {
     for (const category of menu) {
-      const found = category.collections.find((col) =>
+      const found = category?.collections?.find((col) =>
         col.url.includes(product.collection.handle)
       )
       if (found) {
@@ -98,7 +99,7 @@ const ProductDetail = ({
       </div>
 
       <div className="grid grid-cols-1 mt-6 md:grid-cols-2 gap-10 md:gap-14">
-        <div className=" relative">
+        <div className=" relative full-navigation-mobile">
           <ProductImage
             images={product.images}
             altText={product.altText}

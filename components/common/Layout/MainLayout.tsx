@@ -7,11 +7,17 @@ import { getMainMenu } from '@/shopify/api/operations/get-menu'
 import { cacheLife } from 'next/cache'
 import { Suspense } from 'react'
 
-const MainLayout = async ({ children }: { children: React.ReactNode }) => {
-  // 'use cache'
-  // cacheLife('days')
+const MainLayout = async ({
+  children,
+  cookie,
+}: {
+  children: React.ReactNode
+  cookie?: string
+}) => {
+  'use cache'
+  cacheLife('days')
 
-  const client = createClient()
+  const client = createClient({}, cookie)
   const footer = await client.getSingle('footer')
 
   const menuItems = await getMainMenu()
