@@ -1,22 +1,24 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
+import { ImageField } from '@prismicio/client'
 import { PrismicNextImage } from '@prismicio/next'
 import Link from 'next/link'
 
-interface TileBanner {
+export interface TileBanner {
   pathname: string
-  image: any
+  image: ImageField
   label?: string
 }
 
-interface BannerData {
-  image: any
+export interface BannerData {
+  image: ImageField
   pathname: string
   tiles: TileBanner[]
 }
 
 const Banner = ({ bannerData }: { bannerData: BannerData }) => {
   const { image, pathname } = bannerData
+
+  console.log('bannerData :>> ', bannerData);
 
   return (
     <section>

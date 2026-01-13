@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { shopifyFetch } from '../fetcher'
 import { CustomerUpdateMutation, GetCustomerQuery } from '../types/graphql'
 import { customerUpdateMutation } from '../utils/mutation'

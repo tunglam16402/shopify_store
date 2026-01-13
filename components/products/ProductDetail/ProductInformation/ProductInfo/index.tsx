@@ -1,24 +1,37 @@
 'use client'
 
-import React, { useMemo, useState } from 'react'
+import React, { ReactNode, useMemo, useState } from 'react'
 import Dropdown from '@/components/ui/Dropdown'
-import { IcoDown, IcoUp } from '@/components/icons'
+import { IcoDown } from '@/components/icons'
 
-interface IProductInfo {
-  description: string
-  information: string
+/* =======================
+  Types
+======================= */
+
+interface IProductInfoProps {
+  description: string // Shopify descriptionHtml
+  information: string // Shopify descriptionHtml
 }
 
-const FIXED_INFOS = [
+interface ProductInfoItem {
+  id: number
+  title: string
+  descriptionHtml?: string
+  descriptionNode?: ReactNode
+}
+
+const FIXED_INFOS: ProductInfoItem[] = [
   {
     id: 3,
     title: 'Shipping & Returns',
-    description: (
+    descriptionNode: (
       <>
         <strong>Express shipping available for €15</strong> — order before 1 PM
-        for next business day delivery. <br />
+        for next business day delivery.
+        <br />
         <strong>Free shipping on orders over €69</strong> — available in all
-        markets. <br />
+        markets.
+        <br />
         <strong>30-days return policy</strong> — try it out, love it or return
         it.
       </>
@@ -27,7 +40,7 @@ const FIXED_INFOS = [
   {
     id: 4,
     title: 'Payment Options',
-    description: (
+    descriptionNode: (
       <>
         <strong>Secure and trusted payments with:</strong>
         <br />
@@ -57,26 +70,45 @@ const FIXED_INFOS = [
   {
     id: 5,
     title: 'Contact Information',
-    description: `Printworks
-Birger Jarlsgatan 55
-11145 Stockholm SE
-info@printworksmarket.com.`,
+    descriptionNode: (
+      <>
+        Printworks
+        <br />
+        Birger Jarlsgatan 55
+        <br />
+        11145 Stockholm SE
+        <br />
+        info@printworksmarket.com
+      </>
+    ),
   },
 ]
 
-const ProductInfo: React.FC<IProductInfo> = ({ description, information }) => {
-  const productInfo = useMemo(
+const ProductInfo: React.FC<IProductInfoProps> = ({
+  description,
+  information,
+}) => {
+  const productInfo = useMemo<ProductInfoItem[]>(
     () => [
-      { id: 1, title: 'Description', description },
-      { id: 2, title: 'Product Information', description: information },
+      {
+        id: 1,
+        title: 'Description',
+        descriptionHtml: description,
+      },
+      {
+        id: 2,
+        title: 'Product Information',
+        descriptionHtml: information,
+      },
       ...FIXED_INFOS,
     ],
     [description, information]
   )
-  const [openId, setOpenId] = useState<number | null>(productInfo[0].id)
+
+  const [openId, setOpenId] = useState<number | null>(productInfo[0]?.id ?? null)
 
   return (
-    <div className="text-white space-y-4">
+    <div className="space-y-4">
       {productInfo.map((info) => (
         <Dropdown
           key={info.id}
@@ -89,9 +121,17 @@ const ProductInfo: React.FC<IProductInfo> = ({ description, information }) => {
           closeIcon={<IcoDown className="h-5 w-5" />}
           className="text-black text-sm md:text-base"
         >
-          <p className="text-xs md:text-sm mt-3 whitespace-pre-line text-gray-700">
-            {info.description}
-          </p>
+          <div className="prose prose-sm md:prose-base max-w-none text-gray-700 mt-3">
+            {info.descriptionHtml && (
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: info.descriptionHtml,
+                }}
+              />
+            )}
+
+            {info.descriptionNode && info.descriptionNode}
+          </div>
         </Dropdown>
       ))}
     </div>

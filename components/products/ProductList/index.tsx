@@ -5,16 +5,12 @@ import { PrismicNextImage } from '@prismicio/next'
 import Link from 'next/link'
 import ProductCard from '../ProductCard'
 import { ProductCardProps } from '@/types/product/productCard'
+import { TileBanner } from '@/components/collection/Banner'
 
-type Tile = {
-  pathname: string
-  image: any
-  label?: string
-}
 
 type ProductListProps = {
   products: ProductCardProps[]
-  tiles?: Tile[]
+  tiles?: TileBanner[]
 }
 
 const ProductList = ({ products, tiles = [] }: ProductListProps) => {

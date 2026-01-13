@@ -91,7 +91,7 @@ const Dropdown = ({
           opacity: open ? 1 : 0,
         }}
       >
-        <div ref={contentRef} className="pt-4">
+        <div ref={contentRef} className="pb-4">
           {hasLinks ? (
             <ul className="space-y-3 text-sm">
               {links!.map((item, index) => (

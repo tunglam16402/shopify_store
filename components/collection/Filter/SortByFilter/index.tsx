@@ -15,8 +15,7 @@ export const SORT_OPTIONS = [
   { label: 'Alphabetical: Z → A', value: 'title-desc' },
 ]
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const SortByFilter = ({ sortCollection }: any) => {
+const SortByFilter = () => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()

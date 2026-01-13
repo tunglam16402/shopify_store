@@ -1,18 +1,16 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { ProductList } from '@/components/products'
-import React from 'react'
-import Banner from '../Banner'
-import { ProductCardProps } from '@/types/product/productCard'
 import Breadcrumb from '@/components/common/Breadcrumb'
-import { getBreadcrumbFromMenu, getSubCategory } from './helper'
 import ExpandableText from '@/components/common/ExpandableText'
-import { CategoryMenu, Collection } from '../type'
-import ShopByCategory from '../ShopByCategory'
-import SortByFilter from '../Filter/SortByFilter'
+import { ProductCardProps } from '@/types/product/productCard'
 import { cacheLife } from 'next/cache'
+import React from 'react'
+import Banner, { BannerData } from '../Banner'
+import CollectionContent from '../CollectionContent'
+import ShopByCategory from '../ShopByCategory'
+import { CategoryMenu, Collection } from '../type'
+import { getBreadcrumbFromMenu, getSubCategory } from './helper'
 interface ICollectionPage {
   products: ProductCardProps[]
-  bannerData: any
+  bannerData: BannerData | null
   handle: string
   collections: Collection[]
   categoryMenus: CategoryMenu[]
@@ -27,7 +25,6 @@ const CollectionPage: React.FC<ICollectionPage> = async ({
 }) => {
   'use cache'
   cacheLife('hours')
-
   const items = await getBreadcrumbFromMenu(handle)
   const category = getSubCategory(categoryMenus, handle)
 
@@ -55,10 +52,7 @@ const CollectionPage: React.FC<ICollectionPage> = async ({
       <div className="mt-6 md:mt-10">
         <ShopByCategory subCategories={subCategories} />
       </div>
-      <div className="mt-6 md:mt-10">
-        <SortByFilter />
-      </div>
-      <ProductList products={products} tiles={bannerData?.tiles} />
+      <CollectionContent products={products} tiles={bannerData?.tiles} />
     </div>
   )
 }

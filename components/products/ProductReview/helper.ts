@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { RootState } from '@/store/store'
 import { Reviews } from '@/types/reviews'
 import { useMemo } from 'react'

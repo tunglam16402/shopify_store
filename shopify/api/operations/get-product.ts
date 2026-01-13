@@ -61,7 +61,7 @@ export async function getProductByHandle(handle: string) {
     handle: product.handle,
     title: product.title,
     collection: selectedCollection ?? product.collections.nodes[0],
-    description: product.description,
+    description: product.descriptionHtml,
     information: productInfo,
     featuredImage: product.featuredImage?.url || null,
     altText: product.featuredImage?.altText || '',

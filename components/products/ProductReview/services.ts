@@ -1,6 +1,5 @@
 import { ReviewQuery } from "./type"
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export async function fetchReviews(payload: ReviewQuery) {
   const res = await fetch('/api/reviews', {
     method: 'POST',

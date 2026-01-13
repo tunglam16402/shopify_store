@@ -5,7 +5,7 @@ const getProductDetailQuery = /* GraphQL */ `
       id
       handle
       title
-      description
+      descriptionHtml
       collections(first: 100) {
         nodes {
           id

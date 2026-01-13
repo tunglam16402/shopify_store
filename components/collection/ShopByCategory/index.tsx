@@ -18,13 +18,13 @@ const COLLECTION_BREAKPOINT = {
     spaceBetween: 8,
   },
   768: {
-    slidesPerView: 3,
-    slidesPerGroup: 3,
+    slidesPerView: 4,
+    slidesPerGroup: 4,
     spaceBetween: 12,
   },
   1024: {
-    slidesPerView: 5,
-    slidesPerGroup: 5,
+    slidesPerView: 6,
+    slidesPerGroup: 6,
     spaceBetween: 16,
   },
 }
@@ -38,7 +38,7 @@ const ShopByCategory = ({ subCategories }: IShopByCategory) => {
         <Link
           href={subCategory.url}
           key={subCategory.url}
-          className="relative h-28 md:h-44 w-full inline-block"
+          className="relative h-28 md:h-32 w-full inline-block"
         >
           <Image
             src={subCategory.image || ''}
