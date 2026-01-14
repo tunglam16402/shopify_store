@@ -5,22 +5,36 @@ import {
   getCollections,
 } from '@/shopify/api/operations/get-collection'
 import { getCategoryMenus } from '@/shopify/api/operations/get-menu'
-import { parseSort } from '@/shopify/helper'
+import { buildProductFilters, parseSort } from '@/shopify/helper'
 import { Suspense } from 'react'
 
 type Props = {
   params: Promise<{ handle: string }>
-  searchParams: Promise<{ sort?: string }>
+  searchParams: Promise<Record<string, string | undefined>>
 }
 
 const Collection = async ({ params, searchParams }: Props) => {
   const { handle } = await params
-  const { sortKey, reverse } = parseSort((await searchParams)?.sort)
+  const filterSearch = await searchParams
+  const { sortKey, reverse } = parseSort(filterSearch?.sort)
 
-  const products = await getCollectionProductsByHandle({
+const filters = buildProductFilters(
+  new URLSearchParams(
+    Object.entries(filterSearch).flatMap(([key, value]) =>
+      Array.isArray(value)
+        ? value.map(v => [key, v])
+        : value
+        ? [[key, value]]
+        : []
+    )
+  )
+)
+
+  const { products, filters: facets } = await getCollectionProductsByHandle({
     handle,
     sortKey,
     reverse,
+    filters,
   })
   const collections = await getCollections()
   const bannerData = await getBannerData(`/collections/${handle}`)
@@ -31,6 +45,7 @@ const Collection = async ({ params, searchParams }: Props) => {
       <Suspense fallback={null}>
         <CollectionPage
           products={products}
+          facets={facets} 
           bannerData={bannerData}
           handle={handle}
           collections={collections}

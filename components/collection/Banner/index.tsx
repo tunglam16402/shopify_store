@@ -18,8 +18,6 @@ export interface BannerData {
 const Banner = ({ bannerData }: { bannerData: BannerData }) => {
   const { image, pathname } = bannerData
 
-  console.log('bannerData :>> ', bannerData);
-
   return (
     <section>
       <Link href={pathname || '#'}>

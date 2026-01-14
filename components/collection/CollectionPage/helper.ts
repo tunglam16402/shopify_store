@@ -89,3 +89,27 @@ export function getSubCategory(
 
   return category
 }
+
+export function parseFacetInput(input: string): {
+  param: string
+  value?: string
+} | null {
+  try {
+    const parsed = JSON.parse(input)
+
+    const [key] = Object.keys(parsed)
+    if (!key) return null
+
+    // PRICE_RANGE → không xử lý ở đây
+    if (key === 'price') {
+      return { param: 'price' }
+    }
+
+    return {
+      param: key,
+      value: String(parsed[key]),
+    }
+  } catch {
+    return null
+  }
+}

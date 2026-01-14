@@ -6,7 +6,7 @@ import React from 'react'
 import Banner, { BannerData } from '../Banner'
 import CollectionContent from '../CollectionContent'
 import ShopByCategory from '../ShopByCategory'
-import { CategoryMenu, Collection } from '../type'
+import { CategoryMenu, Collection, Facets } from '../type'
 import { getBreadcrumbFromMenu, getSubCategory } from './helper'
 interface ICollectionPage {
   products: ProductCardProps[]
@@ -14,6 +14,7 @@ interface ICollectionPage {
   handle: string
   collections: Collection[]
   categoryMenus: CategoryMenu[]
+  facets: Facets[]
 }
 
 const CollectionPage: React.FC<ICollectionPage> = async ({
@@ -22,12 +23,12 @@ const CollectionPage: React.FC<ICollectionPage> = async ({
   handle,
   collections,
   categoryMenus,
+  facets
 }) => {
   'use cache'
   cacheLife('hours')
   const items = await getBreadcrumbFromMenu(handle)
   const category = getSubCategory(categoryMenus, handle)
-
   const currentCollection = collections.find((item) => item.handle === handle)
   const subCategories = category?.collections ?? []
 
@@ -52,7 +53,7 @@ const CollectionPage: React.FC<ICollectionPage> = async ({
       <div className="mt-6 md:mt-10">
         <ShopByCategory subCategories={subCategories} />
       </div>
-      <CollectionContent products={products} tiles={bannerData?.tiles} />
+      <CollectionContent products={products} tiles={bannerData?.tiles} facets={facets}/>
     </div>
   )
 }

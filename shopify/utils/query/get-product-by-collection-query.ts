@@ -1,13 +1,20 @@
 const getProductByCollectionQuery = /* GraphQL */ `
-  query getCollectionList(
+  query getProductByCollection(
     $handle: String!
     $sortKey: ProductCollectionSortKeys
     $reverse: Boolean
+    $first: Int = 24
+    $filters: [ProductFilter!]
   ) {
     collection(handle: $handle) {
       id
       title
-      products(first: 250, sortKey: $sortKey, reverse: $reverse) {
+      products(
+        first: $first
+        sortKey: $sortKey
+        filters: $filters
+        reverse: $reverse
+      ) {
         nodes {
           id
           title
@@ -24,6 +31,18 @@ const getProductByCollectionQuery = /* GraphQL */ `
               altText
             }
           }
+
+          priceRange {
+            minVariantPrice {
+              amount
+              currencyCode
+            }
+            maxVariantPrice {
+              amount
+              currencyCode
+            }
+          }
+
           variants(first: 1) {
             edges {
               node {
@@ -39,6 +58,18 @@ const getProductByCollectionQuery = /* GraphQL */ `
                 }
               }
             }
+          }
+        }
+
+        filters {
+          id
+          label
+          type
+          values {
+            id
+            label
+            count
+            input
           }
         }
       }

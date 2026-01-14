@@ -5,9 +5,18 @@ import { notFound } from 'next/navigation'
 import { shopifyFetch } from '../../fetcher'
 import {
   GetAllCollectionQuery,
-  GetCollectionListQuery,
+  GetProductByCollectionQuery,
+  ProductFilter,
 } from '../../types/graphql'
 import getAllCollectionQuery from '../../utils/query/get-all-collection-query'
+
+// export type ProductFilter =
+//   | { available: boolean }
+//   | { productType: string }
+//   | { productVendor: string }
+//   | { tag: string }
+//   | { price: { min?: number; max?: number } }
+//   | { variantOption: { name: string; value: string } }
 
 export async function getCollections() {
   'use cache'
@@ -30,20 +39,31 @@ export async function getCollectionProductsByHandle({
   handle,
   sortKey,
   reverse,
+  filters,
 }: {
   handle: string
   sortKey?: string
   reverse?: boolean
+  filters?: ProductFilter[]
 }) {
-  const data = await shopifyFetch<GetCollectionListQuery>({
+  const data = await shopifyFetch<GetProductByCollectionQuery>({
     query: getProductByCollectionQuery,
-    variables: { handle, sortKey, reverse },
+    variables: {
+      handle,
+      sortKey,
+      reverse,
+      filters: filters?.length ? filters : undefined,
+    },
   })
 
-  const collection = data?.collection?.products?.nodes || []
+  console.log('data :>> ', data)
 
-  if (!collection) return notFound()
+  const productsCollection = data?.collection?.products
 
-  return collection.map(mappingDiscountPrice)
+  if (!productsCollection) return notFound()
+
+  return {
+    products: productsCollection.nodes.map(mappingDiscountPrice),
+    filters: productsCollection.filters,
+  }
 }
-
