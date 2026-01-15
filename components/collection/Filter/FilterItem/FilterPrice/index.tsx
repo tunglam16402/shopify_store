@@ -1,103 +1,97 @@
 'use client'
 
-import React, { useMemo, useState } from 'react'
 import { Facets } from '@/components/collection/type'
+import { Slider } from '@/components/ui/Slider'
+import { useFilterProduct } from '@/lib/hooks/useFilterProduct'
+import { useSearchParams } from 'next/navigation'
+import { memo, useEffect, useMemo, useState } from 'react'
 
 interface IFilter {
-  facets: Facets[]
+  globalPrice: Facets[]
 }
 
-const FilterPrice = ({ facets }: IFilter) => {
-  const priceFacet = useMemo(
-    () => facets.find((f) => f.type === 'PRICE_RANGE'),
-    [facets]
-  )
+const FilterPrice = ({ globalPrice }: IFilter) => {
+  const searchParams = useSearchParams()
+  const { setRange } = useFilterProduct()
 
-  if (!priceFacet) return null
+  const { min: globalMin, max: globalMax } = useMemo(() => {
+    const facet = globalPrice.find((f) => f.type === 'PRICE_RANGE')
+    if (!facet?.values?.[0]?.input) return { min: 0, max: 0 }
 
-  const { min: minRange, max: maxRange } = JSON.parse(
-    priceFacet.values[0].input
-  ).price
+    try {
+      const { price } = JSON.parse(facet.values[0].input)
+      return {
+        min: price?.min ?? 0,
+        max: price?.max ?? 0,
+      }
+    } catch {
+      return { min: 0, max: 0 }
+    }
+  }, [globalPrice])
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [min, setMin] = useState(minRange)
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [max, setMax] = useState(maxRange)
+  const min = Number(searchParams.get('price_min')) || globalMin
+  const max = Number(searchParams.get('price_max')) || globalMax
 
-  const handleMinChange = (value: number) => {
-    if (value >= max) return
-    setMin(value)
-  }
+  const [range, setLocalRange] = useState<[number, number]>([min, max])
 
-  const handleMaxChange = (value: number) => {
-    if (value <= min) return
-    setMax(value)
+  useEffect(() => {
+    setLocalRange([min, max])
+  }, [min, max])
+
+  const commit = ([min, max]: [number, number]) => {
+    setRange(
+      { min: 'price_min', max: 'price_max' },
+      { min, max },
+      { min: globalMin, max: globalMax }
+    )
   }
 
   return (
-    <div className="space-y-4">
-      {/* Inputs */}
+    <div className="space-y-4 text-sm text-gray-600">
       <div className="flex items-center gap-3">
         <input
           type="number"
-          value={min}
-          min={minRange}
-          max={max}
-          onChange={(e) => handleMinChange(Number(e.target.value))}
-          className="w-24 rounded border px-2 py-1 text-sm"
+          min={globalMin}
+          max={range[1]}
+          value={range[0]}
+          onChange={(e) =>
+            setLocalRange(([_, max]) => [
+              Math.min(Number(e.target.value), max),
+              max,
+            ])
+          }
+          onBlur={() => commit(range)}
+          className="w-24 rounded border px-2 py-1"
         />
-        <span className="text-gray-400">–</span>
+
+        <span>-</span>
+
         <input
           type="number"
-          value={max}
-          min={min}
-          max={maxRange}
-          onChange={(e) => handleMaxChange(Number(e.target.value))}
-          className="w-24 rounded border px-2 py-1 text-sm"
+          min={range[0]}
+          max={globalMax}
+          value={range[1]}
+          onChange={(e) =>
+            setLocalRange(([min]) => [
+              min,
+              Math.max(Number(e.target.value), min),
+            ])
+          }
+          onBlur={() => commit(range)}
+          className="w-24 rounded border px-2 py-1"
         />
       </div>
 
-      {/* Slider */}
-      <div className="relative h-2">
-        {/* Track */}
-        <div className="absolute inset-0 rounded bg-gray-200" />
-
-        {/* Active range */}
-        <div
-          className="absolute h-2 rounded bg-black"
-          style={{
-            left: `${((min - minRange) / (maxRange - minRange)) * 100}%`,
-            right: `${100 - ((max - minRange) / (maxRange - minRange)) * 100}%`
-          }}
-        />
-
-        {/* Min range */}
-        <input
-          type="range"
-          min={minRange}
-          max={maxRange}
-          value={min}
-          onChange={(e) => handleMinChange(Number(e.target.value))}
-          className="range-thumb pointer-events-auto absolute inset-0 w-full appearance-none bg-transparent"
-        />
-
-        {/* Max range */}
-        <input
-          type="range"
-          min={minRange}
-          max={maxRange}
-          value={max}
-          onChange={(e) => handleMaxChange(Number(e.target.value))}
-          className="range-thumb pointer-events-auto absolute inset-0 w-full appearance-none bg-transparent"
-        />
-      </div>
-
-      {/* Display */}
-      <div className="text-sm text-gray-600">
-        ${min} – ${max}
-      </div>
+      <Slider
+        min={globalMin}
+        max={globalMax}
+        step={1}
+        value={range}
+        onValueChange={(v) => setLocalRange(v as [number, number])}
+        onValueCommit={(v) => commit(v as [number, number])}
+      />
     </div>
   )
 }
 
-export default FilterPrice
+export default memo(FilterPrice)

@@ -5,9 +5,10 @@ import FilterPrice from './FilterItem/FilterPrice'
 
 interface IFilter {
   facets: Facets[]
+  globalPrice: Facets[]
 }
 
-const Filter = ({ facets }: IFilter) => {
+const Filter = ({ facets, globalPrice }: IFilter) => {
   return (
     <div>
       <div>
@@ -15,7 +16,7 @@ const Filter = ({ facets }: IFilter) => {
           Filter
         </div>
       </div>
-      <FilterPrice facets={facets}/>
+      <FilterPrice globalPrice={globalPrice} />
       <FilterItem facets={facets} />
     </div>
   )

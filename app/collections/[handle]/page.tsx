@@ -1,5 +1,6 @@
 import CollectionPage from '@/components/collection/CollectionPage'
 import { getBannerData } from '@/components/collection/CollectionPage/helper'
+import { toURLSearchParams } from '@/lib/helper'
 import {
   getCollectionProductsByHandle,
   getCollections,
@@ -18,19 +19,13 @@ const Collection = async ({ params, searchParams }: Props) => {
   const filterSearch = await searchParams
   const { sortKey, reverse } = parseSort(filterSearch?.sort)
 
-const filters = buildProductFilters(
-  new URLSearchParams(
-    Object.entries(filterSearch).flatMap(([key, value]) =>
-      Array.isArray(value)
-        ? value.map(v => [key, v])
-        : value
-        ? [[key, value]]
-        : []
-    )
-  )
-)
+  const filters = buildProductFilters(toURLSearchParams(filterSearch))
 
-  const { products, filters: facets } = await getCollectionProductsByHandle({
+  const {
+    products,
+    filters: facets,
+    globalPriceFilters,
+  } = await getCollectionProductsByHandle({
     handle,
     sortKey,
     reverse,
@@ -45,7 +40,8 @@ const filters = buildProductFilters(
       <Suspense fallback={null}>
         <CollectionPage
           products={products}
-          facets={facets} 
+          facets={facets}
+          globalPrice={globalPriceFilters}
           bannerData={bannerData}
           handle={handle}
           collections={collections}

@@ -100,10 +100,7 @@ export function parseFacetInput(input: string): {
     const [key] = Object.keys(parsed)
     if (!key) return null
 
-    // PRICE_RANGE → không xử lý ở đây
-    if (key === 'price') {
-      return { param: 'price' }
-    }
+    if (key === 'price') return null
 
     return {
       param: key,

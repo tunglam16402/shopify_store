@@ -1,4 +1,4 @@
-import { ProductFilter } from "./types/graphql"
+import { ProductFilter } from './types/graphql'
 
 export function parseSort(sort?: string) {
   switch (sort) {
@@ -28,11 +28,31 @@ export function parseSort(sort?: string) {
   }
 }
 
-
 export function buildProductFilters(
   searchParams: URLSearchParams
 ): ProductFilter[] {
   const filters: ProductFilter[] = []
+
+  const priceMin =
+    searchParams.get('price_min') !== null
+      ? Number(searchParams.get('price_min'))
+      : undefined
+  const priceMax =
+    searchParams.get('price_max') !== null
+      ? Number(searchParams.get('price_max'))
+      : undefined
+
+  if (
+    (priceMin !== undefined && !isNaN(priceMin)) ||
+    (priceMax !== undefined && !isNaN(priceMax))
+  ) {
+    filters.push({
+      price: {
+        min: priceMin,
+        max: priceMax,
+      },
+    })
+  }
 
   for (const [key, value] of searchParams.entries()) {
     if (!value) continue
@@ -50,16 +70,9 @@ export function buildProductFilters(
         filters.push({ tag: value })
         break
 
-      case 'price': {
-        const [min, max] = value.split('-').map(Number)
-        filters.push({
-          price: {
-            min: isNaN(min) ? undefined : min,
-            max: isNaN(max) ? undefined : max,
-          },
-        })
+      case 'price_min':
+      case 'price_max':
         break
-      }
 
       default:
         break

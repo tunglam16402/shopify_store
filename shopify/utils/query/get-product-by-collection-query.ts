@@ -4,11 +4,30 @@ const getProductByCollectionQuery = /* GraphQL */ `
     $sortKey: ProductCollectionSortKeys
     $reverse: Boolean
     $first: Int = 24
+    $globalFilters: [ProductFilter!]
     $filters: [ProductFilter!]
   ) {
     collection(handle: $handle) {
       id
       title
+
+      globalPriceRange: products(
+        first: 1
+        filters: $globalFilters
+      ) {
+        filters {
+          id
+          label
+          type
+          values {
+            id
+            label
+            count
+            input
+          }
+        }
+      }
+
       products(
         first: $first
         sortKey: $sortKey

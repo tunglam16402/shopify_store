@@ -16,15 +16,16 @@ interface ICollectionContent {
   products: ProductCardProps[]
   tiles?: TileBanner[]
   facets: Facets[]
+  globalPrice:Facets[]
 }
 
 const CollectionContent: React.FC<ICollectionContent> = ({
   products,
   tiles,
   facets,
+  globalPrice
 }) => {
   const [showFilter, setShowFilter] = useState(false)
-  console.log('facets :>> ', facets)
 
   return (
     <div>
@@ -49,13 +50,11 @@ const CollectionContent: React.FC<ICollectionContent> = ({
             'relative transition-all duration-300 ease-in-out',
             'overflow-hidden shrink-0',
             showFilter
-              ? 'w-60 opacity-100 translate-x-0 mr-6'
+              ? 'w-60 opacity-100 translate-x-0 pr-4 mr-4'
               : 'w-0 opacity-0 -translate-x-4'
           )}
         >
-          <div className="w-[280px]">
-            <Filter facets={facets} />
-          </div>
+          <Filter facets={facets} globalPrice={globalPrice}/>
         </div>
 
         <div className="flex-1 transition-[margin] duration-300 ease-in-out">

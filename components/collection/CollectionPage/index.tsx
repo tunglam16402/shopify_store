@@ -15,6 +15,7 @@ interface ICollectionPage {
   collections: Collection[]
   categoryMenus: CategoryMenu[]
   facets: Facets[]
+  globalPrice: Facets[]
 }
 
 const CollectionPage: React.FC<ICollectionPage> = async ({
@@ -23,7 +24,8 @@ const CollectionPage: React.FC<ICollectionPage> = async ({
   handle,
   collections,
   categoryMenus,
-  facets
+  facets,
+  globalPrice,
 }) => {
   'use cache'
   cacheLife('hours')
@@ -53,7 +55,12 @@ const CollectionPage: React.FC<ICollectionPage> = async ({
       <div className="mt-6 md:mt-10">
         <ShopByCategory subCategories={subCategories} />
       </div>
-      <CollectionContent products={products} tiles={bannerData?.tiles} facets={facets}/>
+      <CollectionContent
+        products={products}
+        tiles={bannerData?.tiles}
+        facets={facets}
+        globalPrice={globalPrice}
+      />
     </div>
   )
 }

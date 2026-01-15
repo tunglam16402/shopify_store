@@ -10,14 +10,6 @@ import {
 } from '../../types/graphql'
 import getAllCollectionQuery from '../../utils/query/get-all-collection-query'
 
-// export type ProductFilter =
-//   | { available: boolean }
-//   | { productType: string }
-//   | { productVendor: string }
-//   | { tag: string }
-//   | { price: { min?: number; max?: number } }
-//   | { variantOption: { name: string; value: string } }
-
 export async function getCollections() {
   'use cache'
   cacheLife('hours')
@@ -35,35 +27,80 @@ export async function getCollections() {
   return collections
 }
 
+export function splitPriceFilters(filters?: ProductFilter[]) {
+  if (!filters?.length) {
+    return {
+      filters: undefined,
+      globalFilters: undefined,
+    }
+  }
+
+  const globalFilters: ProductFilter[] = []
+  const appliedFilters: ProductFilter[] = []
+
+  for (const filter of filters) {
+    const isPriceFilter = 'price' in filter && filter.price !== undefined
+
+    appliedFilters.push(filter)
+
+    if (!isPriceFilter) {
+      globalFilters.push(filter)
+    }
+  }
+
+  return {
+    filters: appliedFilters,
+    globalFilters: globalFilters.length ? globalFilters : undefined,
+  }
+}
+
 export async function getCollectionProductsByHandle({
   handle,
   sortKey,
   reverse,
   filters,
+  first = 24,
 }: {
   handle: string
   sortKey?: string
   reverse?: boolean
   filters?: ProductFilter[]
+  first?: number
 }) {
+  'use cache'
+  cacheLife('hours')
+  
+  const { filters: appliedFilters, globalFilters } = splitPriceFilters(filters)
+
   const data = await shopifyFetch<GetProductByCollectionQuery>({
     query: getProductByCollectionQuery,
     variables: {
       handle,
       sortKey,
       reverse,
-      filters: filters?.length ? filters : undefined,
+      first,
+      filters: appliedFilters,
+      globalFilters,
     },
   })
 
-  console.log('data :>> ', data)
+  const collection = data?.collection
+  if (!collection) return notFound()
 
-  const productsCollection = data?.collection?.products
+  const productsConnection = collection.products
+  const globalPriceConnection = collection.globalPriceRange
 
-  if (!productsCollection) return notFound()
+  if (!productsConnection || !globalPriceConnection) {
+    return notFound()
+  }
 
   return {
-    products: productsCollection.nodes.map(mappingDiscountPrice),
-    filters: productsCollection.filters,
+    products: productsConnection.nodes.map(mappingDiscountPrice),
+
+    // Facet dùng cho UI filter (count, disable, etc.)
+    filters: productsConnection.filters,
+
+    // Facet price range GỐC (không bị ảnh hưởng bởi price filter)
+    globalPriceFilters: globalPriceConnection.filters,
   }
 }

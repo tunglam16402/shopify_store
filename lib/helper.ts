@@ -194,3 +194,19 @@ export const mergeGuestCartToCustomer = async (
     return null
   }
 }
+
+export function toURLSearchParams(
+  searchParams: Record<string, string | string[] | undefined>
+) {
+  const params = new URLSearchParams()
+
+  Object.entries(searchParams).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      value.forEach((v) => params.append(key, v))
+    } else if (value) {
+      params.append(key, value)
+    }
+  })
+
+  return params
+}
