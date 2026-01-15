@@ -22,7 +22,7 @@ export function useFilterProduct() {
       params.delete(param)
 
       if (!values.includes(value)) {
-        [...values, value].forEach((v) => params.append(param, v))
+        ;[...values, value].forEach((v) => params.append(param, v))
       } else {
         values
           .filter((v) => v !== value)
@@ -42,8 +42,7 @@ export function useFilterProduct() {
     ) => {
       const params = new URLSearchParams(searchParams)
 
-      const isDefault =
-        value.min === defaults.min && value.max === defaults.max
+      const isDefault = value.min === defaults.min && value.max === defaults.max
 
       if (isDefault) {
         params.delete(keys.min)
@@ -58,8 +57,19 @@ export function useFilterProduct() {
     [searchParams, push]
   )
 
+  const clearRange = useCallback(
+    (keys: { min: string; max: string }) => {
+      const params = new URLSearchParams(searchParams)
+      params.delete(keys.min)
+      params.delete(keys.max)
+      push(params)
+    },
+    [searchParams, push]
+  )
+
   return {
     toggleValue,
     setRange,
+    clearRange,
   }
 }

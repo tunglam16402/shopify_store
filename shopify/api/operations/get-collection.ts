@@ -69,7 +69,6 @@ export async function getCollectionProductsByHandle({
 }) {
   'use cache'
   cacheLife('hours')
-  
   const { filters: appliedFilters, globalFilters } = splitPriceFilters(filters)
 
   const data = await shopifyFetch<GetProductByCollectionQuery>({
@@ -104,3 +103,4 @@ export async function getCollectionProductsByHandle({
     globalPriceFilters: globalPriceConnection.filters,
   }
 }
+

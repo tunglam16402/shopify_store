@@ -2,6 +2,7 @@ import React from 'react'
 import FilterItem from './FilterItem'
 import { Facets } from '../type'
 import FilterPrice from './FilterItem/FilterPrice'
+import SelectedFilter from './SelectedFilter'
 
 interface IFilter {
   facets: Facets[]
@@ -16,6 +17,7 @@ const Filter = ({ facets, globalPrice }: IFilter) => {
           Filter
         </div>
       </div>
+      <SelectedFilter globalPrice={globalPrice} facets={facets}/>
       <FilterPrice globalPrice={globalPrice} />
       <FilterItem facets={facets} />
     </div>

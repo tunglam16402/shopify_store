@@ -1,31 +1,38 @@
 'use client'
 
-import { useState } from 'react'
-import { Activity } from 'react'
 import cn from 'classnames'
+import { useEffect, useState } from 'react'
 
 import { IcoFilter } from '@/components/icons'
 import { ProductList } from '@/components/products'
-import SortByFilter from '../Filter/SortByFilter'
-import Filter from '../Filter'
 import { ProductCardProps } from '@/types/product/productCard'
 import { TileBanner } from '../Banner'
+import Filter from '../Filter'
+import SortByFilter from '../Filter/SortByFilter'
 import { Facets } from '../type'
+import { useSearchParams } from 'next/navigation'
 
 interface ICollectionContent {
   products: ProductCardProps[]
   tiles?: TileBanner[]
   facets: Facets[]
-  globalPrice:Facets[]
+  globalPrice: Facets[]
 }
 
 const CollectionContent: React.FC<ICollectionContent> = ({
   products,
   tiles,
   facets,
-  globalPrice
+  globalPrice,
 }) => {
   const [showFilter, setShowFilter] = useState(false)
+  const searchParams = useSearchParams()
+
+  useEffect(() => {
+    if (searchParams.size > 0) {
+      setShowFilter(true)
+    }
+  }, [searchParams])
 
   return (
     <div>
@@ -54,7 +61,7 @@ const CollectionContent: React.FC<ICollectionContent> = ({
               : 'w-0 opacity-0 -translate-x-4'
           )}
         >
-          <Filter facets={facets} globalPrice={globalPrice}/>
+          <Filter facets={facets} globalPrice={globalPrice} />
         </div>
 
         <div className="flex-1 transition-[margin] duration-300 ease-in-out">
@@ -66,19 +73,3 @@ const CollectionContent: React.FC<ICollectionContent> = ({
 }
 
 export default CollectionContent
-
-//       <div
-//         className="shrink-0 overflow-hidden transition-[width] duration-300 ease-in-out "
-//         style={{ width: showFilter ? 250 : 0 }}
-//       >
-//         <Activity mode={showFilter ? 'visible' : 'hidden'}>
-//           <div
-//             className={cn(
-//               'w-[250px]',
-//               showFilter ? 'translate-x-0 ' : '-translate-x-full'
-//             )}
-//           >
-//             <Filter />
-//           </div>
-//         </Activity>
-//       </div>

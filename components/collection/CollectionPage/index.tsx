@@ -30,7 +30,7 @@ const CollectionPage: React.FC<ICollectionPage> = async ({
   'use cache'
   cacheLife('hours')
   const items = await getBreadcrumbFromMenu(handle)
-  const category = getSubCategory(categoryMenus, handle)
+  const category = await getSubCategory(categoryMenus, handle)
   const currentCollection = collections.find((item) => item.handle === handle)
   const subCategories = category?.collections ?? []
 

@@ -1,5 +1,5 @@
+import { getBannerData } from '@/components/collection/Banner/helper'
 import CollectionPage from '@/components/collection/CollectionPage'
-import { getBannerData } from '@/components/collection/CollectionPage/helper'
 import { toURLSearchParams } from '@/lib/helper'
 import {
   getCollectionProductsByHandle,
