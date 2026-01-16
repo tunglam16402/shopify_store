@@ -44,7 +44,7 @@ const SortByFilter = () => {
         onChange={(v) => onChange(v[0])}
         placeholder="Featured"
         icon={<IcoSort className="w-5 h-5" />}
-        className="w-full"
+        className="w-full text-sm md:text-base"
         multiple={false}
       />
     </div>

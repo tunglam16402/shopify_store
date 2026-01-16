@@ -67,9 +67,14 @@ export function useFilterProduct() {
     [searchParams, push]
   )
 
+  const clearAll = useCallback(() => {
+    push(new URLSearchParams())
+  }, [push])
+
   return {
     toggleValue,
     setRange,
     clearRange,
+    clearAll,
   }
 }

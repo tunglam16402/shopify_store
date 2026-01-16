@@ -47,8 +47,9 @@ const FilterPrice = ({ globalPrice }: IFilter) => {
   }
 
   return (
-    <div className="space-y-4 text-sm text-gray-600">
-      <div className="flex items-center gap-3">
+    <div className="space-y-4 mt-4 border-b pb-6">
+      <span className="md:text-lg font-semibold text-lg">Price</span>
+      <div className="flex items-center gap-3 mt-4">
         <input
           type="number"
           min={globalMin}
@@ -61,10 +62,10 @@ const FilterPrice = ({ globalPrice }: IFilter) => {
             ])
           }
           onBlur={() => commit(range)}
-          className="w-24 rounded border px-2 py-1"
+          className="w-full rounded border px-2 py-1 md:text-base text-lg"
         />
 
-        <span>-</span>
+        <span className="text-lg">-</span>
 
         <input
           type="number"
@@ -78,7 +79,7 @@ const FilterPrice = ({ globalPrice }: IFilter) => {
             ])
           }
           onBlur={() => commit(range)}
-          className="w-24 rounded border px-2 py-1"
+          className="w-full rounded border px-2 py-1 text-lg md:text-base"
         />
       </div>
 
@@ -89,6 +90,7 @@ const FilterPrice = ({ globalPrice }: IFilter) => {
         value={range}
         onValueChange={(v) => setLocalRange(v as [number, number])}
         onValueCommit={(v) => commit(v as [number, number])}
+        className="mt-10"
       />
     </div>
   )

@@ -3,14 +3,20 @@
 import cn from 'classnames'
 import { useEffect, useState } from 'react'
 
-import { IcoFilter } from '@/components/icons'
+import { IcoClose, IcoFilter } from '@/components/icons'
 import { ProductList } from '@/components/products'
 import { ProductCardProps } from '@/types/product/productCard'
 import { TileBanner } from '../Banner'
-import Filter from '../Filter'
 import SortByFilter from '../Filter/SortByFilter'
 import { Facets } from '../type'
 import { useSearchParams } from 'next/navigation'
+import FilterMobile from '../FilterMobile'
+import dynamic from 'next/dynamic'
+import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
+
+const Filter = dynamic(() => import('../Filter'), {
+  ssr: false,
+})
 
 interface ICollectionContent {
   products: ProductCardProps[]
@@ -27,6 +33,7 @@ const CollectionContent: React.FC<ICollectionContent> = ({
 }) => {
   const [showFilter, setShowFilter] = useState(false)
   const searchParams = useSearchParams()
+  const isDesktop = useMediaQuery('(min-width: 768px)')
 
   useEffect(() => {
     if (searchParams.size > 0) {
@@ -37,14 +44,18 @@ const CollectionContent: React.FC<ICollectionContent> = ({
   return (
     <div>
       <div className="flex justify-between items-center gap-4 mt-6 md:mt-10">
-        <div className="text-xl">({products.length} items)</div>
-        <div className="flex items-center gap-6">
+        <div className="md:text-xl text-base hidden md:block">({products.length} items)</div>
+        <div className="flex items-center gap-6 flex-1 md:flex-none">
           <button
             onClick={() => setShowFilter((prev) => !prev)}
-            className="flex items-center gap-2"
+            className="flex flex-1 items-center gap-2 text-sm md:text-base border rounded-lg px-4 py-2 border-gray-400"
           >
             <IcoFilter className="w-5 h-5" />
-            {showFilter ? 'Hide filters' : 'Show filters'}
+            {isDesktop === true
+              ? showFilter
+                ? 'Hide filters'
+                : 'Show filters'
+              : 'Filter'}
           </button>
 
           <SortByFilter />
@@ -52,19 +63,43 @@ const CollectionContent: React.FC<ICollectionContent> = ({
       </div>
 
       <div className="mt-6 md:mt-10 flex">
-        <div
-          className={cn(
-            'relative transition-all duration-300 ease-in-out',
-            'overflow-hidden shrink-0',
-            showFilter
-              ? 'w-60 opacity-100 translate-x-0 pr-4 mr-4'
-              : 'w-0 opacity-0 -translate-x-4'
-          )}
-        >
-          <Filter facets={facets} globalPrice={globalPrice} />
-        </div>
+        {isDesktop === false && (
+          <FilterMobile open={showFilter} onClose={() => setShowFilter(false)}>
+            <div className="flex items-center justify-between pb-4 border-b">
+              <div className="flex items-center gap-2">
+                <span className="text-lg uppercase font-medium">Filter</span>
+                <div className="md:text-xl text-base">
+                  ({products.length} results)
+                </div>
+              </div>
+              <button onClick={() => setShowFilter(false)}>
+                <IcoClose className="w-5 h-5" />
+              </button>
+            </div>
 
-        <div className="flex-1 transition-[margin] duration-300 ease-in-out">
+            <Filter facets={facets} globalPrice={globalPrice} />
+          </FilterMobile>
+        )}
+
+        {isDesktop === true && (
+          <div
+            className={cn(
+              'transition-all duration-300 ease-in-out shrink-0',
+              showFilter
+                ? 'w-60 pr-4 mr-4 translate-x-0 opacity-100'
+                : 'w-0 -translate-x-full opacity-0 pointer-events-none'
+            )}
+          >
+            <div className="w-60">
+              <div className="border-b uppercase text-base md:text-lg border-gray-600 pb-3">
+                Filter
+              </div>
+              <Filter facets={facets} globalPrice={globalPrice} />
+            </div>
+          </div>
+        )}
+
+        <div className="flex-1">
           <ProductList products={products} tiles={tiles} />
         </div>
       </div>

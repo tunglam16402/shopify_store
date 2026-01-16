@@ -14,13 +14,13 @@ const FilterItem = ({ facets }: IFilter) => {
   const { toggleValue } = useFilterProduct()
 
   return (
-    <aside className="w-64 space-y-6">
+    <aside className="mt-6 space-y-6">
       {facets.map((facet) => {
         if (facet.type !== 'LIST') return null
 
         return (
-          <div key={facet.id}>
-            <h4 className="font-medium mb-2">{facet.label}</h4>
+          <div key={facet.id} className='border-b pb-6'>
+            <p className="font-semibold text-lg mb-2">{facet.label}</p>
 
             <ul className="space-y-1">
               {facet.values.map((v) => {

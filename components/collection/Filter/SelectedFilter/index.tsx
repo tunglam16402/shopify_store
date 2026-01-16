@@ -11,18 +11,18 @@ interface Props {
   globalPrice: Facets[]
 }
 
-interface SelectedItem {
-  key: string
-  label: string
-  value?: string
-}
-
 const SelectedFilter = ({ facets, globalPrice }: Props) => {
   const searchParams = useSearchParams()
-  const { toggleValue, clearRange } = useFilterProduct()
+  const { toggleValue, clearRange, clearAll } = useFilterProduct()
 
-  const selected = useMemo<SelectedItem[]>(() => {
-    const items: SelectedItem[] = []
+  const { listGroups, price } = useMemo(() => {
+    const listGroups: Record<
+      string,
+      {
+        label: string
+        items: { label: string; param: string; value: string }[]
+      }
+    > = {}
 
     facets.forEach((facet) => {
       if (facet.type !== 'LIST') return
@@ -31,63 +31,85 @@ const SelectedFilter = ({ facets, globalPrice }: Props) => {
         const parsed = parseFacetInput(v.input)
         if (!parsed?.value) return
 
-        const selectedValues = searchParams.getAll(parsed.param)
-        if (!selectedValues.includes(parsed.value)) return
+        if (!searchParams.getAll(parsed.param).includes(parsed.value)) return
 
-        items.push({
-          key: `${parsed.param}:${parsed.value}`,
+        listGroups[parsed.param] ??= {
+          label: facet.label,
+          items: [],
+        }
+
+        listGroups[parsed.param].items.push({
           label: v.label,
+          param: parsed.param,
           value: parsed.value,
         })
       })
     })
 
+    let price: { min: number; max: number } | null = null
+
     const priceFacet = globalPrice.find((f) => f.type === 'PRICE_RANGE')
     if (priceFacet?.values?.[0]?.input) {
       try {
-        const { price } = JSON.parse(priceFacet.values[0].input)
-        const globalMin = price?.min
-        const globalMax = price?.max
+        const { price: global } = JSON.parse(priceFacet.values[0].input)
+        const min = Number(searchParams.get('price_min') ?? global.min)
+        const max = Number(searchParams.get('price_max') ?? global.max)
 
-        const min = searchParams.get('price_min')
-        const max = searchParams.get('price_max')
-
-        if (
-          (min && Number(min) !== globalMin) ||
-          (max && Number(max) !== globalMax)
-        ) {
-          items.push({
-            key: 'price',
-            label: `Price: ${min ?? globalMin} - ${max ?? globalMax}`,
-          })
+        if (min !== global.min || max !== global.max) {
+          price = { min, max }
         }
       } catch {}
     }
 
-    return items
+    return { listGroups, price }
   }, [facets, globalPrice, searchParams])
 
-  if (selected.length === 0) return null
+  const hasSelectedFilters = Object.keys(listGroups).length > 0 || !!price
 
   return (
-    <div className="flex flex-wrap gap-2 mb-4">
-      {selected.map((item) => (
-        <button
-          key={item.key}
-          className="flex items-center gap-1 rounded-full border px-3 py-1 text-sm"
-          onClick={() => {
-            if (item.key === 'price') {
-              clearRange({ min: 'price_min', max: 'price_max' })
-            } else {
-              const [param, value] = item.key.split(':')
-              toggleValue(param, value)
-            }
-          }}
-        >
-          {item.label}
-          <span className="ml-1 text-gray-400">×</span>
-        </button>
+    <div className="flex flex-col flex-wrap ">
+      {Object.values(listGroups).map((group) => (
+        <div key={group.label} className="space-x-2">
+          <span className="font-medium mr-2 text-sm md:text-base">
+            {group.label}:
+          </span>
+
+          {group.items.map((item) => (
+            <button
+              key={item.value}
+              className="inline-flex items-center gap-1 gap- rounded-full border px-2 py-1 mt-2"
+              onClick={() => toggleValue(item.param, item.value)}
+            >
+              {item.label}
+              <span className="text-gray-400">×</span>
+            </button>
+          ))}
+        </div>
       ))}
+
+      {price && (
+        <div className="mt-2">
+          <span className="font-medium mr-2 text-sm md:text-base">Price:</span>
+          <button
+            className="inline-flex items-center gap-1 rounded-full border px-3 py-1"
+            onClick={() => clearRange({ min: 'price_min', max: 'price_max' })}
+          >
+            {price.min} – {price.max}
+            <span className="text-gray-400">×</span>
+          </button>
+        </div>
+      )}
+
+      {hasSelectedFilters && (
+        <div>
+          <button
+            onClick={() => clearAll()}
+            className="mt-2 underline text-gray-500 hover:text-black"
+          >
+            Clear all
+          </button>
+        </div>
+      )}
     </div>
   )
 }
