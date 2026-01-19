@@ -55,24 +55,24 @@ const SuggestionSearch = ({
         {isTyping ? (
           hasPredictive ? (
             <>
-              <span className="font-[tangerine] font-bold pr-2">Search</span>
+              <span className="font-sub-heading font-bold pr-2">Search</span>
               <span className="uppercase font-light">suggestions</span>
             </>
           ) : (
             <>
               <span className="uppercase font-light">Popular</span>
-              <span className="font-[tangerine] font-bold px-2">Searches</span>
+              <span className="font-sub-heading font-bold px-2">Searches</span>
             </>
           )
         ) : hasRecent ? (
           <>
-            <span className="font-[tangerine] font-bold pr-2">Recent</span>
+            <span className="font-sub-heading font-bold pr-2">Recent</span>
             <span className="uppercase font-light">searches</span>
           </>
         ) : (
           <>
             <span className="uppercase font-light">Popular</span>
-            <span className="font-[tangerine] font-bold px-2">Searches</span>
+            <span className="font-sub-heading font-bold px-2">Searches</span>
           </>
         )}
       </h3>

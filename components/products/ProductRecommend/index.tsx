@@ -24,11 +24,11 @@ const ProductRecommend: React.FC<IProductRecommend> = ({
           text={
             type === 'related' ? 'Related products' : 'Complementary products'
           }
-          normalClass="uppercase text-3xl md:text-4xl"
-          tangerineClass="font-[tangerine] font-bold text-5xl"
+          headingClass="uppercase text-3xl md:text-[42px]"
+          subHeadingClass="font-sub-heading font-bold text-4xl md:text-5xl"
         />
       </div>
-      <ProductSwiper data={data} className="mt-4" />
+      <ProductSwiper data={data} className="mt-4 md:mt-6" />
     </>
   )
 }

@@ -44,34 +44,38 @@ const CollectionContent: React.FC<ICollectionContent> = ({
   return (
     <div>
       <div className="flex justify-between items-center gap-4 mt-6 md:mt-10">
-        <div className="md:text-xl text-base hidden md:block">({products.length} items)</div>
-        <div className="flex items-center gap-6 flex-1 md:flex-none">
+        <div className="md:text-xl text-base hidden md:block">
+          ({products.length} items)
+        </div>
+        <div className="flex items-center gap-2 md:gap-4 flex-1 md:flex-none">
           <button
             onClick={() => setShowFilter((prev) => !prev)}
-            className="flex flex-1 items-center gap-2 text-sm md:text-base border rounded-lg px-4 py-2 border-gray-400"
+            className="flex flex-1 items-center gap-2 text-sm md:text-base border rounded-lg py-2 border-gray-400"
           >
-            <IcoFilter className="w-5 h-5" />
-            {isDesktop === true
-              ? showFilter
-                ? 'Hide filters'
-                : 'Show filters'
-              : 'Filter'}
+            <IcoFilter className="w-5 h-5 ml-4" />
+            <span className="mr-4">
+              {isDesktop === true
+                ? showFilter
+                  ? 'Hide filters'
+                  : 'Show filters'
+                : 'Filter'}
+            </span>
           </button>
-
-          <SortByFilter />
+          <div className="flex-1 md:flex-none">
+            <SortByFilter />
+          </div>
         </div>
       </div>
 
       <div className="mt-6 md:mt-10 flex">
         {isDesktop === false && (
-          <FilterMobile open={showFilter} onClose={() => setShowFilter(false)}>
+          <FilterMobile
+            open={showFilter}
+            onClose={() => setShowFilter(false)}
+            resultsCount={products.length}
+          >
             <div className="flex items-center justify-between pb-4 border-b">
-              <div className="flex items-center gap-2">
-                <span className="text-lg uppercase font-medium">Filter</span>
-                <div className="md:text-xl text-base">
-                  ({products.length} results)
-                </div>
-              </div>
+              <span className="text-xl uppercase font-medium">Filter</span>
               <button onClick={() => setShowFilter(false)}>
                 <IcoClose className="w-5 h-5" />
               </button>
@@ -86,7 +90,7 @@ const CollectionContent: React.FC<ICollectionContent> = ({
             className={cn(
               'transition-all duration-300 ease-in-out shrink-0',
               showFilter
-                ? 'w-60 pr-4 mr-4 translate-x-0 opacity-100'
+                ? 'w-60 mr-8 translate-x-0 opacity-100'
                 : 'w-0 -translate-x-full opacity-0 pointer-events-none'
             )}
           >

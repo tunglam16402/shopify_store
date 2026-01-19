@@ -31,8 +31,8 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
       <div className="text-center">
         <StyledHeading
           text="Ratings and Reviews"
-          normalClass="uppercase text-3xl md:text-4xl"
-          tangerineClass="font-[tangerine] font-bold text-5xl"
+          headingClass="uppercase text-3xl md:text-[42px]"
+          subHeadingClass="font-sub-heading font-bold text-4xl md:text-5xl"
         />
       </div>
 

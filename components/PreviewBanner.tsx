@@ -77,7 +77,7 @@ export function PreviewBanner({ data }: IHeroBannerPreviewProps) {
           <h1 className="text-5xl font-extralight text-white md:text-6xl">
             {title}
             {lowerTitle && (
-              <span className="px-2 font-[tangerine] text-6xl">{lowerTitle}</span>
+              <span className="px-2 font-sub-heading text-6xl">{lowerTitle}</span>
             )}
             {title2 && title2}
           </h1>

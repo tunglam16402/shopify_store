@@ -21,10 +21,10 @@ const FeaturedProductGroup: React.FC<IFeaturedProductGroup> = ({ sections }) => 
     <>
       {sections.map(({ widgetId, section, items }) => (
         <div key={widgetId} className="">
-          <h2 className="text-3xl md:text-5xl text-center mt-12">
+          <h2 className="text-3xl md:text-[54px] text-center mt-12 md:mt-16">
             <span className="uppercase">{section.heading_title}</span>
             {section.sub_title && (
-              <span className="font-[tangerine] font-bold text-5xl px-2">
+              <span className="font-sub-heading font-bold text-4xl md:text-[54px] px-2">
                 {section.sub_title}
               </span>
             )}

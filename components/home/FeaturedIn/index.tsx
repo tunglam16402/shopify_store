@@ -16,9 +16,11 @@ const FeaturedIn: React.FC<IFeaturedIn> = ({ features }) => {
 
   return (
     <section className="relative w-full overflow-hidden">
-      <h2 className="text-3xl md:text-5xl text-center mt-12">
+      <h2 className="text-3xl md:text-[54px] text-center mt-12 md:mt-16">
         <span className="uppercase">featured </span>
-        <span className="font-[tangerine] font-bold text-6xl px-1">in</span>
+        <span className="font-sub-heading font-bold text-4xl md:text-[54px]">
+          in
+        </span>
       </h2>
       <div className="mt-2">
         {feature.mobile_image && (
@@ -26,7 +28,6 @@ const FeaturedIn: React.FC<IFeaturedIn> = ({ features }) => {
             field={feature.mobile_image}
             alt=""
             className="md:hidden w-full h-auto object-contain"
-            priority
           />
         )}
 
@@ -35,7 +36,6 @@ const FeaturedIn: React.FC<IFeaturedIn> = ({ features }) => {
             field={feature.image}
             alt=""
             className="hidden md:block w-full h-auto object-contain"
-            priority
           />
         )}
       </div>

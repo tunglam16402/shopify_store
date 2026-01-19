@@ -30,8 +30,8 @@ const ProductBottomInfo: React.FC<IProductBottomInfo> = ({
       <div>
         <StyledHeading
           text={product.title}
-          normalClass="capitalize text-xl md:text-3xl"
-          tangerineClass="font-[tangerine] font-bold text-3xl md:text-4xl"
+          headingClass="capitalize text-xl md:text-3xl"
+          subHeadingClass="font-sub-heading font-bold text-3xl md:text-4xl"
         />
       </div>
       <div className="w-full md:w-fit">

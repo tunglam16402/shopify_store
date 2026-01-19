@@ -70,12 +70,12 @@ const ProductInformation = ({ product }: ProductInformationProps) => {
 
         <StyledHeading
           text={product.title}
-          normalClass="uppercase text-4xl md:text-[54px]"
-          tangerineClass="font-[tangerine] font-bold text-5xl md:text-6xl"
+          headingClass="uppercase text-4xl md:text-[54px]"
+          subHeadingClass="font-sub-heading text-[42px] md:text-5xl"
         />
 
         {/* Ratings */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 mt-2 ">
           <StarRating rating={avgRating} size={5} />
 
           <span className="text-sm md:text-base text-gray-600">
@@ -85,7 +85,7 @@ const ProductInformation = ({ product }: ProductInformationProps) => {
         </div>
 
         {/* Price */}
-        <div className="mt-4">
+        <div className="mt-6">
           {productPrice?.compareAtPrice &&
           productPrice.compareAtPrice > productPrice.basePrice ? (
             <div className="flex items-center">

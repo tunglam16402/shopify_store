@@ -110,18 +110,18 @@ const SuggestionProducts = ({
           ) : (
             <>
               <span className="uppercase font-light">Popular</span>
-              <span className="font-[tangerine] font-bold px-2">products</span>
+              <span className="font-sub-heading font-bold px-2">products</span>
             </>
           )
         ) : hasRecent ? (
           <>
-            <span className="font-[tangerine] font-bold pr-2">Recently</span>
+            <span className="font-sub-heading font-bold pr-2">Recently</span>
             <span className="uppercase font-light">viewed</span>
           </>
         ) : (
           <>
             <span className="uppercase">You</span>
-            <span className="font-[tangerine] font-bold px-2">may</span>
+            <span className="font-sub-heading font-bold px-2">may</span>
             <span className="uppercase">like</span>
           </>
         )}

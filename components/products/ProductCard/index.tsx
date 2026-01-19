@@ -115,9 +115,9 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
             href={`/products/${product?.handle}`}
             onClick={handleProductClick}
           >
-            <h2 className="text-sm font-semibold text-gray-900 line-clamp-2 min-h-10">
+            <p className="md:text-base font-semibold text-gray-800 line-clamp-2 min-h-10 capitalize">
               {product.title}
-            </h2>
+            </p>
           </Link>
         </div>
 

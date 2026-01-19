@@ -105,7 +105,9 @@ const ProductInfo: React.FC<IProductInfoProps> = ({
     [description, information]
   )
 
-  const [openId, setOpenId] = useState<number | null>(productInfo[0]?.id ?? null)
+  const [openId, setOpenId] = useState<number | null>(
+    productInfo[0]?.id ?? null
+  )
 
   return (
     <div className="space-y-4">
@@ -119,11 +121,10 @@ const ProductInfo: React.FC<IProductInfoProps> = ({
           }
           openIcon={<IcoDown className="h-5 w-5" />}
           closeIcon={<IcoDown className="h-5 w-5" />}
-          className="text-black text-sm md:text-base"
         >
-          <div className="prose prose-sm md:prose-base max-w-none text-gray-700 mt-3">
+          <p className="prose prose-sm md:prose-base text-sm max-w-none text-gray-700 mt-3">
             {info.descriptionHtml && (
-              <div
+              <p
                 dangerouslySetInnerHTML={{
                   __html: info.descriptionHtml,
                 }}
@@ -131,7 +132,7 @@ const ProductInfo: React.FC<IProductInfoProps> = ({
             )}
 
             {info.descriptionNode && info.descriptionNode}
-          </div>
+          </p>
         </Dropdown>
       ))}
     </div>

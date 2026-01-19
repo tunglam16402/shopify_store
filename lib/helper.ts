@@ -21,6 +21,10 @@ const CURRENCY_SYMBOL_MAP: Record<string, string> = {
   VND: '₫',
 }
 
+export function normalizeTitle(text: string) {
+  return text.toLowerCase().replace(/\b\p{L}/gu, (c) => c.toUpperCase())
+}
+
 export function mappingDiscountPrice(
   product: GetProductsQuery['products']['nodes'][0]
 ) {
@@ -40,7 +44,7 @@ export function mappingDiscountPrice(
   return {
     id: product.id,
     variantId: product.variants.edges[0].node.id,
-    title: product.title,
+    title: normalizeTitle(product.title),
     handle: product.handle,
     description: product.description,
     publishedAt: product.publishedAt,

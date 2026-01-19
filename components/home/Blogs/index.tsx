@@ -15,8 +15,8 @@ interface IBlogs {
 const Blogs: React.FC<IBlogs> = ({ blogs }) => {
   return (
     <section className="main-width">
-      <h2 className="text-3xl md:text-5xl text-center mt-12">
-        <span className="font-[tangerine] font-bold text-5xl px-2">the</span>
+      <h2 className="text-3xl md:text-[54px] text-center mt-12 md:mt-16">
+        <span className="font-sub-heading font-bold text-4xl md:text-[54px] px-2">the</span>
         <span className="uppercase">journal</span>
       </h2>
       <div className="mt-4 md:mt-8">

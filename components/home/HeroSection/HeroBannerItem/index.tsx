@@ -29,7 +29,7 @@ const HeroBannerItem: React.FC<IHeroBannerItem> = ({ data }) => {
         <h1 className="text-white font-extralight text-5xl md:text-6xl">
           {data.title}
           {data.lower_title && (
-            <span className="font-[tangerine] text-6xl px-2">
+            <span className="font-sub-heading text-6xl px-2">
               {data.lower_title}
             </span>
           )}

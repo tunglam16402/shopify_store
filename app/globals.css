@@ -58,8 +58,10 @@ body {
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-tangerine: var(--font-tangerine-sans);
-  --font-literata: var(--font-literata-sans);
+  --font-sub-heading: var(--font-sub-heading);
+  --font-heading: var(--font-heading);
+
+  --font-cormorant: var(--font-cormorant-garamond);
   --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -216,6 +218,17 @@ button {
 h1,
 h2,
 h3,
-h4 {
-  font-family: --font-literata;
+h4,
+h5 {
+  font-family: var(--font-heading);
+}
+
+p {
+  font-family: var(--font-paragraph);
+}
+
+.font-sub-heading {
+  font-family: var(--font-sub-heading);
+  font-weight: 300;
+  font-style: italic;
 }
