@@ -19,10 +19,10 @@ const FilterItem = ({ facets }: IFilter) => {
         if (facet.type !== 'LIST') return null
 
         return (
-          <div key={facet.id} className='border-b pb-6'>
+          <div key={facet.id} className="border-b pb-6">
             <p className="font-semibold text-lg mb-2">{facet.label}</p>
 
-            <ul className="space-y-1">
+            <ul className="space-y-4">
               {facet.values.map((v) => {
                 const parsed = parseFacetInput(v.input)
                 if (!parsed || !parsed.value) return null
@@ -31,15 +31,18 @@ const FilterItem = ({ facets }: IFilter) => {
                 const checked = searchParams.getAll(param).includes(value)
                 return (
                   v.count > 0 && (
-                    <li key={v.id} className="flex items-center gap-2">
-                      <input
-                        type="checkbox"
-                        checked={checked}
-                        onChange={() => toggleValue(param, value)}
-                      />
-                      <span>
-                        {v.label} ({v.count})
-                      </span>
+                    <li key={v.id}>
+                      <label className="flex items-center gap-3 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={checked}
+                          onChange={() => toggleValue(param, value)}
+                          className="h-[18px] rounded-sm w-[18px] accent-primary"
+                        />
+                        <span className={checked ? 'font-medium': "font-normal"}>
+                          {v.label} ({v.count})
+                        </span>
+                      </label>
                     </li>
                   )
                 )

@@ -37,7 +37,7 @@ const SortByFilter = () => {
   }
 
   return (
-    <div>
+    <>
       <Select
         options={SORT_OPTIONS}
         value={[sortValue]}
@@ -47,7 +47,7 @@ const SortByFilter = () => {
         className="w-full text-sm md:text-base"
         multiple={false}
       />
-    </div>
+    </>
   )
 }
 

@@ -1,9 +1,13 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import * as SliderPrimitive from "@radix-ui/react-slider"
+import * as React from 'react'
+import * as SliderPrimitive from '@radix-ui/react-slider'
+import { cn } from '@/lib/utils'
 
-import { cn } from "@/lib/utils"
+interface SliderProps
+  extends React.ComponentProps<typeof SliderPrimitive.Root> {
+  tickCount?: number
+}
 
 function Slider({
   className,
@@ -11,9 +15,10 @@ function Slider({
   value,
   min = 0,
   max = 100,
+  tickCount,
   ...props
-}: React.ComponentProps<typeof SliderPrimitive.Root>) {
-  const _values = React.useMemo(
+}: SliderProps) {
+  const values = React.useMemo(
     () =>
       Array.isArray(value)
         ? value
@@ -23,40 +28,89 @@ function Slider({
     [value, defaultValue, min, max]
   )
 
+  const ticks = React.useMemo(() => {
+    if (!tickCount || tickCount < 2) return []
+
+    const step = (max - min) / (tickCount - 1)
+
+    return Array.from({ length: tickCount }, (_, i) => {
+      const v = min + step * i
+      return {
+        value: Math.round(v),
+        percent: ((v - min) / (max - min)) * 100,
+      }
+    })
+  }, [tickCount, min, max])
+
+  const showTicks = ticks.length > 0
+
   return (
-    <SliderPrimitive.Root
-      data-slot="slider"
-      defaultValue={defaultValue}
-      value={value}
-      min={min}
-      max={max}
-      className={cn(
-        "relative flex w-full touch-none items-center select-none data-[disabled]:opacity-50 data-[orientation=vertical]:h-full data-[orientation=vertical]:min-h-44 data-[orientation=vertical]:w-auto data-[orientation=vertical]:flex-col",
-        className
-      )}
-      {...props}
-    >
-      <SliderPrimitive.Track
-        data-slot="slider-track"
+    <div className="relative w-full">
+      <SliderPrimitive.Root
+        min={min}
+        max={max}
+        value={value}
+        defaultValue={defaultValue}
         className={cn(
-          "bg-muted relative grow overflow-hidden rounded-full data-[orientation=horizontal]:h-1.5 data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-1.5"
+          'relative flex w-full touch-none items-center select-none',
+          className
         )}
+        {...props}
       >
-        <SliderPrimitive.Range
-          data-slot="slider-range"
-          className={cn(
-            "bg-primary absolute data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full"
+        <SliderPrimitive.Track className="relative h-1.5 w-full grow rounded-full bg-muted">
+          <SliderPrimitive.Range className="absolute h-full bg-primary" />
+
+          {/* Tick */}
+          {showTicks && (
+            <div className="pointer-events-none absolute inset-0">
+              {ticks.map((tick, i) => (
+                <div
+                  key={i}
+                  className="absolute top-1/2 -translate-y-1/2"
+                  style={{ left: `${tick.percent}%` }}
+                >
+                  <div
+                    className={cn(
+                      'mx-auto bg-muted-foreground h-3 ',
+                      i === 0 || i === ticks.length - 1 ? 'w-0.5' : 'w-px'
+                    )}
+                  />
+                </div>
+              ))}
+            </div>
           )}
-        />
-      </SliderPrimitive.Track>
-      {Array.from({ length: _values.length }, (_, index) => (
-        <SliderPrimitive.Thumb
-          data-slot="slider-thumb"
-          key={index}
-          className="border-primary ring-ring/50 block size-4 shrink-0 rounded-full border bg-white shadow-sm transition-[color,box-shadow] hover:ring-4 focus-visible:ring-4 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50"
-        />
-      ))}
-    </SliderPrimitive.Root>
+        </SliderPrimitive.Track>
+
+        {values.map((_, i) => (
+          <SliderPrimitive.Thumb
+            key={i}
+            className="block w-3 md:w-2.5 md:h-4 rounded h-5 border border-black shadow-2xl bg-white focus-visible:ring-4 focus-visible:ring-ring"
+          />
+        ))}
+      </SliderPrimitive.Root>
+
+      {/* Tick labels */}
+      {showTicks && (
+        <div className="relative mt-3 h-4 w-full ">
+          {ticks.map((tick, i) => (
+            <span
+              key={i}
+              className={cn(
+                'absolute text-sm text-muted-foreground',
+                i === 0 && 'translate-x-0 text-left',
+                i === ticks.length - 1 && '-translate-x-full text-right',
+                i !== 0 &&
+                  i !== ticks.length - 1 &&
+                  '-translate-x-1/2 text-center'
+              )}
+              style={{ left: `${tick.percent}%` }}
+            >
+              {tick.value}
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
   )
 }
 

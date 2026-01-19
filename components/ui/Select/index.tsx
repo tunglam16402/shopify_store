@@ -74,9 +74,9 @@ const Select: React.FC<SelectProps> = ({
           className
         )}
       >
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 ">
           {icon && <span>{icon}</span>}
-          {multiple ? <span>{placeholder}</span> : <span>Sort by: {displayLabel || placeholder}</span>}
+          {multiple ? <span>{placeholder}</span> : <span className='line-clamp-1'>Sort by: {displayLabel || placeholder}</span>}
         </div>
         <IcoDown className="w-4 h-4" />
       </button>

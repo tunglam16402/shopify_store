@@ -62,7 +62,7 @@ const FilterPrice = ({ globalPrice }: IFilter) => {
             ])
           }
           onBlur={() => commit(range)}
-          className="w-full rounded border px-2 py-1 md:text-base text-lg"
+          className="w-full rounded border focus:border-gray-500 px-2 py-1 md:text-base text-lg"
         />
 
         <span className="text-lg">-</span>
@@ -79,19 +79,22 @@ const FilterPrice = ({ globalPrice }: IFilter) => {
             ])
           }
           onBlur={() => commit(range)}
-          className="w-full rounded border px-2 py-1 text-lg md:text-base"
+          className="w-full rounded border focus:border-gray-500 px-2 py-1 text-lg md:text-base"
         />
       </div>
 
-      <Slider
-        min={globalMin}
-        max={globalMax}
-        step={1}
-        value={range}
-        onValueChange={(v) => setLocalRange(v as [number, number])}
-        onValueCommit={(v) => commit(v as [number, number])}
-        className="mt-10"
-      />
+      <div className="md:px-0 px-2">
+        <Slider
+          min={globalMin}
+          max={globalMax}
+          step={1}
+          value={range}
+          onValueChange={(v) => setLocalRange(v as [number, number])}
+          onValueCommit={(v) => commit(v as [number, number])}
+          className="mt-10 px-1"
+          tickCount={5}
+        />
+      </div>
     </div>
   )
 }
