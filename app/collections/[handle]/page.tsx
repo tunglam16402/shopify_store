@@ -36,19 +36,15 @@ const Collection = async ({ params, searchParams }: Props) => {
   const categoryMenus = await getCategoryMenus()
 
   return (
-    <main className="mt-[100px] md:mt-0">
-      <Suspense fallback={null}>
-        <CollectionPage
-          products={products}
-          facets={facets}
-          globalPrice={globalPriceFilters}
-          bannerData={bannerData}
-          handle={handle}
-          collections={collections}
-          categoryMenus={categoryMenus}
-        />
-      </Suspense>
-    </main>
+    <CollectionPage
+      products={products}
+      facets={facets}
+      globalPrice={globalPriceFilters}
+      bannerData={bannerData}
+      handle={handle}
+      collections={collections}
+      categoryMenus={categoryMenus}
+    />
   )
 }
 

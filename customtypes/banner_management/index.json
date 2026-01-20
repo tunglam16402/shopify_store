@@ -17,6 +17,50 @@
           }
         }
       }
+    },
+    "Sub Banner": {
+      "title": {
+        "type": "Text",
+        "config": {
+          "label": "Title",
+          "placeholder": ""
+        }
+      },
+      "description": {
+        "type": "Text",
+        "config": {
+          "label": "description",
+          "placeholder": ""
+        }
+      },
+      "supporting_text": {
+        "type": "Text",
+        "config": {
+          "label": "Supporting Text",
+          "placeholder": ""
+        }
+      },
+      "background_color": {
+        "type": "Color",
+        "config": {
+          "label": "Background Color",
+          "placeholder": ""
+        }
+      },
+      "ctatext": {
+        "type": "Text",
+        "config": {
+          "label": "CTAText",
+          "placeholder": ""
+        }
+      },
+      "ctalink": {
+        "type": "Text",
+        "config": {
+          "label": "CTALink",
+          "placeholder": ""
+        }
+      }
     }
   }
 }

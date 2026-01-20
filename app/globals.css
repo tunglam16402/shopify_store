@@ -10,7 +10,8 @@
   --bg-primary: black;
   /* #7c0214 */
   /* #f89540 */
-  --bg-sub-primary: rgb(172, 6, 36);
+  /* rgb(172, 6, 36) */
+  --bg-sub-primary: rgb(113, 5, 37);
   --bg-accent: #e3c16f;
   --bg-neutral: #f5f2ef;
 

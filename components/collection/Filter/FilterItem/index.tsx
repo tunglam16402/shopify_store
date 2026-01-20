@@ -20,7 +20,7 @@ const FilterItem = ({ facets }: IFilter) => {
 
         return (
           <div key={facet.id} className="border-b pb-6">
-            <p className="font-semibold text-lg mb-2">{facet.label}</p>
+            <p className="font-semibold text-lg mb-6">{facet.label}</p>
 
             <ul className="space-y-4">
               {facet.values.map((v) => {

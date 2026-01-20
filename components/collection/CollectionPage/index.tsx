@@ -35,32 +35,34 @@ const CollectionPage: React.FC<ICollectionPage> = async ({
   const subCategories = category?.collections ?? []
 
   return (
-    <div className="main-width pt-8!">
+    <div className="mt-[132px] md:mt-4">
       {bannerData && <Banner bannerData={bannerData} />}
-      <div className="mt-4 md:mt-6">
+      <div className="main-width mt-4! md:mt-6!">
         <Breadcrumb items={items} />
       </div>
-      <div className="mt-4 md:mt-6">
-        <h1 className="text-3xl md:text-5xl uppercase font-light">
-          {currentCollection?.title}
-        </h1>
-        {currentCollection?.description && (
-          <ExpandableText
-            text={currentCollection.description}
-            lineClamp={4}
-            className="text-sm md:text-base md:w-2/3 mt-2 md:mt-6"
-          />
-        )}
+      <div className="main-width">
+        <div className="mt-4 md:mt-6">
+          <h1 className="text-3xl md:text-5xl uppercase font-light">
+            {currentCollection?.title}
+          </h1>
+          {currentCollection?.description && (
+            <ExpandableText
+              text={currentCollection.description}
+              lineClamp={4}
+              className="text-sm md:text-base md:w-2/3 mt-2 md:mt-6"
+            />
+          )}
+        </div>
+        <div className="mt-6 md:mt-10">
+          <ShopByCategory subCategories={subCategories} />
+        </div>
+        <CollectionContent
+          products={products}
+          tiles={bannerData?.tiles}
+          facets={facets}
+          globalPrice={globalPrice}
+        />
       </div>
-      <div className="mt-6 md:mt-10">
-        <ShopByCategory subCategories={subCategories} />
-      </div>
-      <CollectionContent
-        products={products}
-        tiles={bannerData?.tiles}
-        facets={facets}
-        globalPrice={globalPrice}
-      />
     </div>
   )
 }

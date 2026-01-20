@@ -84,7 +84,71 @@ interface BannerManagementDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/slices
    */
-  slices: prismic.SliceZone<BannerManagementDocumentDataSlicesSlice>
+  slices: prismic.SliceZone<BannerManagementDocumentDataSlicesSlice> /**
+   * Title field in *Banner Management*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: banner_management.title
+   * - **Tab**: Sub Banner
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField
+
+  /**
+   * description field in *Banner Management*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: banner_management.description
+   * - **Tab**: Sub Banner
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField
+
+  /**
+   * Supporting Text field in *Banner Management*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: banner_management.supporting_text
+   * - **Tab**: Sub Banner
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  supporting_text: prismic.KeyTextField
+
+  /**
+   * Background Color field in *Banner Management*
+   *
+   * - **Field Type**: Color
+   * - **Placeholder**: *None*
+   * - **API ID Path**: banner_management.background_color
+   * - **Tab**: Sub Banner
+   * - **Documentation**: https://prismic.io/docs/fields/color
+   */
+  background_color: prismic.ColorField
+
+  /**
+   * CTAText field in *Banner Management*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: banner_management.ctatext
+   * - **Tab**: Sub Banner
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  ctatext: prismic.KeyTextField
+
+  /**
+   * CTALink field in *Banner Management*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: banner_management.ctalink
+   * - **Tab**: Sub Banner
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  ctalink: prismic.KeyTextField
 }
 
 /**

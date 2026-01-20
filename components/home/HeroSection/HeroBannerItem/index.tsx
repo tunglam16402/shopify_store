@@ -26,7 +26,7 @@ const HeroBannerItem: React.FC<IHeroBannerItem> = ({ data }) => {
       </div>
 
       <div className={styles.hero_text}>
-        <h1 className="text-white font-extralight text-5xl md:text-6xl">
+        <h1 className="text-white font-light text-5xl md:text-7xl">
           {data.title}
           {data.lower_title && (
             <span className="font-sub-heading text-6xl px-2">

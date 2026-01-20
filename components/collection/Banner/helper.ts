@@ -1,6 +1,6 @@
 import { createClient } from '@/prismicio'
 import { cacheLife } from 'next/cache'
-import { CategoryMenu } from '../type'
+import { BannerData } from '.'
 
 const isValidTime = (start?: string | null, end?: string | null) => {
   const now = Date.now()
@@ -18,11 +18,17 @@ export const getBannerManagement = async () => {
   })
 }
 
-export const getBannerData = async (slug?: string) => {
+export const getBannerData = async (
+  slug?: string
+): Promise<BannerData | null> => {
   'use cache'
   cacheLife('hours')
+
   const bannerManagementRes = await getBannerManagement()
-  const slices = bannerManagementRes?.data?.slices
+  const data = bannerManagementRes?.data
+  if (!data) return null
+
+  const slices = data.slices
 
   const bannerSlice = slices?.find((slice) => {
     const { start_date, end_date, collection } = slice.primary
@@ -35,21 +41,33 @@ export const getBannerData = async (slug?: string) => {
     return validTime && validSlug
   })
 
-  const banner = bannerSlice?.primary
-  if (!banner) return null
+  if (bannerSlice?.primary) {
+    const banner = bannerSlice.primary
 
-  const tiles = banner.tile_banner?.map((tile) => ({
-    pathname: tile.tile_pathame || '#',
-    image: tile.tile_banner_image,
-    label: tile.tile_banner_button_label || '',
-  }))
-
-  return {
-    image: banner.image,
-    pathname: banner.pathname || '#',
-    tiles: tiles || [],
-    startDate: banner.start_date,
-    endDate: banner.end_date,
+    return {
+      type: 'primary',
+      image: banner.image,
+      pathname: banner.pathname || '#',
+      tiles:
+        banner.tile_banner?.map((tile) => ({
+          pathname: tile.tile_pathame || '#',
+          image: tile.tile_banner_image,
+          label: tile.tile_banner_button_label || '',
+        })) || [],
+    }
   }
-}
 
+  if (data.title || data.description || data.supporting_text) {
+    return {
+      type: 'sub',
+      title: data.title || '',
+      description: data.description || '',
+      supportingText: data.supporting_text || '',
+      CTAText: data.ctatext ?? undefined,
+      CTALink: data.ctalink ?? undefined,
+      bgColor: data.background_color ?? undefined,
+    }
+  }
+
+  return null
+}
