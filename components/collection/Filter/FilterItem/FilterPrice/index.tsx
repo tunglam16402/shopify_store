@@ -2,17 +2,17 @@
 
 import { Facets } from '@/components/collection/type'
 import { Slider } from '@/components/ui/Slider'
-import { useFilterProduct } from '@/lib/hooks/useFilterProduct'
+import { CollectionFilterActions } from '@/lib/hooks/useFilterProduct'
 import { useSearchParams } from 'next/navigation'
 import { memo, useEffect, useMemo, useState } from 'react'
 
 interface IFilter {
   globalPrice: Facets[]
+  setRange: CollectionFilterActions['setRange']
 }
 
-const FilterPrice = ({ globalPrice }: IFilter) => {
+const FilterPrice = ({ globalPrice, setRange }: IFilter) => {
   const searchParams = useSearchParams()
-  const { setRange } = useFilterProduct()
 
   const { min: globalMin, max: globalMax } = useMemo(() => {
     const facet = globalPrice.find((f) => f.type === 'PRICE_RANGE')

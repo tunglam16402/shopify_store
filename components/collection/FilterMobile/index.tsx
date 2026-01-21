@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/Button'
+import { useFilterProduct } from '@/lib/hooks/useFilterProduct'
 
 interface FilterMobileProps {
   open: boolean
@@ -13,6 +14,10 @@ const FilterMobile = ({
   children,
   resultsCount,
 }: FilterMobileProps) => {
+  const { actions } = useFilterProduct()
+  const {clearAll} = actions
+  
+
   if (!open) return null
 
   return (
@@ -21,13 +26,17 @@ const FilterMobile = ({
 
       <div className="border-t p-3 space-y-2 ">
         <Button
-          onClick={onClose}
+          onClick={() => clearAll()}
           className="w-full py-6 rounded-lg text-base"
           variant={'outline'}
         >
           Clear Filters
         </Button>
-        <Button onClick={onClose} className="w-full py-6 rounded-lg text-base" variant={'primary'}>
+        <Button
+          onClick={onClose}
+          className="w-full py-6 rounded-lg text-base"
+          variant={'primary'}
+        >
           View {resultsCount} Results
         </Button>
       </div>

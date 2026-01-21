@@ -56,12 +56,12 @@ const CollectionPage: React.FC<ICollectionPage> = async ({
         <div className="mt-6 md:mt-10">
           <ShopByCategory subCategories={subCategories} />
         </div>
-        <CollectionContent
-          products={products}
-          tiles={bannerData?.tiles}
-          facets={facets}
-          globalPrice={globalPrice}
-        />
+          <CollectionContent
+            products={products}
+            tiles={bannerData?.tiles}
+            facets={facets}
+            globalPrice={globalPrice}
+          />
       </div>
     </div>
   )

@@ -1,17 +1,34 @@
 'use client'
 
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useCallback } from 'react'
+import { useCallback, useTransition } from 'react'
 
-export function useFilterProduct() {
+export interface CollectionFilterActions {
+  toggleValue: (param: string, value: string) => void
+  setRange: (
+    keys: { min: string; max: string },
+    value: { min: number; max: number },
+    defaults: { min: number; max: number }
+  ) => void
+  clearRange: (keys: { min: string; max: string }) => void
+  clearAll: () => void
+}
+
+export function useFilterProduct(): {
+  actions: CollectionFilterActions
+  isPending: boolean
+} {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const [isPending, startTransition] = useTransition()
 
   const push = useCallback(
     (params: URLSearchParams) => {
-      router.push(`?${params.toString()}`, { scroll: false })
+      startTransition(() => {
+        router.push(`?${params.toString()}`, { scroll: false })
+      })
     },
-    [router]
+    [router, startTransition]
   )
 
   const toggleValue = useCallback(
@@ -72,9 +89,12 @@ export function useFilterProduct() {
   }, [push])
 
   return {
-    toggleValue,
-    setRange,
-    clearRange,
-    clearAll,
+    isPending,
+    actions: {
+      toggleValue,
+      setRange,
+      clearRange,
+      clearAll,
+    },
   }
 }

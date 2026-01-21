@@ -70,13 +70,13 @@ const Select: React.FC<SelectProps> = ({
         type="button"
         onClick={toggle}
         className={cn(
-          'border border-gray-400 rounded-lg px-4 py-2 gap-4 md:gap-8 flex items-center justify-between',
+          'border border-gray-400 rounded-lg md:px-4 p-2 gap-2 md:gap-8 flex items-center',
           className
         )}
       >
-        <div className="flex items-center gap-2 ">
+        <div className="flex gap-2 items-center">
           {icon && <span>{icon}</span>}
-          {multiple ? <span>{placeholder}</span> : <span className='line-clamp-1'>Sort by: {displayLabel || placeholder}</span>}
+          {multiple ? <span>{placeholder}</span> : <span className='line-clamp-1 text-left'>Sort by: {displayLabel || placeholder}</span>}
         </div>
         <IcoDown className="w-4 h-4" />
       </button>

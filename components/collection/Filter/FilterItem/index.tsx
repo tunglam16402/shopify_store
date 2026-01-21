@@ -1,17 +1,19 @@
 'use client'
 
-import { useFilterProduct } from '@/lib/hooks/useFilterProduct'
+import {
+  CollectionFilterActions
+} from '@/lib/hooks/useFilterProduct'
 import { useSearchParams } from 'next/navigation'
 import { parseFacetInput } from '../../CollectionPage/helper'
 import { Facets } from '../../type'
 
 interface IFilter {
   facets: Facets[]
+  toggleValue: CollectionFilterActions['toggleValue']
 }
 
-const FilterItem = ({ facets }: IFilter) => {
+const FilterItem = ({ facets, toggleValue }: IFilter) => {
   const searchParams = useSearchParams()
-  const { toggleValue } = useFilterProduct()
 
   return (
     <aside className="mt-6 space-y-6">
@@ -39,7 +41,9 @@ const FilterItem = ({ facets }: IFilter) => {
                           onChange={() => toggleValue(param, value)}
                           className="h-[18px] rounded-sm w-[18px] accent-primary"
                         />
-                        <span className={checked ? 'font-medium': "font-normal"}>
+                        <span
+                          className={checked ? 'font-medium' : 'font-normal'}
+                        >
                           {v.label} ({v.count})
                         </span>
                       </label>

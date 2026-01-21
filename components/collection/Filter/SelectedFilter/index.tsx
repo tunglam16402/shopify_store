@@ -1,20 +1,22 @@
 'use client'
 
+import {
+  CollectionFilterActions
+} from '@/lib/hooks/useFilterProduct'
 import { useSearchParams } from 'next/navigation'
 import { useMemo } from 'react'
-import { useFilterProduct } from '@/lib/hooks/useFilterProduct'
-import { Facets } from '../../type'
 import { parseFacetInput } from '../../CollectionPage/helper'
+import { Facets } from '../../type'
 
 interface Props {
   facets: Facets[]
   globalPrice: Facets[]
+  actions: CollectionFilterActions
 }
 
-const SelectedFilter = ({ facets, globalPrice }: Props) => {
+const SelectedFilter = ({ facets, globalPrice, actions }: Props) => {
+  const { toggleValue, clearRange, clearAll } = actions
   const searchParams = useSearchParams()
-  const { toggleValue, clearRange, clearAll } = useFilterProduct()
-
   const { listGroups, price } = useMemo(() => {
     const listGroups: Record<
       string,

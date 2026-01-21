@@ -93,7 +93,7 @@ const Dropdown = ({
       >
         <div ref={contentRef} className="pb-4">
           {hasLinks ? (
-            <ul className="space-y-3 text-sm">
+            <ul className="space-y-3 text-sm mt-3">
               {links!.map((item, index) => (
                 <li key={index}>
                   <Link
