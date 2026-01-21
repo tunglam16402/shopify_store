@@ -89,7 +89,7 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
         </Link>
         <div className="flex justify-between absolute top-4 left-2 right-2 z-2">
           {product.discountPercent > 0 ? (
-            <span className="bg-red-600 text-white text-xs font-semibold px-2 py-1 rounded-md z-2">
+            <span className="bg-sub-primary text-white text-xs font-semibold px-2 py-1 rounded-md z-2">
               -{product.discountPercent}%
             </span>
           ) : (

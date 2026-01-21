@@ -50,7 +50,7 @@
 }
 
 body {
-  --max-container-width: 1440px;
+  --max-container-width: 1620px;
   --max-container-width-small: 1200px;
   --default-width: 100%;
   /* font-family: var(--primary-font); */

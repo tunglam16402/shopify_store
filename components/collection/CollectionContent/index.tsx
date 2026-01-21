@@ -106,10 +106,11 @@ const CollectionContent: React.FC<ICollectionContent> = ({
                     : 'w-0 -translate-x-full opacity-0 pointer-events-none'
                 )}
               >
-                <div className="w-60">
+                <div className="w-60 sticky max-h-screen overflow-y-auto top-20">
                   <div className="border-b uppercase text-base md:text-lg border-gray-600 pb-3">
                     Filter
                   </div>
+
                   <Filter
                     facets={facets}
                     globalPrice={globalPrice}
