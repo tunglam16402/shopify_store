@@ -61,7 +61,7 @@ const ProductInformation = ({ product }: ProductInformationProps) => {
   }
 
   return (
-    <div className="main-width" ref={containerRef}>
+    <div className="page-width" ref={containerRef}>
       {/* Collection title + Product title */}
       <div className="sticky top-24">
         <p className="text-gray-600 uppercase text-sm mb-1">

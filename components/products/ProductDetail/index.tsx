@@ -94,7 +94,7 @@ const ProductDetail = ({
 
   return (
     <div className="pt-8">
-      <div className="main-width">
+      <div className="page-width">
         <Breadcrumb items={items} />
       </div>
 

@@ -26,7 +26,7 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
   const { hasReviewed, myReview } = useMyReviewed(data?.reviews ?? [])
 
   return (
-    <div className="main-width">
+    <div className="page-width">
       {/* Heading */}
       <div className="text-center">
         <StyledHeading

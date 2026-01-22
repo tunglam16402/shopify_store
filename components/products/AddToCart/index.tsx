@@ -52,7 +52,7 @@ const AddToCart = ({
   return (
     <Button
       onClick={handleAddToCart}
-      variant={'destructive'}
+      variant={'outline'}
       disabled={loading}
       className={`uppercase font-semibold ${className}`}
     >

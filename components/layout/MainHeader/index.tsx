@@ -56,7 +56,7 @@ const MainHeader = ({ menuItems }: Props) => {
         !visible && 'md:translate-y-0 -translate-y-full'
       )}
     >
-      <div className="main-width">
+      <div className="layout-width">
         <div className="flex justify-between items-center">
           <button
             onClick={() => setIsOpenMobile(!isOpenMobile)}

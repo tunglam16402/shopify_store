@@ -68,7 +68,7 @@ const SearchContainer = ({
           visible ? 'translate-y-0 opacity-100' : '-translate-y-5 opacity-0'
         )}
       >
-        <div className="main-width h-screen md:h-full">
+        <div className="layout-width h-screen md:h-full">
           <div className="py-6">
             <div className="flex flex-col md:flex-row gap-8 border-t border-sub-primary ">
               <div className="flex-4 min-w-[250px] mt-4">

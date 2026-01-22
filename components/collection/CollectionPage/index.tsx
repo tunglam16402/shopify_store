@@ -37,10 +37,10 @@ const CollectionPage: React.FC<ICollectionPage> = async ({
   return (
     <div className="mt-[132px] md:mt-4">
       {bannerData && <Banner bannerData={bannerData} />}
-      <div className="main-width mt-4! md:mt-6!">
+      <div className="page-width mt-4! md:mt-6!">
         <Breadcrumb items={items} />
       </div>
-      <div className="main-width">
+      <div className="page-width">
         <div className="mt-4 md:mt-6">
           <h1 className="text-3xl md:text-5xl uppercase font-light">
             {currentCollection?.title}

@@ -41,7 +41,7 @@ export default function AuthForm({
   )
 
   return (
-    <div className="w-full flex items-center justify-center mt-6 md:mt-12 main-width">
+    <div className="w-full flex items-center justify-center mt-6 md:mt-12 page-width">
       <div className="w-full max-w-[560px] mt-6">
         <div className="bg-white rounded-2xl shadow-xl p-4 md:p-8">
           <form action={formAction} className={cn('', className)}>

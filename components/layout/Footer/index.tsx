@@ -73,7 +73,7 @@ const Footer: React.FC<IFooter> = ({ data }) => {
   }
   return (
     <footer id="footer" className="bg-primary mt-10 py-10 md:py-12">
-      <div className="main-width text-white">
+      <div className="layout-width text-white">
         <div className="grid grid-cols-1 md:grid-cols-12 md:gap-20">
           {/* newsletter */}
           <div className="md:col-span-5">

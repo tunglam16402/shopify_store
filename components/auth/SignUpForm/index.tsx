@@ -34,7 +34,7 @@ const SignUpForm = () => {
     state.errors.find((err) => err.field[0] === fieldName)?.message
 
   return (
-    <div className="w-full flex items-center justify-center mt-6 md:mt-12 main-width">
+    <div className="w-full flex items-center justify-center mt-6 md:mt-12 page-width">
       <div className="w-full max-w-[560px] mt-6">
         <form action={formAction} className="space-y-4">
           <div className="bg-white rounded-2xl shadow-xl p-4 md:p-8">

@@ -121,8 +121,9 @@ const ProductInfo: React.FC<IProductInfoProps> = ({
           }
           openIcon={<IcoDown className="h-5 w-5" />}
           closeIcon={<IcoDown className="h-5 w-5" />}
+          className='border-b-gray-300'
         >
-          <p className="prose prose-sm md:prose-base text-sm max-w-none text-gray-700 mt-3">
+          <p className="prose prose-sm md:prose-base text-sm max-w-none text-gray-700 mt-3 pb-4">
             {info.descriptionHtml && (
               <p
                 dangerouslySetInnerHTML={{

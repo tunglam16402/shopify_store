@@ -67,7 +67,7 @@ const Dropdown = ({
   }, [open, children, links])
 
   return (
-    <div className={`border-b border-[#e3c16f] pb-4 ${className}`}>
+    <div className={`border-b border-white pb-4 ${className}`}>
       <div
         className="flex items-center justify-between cursor-pointer select-none"
         onClick={toggle}
@@ -91,7 +91,7 @@ const Dropdown = ({
           opacity: open ? 1 : 0,
         }}
       >
-        <div ref={contentRef} className="pb-4">
+        <div ref={contentRef}>
           {hasLinks ? (
             <ul className="space-y-3 text-sm mt-3">
               {links!.map((item, index) => (

@@ -19,10 +19,10 @@ const BlogItem: React.FC<IBlogItem> = ({ blog }) => {
       </div>
 
       <div className="flex flex-col flex-1 px-2">
-        <h3 className="text-3xl font-light uppercase mt-2">
+        <h3 className="text-4xl font-light uppercase mt-2">
           {blog.title}
         </h3>
-        <p className="text-xs md:text-base mt-3 line-clamp-4">
+        <p className="text-xs md:text-sm mt-3 line-clamp-4">
           {blog.description}
         </p>
       </div>

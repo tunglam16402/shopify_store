@@ -7,6 +7,13 @@ import React from 'react'
 import BlogItem from './BlogItem'
 import { Button } from '@/components/ui/Button'
 import Link from 'next/link'
+import PWSwiper from '@/components/ui/Swiper'
+
+const BLOG_HOME_BREAKPOINT = {
+  0: { slidesPerView: 1, slidesPerGroup: 1, spaceBetween: 2 },
+  640: { slidesPerView: 1, slidesPerGroup: 1, spaceBetween: 2 },
+  1024: { slidesPerView: 4, slidesPerGroup: 1, spaceBetween: 2 },
+}
 
 interface IBlogs {
   blogs: GroupField<Simplify<HomepageDocumentDataBlogItem>>
@@ -14,33 +21,21 @@ interface IBlogs {
 
 const Blogs: React.FC<IBlogs> = ({ blogs }) => {
   return (
-    <section className="main-width">
+    <section className="page-width">
       <h2 className="text-3xl md:text-[54px] text-center mt-12 md:mt-16">
-        <span className="font-sub-heading font-bold text-4xl md:text-[54px] px-2">the</span>
+        <span className="font-sub-heading font-bold text-4xl md:text-[54px] px-2">
+          the
+        </span>
         <span className="uppercase">journal</span>
       </h2>
       <div className="mt-4 md:mt-8">
-        <Carousel
-          items={blogs}
-          renderItem={(blog) => <BlogItem key={blog.pathname} blog={blog} />}
-          slidesToShow={1}
-          itemsToScroll={1}
-          loop={true}
-          autoPlay={false}
-          showDots={false}
-          responsiveConfig={[
-            { breakpoint: 768, slidesToShow: 2 },
-            { breakpoint: 1024, slidesToShow: 3, showArrows: true },
-            {
-              breakpoint: 1280,
-              slidesToShow: 4,
-              itemsToScroll: 1,
-              showArrows: true,
-            },
-          ]}
-        />
+        <PWSwiper breakpoints={BLOG_HOME_BREAKPOINT} pagination={false}>
+          {blogs.map((blog) => (
+            <BlogItem key={blog.pathname} blog={blog} />
+          ))}
+        </PWSwiper>
       </div>
-      <div className='text-center'>
+      <div className="text-center">
         <Link href="/blogs/news">
           <Button
             className="uppercase mt-8 px-8 md:px-12 md:mt-12 text-lg"

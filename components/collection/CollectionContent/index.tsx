@@ -102,12 +102,12 @@ const CollectionContent: React.FC<ICollectionContent> = ({
                 className={cn(
                   'transition-all duration-300 ease-in-out shrink-0',
                   showFilter
-                    ? 'w-60 mr-8 translate-x-0 opacity-100'
+                    ? 'w-64 mr-8 translate-x-0 opacity-100'
                     : 'w-0 -translate-x-full opacity-0 pointer-events-none'
                 )}
               >
-                <div className="w-60 sticky max-h-screen overflow-y-auto top-20">
-                  <div className="border-b uppercase text-base md:text-lg border-gray-600 pb-3">
+                <div className="w-64 sticky max-h-screen overflow-y-auto top-20">
+                  <div className="border-b uppercase text-base md:text-xl font-semibold border-gray-600 pb-3">
                     Filter
                   </div>
 

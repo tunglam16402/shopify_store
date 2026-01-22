@@ -9,6 +9,8 @@ import { ProductCardProps } from '@/types/product/productCard'
 import { useMemo, useState } from 'react'
 import { useReviews } from '@/lib/hooks/useReviews'
 import StarRating from '../ProductReview/TotalRating/StarRating'
+import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
+import styles from './style.module.css'
 
 interface IProductCardProps {
   product: ProductCardProps
@@ -18,6 +20,7 @@ interface IProductCardProps {
 const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
   const [isHover, setIsHover] = useState(false)
   const { data } = useReviews(product.id)
+  const isMobile = useMediaQuery('(max-width: 768px)')
 
   const avgRating = data?.summary?.avgRating ?? 0
   const totalReviews = data?.summary?.totalReviews ?? 0
@@ -30,12 +33,12 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
 
   const handleProductClick = () => {
     try {
-      const raw = getCookie('recentlyViewed')
+      const recentProduct = getCookie('recentlyViewed')
 
       const existing = (() => {
-        if (!raw) return []
+        if (!recentProduct) return []
         try {
-          const parsed = JSON.parse(raw)
+          const parsed = JSON.parse(recentProduct)
           return Array.isArray(parsed) ? parsed : []
         } catch {
           return []
@@ -71,7 +74,7 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
       <div
         onMouseOver={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
-        className="relative aspect-4/5"
+        className={`relative aspect-4/5 overflow-hidden ${styles.card}`}
       >
         <Link
           href={`/products/${product?.handle}`}
@@ -87,14 +90,24 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
             loading={'lazy'}
           />
         </Link>
+
+        {showCTA && !isMobile && (
+          <div className={styles.cta}>
+            <AddToCart
+              variantId={product.variantId}
+              product={product}
+              className="w-full py-6"
+            />
+          </div>
+        )}
+
         <div className="flex justify-between absolute top-4 left-2 right-2 z-2">
           {product.discountPercent > 0 ? (
             <span className="bg-sub-primary text-white text-xs font-semibold px-2 py-1 rounded-md z-2">
               -{product.discountPercent}%
             </span>
           ) : (
-            <span >
-            </span>
+            <span></span>
           )}
           <BorderHeart className="size-6" />
         </div>
@@ -157,7 +170,7 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
           )}
         </div>
 
-        {showCTA && (
+        {showCTA && isMobile && (
           <div className="mt-3 self-end">
             <AddToCart
               variantId={product.variantId}

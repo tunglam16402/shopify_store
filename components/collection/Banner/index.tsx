@@ -26,7 +26,7 @@ export interface BannerData {
 const Banner = ({ bannerData }: { bannerData: BannerData }) => {
   if (bannerData.type === 'primary') {
     return (
-      <section className="main-width">
+      <section className="page-width">
         <Link href={bannerData.pathname || '#'}>
           <PrismicNextImage
             field={bannerData.image}
