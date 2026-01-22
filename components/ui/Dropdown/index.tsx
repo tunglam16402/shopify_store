@@ -85,7 +85,7 @@ const Dropdown = ({
       </div>
 
       <div
-        className="overflow-hidden transition-[max-height,opacity] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
+        className="overflow-hidden transition-[max-height,opacity] duration-300 ease-in-out"
         style={{
           maxHeight: open ? `${height}px` : '0px',
           opacity: open ? 1 : 0,
@@ -93,7 +93,7 @@ const Dropdown = ({
       >
         <div ref={contentRef}>
           {hasLinks ? (
-            <ul className="space-y-3 text-sm mt-3">
+            <ul className="space-y-3 text-sm mt-3 pb-3">
               {links!.map((item, index) => (
                 <li key={index}>
                   <Link

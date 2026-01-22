@@ -7,7 +7,7 @@ import SubBanner from './SubBanner'
 export interface TileBanner {
   pathname: string
   image: ImageField
-  label?: string
+  startAfterRow?: number
 }
 
 export interface BannerData {

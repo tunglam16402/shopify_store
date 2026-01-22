@@ -941,14 +941,14 @@ export interface CollectionBannerSliceDefaultPrimaryTileBannerItem {
   tile_pathame: prismic.KeyTextField
 
   /**
-   * Tile Banner Button Label field in *CollectionBanner → Default → Primary → Tile Banner*
+   * Start After Row field in *CollectionBanner → Default → Primary → Tile Banner*
    *
-   * - **Field Type**: Text
+   * - **Field Type**: Number
    * - **Placeholder**: *None*
-   * - **API ID Path**: collection_banner.default.primary.tile_banner[].tile_banner_button_label
-   * - **Documentation**: https://prismic.io/docs/fields/text
+   * - **API ID Path**: collection_banner.default.primary.tile_banner[].start_after_row
+   * - **Documentation**: https://prismic.io/docs/fields/number
    */
-  tile_banner_button_label: prismic.KeyTextField
+  start_after_row: prismic.NumberField
 }
 
 /**
@@ -1033,17 +1033,6 @@ export interface CollectionBannerSliceDefaultPrimary {
   collection: prismic.GroupField<
     Simplify<CollectionBannerSliceDefaultPrimaryCollectionItem>
   >
-
-  /**
-   * site field in *CollectionBanner → Default → Primary*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: ALL
-   * - **API ID Path**: collection_banner.default.primary.site
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  site: prismic.SelectField<'ALL' | 'AU' | 'NZ', 'filled'>
 }
 
 /**

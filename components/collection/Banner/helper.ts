@@ -52,7 +52,7 @@ export const getBannerData = async (
         banner.tile_banner?.map((tile) => ({
           pathname: tile.tile_pathame || '#',
           image: tile.tile_banner_image,
-          label: tile.tile_banner_button_label || '',
+          startAfterRow: tile.start_after_row || 1,
         })) || [],
     }
   }

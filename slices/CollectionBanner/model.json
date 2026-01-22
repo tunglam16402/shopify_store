@@ -47,14 +47,14 @@
                 "config": {
                   "label": "Tile Banner Image",
                   "constraint": {
-                    "width": 250,
-                    "height": 430
+                    "width": 680,
+                    "height": 1400
                   },
                   "thumbnails": [
                     {
                       "name": "Mobile",
-                      "width": 157,
-                      "height": 437
+                      "width": 430,
+                      "height": 537
                     }
                   ]
                 }
@@ -66,10 +66,10 @@
                   "placeholder": ""
                 }
               },
-              "tile_banner_button_label": {
-                "type": "Text",
+              "start_after_row": {
+                "type": "Number",
                 "config": {
-                  "label": "Tile Banner Button Label",
+                  "label": "Start After Row",
                   "placeholder": ""
                 }
               }
@@ -104,19 +104,6 @@
                 }
               }
             }
-          }
-        },
-        "site": {
-          "type": "Select",
-          "config": {
-            "label": "site",
-            "placeholder": "",
-            "options": [
-              "ALL",
-              "AU",
-              "NZ"
-            ],
-            "default_value": "ALL"
           }
         }
       },

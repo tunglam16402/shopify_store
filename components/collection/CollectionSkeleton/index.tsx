@@ -46,12 +46,11 @@ export default function CollectionSkeleton() {
         <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-4">
           {Array.from({ length: 8 }).map((_, i) => (
             <div key={i} className="space-y-2">
-              <Skeleton className="min-h-[380px] w-full rounded-md" />
+              <Skeleton className="min-h-[470px] w-full rounded-none" />
               <Skeleton className="h-5 w-2/5" />
               <Skeleton className="h-10 w-4/5" />
+              <Skeleton className="h-5 w-28" />
               <Skeleton className="h-7 w-16" />
-              <Skeleton className="h-5 w-24" />
-              <Skeleton className="h-9 w-full" />
             </div>
           ))}
         </div>

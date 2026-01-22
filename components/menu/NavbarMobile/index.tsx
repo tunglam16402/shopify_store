@@ -123,7 +123,7 @@ const NavbarMobile = ({ isOpen, onClose, menuItems }: Props) => {
                       }
                       openIcon={<IcoDown className="h-5 w-5" />}
                       closeIcon={<IcoDown className="h-5 w-5 " />}
-                      className="mb-4"
+                      className="mb-2"
                     />
                   ))}
                 </div>
