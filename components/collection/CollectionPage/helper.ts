@@ -52,6 +52,13 @@ export function parseFacetInput(input: string): {
 
     if (key === 'price') return null
 
+    if (parsed.taxonomyMetafield) {
+      return {
+        param: 'ageGroup',
+        value: parsed.taxonomyMetafield.value, 
+      }
+    }
+
     return {
       param: key,
       value: String(parsed[key]),

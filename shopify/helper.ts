@@ -70,6 +70,16 @@ export function buildProductFilters(
         filters.push({ tag: value })
         break
 
+      case 'ageGroup':
+        filters.push({
+          taxonomyMetafield: {
+            namespace: 'shopify',
+            key: 'recommended-age-group',
+            value,
+          },
+        })
+        break
+
       case 'price_min':
       case 'price_max':
         break
