@@ -17,8 +17,8 @@
           "config": {
             "label": "Banner",
             "constraint": {
-              "width": 4220,
-              "height": 1088
+              "width": 1845,
+              "height": 480
             },
             "thumbnails": [
               {
@@ -47,13 +47,13 @@
                 "config": {
                   "label": "Tile Banner Image",
                   "constraint": {
-                    "width": 680,
-                    "height": 1400
+                    "width": 913,
+                    "height": 1387
                   },
                   "thumbnails": [
                     {
                       "name": "Mobile",
-                      "width": 430,
+                      "width": 400,
                       "height": 537
                     }
                   ]

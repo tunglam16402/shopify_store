@@ -23,8 +23,8 @@ const COLLECTION_BREAKPOINT = {
     spaceBetween: 12,
   },
   1024: {
-    slidesPerView: 6,
-    slidesPerGroup: 6,
+    slidesPerView: 7,
+    slidesPerGroup: 7,
     spaceBetween: 16,
   },
 }

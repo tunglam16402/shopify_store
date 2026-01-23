@@ -7,7 +7,6 @@ import {
 } from '@/shopify/api/operations/get-collection'
 import { getCategoryMenus } from '@/shopify/api/operations/get-menu'
 import { buildProductFilters, parseSort } from '@/shopify/helper'
-import { Suspense } from 'react'
 
 type Props = {
   params: Promise<{ handle: string }>
@@ -34,8 +33,6 @@ const Collection = async ({ params, searchParams }: Props) => {
   const collections = await getCollections()
   const bannerData = await getBannerData(`/collections/${handle}`)
   const categoryMenus = await getCategoryMenus()
-
-  console.log('bannerData :>> ', bannerData);
 
   return (
     <CollectionPage

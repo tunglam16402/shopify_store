@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { PrismicNextImage } from '@prismicio/next'
@@ -17,10 +16,9 @@ type ProductListProps = {
 }
 
 const COLS_DESKTOP = 4
-const BANNER_SPAN = 4 // 2 cols x 2 rows
+const BANNER_SPAN = 4
 
 const ProductList = ({ products, tiles = [] }: ProductListProps) => {
-  // 1️⃣ normalize banner → startIndex
   const banners = tiles
     .filter((t) => t.startAfterRow !== undefined)
     .map((t) => ({
@@ -29,7 +27,6 @@ const ProductList = ({ products, tiles = [] }: ProductListProps) => {
     }))
     .sort((a, b) => a.startIndex - b.startIndex)
 
-  // 2️⃣ build grid items
   const gridItems: GridItem[] = []
   let gridIndex = 0
   let productIndex = 0
@@ -52,7 +49,6 @@ const ProductList = ({ products, tiles = [] }: ProductListProps) => {
     gridIndex++
   }
 
-  console.log('tiles :>> ', tiles)
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-2 gap-y-4 md:gap-4">
       {gridItems.map((item, i) =>
@@ -62,17 +58,13 @@ const ProductList = ({ products, tiles = [] }: ProductListProps) => {
           <Link
             key={`tile-${i}`}
             href={item.data.pathname || '#'}
-            className="
-              col-span-2 row-span-2
-              block group rounded-2xl overflow-hidden
-              border border-gray-200
-              hover:shadow-lg transition-all
-            "
+            className="col-span-2 row-span-2 block group overflow-hidden border border-gray-200"
           >
             <PrismicNextImage
               field={item.data.image}
               className="w-full h-full object-cover"
               alt=""
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
           </Link>
         )
