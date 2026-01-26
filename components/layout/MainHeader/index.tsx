@@ -2,7 +2,7 @@
 
 import CartIcon from '@/components/cart/CartIcon'
 import CartSideBar from '@/components/cart/CartSidebar'
-import { Logo } from '@/components/icons'
+import { IcoHeart, Logo } from '@/components/icons'
 import { AccountDropdown, NavbarMobile } from '@/components/menu'
 import { useUI } from '@/lib/hooks/useContext'
 import cn from 'classnames'
@@ -10,6 +10,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { FaBars } from 'react-icons/fa'
 import SearchInput from './Search/SearchInput'
+import WishlistIconHeader from '@/components/Wishlist/WishlistIconHeader'
 
 type Props = {
   menuItems: { title: string; url: string }[]
@@ -73,9 +74,7 @@ const MainHeader = ({ menuItems }: Props) => {
           {/* Logo */}
           <div className="shrink-0">
             <Link href="/">
-              {/* <span className="w-10"> */}
-                <Logo />
-              {/* </span> */}
+              <Logo />
             </Link>
           </div>
 
@@ -84,7 +83,8 @@ const MainHeader = ({ menuItems }: Props) => {
             <SearchInput />
           </div>
 
-          <div className="flex items-center">
+          <div className="flex items-center justify-center gap-4">
+            <WishlistIconHeader />
             <CartIcon onClick={open} />
             <AccountDropdown />
           </div>

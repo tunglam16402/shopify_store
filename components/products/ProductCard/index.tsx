@@ -1,15 +1,15 @@
 'use client'
 
+import WishlistButton from '@/components/common/WishlistButton'
+import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
+import { useReviews } from '@/lib/hooks/useReviews'
+import { ProductCardProps } from '@/types/product/productCard'
+import { getCookie, setCookie } from '@/utils/set-cookie'
 import Image from 'next/image'
 import Link from 'next/link'
-import AddToCart from '../AddToCart'
-import { BorderHeart } from '@/components/icons'
-import { getCookie, setCookie } from '@/utils/set-cookie'
-import { ProductCardProps } from '@/types/product/productCard'
 import { useMemo, useState } from 'react'
-import { useReviews } from '@/lib/hooks/useReviews'
+import AddToCart from '../AddToCart'
 import StarRating from '../ProductReview/TotalRating/StarRating'
-import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 import styles from './style.module.css'
 
 interface IProductCardProps {
@@ -109,7 +109,7 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
           ) : (
             <span></span>
           )}
-          <BorderHeart className="size-6" />
+          <WishlistButton productId={product.id} iconClassName='size-5 md:size-6'/>
         </div>
       </div>
 

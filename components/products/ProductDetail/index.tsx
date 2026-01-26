@@ -1,33 +1,21 @@
 'use client'
 
+import { CategoryMenu } from '@/components/collection/type'
 import Breadcrumb from '@/components/common/Breadcrumb'
-import { BorderHeart } from '@/components/icons'
+import WishlistButton from '@/components/common/WishlistButton'
 import { trackViewedProduct } from '@/lib/analytics/klaviyo'
 import { mappingVariantPrice } from '@/lib/helper'
 import { ProductCardProps } from '@/types/product/productCard'
 import { useEffect } from 'react'
 import ProductRecommend from '../ProductRecommend'
+import ProductReview from '../ProductReview'
 import ProductImage from './ProductImage'
 import ProductInformation from './ProductInformation'
 import TopCollection from './TopCollection'
-import ProductReview from '../ProductReview'
-import { CategoryMenu } from '@/components/collection/type'
 
 type Variant = ReturnType<typeof mappingVariantPrice> & {
   id: string
   sku: string
-}
-
-type MenuCollection = {
-  title: string
-  url: string
-  image?: string
-}
-
-type MenuCategory = {
-  title: string
-  url: string
-  collections: MenuCollection[]
 }
 
 export type ProductDetailProps = {
@@ -106,7 +94,10 @@ const ProductDetail = ({
             title={product.title}
           />
           <div className="absolute top-3 right-2 md:right-4 p-2 z-1">
-            <BorderHeart className="size-8  md:size-10" />
+            <WishlistButton
+              iconClassName="size-8 md:size-10"
+              productId={product.id}
+            />
           </div>
         </div>
 

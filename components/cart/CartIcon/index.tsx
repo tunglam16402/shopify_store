@@ -10,12 +10,12 @@ const CartIcon = ({ onClick }: { onClick: () => void }) => {
   return (
     <button
       onClick={onClick}
-      className="relative p-2 rounded text-hover"
-      aria-label="open cart"
+      className="relative p-2 rounded hover:[&_path]:stroke-primary"
+      aria-label="open cart sidebar"
     >
       <IcoCart className="w-6 h-6" />
       {totalQty > 0 && (
-        <span className="absolute -top-1 -right-1 bg-black text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+        <span className="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
           {totalQty}
         </span>
       )}

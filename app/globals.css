@@ -219,6 +219,10 @@ button {
   max-width: var(--max-layout-width);
 }
 
+.fill-bg-sub-primary {
+  fill: var(--bg-sub-primary);
+}
+
 @media (min-width: 768px) {
   .page-width,
   .layout-width {

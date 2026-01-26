@@ -3239,6 +3239,13 @@ export type GetProductDetailQueryVariables = Exact<{
 
 export type GetProductDetailQuery = { product?: { id: string, handle: string, title: string, descriptionHtml: string, collections: { nodes: Array<{ id: string, handle: string, title: string }> }, featuredImage?: { url: string, altText?: string | null } | null, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, sku?: string | null, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> }, colorVariants?: { references?: { nodes: Array<{ handle: string, featuredImage?: { url: string, altText?: string | null } | null } | {}> } | null } | null, productInfo?: { value: string, type: string } | null } | null };
 
+export type GetProductsByIdsQueryVariables = Exact<{
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
+}>;
+
+
+export type GetProductsByIdsQuery = { nodes: Array<{ __typename: 'AppliedGiftCard' } | { __typename: 'Article' } | { __typename: 'Blog' } | { __typename: 'Cart' } | { __typename: 'CartLine' } | { __typename: 'Collection' } | { __typename: 'Comment' } | { __typename: 'Company' } | { __typename: 'CompanyContact' } | { __typename: 'CompanyLocation' } | { __typename: 'ComponentizableCartLine' } | { __typename: 'ExternalVideo' } | { __typename: 'GenericFile' } | { __typename: 'Location' } | { __typename: 'MailingAddress' } | { __typename: 'Market' } | { __typename: 'MediaImage' } | { __typename: 'MediaPresentation' } | { __typename: 'Menu' } | { __typename: 'MenuItem' } | { __typename: 'Metafield' } | { __typename: 'Metaobject' } | { __typename: 'Model3d' } | { __typename: 'Order' } | { __typename: 'Page' } | { __typename: 'Product', id: string, title: string, handle: string, description: string, publishedAt: string, category?: { name: string } | null, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } } | { __typename: 'ProductOption' } | { __typename: 'ProductOptionValue' } | { __typename: 'ProductVariant' } | { __typename: 'Shop' } | { __typename: 'ShopPayInstallmentsFinancingPlan' } | { __typename: 'ShopPayInstallmentsFinancingPlanTerm' } | { __typename: 'ShopPayInstallmentsProductVariantPricing' } | { __typename: 'ShopPolicy' } | { __typename: 'TaxonomyCategory' } | { __typename: 'UrlRedirect' } | { __typename: 'Video' } | null> };
+
 export type GetProductRecommendationsQueryVariables = Exact<{
   productId: Scalars['ID']['input'];
 }>;

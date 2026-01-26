@@ -3,15 +3,18 @@ import {
   mappingVariantPrice,
   parseShopifyErrors,
 } from '@/lib/helper'
+import getProductsByIdsQuery from '@/shopify/utils/query/get-product-by-ids'
+import getProductRecommendationsQuery from '@/shopify/utils/query/get-product-recommendation'
 import { shopifyFetch } from '../../fetcher'
 import {
   GetProductDetailQuery,
   GetProductRecommendationsQuery,
+  GetProductsByIdsQuery,
   GetProductsQuery,
 } from '../../types/graphql'
 import getProductsQuery from '../../utils/query/get-all-product-query'
 import getProductDetailQuery from '../../utils/query/get-product-by-handle-query'
-import getProductRecommendationsQuery from '@/shopify/utils/query/get-product-recommendation'
+import { ProductCardProps } from '@/types/product/productCard'
 
 export async function getProductByHandle(handle: string) {
   const data = await shopifyFetch<GetProductDetailQuery>({
@@ -71,6 +74,20 @@ export async function getProductByHandle(handle: string) {
   }
 }
 
+export async function getProductsByIds(
+  ids: string[]
+): Promise<ProductCardProps[]> {
+  const data = await shopifyFetch<GetProductsByIdsQuery>({
+    query: getProductsByIdsQuery,
+    variables: { ids },
+  })
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return ((data?.nodes as any[]) || [])
+    .filter((item) => !!item)
+    .map((item) => mappingDiscountPrice(item))
+}
+
 export async function getAllProduct() {
   const data = await shopifyFetch<GetProductsQuery>({
     query: getProductsQuery,
@@ -99,16 +116,13 @@ export async function getProductRecommendations(productId: string) {
       return { success: false, errors }
     }
 
-    const related =
-      data.relatedProducts?.map(mappingDiscountPrice) ?? []
+    const related = data.relatedProducts?.map(mappingDiscountPrice) ?? []
 
     const complementaryRaw =
       data.complementaryProducts?.map(mappingDiscountPrice) ?? []
 
     const complementary =
-      complementaryRaw.length > 0
-        ? complementaryRaw
-        : [...related].reverse()
+      complementaryRaw.length > 0 ? complementaryRaw : [...related].reverse()
 
     return {
       success: true,

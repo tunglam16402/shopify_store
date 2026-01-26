@@ -1,31 +1,37 @@
 const IcoUser = (props: React.HTMLAttributes<SVGElement>) => (
   <svg
-    viewBox="0 0 24 24"
-    fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    width="20.126"
+    height="23.763"
+    viewBox="0 0 20.126 23.763"
     {...props}
   >
-    <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-    <g
-      id="SVGRepo_tracerCarrier"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    ></g>
-    <g id="SVGRepo_iconCarrier">
+    <g id="Group_1174" data-name="Group 1174" transform="translate(0.6 0.6)">
       <path
-        d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
-        stroke="#000000"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        id="Path_355"
+        data-name="Path 355"
+        d="M41.426,660.871v-.317a9.477,9.477,0,0,0-9.463-9.435h0a9.477,9.477,0,0,0-9.463,9.435v.317Z"
+        transform="translate(-22.5 -638.308)"
+        fill="none"
+        stroke="black"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.5"
       ></path>
-      <path
-        d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z"
-        stroke="#000000"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      ></path>
+      <ellipse
+        id="Ellipse_14"
+        data-name="Ellipse 14"
+        cx="5.395"
+        cy="5.379"
+        rx="5.395"
+        ry="5.379"
+        transform="translate(4.068 0)"
+        fill="none"
+        stroke="black"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.5"
+      ></ellipse>
     </g>
   </svg>
 )

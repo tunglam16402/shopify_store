@@ -1,4 +1,5 @@
 import { Skeleton } from '@/components/ui/Skeleton'
+import ProductSkeleton from './ProductListSkeleton'
 
 export default function CollectionSkeleton() {
   return (
@@ -43,17 +44,7 @@ export default function CollectionSkeleton() {
         </div>
 
         {/* Product grid */}
-        <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-4">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="space-y-2">
-              <Skeleton className="min-h-[470px] w-full rounded-none" />
-              <Skeleton className="h-5 w-2/5" />
-              <Skeleton className="h-10 w-4/5" />
-              <Skeleton className="h-5 w-28" />
-              <Skeleton className="h-7 w-16" />
-            </div>
-          ))}
-        </div>
+        <ProductSkeleton />
       </div>
     </div>
   )
