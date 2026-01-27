@@ -14,9 +14,9 @@ const IcoCart = (props: React.HTMLAttributes<SVGElement>) => (
         transform="translate(-1615.329 -252.191)"
         fill="none"
         stroke="#000"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.4"
       ></path>
       <path
         id="Path_354"
@@ -25,9 +25,9 @@ const IcoCart = (props: React.HTMLAttributes<SVGElement>) => (
         transform="translate(-1842.581 -22.5)"
         fill="none"
         stroke="#000"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.2"
       ></path>
     </g>
   </svg>

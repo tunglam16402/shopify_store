@@ -41,7 +41,7 @@ const DeleteReviewButton = ({ reviewId, onSuccess }: IDeleteReviewButton) => {
           isOpen={showModal}
           onClose={() => setShowModal(false)}
           hasClose={false}
-          className="rounded-2xl md:w-3xl"
+          className="rounded-2xl md:w-3xl p-6"
         >
           <div className="text-center">
             <span className="text-2xl md:text-3xl font-medium">

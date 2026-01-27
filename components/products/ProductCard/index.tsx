@@ -96,7 +96,7 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
             <AddToCart
               variantId={product.variantId}
               product={product}
-              className="w-full py-6"
+              className="w-full py-6 rounded-none"
             />
           </div>
         )}

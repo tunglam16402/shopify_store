@@ -91,7 +91,7 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
       <Modal
         isOpen={showForm}
         onClose={() => setShowForm(false)}
-        className="w-full md:w-3xl"
+        className="w-full md:w-3xl p-6"
       >
         <ReviewForm
           productId={productId}

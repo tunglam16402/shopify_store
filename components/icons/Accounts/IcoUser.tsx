@@ -14,9 +14,9 @@ const IcoUser = (props: React.HTMLAttributes<SVGElement>) => (
         transform="translate(-22.5 -638.308)"
         fill="none"
         stroke="black"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       ></path>
       <ellipse
         id="Ellipse_14"
@@ -28,9 +28,9 @@ const IcoUser = (props: React.HTMLAttributes<SVGElement>) => (
         transform="translate(4.068 0)"
         fill="none"
         stroke="black"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       ></ellipse>
     </g>
   </svg>

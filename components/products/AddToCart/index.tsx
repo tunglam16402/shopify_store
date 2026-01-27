@@ -14,6 +14,7 @@ type AddToCartProps = {
   product?: {
     title: string
     featuredImage?: string | null
+    vendor?: string
     handle: string
     basePrice?: number
   }
@@ -38,7 +39,7 @@ const AddToCart = ({
         productID: variantId,
         imageURL: product?.featuredImage ?? '',
         handle: product?.handle ?? '',
-        // brand: product.vendor,
+        brand: product?.vendor ?? '',
         price: String(product?.basePrice),
       })
       open?.()

@@ -1,88 +1,10 @@
 'use client'
 
-import React, { ReactNode, useMemo, useState } from 'react'
-import Dropdown from '@/components/ui/Dropdown'
 import { IcoDown } from '@/components/icons'
-
-/* =======================
-  Types
-======================= */
-
-interface IProductInfoProps {
-  description: string // Shopify descriptionHtml
-  information: string // Shopify descriptionHtml
-}
-
-interface ProductInfoItem {
-  id: number
-  title: string
-  descriptionHtml?: string
-  descriptionNode?: ReactNode
-}
-
-const FIXED_INFOS: ProductInfoItem[] = [
-  {
-    id: 3,
-    title: 'Shipping & Returns',
-    descriptionNode: (
-      <>
-        <strong>Express shipping available for €15</strong> — order before 1 PM
-        for next business day delivery.
-        <br />
-        <strong>Free shipping on orders over €69</strong> — available in all
-        markets.
-        <br />
-        <strong>30-days return policy</strong> — try it out, love it or return
-        it.
-      </>
-    ),
-  },
-  {
-    id: 4,
-    title: 'Payment Options',
-    descriptionNode: (
-      <>
-        <strong>Secure and trusted payments with:</strong>
-        <br />
-        <br />
-        Klarna
-        <br />
-        PayPal
-        <br />
-        American Express
-        <br />
-        Visa
-        <br />
-        Mastercard
-        <br />
-        Apple Pay
-        <br />
-        Google Pay
-        <br />
-        Maestro
-        <br />
-        UnionPay
-        <br />
-        Shop Pay
-      </>
-    ),
-  },
-  {
-    id: 5,
-    title: 'Contact Information',
-    descriptionNode: (
-      <>
-        Printworks
-        <br />
-        Birger Jarlsgatan 55
-        <br />
-        11145 Stockholm SE
-        <br />
-        info@printworksmarket.com
-      </>
-    ),
-  },
-]
+import Dropdown from '@/components/ui/Dropdown'
+import React, { useMemo, useState } from 'react'
+import { IProductInfoProps, ProductInfoItem } from '../../type'
+import { FIXED_INFOS } from '../../productDetail.contfig'
 
 const ProductInfo: React.FC<IProductInfoProps> = ({
   description,
@@ -121,7 +43,7 @@ const ProductInfo: React.FC<IProductInfoProps> = ({
           }
           openIcon={<IcoDown className="h-5 w-5" />}
           closeIcon={<IcoDown className="h-5 w-5" />}
-          className='border-b-gray-300'
+          className="border-b-gray-300"
         >
           <p className="prose prose-sm md:prose-base text-sm max-w-none text-gray-700 mt-3 pb-4">
             {info.descriptionHtml && (

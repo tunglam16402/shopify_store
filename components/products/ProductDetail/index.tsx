@@ -12,6 +12,7 @@ import ProductReview from '../ProductReview'
 import ProductImage from './ProductImage'
 import ProductInformation from './ProductInformation'
 import TopCollection from './TopCollection'
+import { PersonalizationConfig } from './type'
 
 type Variant = ReturnType<typeof mappingVariantPrice> & {
   id: string
@@ -23,6 +24,7 @@ export type ProductDetailProps = {
     id: string
     handle: string
     title: string
+    vendor: string
     description: string
     information: string
     collection: { id: string; title: string; handle: string }
@@ -31,6 +33,7 @@ export type ProductDetailProps = {
     images: string[]
     variant?: Variant
     colorVariants: { handle: string; image: string | null }[]
+    personalization: PersonalizationConfig
   }
   menu: CategoryMenu[]
   relatedProducts: ProductCardProps[]
@@ -69,10 +72,10 @@ const ProductDetail = ({
       productID: product.id,
       imageURL: product?.featuredImage || '',
       handle: product.handle,
-      // brand: vendor,
+      brand: product.vendor,
       price: String(product.variant?.basePrice),
       metadata: {
-        // brand: vendor,
+        brand: product.vendor,
         price: String(product.variant?.basePrice),
         compareAtPrice: String(product?.variant?.compareAtPrice),
       },

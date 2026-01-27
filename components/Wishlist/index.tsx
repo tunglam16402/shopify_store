@@ -91,21 +91,21 @@ const Wishlist = () => {
         ) : (
           <div className="relative my-24 flex flex-col items-center text-center">
             <div className="relative">
-              <IcoEmptyBox className="h-40 w-40" />
+              <IcoEmptyBox className="h-48 w-48" />
         
             </div>
 
-            <h2 className="mt-8 text-3xl font-bold tracking-tight">
+            <h2 className="mt-8 text-3xl font-bold tracking-tight up">
               Your wishlist feels lonely
             </h2>
 
             {/* Description */}
-            <p className="mt-3 max-w-md text-base text-muted-foreground">
+            <p className="mt-4 md:mt-6 max-w-md text-sm md:text-base text-muted-foreground">
               You haven’t saved any products yet. Find something you love and
               keep it close 
             </p>
 
-            <Button variant={'destructive'} className='mt-6 px-10 text-lg py-6'>
+            <Button variant={'primary'} className='mt-6 px-10 text-lg py-6 rounded-md'>
               Discover products
             </Button>
 

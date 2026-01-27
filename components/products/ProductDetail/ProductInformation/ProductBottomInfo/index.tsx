@@ -7,7 +7,7 @@ import AddToCart from '@/components/products/AddToCart'
 
 interface IProductBottomInfo {
   product: ProductDetailProps['product']
-  show?: boolean // controlled từ parent
+  show?: boolean 
 }
 
 const ProductBottomInfo: React.FC<IProductBottomInfo> = ({

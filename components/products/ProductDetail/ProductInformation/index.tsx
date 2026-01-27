@@ -13,6 +13,9 @@ import StarRating from '../../ProductReview/TotalRating/StarRating'
 import ProductBottomInfo from './ProductBottomInfo'
 import ProductInfo from './ProductInfo'
 import ProductUSP from './ProductUSP'
+import { Button } from '@/components/ui/Button'
+import { ProductPersonalizationEditor } from '../ProductPersonalizationEditor'
+import Modal from '@/components/common/Modal'
 
 type ProductInformationProps = {
   product: ProductDetailProps['product']
@@ -24,6 +27,7 @@ const ProductInformation = ({ product }: ProductInformationProps) => {
   const productPrice = product.variant
   const [quantity, setQuantity] = useState(1)
   const [showBottomInfo, setShowBottomInfo] = useState(false)
+  const [open, setOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   // const footerRef = useRef<HTMLElement | null>(null)
   const { data } = useReviews(product.id)
@@ -61,7 +65,7 @@ const ProductInformation = ({ product }: ProductInformationProps) => {
   }
 
   return (
-    <div className="page-width" ref={containerRef}>
+    <div className="page-width md:pr-20!" ref={containerRef}>
       {/* Collection title + Product title */}
       <div className="sticky top-24">
         <p className="text-gray-600 uppercase text-sm mb-1">
@@ -135,7 +139,7 @@ const ProductInformation = ({ product }: ProductInformationProps) => {
         )}
 
         {/* Quantity + AddToCart */}
-        <div className="flex items-center gap-3 mt-8 md:gap-6">
+        <div className="flex items-center gap-3 mt-8 md:mt-12 md:gap-6">
           <QuantityInput
             value={quantity}
             min={1}
@@ -146,7 +150,7 @@ const ProductInformation = ({ product }: ProductInformationProps) => {
             <AddToCart
               variantId={product.variant?.id || ''}
               quantity={quantity}
-              className="w-full py-6 text-base md:text-lg"
+              className="w-full py-6 text-base md:text-lg bg-primary hover:bg-white! text-white hover:text-black!"
               product={product}
             />
           </div>
@@ -157,6 +161,34 @@ const ProductInformation = ({ product }: ProductInformationProps) => {
           <ProductUSP />
         </div>
 
+        {/* Personalize config */}
+        {product.personalization && (
+          <div className="border border-gray-600 px-6 py-4 mt-8">
+            <div className="flex justify-between">
+              <div>
+                <div className="text-base md:text-lg uppercase font-semibold">
+                  Make it your own
+                </div>
+                <div className="text-sm md:text-base">
+                  Personalize your item with a custom text on the cover.
+                </div>
+              </div>
+              <div className="md:text-base font-semibold">$20</div>
+            </div>
+            <Button
+              variant={'primary'}
+              className="uppercase text-base md:text-lg rounded-none font-semibold w-full mt-4"
+              onClick={() => setOpen(true)}
+            >
+              Personalize
+            </Button>
+            <div className="text-xs mt-2 font-light">
+              Personalized products are non-refundable. Note that delivery time
+              is about 2 weeks due to the craftsmanship. Read more here
+            </div>
+          </div>
+        )}
+
         {/* Product Info */}
         <div className="mt-8">
           <ProductInfo
@@ -166,6 +198,19 @@ const ProductInformation = ({ product }: ProductInformationProps) => {
         </div>
       </div>
 
+      {product.personalization && (
+        <Modal
+          onClose={() => setOpen(false)}
+          className="w-screen h-screen"
+          isOpen={open}
+          hasClose={false}
+        >
+          <ProductPersonalizationEditor
+            product={product}
+            personalization={product.personalization}
+          />
+        </Modal>
+      )}
       <ProductBottomInfo product={product} show={showBottomInfo} />
     </div>
   )

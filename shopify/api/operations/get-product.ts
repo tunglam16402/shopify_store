@@ -16,6 +16,18 @@ import getProductsQuery from '../../utils/query/get-all-product-query'
 import getProductDetailQuery from '../../utils/query/get-product-by-handle-query'
 import { ProductCardProps } from '@/types/product/productCard'
 
+function parsePersonalizationConfig(value?: string) {
+  if (!value) return null
+
+  try {
+    const parsed = JSON.parse(value)
+    if (parsed?.enabled !== true) return null
+    return parsed
+  } catch {
+    return null
+  }
+}
+
 export async function getProductByHandle(handle: string) {
   const data = await shopifyFetch<GetProductDetailQuery>({
     query: getProductDetailQuery,
@@ -47,6 +59,10 @@ export async function getProductByHandle(handle: string) {
 
   const productInfo = product.productInfo?.value ?? ''
 
+  const personalization = parsePersonalizationConfig(
+    product.personalization?.value
+  )
+
   let selectedCollection = null
 
   if (product.collections?.nodes?.length) {
@@ -65,12 +81,14 @@ export async function getProductByHandle(handle: string) {
     title: product.title,
     collection: selectedCollection ?? product.collections.nodes[0],
     description: product.descriptionHtml,
+    vendor: product.vendor,
     information: productInfo,
     featuredImage: product.featuredImage?.url || null,
     altText: product.featuredImage?.altText || '',
     images: product.images?.nodes?.map((img) => img.url) || [],
     variant,
     colorVariants,
+    personalization,
   }
 }
 

@@ -3,12 +3,8 @@
 import { Suspense, useEffect, useState } from 'react'
 import PWSwiper from '@/components/ui/Swiper'
 import Image from 'next/image'
+import { ProductImageProps } from '../type'
 
-type ProductImageProps = {
-  images: string[]
-  altText?: string
-  title: string
-}
 
 export const MOBILE_IMAGE = {
   slidesPerView: 1,

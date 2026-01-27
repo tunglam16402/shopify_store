@@ -30,12 +30,12 @@ const Modal: React.FC<ModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70"
+      className="fixed inset-0 flex items-center justify-center bg-black/70 z-51"
       onClick={onClose}
     >
       <div
         className={cn(
-          'bg-white md:rounded-lg shadow-lg p-6 relative max-h-screen overflow-auto',
+          'bg-white md:rounded-lg shadow-lg relative max-h-screen overflow-auto',
           className
         )}
         onClick={(e) => e.stopPropagation()}

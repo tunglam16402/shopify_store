@@ -152,7 +152,7 @@ const ReviewItem = ({
         <Modal
           isOpen={open}
           onClose={() => setOpen(false)}
-          className="w-full md:w-4xl p-0!"
+          className="w-full md:w-4xl"
         >
           <ReviewItemDetail review={review} startIndex={startIndex} />
         </Modal>

@@ -5,6 +5,7 @@ const getProductDetailQuery = /* GraphQL */ `
       id
       handle
       title
+      vendor
       descriptionHtml
       collections(first: 100) {
         nodes {
@@ -57,6 +58,11 @@ const getProductDetailQuery = /* GraphQL */ `
       }
 
       productInfo: metafield(namespace: "custom", key: "product_information") {
+        value
+        type
+      }
+
+      personalization: metafield(namespace: "custom", key: "personalization_config") {
         value
         type
       }

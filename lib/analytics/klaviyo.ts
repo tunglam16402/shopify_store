@@ -4,10 +4,10 @@ export interface IKlaviyoProduct {
   productID: string
   imageURL: string
   handle: string
-  // brand?: string
+  brand?: string
   price: string
   metadata?: {
-    // brand: string
+    brand: string
     price: string
     compareAtPrice: string
   }
@@ -32,10 +32,10 @@ export function trackViewedProduct(product: Required<IKlaviyoProduct>) {
     ProductID: product.productID.split('/').pop(),
     ImageURL: product.imageURL,
     Handle: product.handle,
-    // Brand: product.brand,
+    Brand: product.brand,
     Price: product.price,
     Metadata: {
-      // Brand: product.metadata.brand,
+      Brand: product.metadata.brand,
       Price: product.metadata.price,
       CompareAtPrice: product.metadata.compareAtPrice,
     },
