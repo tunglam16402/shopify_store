@@ -1,14 +1,22 @@
 import Image from 'next/image'
 
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
-import { FONT_FAMILY_MAP, FONT_SIZE_MAP_DESKTOP, FONT_SIZE_MAP_MOBILE } from '../../productDetail.contfig'
+import {
+  FONT_FAMILY_MAP,
+  FONT_SIZE_MAP_DESKTOP,
+  FONT_SIZE_MAP_MOBILE,
+} from '../../productDetail.contfig'
+import { PersonalizationTextBlock } from '../../type'
 
 interface Props {
   productImage: string
-  textBlock: any
+  textBlock: PersonalizationTextBlock
   values: Record<string, string>
-  x: number
-  y: number
+  position: {
+    x: number
+    y: number
+  }
+
   font: string
   fontSize: 'S' | 'M' | 'L'
   fontWeight: string
@@ -19,27 +27,23 @@ export function PersonalizationPreview({
   productImage,
   textBlock,
   values,
-  x,
-  y,
+  position: { x, y },
   font,
   fontSize,
   fontWeight,
   color,
 }: Props) {
   const isMobile = useMediaQuery('(max-width: 768px)')
-  const fontSizeMap = isMobile
-    ? FONT_SIZE_MAP_MOBILE
-    : FONT_SIZE_MAP_DESKTOP
+  const fontSizeMap = isMobile ? FONT_SIZE_MAP_MOBILE : FONT_SIZE_MAP_DESKTOP
 
   return (
     <div className="relative">
-      <div className="relative aspect-square">
-        <Image
-          src={productImage}
-          alt="Preview"
-          fill
-          className="object-cover"
-        />
+      <div className="relative md:w-[732px] md:h-[732px] w-full h-full aspect-square">
+        <Image src={productImage} alt="Preview" fill className="object-cover" />
+      </div>
+      <div className="text-sm mt-2 text-center">
+        Note that your personalized piece is made by hand, which means small
+        variations in alignment or spacing may appear.
       </div>
 
       <div className="absolute inset-0 pointer-events-none">
@@ -49,6 +53,7 @@ export function PersonalizationPreview({
             left: `${x * 100}%`,
             top: `${y * 100}%`,
             color,
+            transform: 'translate(-50%, -50%)',
             fontFamily: FONT_FAMILY_MAP[font],
             fontWeight,
           }}

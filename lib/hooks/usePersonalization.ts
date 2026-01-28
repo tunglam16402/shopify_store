@@ -55,8 +55,10 @@ export function usePersonalization(personalization: PersonalizationConfig) {
     fontSize,
     color,
     fontWeight,
-    x,
-    y,
+    position: {
+      x,
+      y,
+    },
     setFont,
     setFontSize,
     setColor,

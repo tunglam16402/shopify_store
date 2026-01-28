@@ -43,6 +43,33 @@ export interface PersonalizationConfig {
   }
 }
 
+export interface PersonalizationOptionsProps {
+  personalization: PersonalizationConfig
+
+  /* text */
+  values: Record<string, string>
+  updateLineValue: (lineId: string, value: string, maxLength: number) => void
+
+  /* style */
+  color: string
+  setColor: (c: string) => void
+
+  font: string
+  fontSize: 'S' | 'M' | 'L'
+  fontWeight: string
+  setFont: (f: string) => void
+  setFontSize: (s: 'S' | 'M' | 'L') => void
+  setFontWeight: (w: string) => void
+
+  /* position */
+  position: {
+    x: number
+    y: number
+  }
+  setPosX: (v: number) => void
+  setPosY: (v: number) => void
+}
+
 export type ProductImageProps = {
   images: string[]
   altText?: string

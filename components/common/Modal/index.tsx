@@ -16,7 +16,7 @@ const Modal: React.FC<ModalProps> = ({
   isOpen = 'true',
   onClose,
   children,
-  hasClose = 'true',
+  hasClose = true,
   className,
 }) => {
   useEffect(() => {
@@ -27,11 +27,15 @@ const Modal: React.FC<ModalProps> = ({
   }, [isOpen])
 
   if (!isOpen) return null
+  const handleOverlayClick = () => {
+    if (!hasClose) return
+    onClose?.()
+  }
 
   return (
     <div
       className="fixed inset-0 flex items-center justify-center bg-black/70 z-51"
-      onClick={onClose}
+      onClick={handleOverlayClick}
     >
       <div
         className={cn(

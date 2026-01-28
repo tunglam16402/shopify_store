@@ -12,7 +12,7 @@ const buttonVariants = cva(
         default:
           'bg-white text-black hover:bg-gray-100',
         primary:
-          'rounded-xl border bg-primary text-white hover:text-primary hover:bg-white! hover:border-primary',
+          'rounded-xl border border-primary bg-primary text-white hover:text-primary hover:bg-white! hover:border-primary',
         destructive:
           'bg-black text-white hover:bg-white hover:text-black border hover:border-black',
         outline:
