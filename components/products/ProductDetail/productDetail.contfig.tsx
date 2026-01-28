@@ -91,3 +91,21 @@ export const USP = [
     title: '300 000+ HAPPY CUSTOMERS',
   },
 ]
+
+
+export const FONT_SIZE_MAP_MOBILE = {
+  S: 10,
+  M: 12,
+  L: 14,
+} as const
+
+export const FONT_SIZE_MAP_DESKTOP = {
+  S: 12,
+  M: 14,
+  L: 16,
+} as const
+
+export const FONT_FAMILY_MAP: Record<string, string> = {
+  classic: 'var(--font-geist-mono)',
+  modern: 'var(--font-heading)',
+}

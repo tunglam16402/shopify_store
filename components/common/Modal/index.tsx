@@ -6,7 +6,7 @@ import cn from 'classnames'
 
 interface ModalProps {
   isOpen?: boolean
-  onClose: () => void
+  onClose?: () => void
   children: ReactNode
   hasClose?: boolean
   className?: string

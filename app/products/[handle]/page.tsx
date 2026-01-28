@@ -14,8 +14,8 @@ interface Props {
 }
 
 const ProductDetailPage = async ({ params }: Props) => {
-  'use cache'
-  cacheLife('hours')
+  // 'use cache'
+  // cacheLife('hours')
 
   const { handle } = await params
 

@@ -31,7 +31,7 @@ export type ProductDetailProps = {
     featuredImage?: string | null
     altText?: string
     images: string[]
-    variant?: Variant
+    variant: Variant
     colorVariants: { handle: string; image: string | null }[]
     personalization: PersonalizationConfig
   }

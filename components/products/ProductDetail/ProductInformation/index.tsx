@@ -200,14 +200,14 @@ const ProductInformation = ({ product }: ProductInformationProps) => {
 
       {product.personalization && (
         <Modal
-          onClose={() => setOpen(false)}
-          className="w-screen h-screen"
+          className="w-screen h-screen md:rounded-none"
           isOpen={open}
           hasClose={false}
         >
           <ProductPersonalizationEditor
             product={product}
             personalization={product.personalization}
+            onClose={() => setOpen(false)}
           />
         </Modal>
       )}

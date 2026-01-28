@@ -18,6 +18,8 @@ type AddToCartProps = {
     handle: string
     basePrice?: number
   }
+  price?: number
+  showPrice?: boolean
 }
 
 const AddToCart = ({
@@ -25,6 +27,8 @@ const AddToCart = ({
   quantity = 1,
   className,
   product,
+  showPrice = false,
+  price,
 }: AddToCartProps) => {
   const dispatch = useAppDispatch()
   const { open } = useUI('cart')
@@ -58,6 +62,9 @@ const AddToCart = ({
       className={`uppercase font-semibold ${className}`}
     >
       {loading ? 'Adding...' : 'Add to Cart'}
+      {showPrice && typeof price === 'number' && (
+        <span >| ${price.toFixed(2)}</span>
+      )}
     </Button>
   )
 }

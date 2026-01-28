@@ -247,3 +247,11 @@ p {
   font-weight: 300;
   font-style: italic;
 }
+
+.bg-gold {
+  background-color: #d4af37; 
+}
+
+.bg-silver {
+  background-color: #c0c0c0; 
+}
