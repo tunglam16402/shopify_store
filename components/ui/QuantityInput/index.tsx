@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { IcoMinus, IcoPlus } from '@/components/icons'
+import cn from 'classnames'
 
 interface QuantityInputProps {
   value: number
@@ -10,6 +11,7 @@ interface QuantityInputProps {
   loading?: boolean
   onChange: (newValue: number, immediate?: boolean) => void
   debounce?: number
+  className?: string
 }
 
 export const QuantityInput = ({
@@ -19,6 +21,7 @@ export const QuantityInput = ({
   loading = false,
   onChange,
   debounce = 800,
+  className,
 }: QuantityInputProps) => {
   const [inputValue, setInputValue] = useState(value)
 
@@ -29,7 +32,7 @@ export const QuantityInput = ({
   useEffect(() => {
     const handler = setTimeout(() => {
       if (inputValue !== value) {
-        onChange(inputValue, false) 
+        onChange(inputValue, false)
       }
     }, debounce)
     return () => clearTimeout(handler)
@@ -44,7 +47,7 @@ export const QuantityInput = ({
   const handleIncrease = () => {
     const newValue = Math.min(inputValue + 1, max)
     setInputValue(newValue)
-    onChange(newValue, true) 
+    onChange(newValue, true)
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,14 +56,19 @@ export const QuantityInput = ({
   }
 
   return (
-    <div className="flex items-center gap-2">
+    <div
+      className={cn(
+        'flex items-center gap-2 border border-gray-200',
+        className
+      )}
+    >
       <Button
         variant="default"
         size="icon"
         disabled={loading || inputValue <= min}
         onClick={handleDecrease}
       >
-        <IcoMinus className="w-4 h-4" color='black'/>
+        <IcoMinus className="w-4 h-4" color="black" />
       </Button>
 
       <input
@@ -81,7 +89,7 @@ export const QuantityInput = ({
         disabled={loading || inputValue >= max}
         onClick={handleIncrease}
       >
-        <IcoPlus className="w-4 h-4" color='black'/>
+        <IcoPlus className="w-4 h-4" color="black" />
       </Button>
     </div>
   )

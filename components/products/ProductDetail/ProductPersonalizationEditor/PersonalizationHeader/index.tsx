@@ -35,7 +35,7 @@ const PersonalizationHeader = ({ onClose }: IPersonalizationHeader) => {
       {showExitModal && (
         <div>
           <Modal
-            className="p-6 md:p-10  rounded-none! text-center"
+            className="p-6 md:p-10 text-center"
             hasClose={false}
             onClose={onClose}
           >

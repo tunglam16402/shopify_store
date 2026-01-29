@@ -244,7 +244,6 @@ p {
 
 .font-sub-heading {
   font-family: var(--font-sub-heading);
-  font-weight: 300;
   font-style: italic;
 }
 

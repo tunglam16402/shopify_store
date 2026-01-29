@@ -1,14 +1,16 @@
 'use client'
 
-import Image from 'next/image'
+import Modal from '@/components/common/Modal'
+import { PersonalizationPreview } from '@/components/products/ProductDetail/ProductPersonalizationEditor/PersonalizationPreview'
 import { QuantityInput } from '@/components/ui/QuantityInput'
-import { CartLine } from '@/types/cart'
-import cn from 'classnames'
-import React, { useMemo } from 'react'
 import { useAppDispatch } from '@/lib/hooks/useAppDispatch'
 import { removeItem, updateItem } from '@/store/thunks/cartThunk'
-import { PersonalizationPreview } from '@/components/products/ProductDetail/ProductPersonalizationEditor/PersonalizationPreview'
+import { CartLine } from '@/types/cart'
+import cn from 'classnames'
+import Image from 'next/image'
+import React, { useMemo, useState } from 'react'
 import PersonalizeInfo from './PersonalizeInfo'
+import { IcoSpin } from '@/components/icons'
 
 interface CartItemProps {
   item: CartLine
@@ -17,6 +19,7 @@ interface CartItemProps {
 
 const CartItemComponent = ({ item, variant = 'sidecart' }: CartItemProps) => {
   const dispatch = useAppDispatch()
+  const [openModal, setOpenModal] = useState(false)
   const [loading, setLoading] = React.useState(false)
 
   const personalization = useMemo(() => {
@@ -60,7 +63,7 @@ const CartItemComponent = ({ item, variant = 'sidecart' }: CartItemProps) => {
     <div className="relative">
       <div
         className={cn(
-          'flex justify-between border-b border-gray-400 py-2 ',
+          'flex gap-2 md:gap-4 border-b border-gray-400 py-2 ',
           variant === 'checkout'
             ? 'items-start gap-6 sm:flex-row sm:items-center sm:gap-2'
             : 'items-center'
@@ -71,39 +74,30 @@ const CartItemComponent = ({ item, variant = 'sidecart' }: CartItemProps) => {
           alt="cart item thumbnail"
           width={100}
           height={100}
-          className="object-contain w-full max-w-[140px] h-40 mr-0 sm:mr-4"
+          className="object-contain w-fit"
         />
 
         <div
           className={cn(
-            'space-y-2',
+            'w-full ',
             variant === 'checkout' &&
               'flex flex-col sm:flex-row sm:items-center sm:justify-center sm:gap-6'
           )}
         >
-          <span className="text-sm line-clamp-3">
+          <div className="text-base  line-clamp-2 font-semibold">
             {item.merchandise.product.title}
-          </span>
-          {personalization && (
-            <PersonalizationPreview
-              productImage={personalization.productImage}
-              textBlock={personalization.textBlock}
-              values={personalization.values}
-              position={personalization.position}
-              font={personalization.font}
-              fontSize={personalization.fontSize}
-              fontWeight={personalization.fontWeight}
-              color={personalization.color}
-            />
-          )}
+          </div>
+
+          <div className="text-sm text-gray-500 uppercase mt-1">
+            {item.merchandise.product.category.name}
+            {personalization && <span> | Personalized </span>}
+          </div>
+
           {personalization && (
             <PersonalizeInfo personalization={personalization} />
           )}
 
-          <span className="text-sm text-gray-500 ">
-            {item.merchandise.product.category.name}
-          </span>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 mt-3">
             <p className="font-bold">
               ${(item.quantity * item.merchandise.price.amount).toFixed(2)}
             </p>
@@ -116,47 +110,57 @@ const CartItemComponent = ({ item, variant = 'sidecart' }: CartItemProps) => {
                 : null}
             </p>
           </div>
-          <QuantityInput
-            value={item.quantity}
-            min={1}
-            max={item.merchandise.product.totalInventory ?? 99}
-            onChange={handleChangeQuantity}
-            loading={loading}
-          />
+
+          <div className="flex justify-between items-center mt-2 md:mt-4">
+            <QuantityInput
+              value={item.quantity}
+              min={1}
+              max={item.merchandise.product.totalInventory ?? 99}
+              onChange={handleChangeQuantity}
+              loading={loading}
+            />
+            <div className="flex items-center">
+              {personalization && (
+                <>
+                  <button
+                    onClick={() => setOpenModal(true)}
+                    aria-label="Remove from cart"
+                    className="p-2 text-gray-700 text-sm md:text-base uppercase hover:text-black"
+                  >
+                    View
+                  </button>
+                  |
+                </>
+              )}
+              <button
+                onClick={handleRemove}
+                aria-label="Remove from cart"
+                className="p-2 hover:opacity-80 underline text-sm md:text-base"
+              >
+                remove
+              </button>
+            </div>
+          </div>
         </div>
-
-        <button
-          onClick={handleRemove}
-          aria-label="Remove from cart"
-          className="mt-2 md:mt-0 md:ml-4 p-1 underline hover:opacity-80 rounded self-start md:self-auto"
-        >
-          remove
-        </button>
       </div>
-
+      {personalization && (
+        <Modal isOpen={openModal} onClose={() => setOpenModal(false)}>
+          <PersonalizationPreview
+            productImage={personalization.productImage}
+            textBlock={personalization.textBlock}
+            values={personalization.values}
+            position={personalization.position}
+            font={personalization.font}
+            fontSize={personalization.fontSize}
+            fontWeight={personalization.fontWeight}
+            color={personalization.color}
+          />
+        </Modal>
+      )}
       {/* Loading overlay */}
       {loading && (
         <div className="absolute inset-0 flex items-center justify-center bg-white/60 z-10">
-          <svg
-            className="animate-spin h-8 w-8 text-gray-600"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              className="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              strokeWidth="4"
-            ></circle>
-            <path
-              className="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4l-3 3 3 3h-4z"
-            ></path>
-          </svg>
+         <IcoSpin className="size-8 animate-spin"/>
         </div>
       )}
     </div>

@@ -10,6 +10,7 @@ interface ModalProps {
   children: ReactNode
   hasClose?: boolean
   className?: string
+  align?: 'center' | 'right' | 'left'
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -18,6 +19,7 @@ const Modal: React.FC<ModalProps> = ({
   children,
   hasClose = true,
   className,
+  align = 'center',
 }) => {
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
@@ -34,12 +36,17 @@ const Modal: React.FC<ModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 flex items-center justify-center bg-black/70 z-51"
+      className={cn(
+        'fixed inset-0 flex items-center bg-black/70 z-51',
+        align === 'center' && 'justify-center',
+        align === 'right' && 'justify-end',
+        align === 'left' && 'justify-start'
+      )}
       onClick={handleOverlayClick}
     >
       <div
         className={cn(
-          'bg-white md:rounded-lg shadow-lg relative max-h-screen overflow-auto',
+          'bg-white shadow-lg relative max-h-screen overflow-auto',
           className
         )}
         onClick={(e) => e.stopPropagation()}

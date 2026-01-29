@@ -2,15 +2,16 @@
 
 import CartIcon from '@/components/cart/CartIcon'
 import CartSideBar from '@/components/cart/CartSidebar'
-import { IcoHeart, Logo } from '@/components/icons'
+import { Logo } from '@/components/icons'
 import { AccountDropdown, NavbarMobile } from '@/components/menu'
+import WishlistIconHeader from '@/components/Wishlist/WishlistIconHeader'
 import { useUI } from '@/lib/hooks/useContext'
 import cn from 'classnames'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { FaBars } from 'react-icons/fa'
 import SearchInput from './Search/SearchInput'
-import WishlistIconHeader from '@/components/Wishlist/WishlistIconHeader'
+import Modal from '@/components/common/Modal'
 
 type Props = {
   menuItems: { title: string; url: string }[]
@@ -21,7 +22,7 @@ const MainHeader = ({ menuItems }: Props) => {
   const [scrolled, setScrolled] = useState(false)
   const [visible, setVisible] = useState(true)
   const [lastScrollY, setLastScrollY] = useState(0)
-  const { open, isOpen } = useUI('cart')
+  const { open, isOpen, close } = useUI('cart')
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,14 +32,12 @@ const MainHeader = ({ menuItems }: Props) => {
       setScrolled(currentScrollY > 0)
 
       if (isMobile) {
-        // Trên mobile: chỉ hiện header khi scroll lên
         if (currentScrollY < lastScrollY || currentScrollY < 500) {
           setVisible(true)
         } else {
           setVisible(false)
         }
       } else {
-        // Trên desktop: luôn hiện header (fixed)
         setVisible(true)
       }
 
@@ -95,7 +94,16 @@ const MainHeader = ({ menuItems }: Props) => {
         </div>
 
         {/* Cart sidebar */}
-        <div>{isOpen && <CartSideBar />}</div>
+        {isOpen && (
+          <Modal
+            isOpen={isOpen}
+            onClose={close}
+            className="h-full w-[390px] sm:w-[480px]"
+            align="right"
+          >
+            <CartSideBar isClose={close} />
+          </Modal>
+        )}
       </div>
       {/* Navbar mobile */}
       {isOpenMobile && (

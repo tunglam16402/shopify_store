@@ -145,6 +145,7 @@ const ProductInformation = ({ product }: ProductInformationProps) => {
             min={1}
             max={MAX_QUANTITY}
             onChange={handleChangeQuantity}
+            className='h-12'
           />
           <div className="w-full">
             <AddToCart
@@ -200,7 +201,7 @@ const ProductInformation = ({ product }: ProductInformationProps) => {
 
       {product.personalization && (
         <Modal
-          className="w-screen h-screen md:rounded-none"
+          className="w-screen h-screen"
           isOpen={open}
           hasClose={false}
         >
