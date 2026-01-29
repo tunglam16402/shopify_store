@@ -42,6 +42,9 @@ export const cartFragment = /* GraphQL */ `
                 handle
                 title
                 totalInventory
+                category {
+                  name
+                }
               }
             }
           }

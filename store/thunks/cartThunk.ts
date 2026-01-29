@@ -3,6 +3,7 @@ import { mapCartResponse } from '@/lib/helper'
 import {
   addCartLine,
   attachCartToCustomer,
+  CartLinePersonalizationPayload,
   createCart,
   getCartById,
   removeCartLine,
@@ -46,27 +47,37 @@ export const hydrateCart = createAsyncThunk<Cart | null, HydrateCartArgs>(
 
 export const addItem = createAsyncThunk<
   Cart | null,
-  { variantId: string; quantity?: number },
+  {
+    variantId: string
+    quantity?: number
+    personalization?: CartLinePersonalizationPayload
+  },
   { state: { cart: { cart: Cart | null } } }
->('cart/addItem', async ({ variantId, quantity = 1 }, { getState }) => {
-  let currentCart = getState().cart.cart || null
+>(
+  'cart/addItem',
+  async ({ variantId, quantity = 1, personalization }, { getState }) => {
+    let currentCart = getState().cart.cart || null
 
-  if (!currentCart) {
-    // Tạo cart mới (guest hoặc login)
-    const newCartRaw = await createCart()
-    if (!newCartRaw) return null
-    currentCart = mapCartResponse(newCartRaw)
+    if (!currentCart) {
+      const newCartRaw = await createCart()
+      if (!newCartRaw) return null
+      currentCart = mapCartResponse(newCartRaw)
+    }
+
+    const response = await addCartLine(
+      currentCart.id,
+      variantId,
+      quantity,
+      personalization
+    )
+    if (response?.cartLinesAdd?.cart) {
+      return mapCartResponse(response.cartLinesAdd.cart)
+    }
+
+    console.error('Add to cart failed', response)
+    return currentCart
   }
-
-  // Add line vào cart
-  const response = await addCartLine(currentCart.id, variantId, quantity)
-  if (response?.cartLinesAdd?.cart) {
-    return mapCartResponse(response.cartLinesAdd.cart)
-  }
-
-  console.error('Add to cart failed', response)
-  return currentCart
-})
+)
 
 export const updateItem = createAsyncThunk<
   Cart | null,

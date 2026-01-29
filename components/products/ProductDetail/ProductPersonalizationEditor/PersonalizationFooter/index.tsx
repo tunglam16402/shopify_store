@@ -1,14 +1,17 @@
 import AddToCart from '@/components/products/AddToCart'
+import { CartLinePersonalizationPayload } from '@/shopify/cart/use-cart'
 import { ProductDetailProps } from '../..'
 
 interface IPersonalizationFooter {
   product: ProductDetailProps['product']
   totalPrice: number
+  personalization: CartLinePersonalizationPayload
 }
 
 const PersonalizationFooter = ({
   product,
   totalPrice,
+  personalization
 }: IPersonalizationFooter) => {
   return (
     <div
@@ -26,12 +29,14 @@ const PersonalizationFooter = ({
           showPrice={true}
           product={product}
           price={totalPrice}
+          personalization={personalization}
         />
       </div>
       <label className="items-center gap-2 text-sm cursor-pointer mt-2 md:hidden flex">
         <input
           type="checkbox"
           className="peer w-4 h-4 accent-primary cursor-pointer"
+          required
         />
         <span className="text-gray-500 peer-checked:text-black transition">
           I understand that personalized products are non-refundable.

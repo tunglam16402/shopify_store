@@ -45,7 +45,7 @@ const ProductInfo: React.FC<IProductInfoProps> = ({
           closeIcon={<IcoDown className="h-5 w-5" />}
           className="border-b-gray-300"
         >
-          <p className="prose prose-sm md:prose-base text-sm max-w-none text-gray-700 mt-3 pb-4">
+          <div className="prose prose-sm md:prose-base text-sm max-w-none text-gray-700 mt-3 pb-4">
             {info.descriptionHtml && (
               <p
                 dangerouslySetInnerHTML={{
@@ -55,7 +55,7 @@ const ProductInfo: React.FC<IProductInfoProps> = ({
             )}
 
             {info.descriptionNode && info.descriptionNode}
-          </p>
+          </div>
         </Dropdown>
       ))}
     </div>

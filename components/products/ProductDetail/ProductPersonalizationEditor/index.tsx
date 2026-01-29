@@ -8,6 +8,7 @@ import PersonalizationHeader from './PersonalizationHeader'
 import PersonalizationOptions from './PersonalizationOptions'
 import PersonalizationOrder from './PersonalizationOrder'
 import { PersonalizationPreview } from './PersonalizationPreview'
+import { CartLinePersonalizationPayload } from '@/shopify/cart/use-cart'
 
 const PersonalizationPrice = 20
 
@@ -23,6 +24,26 @@ export function ProductPersonalizationEditor({
   onClose,
 }: Props) {
   const state = usePersonalization(personalization)
+
+  const personalizationPayload: CartLinePersonalizationPayload = {
+    productImage: product.images.at(-1)!,
+
+    textBlock: {
+      lines: personalization.textBlock.lines.map((l) => ({
+        id: l.id,
+        label: l.label,
+      })),
+    },
+
+    values: state.values,
+
+    position: state.position,
+
+    font: state.font,
+    fontSize: state.fontSize,
+    fontWeight: state.fontWeight,
+    color: state.color,
+  }
 
   const totalPrice = Number(
     (product.variant.basePrice + PersonalizationPrice).toFixed(2)
@@ -43,6 +64,7 @@ export function ProductPersonalizationEditor({
             <input
               type="checkbox"
               className="peer w-4 h-4 accent-primary cursor-pointer"
+              required
             />
             <span className="text-gray-500 peer-checked:text-black transition">
               I understand that personalized products are non-refundable.
@@ -67,7 +89,11 @@ export function ProductPersonalizationEditor({
         </div>
       </div>
 
-      <PersonalizationFooter product={product} totalPrice={totalPrice} />
+      <PersonalizationFooter
+        product={product}
+        totalPrice={totalPrice}
+        personalization={personalizationPayload}
+      />
     </div>
   )
 }

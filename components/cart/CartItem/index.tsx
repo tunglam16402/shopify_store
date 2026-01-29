@@ -4,9 +4,11 @@ import Image from 'next/image'
 import { QuantityInput } from '@/components/ui/QuantityInput'
 import { CartLine } from '@/types/cart'
 import cn from 'classnames'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useAppDispatch } from '@/lib/hooks/useAppDispatch'
 import { removeItem, updateItem } from '@/store/thunks/cartThunk'
+import { PersonalizationPreview } from '@/components/products/ProductDetail/ProductPersonalizationEditor/PersonalizationPreview'
+import PersonalizeInfo from './PersonalizeInfo'
 
 interface CartItemProps {
   item: CartLine
@@ -16,6 +18,19 @@ interface CartItemProps {
 const CartItemComponent = ({ item, variant = 'sidecart' }: CartItemProps) => {
   const dispatch = useAppDispatch()
   const [loading, setLoading] = React.useState(false)
+
+  const personalization = useMemo(() => {
+    const attr = item.attributes?.find(
+      (a) => a.key === 'personalization_config'
+    )
+    if (!attr?.value) return null
+
+    try {
+      return JSON.parse(attr.value)
+    } catch {
+      return null
+    }
+  }, [item.attributes])
 
   const handleChangeQuantity = async (newQuantity: number) => {
     setLoading(true)
@@ -56,7 +71,7 @@ const CartItemComponent = ({ item, variant = 'sidecart' }: CartItemProps) => {
           alt="cart item thumbnail"
           width={100}
           height={100}
-          className="object-contain w-full max-w-[140px] h-[160px] mr-0 sm:mr-4"
+          className="object-contain w-full max-w-[140px] h-40 mr-0 sm:mr-4"
         />
 
         <div
@@ -69,8 +84,24 @@ const CartItemComponent = ({ item, variant = 'sidecart' }: CartItemProps) => {
           <span className="text-sm line-clamp-3">
             {item.merchandise.product.title}
           </span>
+          {personalization && (
+            <PersonalizationPreview
+              productImage={personalization.productImage}
+              textBlock={personalization.textBlock}
+              values={personalization.values}
+              position={personalization.position}
+              font={personalization.font}
+              fontSize={personalization.fontSize}
+              fontWeight={personalization.fontWeight}
+              color={personalization.color}
+            />
+          )}
+          {personalization && (
+            <PersonalizeInfo personalization={personalization} />
+          )}
+
           <span className="text-sm text-gray-500 ">
-            {item.merchandise.title}
+            {item.merchandise.product.category.name}
           </span>
           <div className="flex items-center gap-2">
             <p className="font-bold">

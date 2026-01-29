@@ -1,5 +1,15 @@
 'use server'
 
+import { cookies } from 'next/headers'
+import { shopifyFetch } from '../fetcher'
+import {
+  cartBuyerIdentityUpdateMutation,
+  cartCreateMutation,
+} from '../utils/mutation'
+import cartLineAddMutation from '../utils/mutation/cart-lines-add'
+import cartLinesRemoveMutation from '../utils/mutation/cart-lines-remove'
+import cartLinesUpdateMutation from '../utils/mutation/cart-lines-update'
+import getCheckoutQuery from '../utils/query/get-checkout-query'
 import {
   CartBuyerIdentityInput,
   CartBuyerIdentityUpdateMutation,
@@ -9,17 +19,29 @@ import {
   CartLinesUpdateMutation,
   GetCheckoutQuery,
 } from './../types/graphql'
-import { shopifyFetch } from '../fetcher'
-import {
-  cartBuyerIdentityUpdateMutation,
-  cartCreateMutation,
-} from '../utils/mutation'
-import cartLineAddMutation from '../utils/mutation/cart-lines-add'
-import cartLinesUpdateMutation from '../utils/mutation/cart-lines-update'
-import cartLinesRemoveMutation from '../utils/mutation/cart-lines-remove'
-import getCheckoutQuery from '../utils/query/get-checkout-query'
-import { cookies } from 'next/headers'
-import { Cart } from '@/types/cart'
+
+export interface CartLinePersonalizationPayload {
+  values: Record<string, string>
+
+  productImage?: string
+
+  textBlock?: {
+    lines: {
+      id: string
+      label: string
+    }[]
+  }
+
+  position?: {
+    x: number
+    y: number
+  }
+
+  font: string
+  fontSize: string
+  fontWeight: string
+  color: string
+}
 
 export async function createCart() {
   const data = await shopifyFetch<CartCreateMutation>({
@@ -42,7 +64,8 @@ export async function createCart() {
 export async function addCartLine(
   cartId: string,
   variantId: string,
-  quantity = 1
+  quantity = 1,
+  personalization?: CartLinePersonalizationPayload
 ) {
   // get shopify cookies
 
@@ -50,16 +73,26 @@ export async function addCartLine(
   const shopifyY = cookie?.get('_shopify_y')?.value
   const shopifyS = cookie?.get('_shopify_s')?.value
 
+  const lines = [
+    {
+      merchandiseId: variantId,
+      quantity,
+      ...(personalization && {
+        attributes: [
+          {
+            key: 'personalization_config',
+            value: JSON.stringify(personalization),
+          },
+        ],
+      }),
+    },
+  ]
+
   const data = await shopifyFetch<CartLinesAddMutation>({
     query: cartLineAddMutation,
     variables: {
       cartId,
-      lines: [
-        {
-          merchandiseId: variantId,
-          quantity,
-        },
-      ],
+      lines,
     },
     headers: {
       ...(shopifyY &&

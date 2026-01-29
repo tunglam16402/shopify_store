@@ -1,13 +1,21 @@
 export type CartLine = {
   id: string
   quantity: number
+  attributes?: {
+    key: string
+    value: string
+  }[]
   merchandise: {
     id: string
     title: string
     price: { amount: number; currencyCode: string }
     compareAtPrice?: { amount: number; currencyCode: string } | null
     image?: { url: string; altText: string } | null
-    product: { title: string; totalInventory: number }
+    product: {
+      title: string
+      totalInventory: number
+      category: { name: string }
+    }
   }
 }
 
