@@ -113,7 +113,7 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
         </div>
       </div>
 
-      <div className="flex flex-col flex-1 mt-3 ">
+      <div className="flex flex-col flex-1 mt-3 px-2">
         <div className="md:min-h-6 min-h-5">
           {product.category && (
             <p className="text-xs md:text-sm font-light uppercase tracking-wide">

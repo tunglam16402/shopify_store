@@ -20,7 +20,7 @@ const SideCartHeader = ({ subTotal, isClose }: SideCartHeader) => {
 
   return (
     <div className="sticky top-0 z-10 bg-white">
-      <div className="relative px-4 py-4 md:px-6 md:py-6">
+      <div className="relative px-4 py-2 md:px-6 md:py-4">
         {/* Close button */}
         <button
           type="button"

@@ -27,18 +27,14 @@ export function ProductPersonalizationEditor({
 
   const personalizationPayload: CartLinePersonalizationPayload = {
     productImage: product.images.at(-1)!,
-
     textBlock: {
       lines: personalization.textBlock.lines.map((l) => ({
         id: l.id,
         label: l.label,
       })),
     },
-
     values: state.values,
-
     position: state.position,
-
     font: state.font,
     fontSize: state.fontSize,
     fontWeight: state.fontWeight,
@@ -59,18 +55,6 @@ export function ProductPersonalizationEditor({
             personalization={personalization}
             {...state}
           />
-
-          <label className="items-center gap-2 text-sm cursor-pointer mt-8 hidden md:flex">
-            <input
-              type="checkbox"
-              className="peer w-4 h-4 accent-primary cursor-pointer"
-              required
-            />
-            <span className="text-gray-500 peer-checked:text-black transition">
-              I understand that personalized products are non-refundable.
-            </span>
-          </label>
-
           <div className="mt-2 hidden md:block">
             <PersonalizationOrder product={product} totalPrice={totalPrice} />
           </div>
@@ -93,6 +77,7 @@ export function ProductPersonalizationEditor({
         product={product}
         totalPrice={totalPrice}
         personalization={personalizationPayload}
+        onClose={onClose}
       />
     </div>
   )

@@ -51,35 +51,36 @@ const CartSideBar = ({ isClose }: ICartSideBar) => {
   }, [anchorProductId])
 
   const lines = cart?.lines ?? []
-
+  
   return (
     <div className="flex h-full flex-col">
       <SideCartHeader subTotal={subTotal} isClose={isClose} />
-
-      <div className="flex flex-1">
+      <div className="flex-1 overflow-y-auto">
         {lines.length === 0 ? (
           <CartEmpty />
         ) : (
-          <div className="flex-1 overflow-y-auto border-b border-gray-300 px-4 py-4 md:px-6 md:py-6">
-            {lines.map((item) => (
-              <CartItem key={item.id} item={item} variant="sidecart" />
-            ))}
+          lines.map((item) => (
+            <div
+              key={item.id}
+              className="border-b border-gray-300 px-4 py-3 md:px-6"
+            >
+              <CartItem item={item} variant="sidecart" />
+            </div>
+          ))
+        )}
+        {lines.length > 0 && recommendations.length > 0 && (
+          <div className="mt-4 md:mt-6">
+            <ProductRecommend
+              title="You may also like"
+              data={recommendations}
+              headingClassName="text-2xl md:text-3xl"
+              subHeadingClassName="text-3xl md:text-4xl font-sub-heading"
+              swiperBreakpoints={SIDEBAR_SWIPER_BREAKPOINT}
+              styleHeadingClassName="px-4 md:px-6"
+            />
           </div>
         )}
       </div>
-
-      {lines.length > 0 && recommendations.length > 0 && (
-        <div className="mt-4 md:mt-6">
-          <ProductRecommend
-            title="You may also like"
-            data={recommendations}
-            headingClassName="text-2xl md:text-3xl"
-            subHeadingClassName="text-3xl md:text-4xl font-sub-heading"
-            swiperBreakpoints={SIDEBAR_SWIPER_BREAKPOINT}
-            styleHeadingClassName="px-4 md:px-6"
-          />
-        </div>
-      )}
 
       <CartFooter isClose={isClose} subTotal={subTotal} />
     </div>

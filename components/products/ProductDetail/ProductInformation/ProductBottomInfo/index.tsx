@@ -34,6 +34,7 @@ const ProductBottomInfo: React.FC<IProductBottomInfo> = ({
         <AddToCart
           variantId={product.variant?.id || ''}
           className="w-full md:w-fit md:px-24 md:text-lg bg-primary hover:bg-white! text-white hover:text-black!"
+          cartBtnPrice={product.variant.basePrice}
         />
       </div>
     </div>

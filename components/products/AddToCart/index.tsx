@@ -20,8 +20,9 @@ type AddToCartProps = {
     handle: string
     basePrice?: number
   }
-  price?: number
-  showPrice?: boolean
+  cartBtnPrice?: number
+  beforeAdd?: () => boolean | Promise<boolean>
+  onAdded?: () => void
 }
 
 const AddToCart = ({
@@ -30,8 +31,9 @@ const AddToCart = ({
   personalization,
   className,
   product,
-  showPrice = false,
-  price,
+  cartBtnPrice,
+  beforeAdd,
+  onAdded,
 }: AddToCartProps) => {
   const dispatch = useAppDispatch()
   const { open } = useUI('cart')
@@ -40,6 +42,15 @@ const AddToCart = ({
   const handleAddToCart = async () => {
     try {
       setLoading(true)
+
+      if (beforeAdd) {
+        const allow = await beforeAdd()
+        if (!allow) {
+          setLoading(false)
+          return
+        }
+      }
+
       await dispatch(addItem({ variantId, quantity, personalization })).unwrap()
       trackAddedToCart({
         name: product?.title ?? '',
@@ -50,6 +61,7 @@ const AddToCart = ({
         price: String(product?.basePrice),
       })
       open?.()
+      onAdded?.()
     } catch (err) {
       console.error('Add to cart failed', err)
     } finally {
@@ -62,11 +74,11 @@ const AddToCart = ({
       onClick={handleAddToCart}
       variant={'outline'}
       disabled={loading}
-      className={`uppercase font-semibold ${className}`}
+      className={`font-semibold uppercase ${className}`}
     >
       {loading ? 'Adding...' : 'Add to Cart'}
-      {showPrice && typeof price === 'number' && (
-        <span>| ${price.toFixed(2)}</span>
+      {typeof cartBtnPrice === 'number' && (
+        <span>| ${cartBtnPrice.toFixed(2)}</span>
       )}
     </Button>
   )
