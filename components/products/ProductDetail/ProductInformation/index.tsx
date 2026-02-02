@@ -145,7 +145,7 @@ const ProductInformation = ({ product }: ProductInformationProps) => {
             min={1}
             max={MAX_QUANTITY}
             onChange={handleChangeQuantity}
-            className='h-12'
+            className='h-12 border border-gray-200'
           />
           <div className="w-full">
             <AddToCart

@@ -1,46 +1,87 @@
 'use client'
 
-import Link from 'next/link'
-import { Button } from '@/components/ui/Button'
-import { CartItem } from '../CartItem'
-import CartSubtotal from '../CartSubtotal'
+import { getCartRecommendations } from '@/actions/cart'
+import { ProductRecommend } from '@/components/products'
 import { useAppSelector } from '@/lib/hooks/useAppSelector'
-import StyledHeading from '@/components/ui/StyledHeading'
+import { ProductCardProps } from '@/types/product/productCard'
+import { useEffect, useState, useTransition } from 'react'
+import CartEmpty from '../CartEmpty'
+import CartFooter from '../CartFooter'
+import { CartItem } from '../CartItem'
+import SideCartHeader from './SideCartHeader'
 
 interface ICartSideBar {
   isClose: () => void
 }
 
+export const SIDEBAR_SWIPER_BREAKPOINT = {
+  0: {
+    slidesPerView: 2,
+    slidesPerGroup: 2,
+    spaceBetween: 8,
+  },
+  640: {
+    slidesPerView: 2,
+    slidesPerGroup: 2,
+    spaceBetween: 8,
+  },
+  1024: {
+    slidesPerView: 2,
+    slidesPerGroup: 2,
+    spaceBetween: 8,
+  },
+}
+
 const CartSideBar = ({ isClose }: ICartSideBar) => {
   const cart = useAppSelector((state) => state.cart.cart)
+  const [recommendations, setRecommendations] = useState<ProductCardProps[]>([])
+
+  const [, startTransition] = useTransition()
+
+  const anchorProductId = cart?.lines?.[0]?.merchandise?.product.id
+  const subTotal = cart?.cost.subtotalAmount
+
+  useEffect(() => {
+    if (!anchorProductId) return
+
+    startTransition(async () => {
+      const res = await getCartRecommendations(anchorProductId)
+      setRecommendations(res?.complementary ?? [])
+    })
+  }, [anchorProductId])
+
+  const lines = cart?.lines ?? []
 
   return (
     <div className="flex h-full flex-col">
-      <div className=" pt-2 pb-2 px-4 border-b">
-        <StyledHeading
-          headingClass="text-4xl md:text-[54px]"
-          subHeadingClass="font-sub-heading text-5xl md:text-[54px]"
-          text="Shopping cart"
-        />
-      </div>
-      {/* Cart Items */}
-      <div className="flex-1 overflow-y-auto px-4">
-        {!cart || cart.lines.length === 0 ? (
-          <p className="text-sm text-gray-500">Your cart is empty</p>
+      <SideCartHeader subTotal={subTotal} isClose={isClose} />
+
+      <div className="flex flex-1">
+        {lines.length === 0 ? (
+          <CartEmpty />
         ) : (
-          cart.lines.map((item) => (
-            <CartItem key={item.id} item={item} variant="sidecart" />
-          ))
+          <div className="flex-1 overflow-y-auto border-b border-gray-300 px-4 py-4 md:px-6 md:py-6">
+            {lines.map((item) => (
+              <CartItem key={item.id} item={item} variant="sidecart" />
+            ))}
+          </div>
         )}
       </div>
-      {/* Subtotal */}
-      <CartSubtotal />
-      {/* Checkout */}
-      <div className="p-4">
-        <Link href="/cart">
-          <Button className="w-full" onClick={isClose}>CHECKOUT</Button>
-        </Link>
-      </div>
+
+      {lines.length > 0 && recommendations.length > 0 && (
+        <div className="mt-4 md:mt-6">
+          <ProductRecommend
+            title="You may also like"
+            data={recommendations}
+            headingClassName="text-2xl md:text-3xl"
+            subHeadingClassName="text-3xl md:text-4xl font-sub-heading"
+            swiperBreakpoints={SIDEBAR_SWIPER_BREAKPOINT}
+            styleHeadingClassName="px-4 md:px-6"
+          />
+        </div>
+      )}
+
+      <CartFooter isClose={isClose} subTotal={subTotal} />
     </div>
   )
 }

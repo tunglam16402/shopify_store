@@ -1,7 +1,5 @@
 import ProductDetail from '@/components/products/ProductDetail'
-import {
-  getCategoryMenus
-} from '@/shopify/api/operations/get-menu'
+import { getCategoryMenus } from '@/shopify/api/operations/get-menu'
 import {
   getProductByHandle,
   getProductRecommendations,

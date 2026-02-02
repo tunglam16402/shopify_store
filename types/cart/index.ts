@@ -12,6 +12,7 @@ export type CartLine = {
     compareAtPrice?: { amount: number; currencyCode: string } | null
     image?: { url: string; altText: string } | null
     product: {
+      id: string
       title: string
       totalInventory: number
       category: { name: string }
@@ -29,4 +30,9 @@ export type Cart = {
     totalAmount: { amount: number; currencyCode: string }
     subtotalAmount: { amount: number; currencyCode: string }
   }
+}
+
+export interface CartSubTotal {
+  amount: number
+  currencyCode: string
 }

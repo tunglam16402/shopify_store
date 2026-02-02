@@ -3,6 +3,12 @@ import { ProductCardProps } from '@/types/product/productCard'
 import React, { Suspense } from 'react'
 import ProductCard from '../ProductCard'
 
+export interface SwiperBreakpoint {
+  slidesPerView: number
+  slidesPerGroup?: number
+  spaceBetween?: number
+}
+
 export const PRODUCT_SWIPER_BREAKPOINT = {
   0: {
     slidesPerView: 2,
@@ -23,7 +29,7 @@ export const PRODUCT_SWIPER_BREAKPOINT = {
 
 type ProductSwiperProps = {
   data: ProductCardProps[]
-  breakpoints?: Record<number, { slidesPerView: number; spaceBetween?: number }>
+  breakpoints?: Record<number, SwiperBreakpoint>
   className?: string
 }
 
@@ -31,7 +37,6 @@ const ProductSwiper: React.FC<ProductSwiperProps> = ({
   data,
   className = '',
 }) => {
-
   return (
     <div className={`product-swiper ${className}`}>
       <Suspense fallback={null}>

@@ -1,20 +1,20 @@
 'use client'
 
-import { useAppSelector } from '@/lib/hooks/useAppSelector'
+import { CartSubTotal } from '@/types/cart'
 
-const CartSubtotal = () => {
-  const cart = useAppSelector((state) => state.cart.cart)
+interface ICartSubtotal {
+  subTotal?: CartSubTotal
+}
 
-  if (!cart) return null
-
+const CartSubtotal = ({ subTotal }: ICartSubtotal) => {
   return (
-    <div className="py-4 px-10 border-t mt-4">
-      <div className="flex justify-between font-semibold">
-        <span>Subtotal:</span>
-        <span>
-          {cart.cost.subtotalAmount.amount}
-          {cart.cost.subtotalAmount.currencyCode}
-        </span>
+    <div>
+      <div className="flex items-center justify-between">
+        <h4 className="text-2xl font-light uppercase md:text-3xl">Subtotal:</h4>
+        <span className="text-2xl md:text-3xl">${subTotal?.amount}</span>
+      </div>
+      <div className="mt-2 text-xs md:mt-3">
+        Shipping and taxes calculated at checkout
       </div>
     </div>
   )

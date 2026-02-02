@@ -58,7 +58,7 @@ export const QuantityInput = ({
   return (
     <div
       className={cn(
-        'flex items-center gap-2 border border-gray-200',
+        'flex items-center md:gap-2 border border-gray-200',
         className
       )}
     >
@@ -68,14 +68,14 @@ export const QuantityInput = ({
         disabled={loading || inputValue <= min}
         onClick={handleDecrease}
       >
-        <IcoMinus className="w-4 h-4" color="black" />
+        <IcoMinus className="size-3 md:size-4" color="black" />
       </Button>
 
       <input
         type="number"
         value={inputValue}
         onChange={handleInputChange}
-        className="w-6 md:w-10 text-center border-none focus:outline-none 
+        className="w-4 md:w-6 text-center text-sm md:text-base border-none focus:outline-none 
           [&::-webkit-outer-spin-button]:appearance-none 
           [&::-webkit-inner-spin-button]:appearance-none 
           [-moz-appearance:textfield]"
@@ -89,7 +89,7 @@ export const QuantityInput = ({
         disabled={loading || inputValue >= max}
         onClick={handleIncrease}
       >
-        <IcoPlus className="w-4 h-4" color="black" />
+        <IcoPlus className="size-3 md:size-4"  color="black" />
       </Button>
     </div>
   )

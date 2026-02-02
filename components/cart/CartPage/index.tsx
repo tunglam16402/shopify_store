@@ -1,15 +1,17 @@
 'use client'
 
 import { CartItem } from '@/components/cart/CartItem'
-import React from 'react'
-import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
-import CartSubtotal from '../CartSubtotal'
 import { useAppSelector } from '@/lib/hooks/useAppSelector'
+import Link from 'next/link'
+import CartSubtotal from '../CartSubtotal'
 
 const CartPage = () => {
   const cart = useAppSelector((state) => state.cart.cart)
 
+  if (!cart) return null
+
+  const subTotal = cart.cost.subtotalAmount
 
   const handleCheckout = () => {
     if (!cart?.checkoutUrl) return
@@ -37,7 +39,7 @@ const CartPage = () => {
             </div>
 
             <div className="w-full lg:w-2/5 space-y-4">
-              <CartSubtotal />
+              <CartSubtotal subTotal={subTotal} />
               <Button onClick={handleCheckout}>CHECKOUT</Button>
             </div>
           </div>

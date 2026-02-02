@@ -63,7 +63,7 @@ const CartItemComponent = ({ item, variant = 'sidecart' }: CartItemProps) => {
     <div className="relative">
       <div
         className={cn(
-          'flex gap-2 md:gap-4 border-b border-gray-400 py-2 ',
+          'flex gap-2 md:gap-4 ',
           variant === 'checkout'
             ? 'items-start gap-6 sm:flex-row sm:items-center sm:gap-2'
             : 'items-center'
@@ -111,7 +111,7 @@ const CartItemComponent = ({ item, variant = 'sidecart' }: CartItemProps) => {
             </p>
           </div>
 
-          <div className="flex justify-between items-center mt-2 md:mt-4">
+          <div className="flex justify-between items-center mt-4">
             <QuantityInput
               value={item.quantity}
               min={1}
@@ -160,7 +160,7 @@ const CartItemComponent = ({ item, variant = 'sidecart' }: CartItemProps) => {
       {/* Loading overlay */}
       {loading && (
         <div className="absolute inset-0 flex items-center justify-center bg-white/60 z-10">
-         <IcoSpin className="size-8 animate-spin"/>
+          <IcoSpin className="size-8 animate-spin" />
         </div>
       )}
     </div>

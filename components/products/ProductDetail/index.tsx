@@ -89,14 +89,14 @@ const ProductDetail = ({
         <Breadcrumb items={items} />
       </div>
 
-      <div className="grid grid-cols-1 mt-6 md:grid-cols-2 gap-10 md:gap-14">
-        <div className=" relative full-navigation-mobile">
+      <div className="mt-6 grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-14">
+        <div className="full-navigation-mobile relative">
           <ProductImage
             images={product.images}
             altText={product.altText}
             title={product.title}
           />
-          <div className="absolute top-3 right-2 md:right-4 p-2 z-1">
+          <div className="absolute top-3 right-2 z-1 p-2 md:right-4">
             <WishlistButton
               iconClassName="size-8 md:size-10"
               productId={product.id}
@@ -108,13 +108,13 @@ const ProductDetail = ({
       </div>
 
       <div className="mt-12 md:mt-20">
-        <ProductRecommend type="related" relatedProduct={relatedProducts} />
+        <ProductRecommend title="Related products" data={relatedProducts} />
       </div>
       {complementaryProducts.length > 0 && (
         <div className="mt-12 md:mt-20">
           <ProductRecommend
-            type="complementary"
-            complementaryProduct={complementaryProducts}
+            title="Complementary products"
+            data={complementaryProducts}
           />
         </div>
       )}

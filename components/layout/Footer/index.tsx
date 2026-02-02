@@ -1,50 +1,20 @@
 'use client'
 
 import {
-  IcoApplePay,
   IcoFacebook,
-  IcoGooglePay,
   IcoInstagram,
-  IcoKlarna,
-  IcoMaestro,
-  IcoMasterCard,
-  IcoPaypal,
-  IcoShopifyPay,
-  IcoTiktok,
-  IcoVisa,
+  IcoTiktok
 } from '@/components/icons'
 import { FooterDocumentData, Simplify } from '@/prismicio-types'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import FooterLinkGroup from './FooterLinkGroup'
+import { paymentMethodsMock } from '@/config/payment.config'
 
 interface IFooter {
   data: Simplify<FooterDocumentData>
 }
-
-const paymentMethodsMock = [
-  { id: 'paypal', icon: <IcoPaypal className="h-full w-full " /> },
-  {
-    id: 'mastercard',
-    icon: <IcoMasterCard className="h-full w-full " />,
-  },
-  { id: 'visa', icon: <IcoVisa className="h-full w-full " /> },
-  { id: 'applepay', icon: <IcoApplePay className="h-full w-full " /> },
-  { id: 'googlepay', icon: <IcoGooglePay className="h-full w-full " /> },
-  {
-    id: 'klarna',
-    icon: <IcoKlarna className="h-full w-full " />,
-  },
-  {
-    id: 'maestro',
-    icon: <IcoMaestro className="h-full w-full " />,
-  },
-  {
-    id: 'shopifypay',
-    icon: <IcoShopifyPay className="h-full w-full " />,
-  },
-]
 
 const Footer: React.FC<IFooter> = ({ data }) => {
   const newsletterData = data.newsletter[0]
