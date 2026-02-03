@@ -91,3 +91,22 @@ export function buildProductFilters(
 
   return filters
 }
+
+export const PRODUCT_HIDDEN_TAGS = ['_hidden', '_gift', 'custom_fee'] as const
+
+function normalizeTags(tags?: string[] | string | null): string[] {
+  if (!tags) return []
+  if (Array.isArray(tags)) return tags
+  return [tags]
+}
+
+export function isPublicShopifyProduct(product: {
+  publishedAt?: string | null
+  tags?: string[] | string | null
+}) {
+  if (!product.publishedAt) return false
+
+  const tags = normalizeTags(product.tags)
+
+  return !PRODUCT_HIDDEN_TAGS.some((tag) => tags.includes(tag))
+}

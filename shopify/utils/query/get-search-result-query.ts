@@ -8,6 +8,7 @@ const getSearchResultQuery = /* GraphQL */ `
             title
             handle
             description
+            tags
             images(first: 2) {
               nodes {
                 url

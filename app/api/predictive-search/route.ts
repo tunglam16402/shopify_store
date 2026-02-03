@@ -1,4 +1,5 @@
 import { shopifyFetch } from '@/shopify/fetcher'
+import { isPublicShopifyProduct } from '@/shopify/helper'
 import { GetPredictiveSearchQuery } from '@/shopify/types/graphql'
 import getPredictiveSearchQuery from '@/shopify/utils/query/get-search-predictive-query'
 import { NextResponse } from 'next/server'
@@ -16,9 +17,12 @@ export async function GET(request: Request) {
       query: getPredictiveSearchQuery,
       variables: { query },
     })
-    return NextResponse.json({
-      products: data?.predictiveSearch?.products ?? [],
-    })
+
+    const products = data.predictiveSearch?.products?.filter(
+      isPublicShopifyProduct
+    )
+
+    return NextResponse.json({ products })
   } catch (error) {
     console.error('API predictive search error:', error)
     return NextResponse.json({ products: [] })

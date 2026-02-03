@@ -13,8 +13,8 @@ export default async function SearchResultPage({
   const products = await getSearchResult(query)
 
   return (
-    <main className="p-8 max-w-6xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Shop All Products</h1>
+    <main className="mx-auto max-w-6xl p-8">
+      <h1 className="mb-6 text-3xl font-bold">Shop All Products</h1>
       <ProductList products={products} />
     </main>
   )

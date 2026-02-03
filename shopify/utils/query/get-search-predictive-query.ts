@@ -7,6 +7,7 @@ const getPredictiveSearchQuery = /* GraphQL */ `
         handle
         description
         publishedAt
+        tags
         category {
           name
         }

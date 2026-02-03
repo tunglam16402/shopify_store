@@ -446,7 +446,12 @@ export type CartInput = {
   note?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** The input fields for a cart metafield value to set. */
+/**
+ * The input fields for a cart metafield value to set.
+ *
+ * Cart metafields will be copied to order metafields at order creation time if there is a matching order metafield definition with the [`cart to order copyable`](https://shopify.dev/docs/apps/build/metafields/use-metafield-capabilities#cart-to-order-copyable) capability enabled.
+ *
+ */
 export type CartInputMetafieldInput = {
   /** The key name of the metafield. */
   key: Scalars['String']['input'];
@@ -3182,7 +3187,7 @@ export type GetAllCollectionQuery = { collections: { nodes: Array<{ handle: stri
 export type GetProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetProductsQuery = { products: { nodes: Array<{ id: string, title: string, handle: string, description: string, publishedAt: string, category?: { name: string } | null, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } }> } };
+export type GetProductsQuery = { products: { nodes: Array<{ id: string, title: string, handle: string, description: string, publishedAt: string, tags: Array<string>, category?: { name: string } | null, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } }> } };
 
 export type GetArticleListQueryVariables = Exact<{
   handle: Scalars['String']['input'];
@@ -3244,25 +3249,25 @@ export type GetProductsByIdsQueryVariables = Exact<{
 }>;
 
 
-export type GetProductsByIdsQuery = { nodes: Array<{ __typename: 'AppliedGiftCard' } | { __typename: 'Article' } | { __typename: 'Blog' } | { __typename: 'Cart' } | { __typename: 'CartLine' } | { __typename: 'Collection' } | { __typename: 'Comment' } | { __typename: 'Company' } | { __typename: 'CompanyContact' } | { __typename: 'CompanyLocation' } | { __typename: 'ComponentizableCartLine' } | { __typename: 'ExternalVideo' } | { __typename: 'GenericFile' } | { __typename: 'Location' } | { __typename: 'MailingAddress' } | { __typename: 'Market' } | { __typename: 'MediaImage' } | { __typename: 'MediaPresentation' } | { __typename: 'Menu' } | { __typename: 'MenuItem' } | { __typename: 'Metafield' } | { __typename: 'Metaobject' } | { __typename: 'Model3d' } | { __typename: 'Order' } | { __typename: 'Page' } | { __typename: 'Product', id: string, title: string, handle: string, description: string, publishedAt: string, category?: { name: string } | null, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } } | { __typename: 'ProductOption' } | { __typename: 'ProductOptionValue' } | { __typename: 'ProductVariant' } | { __typename: 'Shop' } | { __typename: 'ShopPayInstallmentsFinancingPlan' } | { __typename: 'ShopPayInstallmentsFinancingPlanTerm' } | { __typename: 'ShopPayInstallmentsProductVariantPricing' } | { __typename: 'ShopPolicy' } | { __typename: 'TaxonomyCategory' } | { __typename: 'UrlRedirect' } | { __typename: 'Video' } | null> };
+export type GetProductsByIdsQuery = { nodes: Array<{ __typename: 'AppliedGiftCard' } | { __typename: 'Article' } | { __typename: 'Blog' } | { __typename: 'Cart' } | { __typename: 'CartLine' } | { __typename: 'Collection' } | { __typename: 'Comment' } | { __typename: 'Company' } | { __typename: 'CompanyContact' } | { __typename: 'CompanyLocation' } | { __typename: 'ComponentizableCartLine' } | { __typename: 'ExternalVideo' } | { __typename: 'GenericFile' } | { __typename: 'Location' } | { __typename: 'MailingAddress' } | { __typename: 'Market' } | { __typename: 'MediaImage' } | { __typename: 'MediaPresentation' } | { __typename: 'Menu' } | { __typename: 'MenuItem' } | { __typename: 'Metafield' } | { __typename: 'Metaobject' } | { __typename: 'Model3d' } | { __typename: 'Order' } | { __typename: 'Page' } | { __typename: 'Product', id: string, title: string, handle: string, description: string, publishedAt: string, tags: Array<string>, category?: { name: string } | null, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } } | { __typename: 'ProductOption' } | { __typename: 'ProductOptionValue' } | { __typename: 'ProductVariant' } | { __typename: 'Shop' } | { __typename: 'ShopPayInstallmentsFinancingPlan' } | { __typename: 'ShopPayInstallmentsFinancingPlanTerm' } | { __typename: 'ShopPayInstallmentsProductVariantPricing' } | { __typename: 'ShopPolicy' } | { __typename: 'TaxonomyCategory' } | { __typename: 'UrlRedirect' } | { __typename: 'Video' } | null> };
 
 export type GetProductRecommendationsQueryVariables = Exact<{
   productId: Scalars['ID']['input'];
 }>;
 
 
-export type GetProductRecommendationsQuery = { relatedProducts?: Array<{ id: string, title: string, handle: string, description: string, publishedAt: string, productType: string, category?: { name: string } | null, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } }> | null, complementaryProducts?: Array<{ id: string, title: string, handle: string, description: string, publishedAt: string, productType: string, category?: { name: string } | null, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } }> | null };
+export type GetProductRecommendationsQuery = { relatedProducts?: Array<{ id: string, title: string, handle: string, description: string, publishedAt: string, productType: string, tags: Array<string>, category?: { name: string } | null, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } }> | null, complementaryProducts?: Array<{ id: string, title: string, handle: string, description: string, publishedAt: string, productType: string, tags: Array<string>, category?: { name: string } | null, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } }> | null };
 
 export type GetPredictiveSearchQueryVariables = Exact<{
   query: Scalars['String']['input'];
 }>;
 
 
-export type GetPredictiveSearchQuery = { predictiveSearch?: { products: Array<{ id: string, title: string, handle: string, description: string, publishedAt: string, category?: { name: string } | null, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } }> } | null };
+export type GetPredictiveSearchQuery = { predictiveSearch?: { products: Array<{ id: string, title: string, handle: string, description: string, publishedAt: string, tags: Array<string>, category?: { name: string } | null, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } }> } | null };
 
 export type GetSearchResultQueryVariables = Exact<{
   query: Scalars['String']['input'];
 }>;
 
 
-export type GetSearchResultQuery = { search: { edges: Array<{ node: { id: string, title: string, handle: string, description: string, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } } | {} }> } };
+export type GetSearchResultQuery = { search: { edges: Array<{ node: { id: string, title: string, handle: string, description: string, tags: Array<string>, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } } | {} }> } };

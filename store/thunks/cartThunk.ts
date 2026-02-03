@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { mapCartResponse } from '@/lib/helper'
+import { getCustomFee, mapCartResponse } from '@/lib/helper'
 import {
   addCartLine,
   attachCartToCustomer,
@@ -7,7 +7,7 @@ import {
   createCart,
   getCartById,
   removeCartLine,
-  updateCartLine,
+  updateCartLines,
 } from '@/shopify/cart/use-cart'
 import { Cart } from '@/types/cart'
 
@@ -84,15 +84,26 @@ export const updateItem = createAsyncThunk<
   { lineId: string; quantity: number },
   { state: { cart: { cart: Cart | null } } }
 >('cart/updateItem', async ({ lineId, quantity }, { getState }) => {
-  const currentCart = getState().cart.cart
-  if (!currentCart) return null
+  const cart = getState().cart.cart
+  if (!cart) return null
 
-  const response = await updateCartLine(currentCart.id, lineId, quantity)
+  const productLine = cart.lines.find((l) => l.id === lineId)
+  if (!productLine) return cart
+
+  const feeLine = getCustomFee(cart, productLine)
+
+  const linesToUpdate = [
+    { id: productLine.id, quantity },
+    ...(feeLine ? [{ id: feeLine.id, quantity }] : []),
+  ]
+
+  const response = await updateCartLines(cart.id, linesToUpdate)
+
   if (response?.cartLinesUpdate?.cart) {
     return mapCartResponse(response.cartLinesUpdate.cart)
   }
-  console.error('Update cart failed', response)
-  return currentCart
+
+  return cart
 })
 
 export const removeItem = createAsyncThunk<
@@ -100,13 +111,21 @@ export const removeItem = createAsyncThunk<
   string,
   { state: { cart: { cart: Cart | null } } }
 >('cart/removeItem', async (lineId, { getState }) => {
-  const currentCart = getState().cart.cart
-  if (!currentCart) return null
+  const cart = getState().cart.cart
+  if (!cart) return null
 
-  const response = await removeCartLine(currentCart.id, [lineId])
+  const productLine = cart.lines.find((l) => l.id === lineId)
+  if (!productLine) return cart
+
+  const feeLine = getCustomFee(cart, productLine)
+
+  const lineIds = [productLine.id, ...(feeLine ? [feeLine.id] : [])]
+
+  const response = await removeCartLine(cart.id, lineIds)
+
   if (response?.cartLinesRemove?.cart) {
     return mapCartResponse(response.cartLinesRemove.cart)
   }
-  console.error('Remove cart line failed', response)
-  return currentCart
+
+  return cart
 })

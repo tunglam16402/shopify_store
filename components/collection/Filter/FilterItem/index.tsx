@@ -15,8 +15,6 @@ interface IFilter {
 const FilterItem = ({ facets, toggleValue }: IFilter) => {
   const searchParams = useSearchParams()
 
-  console.log('facets :>> ', facets);
-
   return (
     <aside className="mt-6 space-y-6">
       {facets.map((facet) => {

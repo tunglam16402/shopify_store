@@ -5,7 +5,7 @@ export async function getProductsByWidget(widgetId: string) {
 
   const mappedProducts = products.map((p) => ({
     ...p,
-    publishedAtTime: p.publishedAt ? new Date(p.publishedAt).getTime() : 0,
+    publishedAtTime: p?.publishedAt ? new Date(p.publishedAt).getTime() : 0,
   }))
 
   switch (widgetId) {

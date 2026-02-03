@@ -10,6 +10,7 @@ const getProductRecommendationsQuery = /* GraphQL */ `
       description
       publishedAt
       productType
+      tags
       category {
         name
       }
@@ -50,6 +51,7 @@ const getProductRecommendationsQuery = /* GraphQL */ `
       category {
         name
       }
+      tags
  
       images(first: 2) {
         nodes {

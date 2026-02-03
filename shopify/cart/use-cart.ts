@@ -20,6 +20,9 @@ import {
   GetCheckoutQuery,
 } from './../types/graphql'
 
+const PERSONALIZATION_FEE_VARIANT_ID =
+  'gid://shopify/ProductVariant/46459571863683'
+
 export interface CartLinePersonalizationPayload {
   values: Record<string, string>
 
@@ -73,19 +76,37 @@ export async function addCartLine(
   const shopifyY = cookie?.get('_shopify_y')?.value
   const shopifyS = cookie?.get('_shopify_s')?.value
 
+  const linkId = crypto.randomUUID()
+
   const lines = [
     {
       merchandiseId: variantId,
       quantity,
-      ...(personalization && {
-        attributes: [
-          {
-            key: 'personalization_config',
-            value: JSON.stringify(personalization),
-          },
-        ],
-      }),
+      attributes: [
+        { key: 'link_id', value: linkId },
+        ...(personalization
+          ? [
+              {
+                key: 'personalization_config',
+                value: JSON.stringify(personalization),
+              },
+            ]
+          : []),
+      ],
     },
+
+    ...(personalization
+      ? [
+          {
+            merchandiseId: PERSONALIZATION_FEE_VARIANT_ID,
+            quantity,
+            attributes: [
+              { key: 'line_type', value: 'personalization_fee' },
+              { key: 'link_id', value: linkId },
+            ],
+          },
+        ]
+      : []),
   ]
 
   const data = await shopifyFetch<CartLinesAddMutation>({
@@ -105,27 +126,22 @@ export async function addCartLine(
   return data
 }
 
-export async function updateCartLine(
+export async function updateCartLines(
   cartId: string,
-  lineId: string,
-  quantity: number
+  lines: { id: string; quantity: number }[]
 ) {
   const data = await shopifyFetch<CartLinesUpdateMutation>({
     query: cartLinesUpdateMutation,
     variables: {
       cartId,
-      lines: [
-        {
-          id: lineId,
-          quantity,
-        },
-      ],
+      lines,
     },
   })
 
   if (data?.cartLinesUpdate?.userErrors?.length) {
     console.error('Cart update errors:', data.cartLinesUpdate.userErrors)
   }
+
   return data
 }
 

@@ -11,6 +11,7 @@ const getProductsByIdsQuery = /* GraphQL */ `
         category {
           name
         }
+        tags
         images(first: 2) {
           nodes {
             url

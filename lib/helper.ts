@@ -4,7 +4,7 @@ import {
   GetProductDetailQuery,
   GetProductsQuery,
 } from '@/shopify/types/graphql'
-import { Cart } from '@/types/cart'
+import { Cart, CartLine } from '@/types/cart'
 import { BreadcrumbItem } from '@/types/collection/menuCollection'
 import { Address } from '@/types/customer/address'
 import { AppError } from '@/types/error'
@@ -142,6 +142,24 @@ export function mapCartResponse(cartResponse: any): Cart {
     lines: cartResponse.lines.edges.map((e: any) => e.node),
     cost: cartResponse.cost,
   }
+}
+
+export const isPersonalizationFee = (line: CartLine) =>
+  line.attributes?.some(
+    (a) => a.key === 'line_type' && a.value === 'personalization_fee'
+  )
+
+// Link Custom fee and product line
+export const getLinkId = (line: CartLine) =>
+  line.attributes?.find((a) => a.key === 'link_id')?.value
+
+export const getCustomFee = (cart: Cart, productLine: CartLine) => {
+  const linkId = getLinkId(productLine)
+  if (!linkId) return undefined
+
+  return cart.lines.find(
+    (line) => isPersonalizationFee(line) && getLinkId(line) === linkId
+  )
 }
 
 export function parseShopifyErrors(data: any): AppError[] {

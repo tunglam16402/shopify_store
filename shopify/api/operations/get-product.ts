@@ -15,6 +15,7 @@ import {
 import getProductsQuery from '../../utils/query/get-all-product-query'
 import getProductDetailQuery from '../../utils/query/get-product-by-handle-query'
 import { ProductCardProps } from '@/types/product/productCard'
+import { isPublicShopifyProduct } from '@/shopify/helper'
 
 function parsePersonalizationConfig(value?: string) {
   if (!value) return null
@@ -111,7 +112,7 @@ export async function getAllProduct() {
     query: getProductsQuery,
   })
 
-  const products = data.products?.nodes ?? []
+  const products = (data.products?.nodes ?? []).filter(isPublicShopifyProduct)
 
   return products.map(mappingDiscountPrice)
 }
@@ -134,10 +135,15 @@ export async function getProductRecommendations(productId: string) {
       return { success: false, errors }
     }
 
-    const related = data.relatedProducts?.map(mappingDiscountPrice) ?? []
+    const related =
+      data.relatedProducts
+        ?.filter(isPublicShopifyProduct)
+        .map(mappingDiscountPrice) ?? []
 
     const complementaryRaw =
-      data.complementaryProducts?.map(mappingDiscountPrice) ?? []
+      data.complementaryProducts
+        ?.filter(isPublicShopifyProduct)
+        .map(mappingDiscountPrice) ?? []
 
     const complementary =
       complementaryRaw.length > 0 ? complementaryRaw : [...related].reverse()
@@ -147,7 +153,7 @@ export async function getProductRecommendations(productId: string) {
       data: {
         related,
         complementary,
-        isFallback: complementaryRaw.length === 0, // optional flag cho UI
+        isFallback: complementaryRaw.length === 0,
       },
     }
   } catch (error) {

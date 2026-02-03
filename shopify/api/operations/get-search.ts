@@ -2,6 +2,7 @@ import { mappingDiscountPrice } from '@/lib/helper'
 import { shopifyFetch } from '../../fetcher'
 import { GetSearchResultQuery } from '../../types/graphql'
 import getSearchResultQuery from '../../utils/query/get-search-result-query'
+import { isPublicShopifyProduct } from '@/shopify/helper'
 
 export async function getSearchResult(query: string) {
   const data = await shopifyFetch<GetSearchResultQuery>({
@@ -17,10 +18,9 @@ export async function getSearchResult(query: string) {
       ): node is Exclude<
         GetSearchResultQuery['search']['edges'][number]['node'],
         object
-      > => {
-        return 'id' in node
-      }
+      > => 'id' in node
     )
+    .filter(isPublicShopifyProduct)
 
   return products.map(mappingDiscountPrice)
 }

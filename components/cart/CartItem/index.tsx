@@ -15,9 +15,16 @@ import { IcoSpin } from '@/components/icons'
 interface CartItemProps {
   item: CartLine
   variant?: 'sidecart' | 'checkout'
+  displayPrice: number
+  displayComparedAtPrice?: number
 }
 
-const CartItemComponent = ({ item, variant = 'sidecart' }: CartItemProps) => {
+const CartItemComponent = ({
+  item,
+  variant = 'sidecart',
+  displayPrice,
+  displayComparedAtPrice,
+}: CartItemProps) => {
   const dispatch = useAppDispatch()
   const [openModal, setOpenModal] = useState(false)
   const [loading, setLoading] = React.useState(false)
@@ -63,7 +70,7 @@ const CartItemComponent = ({ item, variant = 'sidecart' }: CartItemProps) => {
     <div className="relative">
       <div
         className={cn(
-          'flex gap-2 md:gap-4 ',
+          'flex gap-2 md:gap-4',
           variant === 'checkout'
             ? 'items-start gap-6 sm:flex-row sm:items-center sm:gap-2'
             : 'items-center'
@@ -74,21 +81,21 @@ const CartItemComponent = ({ item, variant = 'sidecart' }: CartItemProps) => {
           alt="cart item thumbnail"
           width={100}
           height={100}
-          className="object-contain w-fit"
+          className="w-fit object-contain"
         />
 
         <div
           className={cn(
-            'w-full ',
+            'w-full',
             variant === 'checkout' &&
               'flex flex-col sm:flex-row sm:items-center sm:justify-center sm:gap-6'
           )}
         >
-          <div className="text-base  line-clamp-2 font-semibold">
+          <div className="line-clamp-2 text-base font-semibold">
             {item.merchandise.product.title}
           </div>
 
-          <div className="text-sm text-gray-500 uppercase mt-1">
+          <div className="mt-1 text-sm text-gray-500 uppercase">
             {item.merchandise.product.category.name}
             {personalization && <span> | Personalized </span>}
           </div>
@@ -97,21 +104,18 @@ const CartItemComponent = ({ item, variant = 'sidecart' }: CartItemProps) => {
             <PersonalizeInfo personalization={personalization} />
           )}
 
-          <div className="flex items-center gap-2 mt-3">
+          <div className="mt-3 flex items-center gap-2">
             <p className="font-bold">
-              ${(item.quantity * item.merchandise.price.amount).toFixed(2)}
+              ${(item.quantity * displayPrice).toFixed(2)}
             </p>
-            <p className="text-sm text-gray-500 line-through text-main-color">
-              $
-              {item.merchandise.compareAtPrice
-                ? (
-                    item.quantity * item.merchandise.compareAtPrice.amount
-                  ).toFixed(2)
-                : null}
-            </p>
+            {displayComparedAtPrice && (
+              <p className="text-sm text-gray-500 line-through">
+                ${(item.quantity * displayComparedAtPrice).toFixed(2)}
+              </p>
+            )}
           </div>
 
-          <div className="flex justify-between items-center mt-4">
+          <div className="mt-4 flex items-center justify-between">
             <QuantityInput
               value={item.quantity}
               min={1}
@@ -125,7 +129,7 @@ const CartItemComponent = ({ item, variant = 'sidecart' }: CartItemProps) => {
                   <button
                     onClick={() => setOpenModal(true)}
                     aria-label="Remove from cart"
-                    className="p-2 text-gray-700 text-sm md:text-base uppercase hover:text-black"
+                    className="p-2 text-sm text-gray-700 uppercase hover:text-black md:text-base"
                   >
                     View
                   </button>
@@ -135,7 +139,7 @@ const CartItemComponent = ({ item, variant = 'sidecart' }: CartItemProps) => {
               <button
                 onClick={handleRemove}
                 aria-label="Remove from cart"
-                className="p-2 hover:opacity-80 underline text-sm md:text-base"
+                className="p-2 text-sm underline hover:opacity-80 md:text-base"
               >
                 remove
               </button>
@@ -159,7 +163,7 @@ const CartItemComponent = ({ item, variant = 'sidecart' }: CartItemProps) => {
       )}
       {/* Loading overlay */}
       {loading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-white/60 z-10">
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/60">
           <IcoSpin className="size-8 animate-spin" />
         </div>
       )}

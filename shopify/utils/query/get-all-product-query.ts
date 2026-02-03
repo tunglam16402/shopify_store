@@ -10,7 +10,8 @@ const getProductsQuery = /* GraphQL */ `
         category {
           name
         }
-  
+        tags
+
         images(first: 2) {
           nodes {
             url

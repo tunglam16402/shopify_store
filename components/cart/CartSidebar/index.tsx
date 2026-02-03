@@ -9,6 +9,7 @@ import CartEmpty from '../CartEmpty'
 import CartFooter from '../CartFooter'
 import { CartItem } from '../CartItem'
 import SideCartHeader from './SideCartHeader'
+import { getCustomFee, isPersonalizationFee } from '@/lib/helper'
 
 interface ICartSideBar {
   isClose: () => void
@@ -51,22 +52,41 @@ const CartSideBar = ({ isClose }: ICartSideBar) => {
   }, [anchorProductId])
 
   const lines = cart?.lines ?? []
-  
+
+  const productLines = lines.filter((line) => !isPersonalizationFee(line))
+
   return (
     <div className="flex h-full flex-col">
       <SideCartHeader subTotal={subTotal} isClose={isClose} />
       <div className="flex-1 overflow-y-auto">
-        {lines.length === 0 ? (
+        {productLines.length === 0 ? (
           <CartEmpty />
         ) : (
-          lines.map((item) => (
-            <div
-              key={item.id}
-              className="border-b border-gray-300 px-4 py-3 md:px-6"
-            >
-              <CartItem item={item} variant="sidecart" />
-            </div>
-          ))
+          productLines.map((item) => {
+            const feeLine = getCustomFee(cart!, item)
+
+            const displayPrice =
+              Number(item.merchandise.price.amount) +
+              (feeLine ? Number(feeLine.merchandise.price.amount) : 0)
+
+            const displayComparedAtPrice =
+              Number(item.merchandise.compareAtPrice?.amount) +
+              (feeLine ? Number(feeLine.merchandise.price.amount) : 0)
+
+            return (
+              <div
+                key={item.id}
+                className="border-b border-gray-300 px-4 py-3 md:px-6"
+              >
+                <CartItem
+                  item={item}
+                  variant="sidecart"
+                  displayPrice={displayPrice}
+                  displayComparedAtPrice={displayComparedAtPrice}
+                />
+              </div>
+            )
+          })
         )}
         {lines.length > 0 && recommendations.length > 0 && (
           <div className="mt-4 md:mt-6">
