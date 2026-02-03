@@ -33,7 +33,7 @@ const SideCartHeader = ({ subTotal, isClose }: SideCartHeader) => {
 
         <StyledHeading
           headingClass="text-4xl md:text-[54px]"
-          subHeadingClass="font-sub-heading text-5xl md:text-6xl"
+          subHeadingClass="font-sub-heading text-5xl md:text-[68px]"
           text="Shopping cart"
         />
 

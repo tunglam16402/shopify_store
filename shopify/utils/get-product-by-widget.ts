@@ -14,7 +14,7 @@ export async function getProductsByWidget(widgetId: string) {
         .filter((p) => (p.category || '').toLowerCase().includes('best'))
         .slice(0, 8)
 
-    case 'lastest':
+    case 'latest':
     default:
       return [...mappedProducts]
         .sort((a, b) => b.publishedAtTime - a.publishedAtTime)

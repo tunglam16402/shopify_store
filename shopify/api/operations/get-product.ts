@@ -3,8 +3,10 @@ import {
   mappingVariantPrice,
   parseShopifyErrors,
 } from '@/lib/helper'
+import { isPublicShopifyProduct } from '@/shopify/helper'
 import getProductsByIdsQuery from '@/shopify/utils/query/get-product-by-ids'
 import getProductRecommendationsQuery from '@/shopify/utils/query/get-product-recommendation'
+import { ProductCardProps } from '@/types/product/productCard'
 import { shopifyFetch } from '../../fetcher'
 import {
   GetProductDetailQuery,
@@ -14,8 +16,6 @@ import {
 } from '../../types/graphql'
 import getProductsQuery from '../../utils/query/get-all-product-query'
 import getProductDetailQuery from '../../utils/query/get-product-by-handle-query'
-import { ProductCardProps } from '@/types/product/productCard'
-import { isPublicShopifyProduct } from '@/shopify/helper'
 
 function parsePersonalizationConfig(value?: string) {
   if (!value) return null

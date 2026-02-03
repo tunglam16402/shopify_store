@@ -9,12 +9,12 @@ import { Cart } from '@/types/cart'
 
 interface CartState {
   cart: Cart | null
-  status: 'idle' | 'loading' | 'error'
+  hydrated: boolean
 }
 
 const initialState: CartState = {
   cart: null,
-  status: 'idle',
+  hydrated: false,
 }
 
 const cartSlice = createSlice({
@@ -32,13 +32,15 @@ const cartSlice = createSlice({
         hydrateCart.fulfilled,
         (state, action: PayloadAction<Cart | null>) => {
           state.cart = action.payload
+          state.hydrated = true
           if (action.payload) {
-            state.cart = action.payload
-            state.cart.id = action.payload.id
             localStorage.setItem('shopify_cart_id', action.payload.id)
           }
         }
       )
+      .addCase(hydrateCart.rejected, (state) => {
+        state.hydrated = true
+      })
       .addCase(
         addItem.fulfilled,
         (state, action: PayloadAction<Cart | null>) => {
