@@ -36,3 +36,9 @@ export interface CartSubTotal {
   amount: number
   currencyCode: string
 }
+
+export interface CartDisplayItem {
+  line: CartLine
+  displayPrice: number
+  displayComparedAtPrice?: number
+}

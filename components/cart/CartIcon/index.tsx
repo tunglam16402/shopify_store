@@ -2,20 +2,24 @@
 
 import IcoCart from '@/components/icons/Cart/IcoCart'
 import { useAppSelector } from '@/lib/hooks/useAppSelector'
+import { isPersonalizationFee } from '../helper'
 
 const CartIcon = ({ onClick }: { onClick: () => void }) => {
   const cart = useAppSelector((state) => state.cart.cart)
-  const totalQty = cart?.lines.reduce((sum, x) => sum + x.quantity, 0) ?? 0
+  const totalQty =
+    cart?.lines
+      .filter((line) => !isPersonalizationFee(line))
+      .reduce((sum, line) => sum + line.quantity, 0) ?? 0
 
   return (
     <button
       onClick={onClick}
-      className="relative p-2 rounded hover:[&_path]:stroke-primary"
+      className="hover:[&_path]:stroke-primary relative rounded p-2"
       aria-label="open cart sidebar"
     >
-      <IcoCart className="w-6 h-6" />
+      <IcoCart className="h-6 w-6" />
 
-      <span className="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+      <span className="bg-primary absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full text-xs text-white">
         {totalQty || 0}
       </span>
     </button>

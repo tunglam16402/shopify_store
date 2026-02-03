@@ -1,5 +1,5 @@
 import CartPage from '@/components/cart/CartPage'
-import React, { Suspense } from 'react'
+import { Suspense } from 'react'
 
 const Cart = () => {
   return (

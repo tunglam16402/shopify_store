@@ -1,5 +1,4 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { getCustomFee, mapCartResponse } from '@/lib/helper'
 import {
   addCartLine,
   attachCartToCustomer,
@@ -10,6 +9,7 @@ import {
   updateCartLines,
 } from '@/shopify/cart/use-cart'
 import { Cart } from '@/types/cart'
+import { getCustomFee, mapCartResponse } from '@/components/cart/helper'
 
 interface HydrateCartArgs {
   customerAccessToken?: string

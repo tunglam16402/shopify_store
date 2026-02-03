@@ -8,8 +8,11 @@ import { useEffect, useState, useTransition } from 'react'
 import CartEmpty from '../CartEmpty'
 import CartFooter from '../CartFooter'
 import { CartItem } from '../CartItem'
+import {
+  getCartDisplayItems,
+  isPersonalizationFee
+} from '../helper'
 import SideCartHeader from './SideCartHeader'
-import { getCustomFee, isPersonalizationFee } from '@/lib/helper'
 
 interface ICartSideBar {
   isClose: () => void
@@ -35,8 +38,8 @@ export const SIDEBAR_SWIPER_BREAKPOINT = {
 
 const CartSideBar = ({ isClose }: ICartSideBar) => {
   const cart = useAppSelector((state) => state.cart.cart)
+  const displayItems = getCartDisplayItems(cart)
   const [recommendations, setRecommendations] = useState<ProductCardProps[]>([])
-
   const [, startTransition] = useTransition()
 
   const anchorProductId = cart?.lines?.[0]?.merchandise?.product.id
@@ -62,31 +65,19 @@ const CartSideBar = ({ isClose }: ICartSideBar) => {
         {productLines.length === 0 ? (
           <CartEmpty />
         ) : (
-          productLines.map((item) => {
-            const feeLine = getCustomFee(cart!, item)
-
-            const displayPrice =
-              Number(item.merchandise.price.amount) +
-              (feeLine ? Number(feeLine.merchandise.price.amount) : 0)
-
-            const displayComparedAtPrice =
-              Number(item.merchandise.compareAtPrice?.amount) +
-              (feeLine ? Number(feeLine.merchandise.price.amount) : 0)
-
-            return (
-              <div
-                key={item.id}
-                className="border-b border-gray-300 px-4 py-3 md:px-6"
-              >
-                <CartItem
-                  item={item}
-                  variant="sidecart"
-                  displayPrice={displayPrice}
-                  displayComparedAtPrice={displayComparedAtPrice}
-                />
-              </div>
-            )
-          })
+          displayItems.map(({ line, displayPrice, displayComparedAtPrice }) => (
+            <div
+              key={line.id}
+              className="border-b border-gray-300 px-4 py-3 md:px-6"
+            >
+              <CartItem
+                item={line}
+                variant="sidecart"
+                displayPrice={displayPrice}
+                displayComparedAtPrice={displayComparedAtPrice}
+              />
+            </div>
+          ))
         )}
         {lines.length > 0 && recommendations.length > 0 && (
           <div className="mt-4 md:mt-6">
