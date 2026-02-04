@@ -8,11 +8,9 @@ import { useEffect, useState, useTransition } from 'react'
 import CartEmpty from '../CartEmpty'
 import CartFooter from '../CartFooter'
 import { CartItem } from '../CartItem'
-import {
-  getCartDisplayItems,
-  isPersonalizationFee
-} from '../helper'
+import { getCartDisplayItems, isPersonalizationFee } from '../helper'
 import SideCartHeader from './SideCartHeader'
+import Link from 'next/link'
 
 interface ICartSideBar {
   isClose: () => void
@@ -93,7 +91,9 @@ const CartSideBar = ({ isClose }: ICartSideBar) => {
         )}
       </div>
 
-      <CartFooter isClose={isClose} subTotal={subTotal} />
+      <CartFooter handleOnClick={isClose} subTotal={subTotal}>
+        <Link href="/cart">CHECKOUT</Link>
+      </CartFooter>
     </div>
   )
 }

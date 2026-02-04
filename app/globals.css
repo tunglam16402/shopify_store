@@ -219,6 +219,10 @@ button {
   max-width: var(--max-layout-width);
 }
 
+.mobile-mt {
+  margin-top: 110px;
+}
+
 .fill-bg-sub-primary {
   fill: var(--bg-sub-primary);
 }
@@ -227,6 +231,10 @@ button {
   .page-width,
   .layout-width {
     padding: 0 30px;
+  }
+
+  .mobile-mt {
+    margin-top: 0;
   }
 }
 

@@ -4,7 +4,6 @@ import {
   GetProductDetailQuery,
   GetProductsQuery,
 } from '@/shopify/types/graphql'
-import { Cart, CartLine } from '@/types/cart'
 import { BreadcrumbItem } from '@/types/collection/menuCollection'
 import { Address } from '@/types/customer/address'
 import { AppError } from '@/types/error'
@@ -13,7 +12,7 @@ type VariantFromQuery = NonNullable<
   GetProductDetailQuery['product']
 >['variants']['edges'][number]['node']
 
-const CURRENCY_SYMBOL_MAP: Record<string, string> = {
+export const CURRENCY_SYMBOL_MAP: Record<string, string> = {
   USD: '$',
   EUR: '€',
   GBP: '£',

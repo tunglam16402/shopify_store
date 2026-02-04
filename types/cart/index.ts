@@ -14,6 +14,7 @@ export type CartLine = {
     product: {
       id: string
       title: string
+      handle: string
       totalInventory: number
       category: { name: string }
     }

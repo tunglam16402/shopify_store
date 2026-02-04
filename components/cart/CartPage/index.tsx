@@ -2,17 +2,17 @@
 
 import { getCartRecommendations } from '@/actions/cart'
 import { CartItem } from '@/components/cart/CartItem'
+import Loading from '@/components/common/Loading'
 import { ProductRecommend } from '@/components/products'
-import { Button } from '@/components/ui/Button'
+import StyledHeading from '@/components/ui/StyledHeading'
 import { useAppSelector } from '@/lib/hooks/useAppSelector'
+import { getProductsByWidget } from '@/shopify/utils/get-product-by-widget'
 import { ProductCardProps } from '@/types/product/productCard'
 import { useEffect, useState, useTransition } from 'react'
 import CartEmpty from '../CartEmpty'
-import CartSubtotal from '../CartSubtotal'
+import CartFooter from '../CartFooter'
+import ShippingProgressBar from '../CartSidebar/ShippingProgressBar'
 import { getCartDisplayItems } from '../helper'
-import { getProductsByWidget } from '@/shopify/utils/get-product-by-widget'
-import StyledHeading from '@/components/ui/StyledHeading'
-import Loading from '@/components/common/Loading'
 
 const CartPage = () => {
   const { cart, hydrated } = useAppSelector((state) => state.cart)
@@ -61,31 +61,43 @@ const CartPage = () => {
           <CartEmpty headingClassName="mt-6 md:text-5xl text-4xl font-semibold" />
         </div>
       ) : (
-        <div className="layout-width">
+        <div className="layout-width pt-4! md:pt-5!">
           <StyledHeading
             headingClass="text-4xl md:text-[54px]"
             subHeadingClass="font-sub-heading text-5xl md:text-[68px]"
             text="Shopping cart"
           />
 
-          <div className="flex flex-col gap-8 lg:flex-row">
-            <div className="w-full space-y-4 lg:w-3/5">
+          <div className="mt-4 flex flex-col gap-8 md:mt-6 lg:flex-row">
+            <div className="w-full lg:w-3/5">
               {displayItems.map(
                 ({ line, displayPrice, displayComparedAtPrice }) => (
-                  <CartItem
+                  <div
                     key={line.id}
-                    item={line}
-                    variant="checkout"
-                    displayPrice={displayPrice}
-                    displayComparedAtPrice={displayComparedAtPrice}
-                  />
+                    className="border-b border-gray-300 py-3 md:py-4"
+                  >
+                    <CartItem
+                      item={line}
+                      variant="checkout"
+                      displayPrice={displayPrice}
+                      displayComparedAtPrice={displayComparedAtPrice}
+                    />
+                  </div>
                 )
               )}
             </div>
 
             <div className="w-full space-y-4 lg:w-2/5">
-              <CartSubtotal subTotal={subTotal} />
-              <Button onClick={handleCheckout}>CHECKOUT</Button>
+              <div className="text-2xl font-semibold uppercase md:text-3xl">
+                Order Summary
+              </div>
+              <div className="mt-4 md:mt-6">
+                <ShippingProgressBar subTotal={subTotal} />
+              </div>
+
+              <CartFooter handleOnClick={handleCheckout} subTotal={subTotal}>
+                CHECKOUT
+              </CartFooter>
             </div>
           </div>
         </div>

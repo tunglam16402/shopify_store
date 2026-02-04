@@ -3,7 +3,7 @@ import { Suspense } from 'react'
 
 const Cart = () => {
   return (
-    <div>
+    <div className='mobile-mt'>
       <Suspense fallback={null}>
         <CartPage />
       </Suspense>

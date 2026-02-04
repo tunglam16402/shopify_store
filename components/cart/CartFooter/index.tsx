@@ -1,29 +1,27 @@
 import { Button } from '@/components/ui/Button'
-import { CartSubTotal } from '@/types/cart'
-import Link from 'next/link'
-import CartSubtotal from '../CartSubtotal'
 import { paymentMethodsMock } from '@/config/payment.config'
+import { CartSubTotal } from '@/types/cart'
+import CartSubtotal from '../CartSubtotal'
 
 interface ICartFooter {
-  isClose: () => void
+  handleOnClick?: () => void
   subTotal?: CartSubTotal
+  children?: React.ReactNode
 }
 
-const CartFooter = ({ isClose, subTotal }: ICartFooter) => {
+const CartFooter = ({ handleOnClick, subTotal, children }: ICartFooter) => {
   return (
-    <div className="sticky bottom-0 z-11 bg-[#F1EFEF] p-4 md:px-6">
+    <div className="sticky bottom-0 z-2 bg-[#F1EFEF] p-4 md:px-6">
       <CartSubtotal subTotal={subTotal} />
 
       <div className="mt-4 md:mt-6">
-        <Link href="/cart">
-          <Button
-            variant={'primary'}
-            className="w-full rounded-none md:py-6 md:text-lg"
-            onClick={isClose}
-          >
-            CHECKOUT
-          </Button>
-        </Link>
+        <Button
+          variant={'primary'}
+          className="w-full rounded-none md:py-6 md:text-lg"
+          onClick={handleOnClick}
+        >
+          {children}
+        </Button>
       </div>
       <div className="mt-4">
         <div className="flex flex-wrap items-center justify-center gap-1">
