@@ -136,7 +136,6 @@ const AddressForm: React.FC<AddressFormProps> = ({
 
   return (
     <form action={formAction} className="space-y-4 border p-4 rounded-md">
-      {/* Nếu là edit thì gửi hidden id */}
       {actionType === 'edit' && defaultValues.id && (
         <input type="hidden" name="id" value={defaultValues.id} />
       )}

@@ -18,7 +18,7 @@ const CartIcon = ({ onClick }: { onClick: () => void }) => {
       aria-label="open cart sidebar"
     >
       <IcoCart className="h-6 w-6" />
-
+      {/* {cart?.cost.totalAmount.amount || 0} */}
       <span className="bg-primary absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full text-xs text-white">
         {totalQty || 0}
       </span>

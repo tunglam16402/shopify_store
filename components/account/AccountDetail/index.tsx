@@ -14,15 +14,14 @@ import ChangePasswordForm from './ChangePasswordForm'
 const AccountDetail: React.FC = () => {
   const { customer } = useSelector((state: RootState) => state.user)
 
-  const [isEditing, setIsEditing] = useState(false) // Update Customer form
-  const [isAddingAddress, setIsAddingAddress] = useState(false) // Add Address form
-  const [editingAddress, setEditingAddress] = useState<Address | null>(null) // Edit Address form
+  const [isEditing, setIsEditing] = useState(false) 
+  const [isAddingAddress, setIsAddingAddress] = useState(false)
+  const [editingAddress, setEditingAddress] = useState<Address | null>(null) 
 
   if (!customer) {
     return <p className="text-gray-500">No customer data available</p>
   }
 
-  // ---- HANDLERS ----
   const handleOpenUpdateCustomer = () => {
     setIsEditing(true)
     setIsAddingAddress(false)
@@ -47,7 +46,6 @@ const AccountDetail: React.FC = () => {
 
   return (
     <div className="space-y-8">
-      {/* ===== Account Info Section ===== */}
       <div className="space-y-4">
         <AccountInfo customer={customer} />
 
@@ -70,7 +68,6 @@ const AccountDetail: React.FC = () => {
         )}
       </div>
 
-      {/* ===== Address Section ===== */}
       <div className="space-y-4">
         <AddressList
           addresses={customer?.addresses?.nodes ?? []}
@@ -97,7 +94,6 @@ const AccountDetail: React.FC = () => {
           />
         )}
 
-        {/* Edit Address form */}
         {editingAddress && (
           <AddressForm
             actionType="edit"

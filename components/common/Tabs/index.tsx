@@ -88,7 +88,7 @@ const Tab: React.FC<TabsProps> = ({
 
           <div
             ref={indicatorRef}
-            className="absolute bottom-0 h-[2px] bg-black transition-all duration-300"
+            className="absolute bottom-0 h-0.5 bg-black transition-all duration-300"
           />
         </div>
       </div>

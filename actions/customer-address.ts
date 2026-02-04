@@ -37,7 +37,6 @@ export async function createCustomerAddressAction(
     }
   }
 
-
   const result = await createCustomerAddress(accessToken, {
     firstName,
     lastName,

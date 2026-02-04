@@ -22,13 +22,13 @@ const DetailForm: React.FC<detailsFormProps> = ({ customer, onCancel }) => {
   )
 
   return (
-    <form action={formAction} className="space-y-4 border p-4 rounded-md">
+    <form action={formAction} className="space-y-4 rounded-md border p-4">
       <div>
         <label className="block text-sm font-medium">First Name</label>
         <input
           name="firstName"
           defaultValue={customer.firstName ?? ''}
-          className="border rounded p-2 w-full"
+          className="w-full rounded border p-2"
         />
       </div>
 
@@ -37,7 +37,7 @@ const DetailForm: React.FC<detailsFormProps> = ({ customer, onCancel }) => {
         <input
           name="lastName"
           defaultValue={customer.lastName ?? ''}
-          className="border rounded p-2 w-full"
+          className="w-full rounded border p-2"
         />
       </div>
 
@@ -47,7 +47,7 @@ const DetailForm: React.FC<detailsFormProps> = ({ customer, onCancel }) => {
           type="email"
           name="email"
           defaultValue={customer.email ?? ''}
-          className="border rounded p-2 w-full"
+          className="w-full rounded border p-2"
         />
       </div>
 
@@ -57,7 +57,7 @@ const DetailForm: React.FC<detailsFormProps> = ({ customer, onCancel }) => {
           type="phone"
           name="phone"
           defaultValue={customer.phone ?? ''}
-          className="border rounded p-2 w-full"
+          className="w-full rounded border p-2"
         />
       </div>
 
@@ -65,21 +65,21 @@ const DetailForm: React.FC<detailsFormProps> = ({ customer, onCancel }) => {
         <button
           type="submit"
           disabled={isPending}
-          className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition"
+          className="rounded bg-green-500 px-4 py-2 text-white transition hover:bg-green-600"
         >
           {isPending ? 'Updating...' : 'Save'}
         </button>
         <button
           type="button"
           onClick={onCancel}
-          className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 transition"
+          className="rounded bg-gray-300 px-4 py-2 transition hover:bg-gray-400"
         >
           Cancel
         </button>
       </div>
 
       {(state?.errors?.length ?? 0) > 0 && (
-        <ul className="text-red-500 text-sm">
+        <ul className="text-sm text-red-500">
           {state.errors?.map((err, idx) => (
             <li key={idx}>{err.message}</li>
           ))}
@@ -87,7 +87,7 @@ const DetailForm: React.FC<detailsFormProps> = ({ customer, onCancel }) => {
       )}
 
       {state.success && (
-        <p className="text-green-500 text-sm">Update successful!</p>
+        <p className="text-sm text-green-500">Update successful!</p>
       )}
     </form>
   )
