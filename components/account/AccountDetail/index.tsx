@@ -14,9 +14,9 @@ import ChangePasswordForm from './ChangePasswordForm'
 const AccountDetail: React.FC = () => {
   const { customer } = useSelector((state: RootState) => state.user)
 
-  const [isEditing, setIsEditing] = useState(false) 
+  const [isEditing, setIsEditing] = useState(false)
   const [isAddingAddress, setIsAddingAddress] = useState(false)
-  const [editingAddress, setEditingAddress] = useState<Address | null>(null) 
+  const [editingAddress, setEditingAddress] = useState<Address | null>(null)
 
   if (!customer) {
     return <p className="text-gray-500">No customer data available</p>
@@ -53,7 +53,7 @@ const AccountDetail: React.FC = () => {
           <div className="flex justify-center">
             <button
               onClick={handleOpenUpdateCustomer}
-              className="px-4 py-2 text-sm bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+              className="rounded bg-blue-500 px-4 py-2 text-sm text-white transition hover:bg-blue-600"
             >
               Update
             </button>
@@ -79,7 +79,7 @@ const AccountDetail: React.FC = () => {
           <div className="flex justify-center">
             <button
               onClick={handleOpenAddAddress}
-              className="px-4 py-2 text-sm bg-green-500 text-white rounded hover:bg-green-600 transition"
+              className="rounded bg-green-500 px-4 py-2 text-sm text-white transition hover:bg-green-600"
             >
               Add Address
             </button>

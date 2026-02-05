@@ -7,6 +7,7 @@ import {
 import { BreadcrumbItem } from '@/types/collection/menuCollection'
 import { Address } from '@/types/customer/address'
 import { AppError } from '@/types/error'
+import { parsePhoneNumberFromString } from 'libphonenumber-js'
 
 type VariantFromQuery = NonNullable<
   GetProductDetailQuery['product']
@@ -132,8 +133,7 @@ export function formatDate(
   return date.toLocaleDateString(locale, options)
 }
 
-
-export function parseShopifyErrors(data: any): AppError[] {
+export function parseShopifyCustomersErrors(data: any): AppError[] {
   const errors: AppError[] = []
 
   if (data?.customerUserErrors?.length) {
@@ -146,16 +146,32 @@ export function parseShopifyErrors(data: any): AppError[] {
     )
   }
 
+  return errors
+}
+
+export function parseShopifyUsersErrors(data: any): AppError[] {
+  const errors: AppError[] = []
+
   if (data?.userErrors?.length) {
     errors.push(
       ...data.userErrors.map((err: any) => ({
         field: err.field || [],
+        code: 'USER_ERROR',
         message: err.message,
       }))
     )
   }
 
   return errors
+}
+
+export function formatPhoneE164(
+  rawPhone: string,
+  country: 'VN' | 'US' = 'VN'
+): string | null {
+  const phone = parsePhoneNumberFromString(rawPhone, country)
+  if (!phone || !phone.isValid()) return null
+  return phone.format('E.164')
 }
 
 export function normalizeAddress(address: any): Address {

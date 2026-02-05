@@ -7,7 +7,7 @@ export interface Customer {
   email: string
   firstName: string
   lastName: string
-  phone?: string | null
+  phone?: string
   createdAt: string
   acceptsMarketing: boolean
   defaultAddress?: Address | null
@@ -21,12 +21,9 @@ export interface Customer {
 
 export interface UpdateCustomerState {
   success: boolean
-  errors: AppError[]
+  errors?: AppError[]
   customer?: {
     id: string
   } | null
-  accessToken?: {
-    accessToken: string
-    expiresAt: string
-  } | null
+  requireReLogin?: boolean
 }

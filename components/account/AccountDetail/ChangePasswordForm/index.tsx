@@ -1,15 +1,16 @@
 'use client'
 
-import { useActionState } from 'react'
+import { useActionState, useEffect } from 'react'
 import PasswordInput from '@/components/common/PasswordInput'
 import { Button } from '@/components/ui/Button'
 import { changeCustomerPasswordAction } from '@/actions/customer'
+import { useDispatch } from 'react-redux'
+import { logout } from '@/store/slices/userSlice'
+import { useRouter } from 'next/navigation'
 
 const initialState = {
   success: false,
   errors: [],
-  customer: null,
-  accessToken: null,
 }
 
 export default function ChangePasswordForm({
@@ -21,6 +22,15 @@ export default function ChangePasswordForm({
     changeCustomerPasswordAction,
     initialState
   )
+  const dispatch = useDispatch()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (state.success && state.requireReLogin) {
+      dispatch(logout())
+      router.push('/account/login')
+    }
+  }, [state.success])
 
   return (
     <form action={formAction} className="space-y-4">
@@ -33,7 +43,7 @@ export default function ChangePasswordForm({
         disabled={pending}
       />
       {state.errors?.find((e) => e.field.includes('oldPassword')) && (
-        <p className="text-red-500 text-sm">
+        <p className="text-sm text-red-500">
           {state.errors.find((e) => e.field.includes('oldPassword'))?.message}
         </p>
       )}
@@ -50,10 +60,10 @@ export default function ChangePasswordForm({
         disabled={pending}
       />
 
-      {state.errors.length > 0 && (
-        <ul className="text-red-500 text-sm space-y-1">
-          {state.errors.map((error, i) => (
-            <li key={i}>{error.message}</li>
+      {(state?.errors?.length ?? 0) > 0 && (
+        <ul className="text-sm text-red-500">
+          {state.errors?.map((err, idx) => (
+            <li key={idx}>{err.message}</li>
           ))}
         </ul>
       )}

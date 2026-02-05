@@ -1,5 +1,6 @@
 'use server'
 
+import { formatPhoneE164 } from '@/lib/helper'
 import { createCustomerAccessToken } from '@/shopify/auth/use-login'
 import { updateCustomer } from '@/shopify/customer/use-customer'
 import { UpdateCustomerState } from '@/types/customer'
@@ -11,9 +12,11 @@ export async function updateCustomerAction(
 ): Promise<UpdateCustomerState> {
   const firstName = formData.get('firstName') as string
   const lastName = formData.get('lastName') as string
-  const email = formData.get('email') as string
-  const phone = formData.get('phone') as string
-  //   const acceptsMarketing = formData.get('acceptsMarketing') === 'on'
+  const rawPhone = formData.get('phone') as string
+  const phone =
+    typeof rawPhone === 'string' && rawPhone.trim() !== ''
+      ? (formatPhoneE164(rawPhone, 'VN') ?? undefined)
+      : undefined
 
   const cookieStore = await cookies()
   const accessToken = cookieStore.get('shopify_customer_token')?.value
@@ -21,6 +24,7 @@ export async function updateCustomerAction(
   if (!accessToken) {
     return {
       success: false,
+      customer: null,
       errors: [{ field: [], message: 'User not authenticated' }],
     }
   }
@@ -28,9 +32,7 @@ export async function updateCustomerAction(
   const result = await updateCustomer(accessToken, {
     firstName,
     lastName,
-    email,
     phone,
-    // acceptsMarketing,
   })
 
   if (!result) {
@@ -40,27 +42,18 @@ export async function updateCustomerAction(
     }
   }
 
-  if (result.customerAccessToken) {
-    cookieStore.set(
-      'shopify_customer_token',
-      result.customerAccessToken.accessToken,
-      {
-        path: '/',
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-      }
-    )
+  if (result.errors.length > 0) {
+    return {
+      success: false,
+      customer: null,
+      errors: result.errors,
+    }
   }
 
   return {
     success: true,
     customer: result.customer,
-    accessToken: result.customerAccessToken,
-    errors:
-      result.customerUserErrors?.map((err) => ({
-        field: err.field || [],
-        message: err.message,
-      })) ?? [],
+    errors: [],
   }
 }
 
@@ -75,6 +68,7 @@ export async function changeCustomerPasswordAction(
 
   const cookieStore = await cookies()
 
+  //  Validate input
   if (!email || !oldPassword || !newPassword || !confirmPassword) {
     return {
       success: false,
@@ -99,6 +93,7 @@ export async function changeCustomerPasswordAction(
     }
   }
 
+  //  Verify old password
   const verifyResult = await createCustomerAccessToken({
     email,
     password: oldPassword,
@@ -115,37 +110,26 @@ export async function changeCustomerPasswordAction(
       ],
     }
   }
+
+  //  Update password
   const result = await updateCustomer(verifyResult.accessToken, {
     password: newPassword,
   })
 
-  if (!result) {
+  if (!result || result.errors.length > 0) {
     return {
       success: false,
-      errors: [{ field: [], message: 'Password update failed' }],
+      errors: result?.errors ?? [
+        { field: [], message: 'Password update failed' },
+      ],
     }
   }
 
-  if (result.customerAccessToken) {
-    cookieStore.set(
-      'shopify_customer_token',
-      result.customerAccessToken.accessToken,
-      {
-        path: '/',
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-      }
-    )
-  }
+  cookieStore.delete('shopify_customer_token')
 
   return {
-    success: result.customerUserErrors?.length === 0,
-    customer: result.customer,
-    accessToken: result.customerAccessToken,
-    errors:
-      result.customerUserErrors?.map((err) => ({
-        field: err.field || [],
-        message: err.message,
-      })) ?? [],
+    success: true,
+    requireReLogin: true,
+    errors: [],
   }
 }

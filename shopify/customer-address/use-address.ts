@@ -10,7 +10,7 @@ import {
   CustomerAddressDeleteMutation,
   CustomerAddressUpdateMutation,
 } from '../types/graphql'
-import { parseShopifyErrors } from '@/lib/helper'
+import { parseShopifyCustomersErrors } from '@/lib/helper'
 
 export async function createCustomerAddress(
   accessToken: string,
@@ -29,7 +29,7 @@ export async function createCustomerAddress(
       return null
     }
 
-    const errors = parseShopifyErrors(data.customerAddressCreate)
+    const errors = parseShopifyCustomersErrors(data.customerAddressCreate)
     if (errors.length > 0) {
       return { success: false, errors }
     }
@@ -62,7 +62,7 @@ export async function updateCustomerAddress(
       },
     })
 
-    const errors = parseShopifyErrors(data.customerAddressUpdate)
+    const errors = parseShopifyCustomersErrors(data.customerAddressUpdate)
     if (errors.length > 0) {
       return { success: false, errors }
     }
@@ -90,7 +90,7 @@ export async function deleteCustomerAddress(accessToken: string, id: string) {
       },
     })
 
-    const errors = parseShopifyErrors(data.customerAddressDelete)
+    const errors = parseShopifyCustomersErrors(data.customerAddressDelete)
     if (errors.length > 0) {
       return { success: false, errors }
     }

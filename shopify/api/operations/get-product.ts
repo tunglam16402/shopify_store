@@ -1,7 +1,6 @@
 import {
   mappingDiscountPrice,
-  mappingVariantPrice,
-  parseShopifyErrors,
+  mappingVariantPrice
 } from '@/lib/helper'
 import { isPublicShopifyProduct } from '@/shopify/helper'
 import getProductsByIdsQuery from '@/shopify/utils/query/get-product-by-ids'
@@ -126,14 +125,6 @@ export async function getProductRecommendations(productId: string) {
       query: getProductRecommendationsQuery,
       variables: { productId },
     })
-
-    const relatedErrors = parseShopifyErrors(data.relatedProducts)
-    const complementaryErrors = parseShopifyErrors(data.complementaryProducts)
-
-    const errors = [...relatedErrors, ...complementaryErrors]
-    if (errors.length > 0) {
-      return { success: false, errors }
-    }
 
     const related =
       data.relatedProducts

@@ -56,7 +56,7 @@ export const loadUserFromCookie = createAsyncThunk(
       if (!data.customer) {
         throw new Error('No customer found')
       }
-      
+
       return data.customer
     } catch (err: any) {
       return rejectWithValue(err.message || 'Failed to load user')
@@ -83,7 +83,17 @@ const userSlice = createSlice({
       state.loading = false
       state.error = null
     },
+
+    updateCustomerInfo: (state, action) => {
+      if (state.customer) {
+        state.customer = {
+          ...state.customer,
+          ...action.payload,
+        }
+      }
+    },
   },
+
   extraReducers: (builder) => {
     // login
     builder.addCase(loginUser.pending, (state) => {
@@ -107,5 +117,5 @@ const userSlice = createSlice({
   },
 })
 
-export const { logout } = userSlice.actions
+export const { logout, updateCustomerInfo } = userSlice.actions
 export default userSlice.reducer

@@ -1,3 +1,4 @@
+import { parseShopifyCustomersErrors } from '@/lib/helper'
 import { shopifyFetch } from '../fetcher'
 import { CustomerUpdateMutation, GetCustomerQuery } from '../types/graphql'
 import { customerUpdateMutation } from '../utils/mutation'
@@ -26,28 +27,28 @@ export async function updateCustomer(
   customer: {
     firstName?: string
     lastName?: string
-    email?: string
     phone?: string
     password?: string
-    // acceptsMarketing?: boolean
   }
 ) {
   try {
     const data = await shopifyFetch<CustomerUpdateMutation>({
       query: customerUpdateMutation,
-      variables: { customerAccessToken: accessToken, customer },
+      variables: {
+        customerAccessToken: accessToken,
+        customer,
+      },
     })
 
-    if (!data?.customerUpdate?.customer) {
-      return null
+    const result = data?.customerUpdate
+    if (!result) return null
+
+    const errors = parseShopifyCustomersErrors(result)
+
+    return {
+      customer: result.customer,
+      errors,
     }
-
-    // const errors = parseShopifyErrors(data.customerUpdate?.customerUserErrors)
-    // if (errors.length > 0) {
-    //   return { success: false, errors }
-    // }
-
-    return data.customerUpdate
   } catch (error) {
     console.error('Error in updateCustomer:', error)
     return null
