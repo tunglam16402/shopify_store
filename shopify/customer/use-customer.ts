@@ -4,7 +4,6 @@ import { customerUpdateMutation } from '../utils/mutation'
 import getCustomerQuery from '../utils/query/get-customer-query'
 
 export async function getCustomer(accessToken: string) {
-
   try {
     const data = await shopifyFetch<GetCustomerQuery>({
       query: getCustomerQuery,

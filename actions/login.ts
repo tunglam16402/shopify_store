@@ -19,7 +19,7 @@ export async function loginCustomer(
       accessToken: null,
       expiresAt: null,
       errors: parseResult.error.issues.map((issue) => ({
-        field: issue.path.map(String), 
+        field: issue.path.map(String),
         message: issue.message,
       })),
     }
@@ -32,13 +32,14 @@ export async function loginCustomer(
 
     const expires = result.expiresAt
       ? new Date(result.expiresAt)
-      : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) 
+      : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
     cookieStore.set('shopify_customer_token', result.accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
       expires,
+      priority: 'high',
     })
   }
 

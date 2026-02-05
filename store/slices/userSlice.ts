@@ -47,8 +47,16 @@ export const loadUserFromCookie = createAsyncThunk(
   'user/loadUserFromCookie',
   async (_, { rejectWithValue }) => {
     try {
-      const res = await fetch('/api/customer/get', { cache: 'no-store' })
+      const res = await fetch('/api/customer/get', {
+        cache: 'no-store',
+        credentials: 'include',
+      })
       const data = await res.json()
+
+      if (!data.customer) {
+        throw new Error('No customer found')
+      }
+      
       return data.customer
     } catch (err: any) {
       return rejectWithValue(err.message || 'Failed to load user')

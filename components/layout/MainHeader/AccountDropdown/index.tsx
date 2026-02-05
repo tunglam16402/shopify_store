@@ -91,13 +91,13 @@ const AccountDropdown = () => {
                 Order History
               </DropdownLink>
 
-              <DropdownLink
-                href="/account/order-history"
-                icon={<IcoLogout className="h-4 w-4" />}
+              <li
                 onClick={handleLogout}
+                className="flex items-center gap-3 px-4 py-2 text-sm font-medium transition hover:bg-gray-100"
               >
+                <IcoLogout className="h-4 w-4" />
                 Logout
-              </DropdownLink>
+              </li>
             </>
           )}
         </ul>
