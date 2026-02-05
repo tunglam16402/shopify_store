@@ -1,10 +1,6 @@
 'use client'
 
-import {
-  IcoFacebook,
-  IcoInstagram,
-  IcoTiktok
-} from '@/components/icons'
+import { IcoFacebook, IcoInstagram, IcoTiktok } from '@/components/icons'
 import { FooterDocumentData, Simplify } from '@/prismicio-types'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -48,10 +44,10 @@ const Footer: React.FC<IFooter> = ({ data }) => {
           {/* newsletter */}
           <div className="md:col-span-5">
             <div>
-              <h3 className="uppercase text-lg font-semibold md:text-2xl">
+              <h3 className="text-lg font-semibold uppercase md:text-2xl">
                 {newsletterData?.title}
               </h3>
-              <p className="text-sm mt-2 md:text-base">
+              <p className="mt-2 text-sm md:text-base">
                 {newsletterData?.description}
               </p>
               <form
@@ -62,13 +58,13 @@ const Footer: React.FC<IFooter> = ({ data }) => {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="h-5 flex-1 border-none pl-2.5 text-base outline-none text-black"
+                  className="h-5 flex-1 border-none pl-2.5 text-base text-black outline-none"
                   placeholder="Email Address"
                   required
                 />
                 <button
                   disabled={status === 'loading'}
-                  className="rounded-md border border-primary md:cursor-pointer bg-accent px-8 py-2 text-sm font-bold text-black hover:bg-white hover:text-primary md:py-2.5 disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="border-primary bg-accent hover:text-primary rounded-md border px-8 py-2 text-sm font-bold text-black hover:bg-white disabled:cursor-not-allowed disabled:opacity-60 md:cursor-pointer md:py-2.5"
                 >
                   {status === 'loading' ? 'Submitting...' : 'Sign up'}
                 </button>
@@ -89,8 +85,8 @@ const Footer: React.FC<IFooter> = ({ data }) => {
             </div>
 
             <div>
-              <p className="uppercase mt-10 font-semibold md:mt-5">Follow us</p>
-              <div className="flex items-center gap-6 md:gap-11 mt-3 md:mt-5">
+              <p className="mt-10 font-semibold uppercase md:mt-5">Follow us</p>
+              <div className="mt-3 flex items-center gap-6 md:mt-5 md:gap-11">
                 <Link href="https://www.facebook.com">
                   <IcoFacebook className="h-7 w-7 md:h-[33px] md:w-[33px]" />
                 </Link>
@@ -104,25 +100,29 @@ const Footer: React.FC<IFooter> = ({ data }) => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 flex-1 md:gap-12 mt-10 md:col-span-7 md:mt-0">
+          <div className="mt-10 grid flex-1 grid-cols-1 md:col-span-7 md:mt-0 md:grid-cols-3 md:gap-12">
             <FooterLinkGroup title="Inspiration" links={data.inspiration} />
             <FooterLinkGroup title="Policies" links={data.policies} />
             <FooterLinkGroup title="Customer Care" links={data.customer_care} />
           </div>
         </div>
 
-        <div className="mx-auto mt-4 relative w-full h-[100px] max-w-[500px] md:mt-12">
-          <Link href="/">
-            <Image
-              alt="Logo"
-              src="/LogoWhite.webp"
-              fill
-              className="object-contain"
-            />
+        <div className="mx-auto mt-4 h-[100px] w-full max-w-[500px] md:mt-12">
+          <Link href="/" className="block h-full">
+            <div className="relative h-full w-full">
+              <Image
+                alt="Logo"
+                src="/LogoWhite.webp"
+                fill
+                className="object-contain"
+                sizes="(max-width: 768px) 80vw, 60vw"
+                priority
+              />
+            </div>
           </Link>
         </div>
 
-        <div className="px-5 md:px-0 mt-4">
+        <div className="mt-4 px-5 md:px-0">
           <div className="flex flex-wrap items-center justify-center gap-2">
             {paymentMethodsMock.map((method) => (
               <div key={method.id} className="h-4 w-9 md:h-[22px] md:w-12">
@@ -132,7 +132,7 @@ const Footer: React.FC<IFooter> = ({ data }) => {
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-center text-[10px] gap-1 md:flex-row md:justify-between mt-10 md:text-sm">
+        <div className="mt-10 flex flex-col items-center justify-center gap-1 text-[10px] md:flex-row md:justify-between md:text-sm">
           <div>
             <span>
               © {new Date().getFullYear()},<a href=""> Printwork. </a>

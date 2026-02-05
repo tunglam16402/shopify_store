@@ -35,19 +35,19 @@ const DropdownContent = ({ menuItem }: DropdownContentProps) => {
                 <p className="text-sm font-medium uppercase">
                   <Link
                     href={child.url}
-                    className="hover:text-gray-700 transition-colors"
+                    className="transition-colors hover:text-gray-700"
                   >
                     {child.title}
                   </Link>
                 </p>
 
                 {child.children && child.children?.length > 0 && (
-                  <ul className="flex flex-col gap-1 text-sm mt-4">
+                  <ul className="mt-4 flex flex-col gap-1 text-sm">
                     {child.children.map((grand, index) => (
                       <li key={index}>
                         <Link
                           href={grand.url}
-                          className="hover:text-[#f89540] font-light uppercase transition-colors"
+                          className="font-light uppercase transition-colors hover:text-[#f89540]"
                         >
                           {grand.title}
                         </Link>
@@ -60,24 +60,25 @@ const DropdownContent = ({ menuItem }: DropdownContentProps) => {
           </ul>
         </div>
 
-        <div className="col-span-3 grid grid-cols-3 gap-4 place-items-center">
+        <div className="col-span-3 grid grid-cols-3 place-items-center gap-4">
           {Array.from({ length: emptySlots }).map((_, i) => (
             <div
               key={`empty-${i}`}
-              className="w-full aspect-square bg-transparent"
+              className="aspect-square w-full bg-transparent"
             />
           ))}
           {images.map((src, i) => (
             <div
               key={i}
-              className="relative w-full aspect-square overflow-hidden"
+              className="relative aspect-square w-full overflow-hidden"
             >
               <Link href={menuItem.url}>
                 <Image
                   src={src}
                   alt={`${menuItem.title} preview ${i + 1}`}
                   fill
-                  className="object-contain hover:scale-105 transition-transform duration-300"
+                  className="object-contain transition-transform duration-300 hover:scale-105"
+                  sizes="(max-width: 768px) 80vw, 20vw"
                 />
               </Link>
             </div>

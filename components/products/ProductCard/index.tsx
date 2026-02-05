@@ -86,7 +86,8 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
             alt={product?.images?.[0]?.altText || product.title}
             fill
             className="object-contain"
-            sizes="max-width: 50vw, 25vw"
+            sizes="(max-width: 768px) 59vw, 25vw"
+
             loading={'lazy'}
           />
         </Link>

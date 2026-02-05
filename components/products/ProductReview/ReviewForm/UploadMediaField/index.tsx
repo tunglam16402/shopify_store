@@ -66,17 +66,17 @@ const UploadMediaField: React.FC<UploadMediaFieldProps> = ({
     <div className="mt-6">
       <Label htmlFor={name}>{label}</Label>
 
-      <div className="relative cursor-pointer w-full inline-block">
+      <div className="relative inline-block w-full cursor-pointer">
         <div
-          className={`h-12 flex items-center justify-center border border-gray-300 rounded-md bg-white  ${
-            disabled ? 'opacity-50 cursor-not-allowed' : ''
+          className={`flex h-12 items-center justify-center rounded-md border border-gray-300 bg-white ${
+            disabled ? 'cursor-not-allowed opacity-50' : ''
           }`}
         >
           {selectedFiles.length > 0 ? (
             `${selectedFiles.length} file(s) selected`
           ) : (
             <>
-              <IcoUpload className="w-5 h-5 mr-2" />
+              <IcoUpload className="mr-2 h-5 w-5" />
               Click to upload files
             </>
           )}
@@ -91,11 +91,11 @@ const UploadMediaField: React.FC<UploadMediaFieldProps> = ({
           accept="image/*,video/*"
           disabled={disabled}
           onChange={onFileChange}
-          className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+          className="absolute top-0 left-0 h-full w-full cursor-pointer opacity-0"
         />
       </div>
 
-      <p className="text-xs md:text-sm mt-2 text-gray-600">
+      <p className="mt-2 text-xs text-gray-600 md:text-sm">
         Upload up to 3 images (max. 5MB each) or 1 video (max. 100MB).
       </p>
 
@@ -104,7 +104,7 @@ const UploadMediaField: React.FC<UploadMediaFieldProps> = ({
           {selectedFiles.map((file, idx) => (
             <div
               key={idx}
-              className="text-xs text-gray-700 flex items-center gap-2"
+              className="flex items-center gap-2 text-xs text-gray-700"
             >
               <span>📎</span>
               <span>{file.name}</span>
@@ -125,22 +125,20 @@ const UploadMediaField: React.FC<UploadMediaFieldProps> = ({
             return (
               <div
                 key={idx}
-                className="relative w-32 md:w-40 aspect-square md:overflow-hidden border group"
+                className="group relative aspect-square w-32 border md:w-40 md:overflow-hidden"
               >
                 <button
                   type="button"
                   onClick={() => onRemoveFile(idx)}
-                  className="absolute -top-3 -right-3 md:right-1 md:top-1 z-10 
-                  bg-black/50 text-white rounded-full p-1 md:opacity-0 
-                  group-hover:opacity-100 transition"
+                  className="absolute -top-3 -right-3 z-10 rounded-full bg-black/50 p-1 text-white transition group-hover:opacity-100 md:top-1 md:right-1 md:opacity-0"
                 >
-                  <IcoClose className="w-5 h-5" color="white" />
+                  <IcoClose className="h-5 w-5" color="white" />
                 </button>
 
                 {isVideo ? (
                   <video
                     src={url}
-                    className="w-full h-full object-cover"
+                    className="h-full w-full object-cover"
                     controls
                   />
                 ) : (
@@ -148,7 +146,8 @@ const UploadMediaField: React.FC<UploadMediaFieldProps> = ({
                     src={url}
                     alt={`preview-${idx}`}
                     fill
-                    className="object-cover w-full h-full"
+                    className="h-full w-full object-cover"
+                    sizes="(max-width: 768px) 50vw, 20vw"
                   />
                 )}
               </div>

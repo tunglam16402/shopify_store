@@ -32,13 +32,13 @@ const ReviewItem = ({
     <div
       className={cn(
         'mb-8 border-b pb-4 md:pb-8',
-        isMyReview && 'border rounded-xl px-4'
+        isMyReview && 'rounded-xl border px-4'
       )}
     >
       {isMyReview && (
         <div className="mb-4">
-          <div className="flex justify-between pt-3 pb-4 border-b text-sm md:text-base">
-            <div className="font-medium text-primary">Your review</div>
+          <div className="flex justify-between border-b pt-3 pb-4 text-sm md:text-base">
+            <div className="text-primary font-medium">Your review</div>
             {isMyReview && (
               <div className="flex gap-3 underline">
                 <button onClick={onOpenForm}>Update</button>
@@ -58,7 +58,7 @@ const ReviewItem = ({
             <div>
               <strong>{review.username}</strong>
               <div className="flex items-center gap-1">
-                <IcoVerify className="w-5 h-5" />
+                <IcoVerify className="h-5 w-5" />
                 <p className="text-gray-700">Verified Buyer</p>
               </div>
             </div>
@@ -68,7 +68,7 @@ const ReviewItem = ({
             </span>
           </div>
 
-          <div className="flex mt-2 md:mt-4">
+          <div className="mt-2 flex md:mt-4">
             {[...Array(review.rating)].map((_, i) => (
               <IcoStarFill key={`full-${i}`} className="h-7 w-7" />
             ))}
@@ -78,7 +78,7 @@ const ReviewItem = ({
           </div>
 
           <div>
-            <p className="font-medium text-xl mt-2 md:mt-4">
+            <p className="mt-2 text-xl font-medium md:mt-4">
               {review.headline}
             </p>
             <ExpandableText
@@ -89,7 +89,7 @@ const ReviewItem = ({
           </div>
 
           {review.review_media?.length > 0 && (
-            <div className="flex gap-2 mt-5 flex-wrap">
+            <div className="mt-5 flex flex-wrap gap-2">
               {review.review_media.map((m, index) =>
                 m.type === 'image' ? (
                   <div
@@ -98,13 +98,14 @@ const ReviewItem = ({
                       setStartIndex(index)
                       setOpen(true)
                     }}
-                    className="w-32 h-32 md:w-40 md:h-40 relative rounded overflow-hidden"
+                    className="relative h-32 w-32 overflow-hidden rounded md:h-40 md:w-40"
                   >
                     <Image
                       src={m.url}
                       alt="review media"
                       fill
-                      className="object-cover cursor-pointer"
+                      className="cursor-pointer object-cover"
+                      sizes="(max-width: 768px) 33vw, 20vw"
                     />
                   </div>
                 ) : (
@@ -112,7 +113,7 @@ const ReviewItem = ({
                     key={m.id}
                     src={m.url}
                     controls
-                    className="w-40 h-40 rounded"
+                    className="h-40 w-40 rounded"
                   />
                 )
               )}
@@ -122,7 +123,7 @@ const ReviewItem = ({
 
         <div className="md:col-span-2">
           {review.quality !== 0 && review.value !== 0 && (
-            <div className="space-y-5 mt-5 md:mt-0">
+            <div className="mt-5 space-y-5 md:mt-0">
               <RatingBar
                 label="Quality of this product"
                 value={review.quality}

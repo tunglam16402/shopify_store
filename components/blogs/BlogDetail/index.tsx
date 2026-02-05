@@ -19,6 +19,7 @@ const BlogDetail = ({ blog }: BlogDetailProps) => {
             fill
             className="object-cover"
             priority
+            sizes='50vw'
           />
         </div>
       )}

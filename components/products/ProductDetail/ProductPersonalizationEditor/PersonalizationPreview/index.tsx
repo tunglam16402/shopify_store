@@ -38,15 +38,21 @@ export function PersonalizationPreview({
 
   return (
     <div className="relative">
-      <div className="relative md:w-[732px] md:h-[732px] w-full h-full aspect-square">
-        <Image src={productImage} alt="Preview" fill className="object-cover" />
+      <div className="relative aspect-square h-full w-full md:h-[732px] md:w-[732px]">
+        <Image
+          src={productImage}
+          alt="Preview"
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, 50vw"
+        />
       </div>
-      <div className="text-sm mt-2 text-center">
+      <div className="mt-2 text-center text-sm">
         Note that your personalized piece is made by hand, which means small
         variations in alignment or spacing may appear.
       </div>
 
-      <div className="absolute inset-0 pointer-events-none">
+      <div className="pointer-events-none absolute inset-0">
         <div
           style={{
             position: 'absolute',

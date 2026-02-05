@@ -19,20 +19,22 @@ const FeaturedCollectionItem: React.FC<IFeaturedCollectionItem> = ({
     <div className="relative w-full">
       {imageField && (
         <div className="relative w-full">
-          <Link href={href} className="block aspect-[9/10]">
-            <Image
-              src={imageField.url || ""}
-              alt=""
-              fill
-              className="w-full h-auto object-contain"
-              loading="lazy"
-            />
+          <Link href={href} className="block aspect-9/10">
+            <div className="relative h-full w-full">
+              <Image
+                src={imageField.url || ''}
+                alt=""
+                fill
+                className="object-contain"
+                sizes="(max-width: 768px) 100vw, 33vw"
+              />
+            </div>
           </Link>
 
-          <div className="absolute inset-0 bg-black/30 flex flex-col justify-between items-center text-white p-4">
-            <h3 className="flex flex-col items-center text-center my-auto space-y-2">
+          <div className="absolute inset-0 flex flex-col items-center justify-between bg-black/30 p-4 text-white">
+            <h3 className="my-auto flex flex-col items-center space-y-2 text-center">
               <div className="text-4xl md:text-5xl">
-                <span className="font-sub-heading text-5xl md:text-6xl capitalize">
+                <span className="font-sub-heading text-5xl capitalize md:text-6xl">
                   {collection.sub_title_top}
                 </span>
                 <span className="uppercase"> {collection.title_top},</span>
@@ -46,7 +48,7 @@ const FeaturedCollectionItem: React.FC<IFeaturedCollectionItem> = ({
             </h3>
 
             <div className="uppercase">
-              <Link href={href} className="text-white px-6">
+              <Link href={href} className="px-6 text-white">
                 {collection.button_text}
               </Link>
             </div>

@@ -5,7 +5,6 @@ import PWSwiper from '@/components/ui/Swiper'
 import Image from 'next/image'
 import { ProductImageProps } from '../type'
 
-
 export const MOBILE_IMAGE = {
   slidesPerView: 1,
   slidesPerGroup: 1,
@@ -38,7 +37,7 @@ const ProductImage = ({ images, altText, title }: ProductImageProps) => {
       {/* Mobile */}
       <Suspense fallback={null}>
         <PWSwiper
-          className="md:hidden w-full pb-0!"
+          className="w-full pb-0! md:hidden"
           pagination={true}
           breakpoints={MOBILE_IMAGE}
           loop={true}
@@ -51,7 +50,7 @@ const ProductImage = ({ images, altText, title }: ProductImageProps) => {
                 height={500}
                 width={500}
                 sizes="100vw"
-                className="object-contain w-full cursor-pointer"
+                className="w-full cursor-pointer object-contain"
                 fetchPriority={i === 0 ? 'high' : 'low'}
               />
             </div>
@@ -60,7 +59,7 @@ const ProductImage = ({ images, altText, title }: ProductImageProps) => {
       </Suspense>
 
       {/* Desktop */}
-      <div className="hidden md:grid grid-cols-2 ">
+      <div className="hidden grid-cols-2 md:grid">
         {images[0] && (
           <div className="col-span-2" onClick={() => openLightbox(0)}>
             <Image
@@ -69,7 +68,7 @@ const ProductImage = ({ images, altText, title }: ProductImageProps) => {
               height={800}
               width={1200}
               sizes="(min-width: 768px) 100vw, 100vw"
-              className="object-cover w-full h-auto cursor-pointer"
+              className="h-auto w-full cursor-pointer object-cover"
               priority
             />
           </div>
@@ -83,7 +82,7 @@ const ProductImage = ({ images, altText, title }: ProductImageProps) => {
               height={500}
               width={500}
               sizes="(min-width: 768px) 50vw, 100vw"
-              className="object-cover w-full h-auto cursor-pointer"
+              className="h-auto w-full cursor-pointer object-cover"
               priority={i < 2}
             />
           </div>
@@ -93,15 +92,16 @@ const ProductImage = ({ images, altText, title }: ProductImageProps) => {
       {/* Lightbox */}
       {open && (
         <div
-          className="fixed inset-0 bg-black/80 bg-opacity-90 flex items-center justify-center z-[9999] cursor-zoom-out"
+          className="bg-opacity-90 fixed inset-0 z-9999 flex cursor-zoom-out items-center justify-center bg-black/80"
           onClick={() => setOpen(false)}
         >
           <Image
             src={images[index]}
             alt={altText || title}
             fill
+            sizes="(max-width: 768px) 100vw, 70vw"
             style={{ transform: `scale(${zoom})` }}
-            className=" object-contain transition-transform duration-200"
+            className="object-contain transition-transform duration-200"
             onWheel={(e) => {
               e.stopPropagation()
               setZoom((prev) =>
