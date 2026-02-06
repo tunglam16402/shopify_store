@@ -2,13 +2,13 @@
 
 import { normalizeAddress } from '@/lib/helper'
 import {
-    createCustomerAddress,
-    deleteCustomerAddress,
-    updateCustomerAddress,
+  createCustomerAddress,
+  deleteCustomerAddress,
+  updateCustomerAddress,
 } from '@/shopify/customer-address/use-address'
 import {
-    CreateAddressState,
-    UpdateAddressState,
+  CreateAddressState,
+  UpdateAddressState,
 } from '@/types/customer/address'
 import { cookies } from 'next/headers'
 
@@ -50,18 +50,20 @@ export async function createCustomerAddressAction(
     zip,
   })
 
-  if (!result || !result.data?.customerAddress) {
+  if (!result || !result.success) {
     return {
       success: false,
-      errors: [{ field: [], message: 'Create address failed' }],
+      errors: result?.errors ?? [
+        { field: [], message: 'Create address failed' },
+      ],
     }
   }
 
   return {
     success: true,
-    address: normalizeAddress(result.data.customerAddress),
+    address: normalizeAddress(result?.data?.customerAddress),
     errors:
-      result.data.customerUserErrors?.map((err) => ({
+      result?.data?.customerUserErrors?.map((err) => ({
         field: err.field || [],
         message: err.message,
       })) ?? [],

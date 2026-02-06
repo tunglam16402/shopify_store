@@ -25,21 +25,33 @@ export async function createCustomerAddress(
       },
     })
 
-    if (!data.customerAddressCreate?.customerAddress) {
-      return null
+    const payload = data.customerAddressCreate
+
+    if (!payload) {
+      return {
+        success: false,
+        errors: [{ field: [], message: 'Invalid Shopify response' }],
+      }
     }
 
-    const errors = parseShopifyCustomersErrors(data.customerAddressCreate)
+    const errors = parseShopifyCustomersErrors(payload)
     if (errors.length > 0) {
       return { success: false, errors }
     }
 
+    if (!payload.customerAddress) {
+      return {
+        success: false,
+        errors: [{ field: [], message: 'Address not created' }],
+      }
+    }
+
     return {
       success: true,
-      data: data.customerAddressCreate,
+      data: payload,
     }
   } catch (error) {
-    console.error('Error in createCustomerAddres:', error)
+    console.error('Error in createCustomerAddress:', error)
     return {
       success: false,
       errors: [{ field: [], message: 'Network error or Shopify unreachable' }],

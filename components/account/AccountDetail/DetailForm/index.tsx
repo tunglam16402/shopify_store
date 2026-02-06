@@ -29,6 +29,8 @@ const DetailForm: React.FC<detailsFormProps> = ({ customer, onCancel }) => {
     initialState
   )
 
+  console.log('dob :>> ', dob);
+
   const [formValues, setFormValues] = useState({
     firstName: customer.firstName ?? '',
     lastName: customer.lastName ?? '',
@@ -49,6 +51,7 @@ const DetailForm: React.FC<detailsFormProps> = ({ customer, onCancel }) => {
       )
       onCancel()
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.success])
 
   return (
