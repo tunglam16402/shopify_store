@@ -2,7 +2,10 @@
 
 import { formatPhoneE164 } from '@/lib/helper'
 import { createCustomerAccessToken } from '@/shopify/auth/use-login'
-import { updateCustomer } from '@/shopify/customer/use-customer'
+import {
+  updateCustomer,
+  updateCustomerMetafields,
+} from '@/shopify/customer/use-customer'
 import { UpdateCustomerState } from '@/types/customer'
 import { cookies } from 'next/headers'
 
@@ -17,6 +20,8 @@ export async function updateCustomerAction(
     typeof rawPhone === 'string' && rawPhone.trim() !== ''
       ? (formatPhoneE164(rawPhone, 'VN') ?? undefined)
       : undefined
+  const gender = formData.get('gender') as string
+  const dateOfBirth = formData.get('dateOfBirth') as string | null
 
   const cookieStore = await cookies()
   const accessToken = cookieStore.get('shopify_customer_token')?.value
@@ -48,6 +53,14 @@ export async function updateCustomerAction(
       customer: null,
       errors: result.errors,
     }
+  }
+
+  if (result?.customer?.id && (gender || dateOfBirth)) {
+    await updateCustomerMetafields(
+      result?.customer?.id,
+      gender ?? undefined,
+      dateOfBirth ?? undefined
+    )
   }
 
   return {

@@ -2,21 +2,26 @@ import { AppError } from '../error'
 
 export type Address = {
   id?: string
-  address1: string
+
+  address1?: string | null
   address2?: string | null
-  city: string
+  city?: string | null
   company?: string | null
-  country: string
+  country?: string | null
   countryCodeV2?: string | null
-  firstName: string
-  lastName: string
+
+  firstName?: string | null
+  lastName?: string | null
   phone?: string | null
-  province: string
+
+  province?: string | null
   provinceCode?: string | null
-  zip: string
+  zip?: string | null
+
   name?: string | null
   formatted?: string[]
 }
+
 
 export interface CreateAddressState {
   success: boolean

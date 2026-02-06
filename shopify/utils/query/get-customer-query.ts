@@ -98,6 +98,15 @@ const getCustomerQuery = /* GraphQL */ `
           formatted(withCompany: true, withName: true)
         }
       }
+
+      gender: metafield(namespace: "custom", key: "gender") {
+        value
+        type
+      }
+      dateOfBirth: metafield(namespace: "custom", key: "date_of_birth") {
+        value
+        type
+      }
     }
   }
 `

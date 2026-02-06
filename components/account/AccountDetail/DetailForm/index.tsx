@@ -6,6 +6,7 @@ import { useActionState, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
+import { DatePicker } from '@/components/ui/DoBInput'
 
 interface detailsFormProps {
   customer: Customer
@@ -20,15 +21,19 @@ const initialState = {
 
 const DetailForm: React.FC<detailsFormProps> = ({ customer, onCancel }) => {
   const dispatch = useDispatch()
+  const [dob, setDob] = useState<Date | undefined>(
+    customer.dateOfBirth ? new Date(customer.dateOfBirth) : undefined
+  )
   const [state, formAction, pending] = useActionState(
     updateCustomerAction,
     initialState
   )
 
   const [formValues, setFormValues] = useState({
-    firstName: customer?.firstName ?? '',
-    lastName: customer?.lastName ?? '',
-    phone: customer?.phone ?? '',
+    firstName: customer.firstName ?? '',
+    lastName: customer.lastName ?? '',
+    phone: customer.phone ?? '',
+    gender: customer.gender ?? '',
   })
 
   useEffect(() => {
@@ -38,12 +43,13 @@ const DetailForm: React.FC<detailsFormProps> = ({ customer, onCancel }) => {
           firstName: formValues.firstName,
           lastName: formValues.lastName,
           phone: formValues.phone,
+          gender: formValues.gender,
+          dateOfBirth: dob ? dob.toISOString().slice(0, 10) : null,
         })
       )
       onCancel()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, state.success])
+  }, [state.success])
 
   return (
     <form action={formAction} className="space-y-4 rounded-md border p-4">
@@ -102,6 +108,34 @@ const DetailForm: React.FC<detailsFormProps> = ({ customer, onCancel }) => {
 
         <input type="hidden" name="phone" value={formValues.phone} />
       </div>
+
+      <div>
+        <label className="mb-2 block text-sm font-medium">Gender</label>
+
+        <div className="flex gap-6">
+          {['male', 'female', 'other'].map((g) => (
+            <label key={g} className="flex items-center gap-2 text-sm">
+              <input
+                type="radio"
+                name="gender"
+                value={g}
+                checked={formValues.gender === g}
+                onChange={() =>
+                  setFormValues((prev) => ({ ...prev, gender: g }))
+                }
+              />
+              {g}
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <label className="mb-2 block text-sm font-medium">Date of Birth</label>
+
+        <DatePicker name="dateOfBirth" value={dob} onChange={setDob} />
+      </div>
+
       <div className="flex justify-between gap-4">
         <button
           type="submit"

@@ -1,5 +1,3 @@
-
-
 .filterWrapper {
   overflow-x: auto;
   scroll-snap-type: x mandatory;
@@ -7,6 +5,8 @@
   scrollbar-width: none;
   /* margin-right: -16px; */
   position: relative;
+  display: flex;
+  justify-content: center;
 }
 
 .filter {
@@ -21,7 +21,9 @@
   bottom: 0;
   height: 2px;
   background-color: #cecdcd;
-  transition: transform 0.3s ease, width 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    width 0.3s ease;
   width: 100%;
   left: 0;
 }
@@ -31,7 +33,9 @@
   bottom: 0;
   height: 2px;
   background-color: black;
-  transition: transform 0.3s ease, width 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    width 0.3s ease;
   will-change: transform, width;
   left: 0;
 }

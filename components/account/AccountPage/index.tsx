@@ -14,14 +14,14 @@ const profileTabs = [
   {
     label: 'Order History',
     icon: <Order />,
-    key: 'orderH',
+    key: 'order',
     component: <OrderHistory />,
   },
 ]
 
 const AccountPage = () => {
   return (
-    <div>
+    <div className='bg-white layout-width rounded-4xl'>
       <Tabs tabs={profileTabs} />
     </div>
   )

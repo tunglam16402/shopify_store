@@ -17,8 +17,6 @@ const AccountDropdown = () => {
   const router = useRouter()
   const dispatch = useAppDispatch()
   const { isLoggedIn, customer } = useSelector((state: RootState) => state.user)
-
-  console.log('isLoggedIn :>> ', isLoggedIn)
   const userName = customer?.firstName || customer?.email || 'User'
 
   useEffect(() => {

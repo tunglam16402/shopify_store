@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { attachCartToCustomer } from '@/shopify/cart/use-cart'
 import {
+  GetCustomerQuery,
   GetProductDetailQuery,
   GetProductsQuery,
 } from '@/shopify/types/graphql'
 import { BreadcrumbItem } from '@/types/collection/menuCollection'
+import { Customer } from '@/types/customer'
 import { Address } from '@/types/customer/address'
 import { AppError } from '@/types/error'
 import { parsePhoneNumberFromString } from 'libphonenumber-js'
@@ -57,6 +59,33 @@ export function mappingDiscountPrice(
     compareAtPrice: compareAt,
     currency: CURRENCY_SYMBOL_MAP[currencyCode] ?? currencyCode,
     discountPercent,
+  }
+}
+
+export function mapCustomer(
+  customer: NonNullable<GetCustomerQuery['customer']>
+): Customer {
+  return {
+    id: customer.id,
+    email: customer.email ?? '',
+    firstName: customer.firstName ?? '',
+    lastName: customer.lastName ?? '',
+    phone: customer.phone ?? undefined,
+    createdAt: customer.createdAt,
+    acceptsMarketing: customer.acceptsMarketing,
+
+    defaultAddress: customer.defaultAddress,
+    orders: customer.orders,
+    addresses: customer.addresses,
+
+    gender:
+      customer.gender?.value === 'male' ||
+      customer.gender?.value === 'female' ||
+      customer.gender?.value === 'other'
+        ? customer.gender.value
+        : null,
+
+    dateOfBirth: customer.dateOfBirth?.value ?? null,
   }
 }
 

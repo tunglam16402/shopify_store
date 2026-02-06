@@ -70,7 +70,7 @@ const Tab: React.FC<TabsProps> = ({
                 }}
                 onClick={() => handleClick(tab.key)}
                 className={`${tabClassName} flex flex-col items-center gap-1 ${
-                  isActive ? 'font-bold' : 'opacity-70'
+                  isActive ? 'font-bold text-primary!' : 'opacity-90'
                 }`}
                 type="button"
               >
@@ -88,7 +88,7 @@ const Tab: React.FC<TabsProps> = ({
 
           <div
             ref={indicatorRef}
-            className="absolute bottom-0 h-0.5 bg-black transition-all duration-300"
+            className="bg-primary absolute bottom-0 h-0.5 transition-all duration-300"
           />
         </div>
       </div>

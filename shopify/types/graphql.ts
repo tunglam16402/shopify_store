@@ -3909,6 +3909,12 @@ export type GetCheckoutQuery = {
   } | null
 }
 
+export type GetCustomerIdQueryVariables = Exact<{
+  customerAccessToken: Scalars['String']['input']
+}>
+
+export type GetCustomerIdQuery = { customer?: { id: string } | null }
+
 export type GetCustomerQueryVariables = Exact<{
   customerAccessToken: Scalars['String']['input']
 }>
@@ -4000,6 +4006,8 @@ export type GetCustomerQuery = {
         formatted: Array<string>
       }>
     }
+    gender?: { value: string; type: string } | null
+    dateOfBirth?: { value: string; type: string } | null
   } | null
 }
 
