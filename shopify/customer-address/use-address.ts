@@ -74,14 +74,30 @@ export async function updateCustomerAddress(
       },
     })
 
-    const errors = parseShopifyCustomersErrors(data.customerAddressUpdate)
+    const payload = data.customerAddressUpdate
+
+    if (!payload) {
+      return {
+        success: false,
+        errors: [{ field: [], message: 'Invalid Shopify response' }],
+      }
+    }
+
+    const errors = parseShopifyCustomersErrors(payload)
     if (errors.length > 0) {
       return { success: false, errors }
     }
 
+    if (!payload.customerAddress) {
+      return {
+        success: false,
+        errors: [{ field: [], message: 'Address not updated' }],
+      }
+    }
+
     return {
       success: true,
-      data: data.customerAddressUpdate,
+      data: payload,
     }
   } catch (error) {
     console.error('Error in createCustomerAddres:', error)

@@ -81,18 +81,18 @@ const SignInForm = () => {
                     <IcoEmail className="h-5 w-5" />
                   </div>
                   <Input
-                    type="email"
                     name="email"
                     id="email"
                     placeholder="you@example.com"
                     disabled={pending}
-                    className="h-12 rounded-xl pl-12"
+                    className="h-12 rounded-xl pl-12!"
+                    error={getFieldError('email')}
                   />
-                  {getFieldError('email') && (
+                  {/* {getFieldError('email') && (
                     <p className="mt-1 text-sm text-red-500">
                       {getFieldError('email')}
                     </p>
-                  )}
+                  )} */}
                 </div>
 
                 <div className="mt-5 space-y-2">

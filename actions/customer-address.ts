@@ -113,7 +113,9 @@ export async function updateCustomerAddressAction(
   if (!result || !result.data) {
     return {
       success: false,
-      errors: [{ field: [], message: 'update address failed' }],
+      errors: result?.errors ?? [
+        { field: [], message: 'update address failed' },
+      ],
     }
   }
 
@@ -142,10 +144,12 @@ export async function deleteCustomerAddressAction(id: string) {
 
     const result = await deleteCustomerAddress(accessToken, id)
 
-    if (!result || !result.data) {
+    if (!result || !result.success) {
       return {
         success: false,
-        errors: [{ field: [], message: 'update address failed' }],
+        errors: result?.errors ?? [
+          { field: [], message: 'delete address failed' },
+        ],
       }
     }
 

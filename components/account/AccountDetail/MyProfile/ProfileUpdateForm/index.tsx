@@ -8,7 +8,7 @@ import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 import { DatePicker } from '@/components/ui/DoBInput'
 
-interface detailsFormProps {
+interface IProfileUpdateForm {
   customer: Customer
   onCancel: () => void
 }
@@ -19,7 +19,7 @@ const initialState = {
   customer: null,
 }
 
-const DetailForm: React.FC<detailsFormProps> = ({ customer, onCancel }) => {
+const ProfileUpdateForm: React.FC<IProfileUpdateForm> = ({ customer, onCancel }) => {
   const dispatch = useDispatch()
   const [dob, setDob] = useState<Date | undefined>(
     customer.dateOfBirth ? new Date(customer.dateOfBirth) : undefined
@@ -28,8 +28,6 @@ const DetailForm: React.FC<detailsFormProps> = ({ customer, onCancel }) => {
     updateCustomerAction,
     initialState
   )
-
-  console.log('dob :>> ', dob);
 
   const [formValues, setFormValues] = useState({
     firstName: customer.firstName ?? '',
@@ -169,4 +167,4 @@ const DetailForm: React.FC<detailsFormProps> = ({ customer, onCancel }) => {
   )
 }
 
-export default DetailForm
+export default ProfileUpdateForm

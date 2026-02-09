@@ -31,7 +31,7 @@ const AddressList: React.FC<AddressListProps> = ({
   }
 
   if (addresses.length === 0) {
-    return <p className="text-gray-500 text-sm">No saved addresses yet.</p>
+    return <p className="text-sm text-gray-500">No saved addresses yet.</p>
   }
 
   return (
@@ -42,7 +42,7 @@ const AddressList: React.FC<AddressListProps> = ({
             key={address.id}
             address={address}
             isDefault={address.id === defaultAddressId}
-            onEdit={onEditAddress} 
+            onEdit={onEditAddress}
             onDelete={handleDelete}
           />
         ))}

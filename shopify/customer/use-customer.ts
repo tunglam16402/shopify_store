@@ -132,7 +132,7 @@ export async function updateCustomerMetafields(
   const errors = parseShopifyUsersErrors(data.metafieldsSet)
 
   if (errors.length > 0) {
-    console.error('[Parsed metafield errors]', errors)
+    return { success: false, errors }
   }
 
   return data.metafieldsSet.metafields
