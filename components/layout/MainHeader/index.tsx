@@ -51,13 +51,13 @@ const MainHeader = ({ menuItems }: Props) => {
   return (
     <div
       className={cn(
-        'fixed left-0 w-full z-50 transition-all duration-300 ease-out bg-white py-2!',
+        'fixed left-0 z-50 w-full bg-white py-2! transition-all duration-300 ease-out',
         scrolled ? 'top-0' : 'top-10',
-        !visible && 'md:translate-y-0 -translate-y-full'
+        !visible && '-translate-y-full md:translate-y-0'
       )}
     >
       <div className="layout-width">
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between">
           <button
             onClick={() => setIsOpenMobile(!isOpenMobile)}
             className="md:hidden"
@@ -82,14 +82,14 @@ const MainHeader = ({ menuItems }: Props) => {
             <SearchInput />
           </div>
 
-          <div className="flex items-center justify-center gap-4">
+          <div className="flex items-center justify-center gap-0 md:gap-4">
             <WishlistIconHeader />
             <CartIcon onClick={open} />
             <AccountDropdown />
           </div>
         </div>
 
-        <div className="mt-2 block md:hidden w-full">
+        <div className="mt-2 block w-full md:hidden">
           <SearchInput />
         </div>
 

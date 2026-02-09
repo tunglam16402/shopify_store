@@ -1,7 +1,6 @@
 import { IcoHeart } from '@/components/icons'
 import { useWishList } from '@/lib/hooks/useWishlist'
 import Link from 'next/link'
-import React from 'react'
 
 const WishlistIconHeader = () => {
   const { wishlistSet } = useWishList()
@@ -10,11 +9,11 @@ const WishlistIconHeader = () => {
       <Link
         href="/wishlist"
         aria-label="open wishlist page"
-        className="relative hover:[&_path]:stroke-primary p-2"
+        className="hover:[&_path]:stroke-primary relative p-2"
       >
-        <IcoHeart className="w-6 h-6" />
+        <IcoHeart className="size-5 md:size-6" />
 
-        <span className="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+        <span className="bg-primary absolute top-0 -right-0.5 flex h-4.5 w-4.5 items-center justify-center rounded-full text-xs text-white">
           {wishlistSet?.size || 0}
         </span>
       </Link>

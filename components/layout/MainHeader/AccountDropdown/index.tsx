@@ -52,11 +52,11 @@ const AccountDropdown = () => {
           }
           setOpen((prev) => !prev)
         }}
-        className="hover:[&_path]:stroke-primary hover:[&_ellipse]:stroke-primary hover:text-primary flex items-center gap-2 p-2 text-sm"
+        className="hover:[&_path]:stroke-primary hover:[&_ellipse]:stroke-primary hover:text-primary flex items-center gap-2 py-2 pl-2 pr-0 md:p-2 text-sm"
         aria-haspopup={isLoggedIn ? 'menu' : undefined}
         aria-expanded={isLoggedIn ? open : undefined}
       >
-        <IcoUser className="h-6 w-6" />
+        <IcoUser className="size-5 md:size-6" />
         {isLoggedIn ? (
           <span className="hidden font-medium md:block">Hi, {userName}</span>
         ) : (
