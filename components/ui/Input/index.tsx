@@ -5,9 +5,17 @@ type InputProps = React.ComponentProps<'input'> & {
   label?: string
   required?: boolean
   error?: string
+  placeholder?: string
 }
 
-export function Input({ label, required, error, value, ...props }: InputProps) {
+export function Input({
+  label,
+  required,
+  error,
+  value,
+  placeholder=" ",
+  ...props
+}: InputProps) {
   const hasError = Boolean(error)
   const hasValue = value !== undefined && value !== ''
 
@@ -17,7 +25,7 @@ export function Input({ label, required, error, value, ...props }: InputProps) {
         <input
           {...props}
           value={value}
-          placeholder=" "
+          placeholder={placeholder}
           required={required}
           aria-invalid={hasError}
           className={cn(

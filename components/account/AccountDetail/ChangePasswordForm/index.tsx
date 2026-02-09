@@ -38,9 +38,10 @@ export default function ChangePasswordForm({
 
       <PasswordInput
         name="oldPassword"
-        placeholder="Enter your old password"
+        label="Old Password"
         required
         disabled={pending}
+        error=""
       />
       {state.errors?.find((e) => e.field.includes('oldPassword')) && (
         <p className="text-sm text-red-500">
@@ -49,15 +50,16 @@ export default function ChangePasswordForm({
       )}
       <PasswordInput
         name="newPassword"
-        placeholder="Enter your new password"
+        label="New Password"
         required
         disabled={pending}
       />
       <PasswordInput
         name="confirmPassword"
-        placeholder="Confirm new password"
+        label="Confirm New Password"
         required
         disabled={pending}
+        error=""
       />
 
       {(state?.errors?.length ?? 0) > 0 && (

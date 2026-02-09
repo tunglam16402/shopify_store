@@ -7,8 +7,8 @@ export default function AccountLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="bg-slate-50">
-      <div className="flex flex-col items-center justify-center py-16">
+    <div className="bg-slate-50 mobile-mt">
+      <div className="flex flex-col items-center justify-center py-6 md:py-12">
         <Logo className="w-full" />
         <p className="text-slate-600 mt-6 max-w-[500px] text-center">
           Step into a world where imagination meets strategy — explore, shop,

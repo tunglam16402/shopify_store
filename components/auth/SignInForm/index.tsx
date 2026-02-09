@@ -64,131 +64,103 @@ const SignInForm = () => {
     state.errors.find((err) => err.field[0] === fieldName)?.message
 
   return (
-    <div className="page-width mt-6 flex w-full items-center justify-center md:mt-12">
-      <div className="mt-6 w-full max-w-[560px]">
-        <form action={formAction} className="space-y-4">
-          <div className="rounded-2xl bg-white p-4 shadow-xl md:p-8">
-            <div>
-              <div className="space-y-2">
-                <Label
-                  htmlFor="email"
-                  className="text-sm font-semibold text-slate-700"
-                >
-                  Email Address
-                </Label>
-                <div className="relative">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
-                    <IcoEmail className="h-5 w-5" />
-                  </div>
-                  <Input
-                    name="email"
-                    id="email"
-                    placeholder="you@example.com"
-                    disabled={pending}
-                    className="h-12 rounded-xl pl-12!"
-                    error={getFieldError('email')}
-                  />
-                  {/* {getFieldError('email') && (
-                    <p className="mt-1 text-sm text-red-500">
-                      {getFieldError('email')}
-                    </p>
-                  )} */}
-                </div>
+    <div className="page-width">
+      <div className="mx-auto w-full max-w-[560px] bg-white p-4 shadow-xl md:p-8">
+        <h1 className="text-center text-3xl font-bold text-slate-900 uppercase sm:text-4xl">
+          Login
+        </h1>
+        <form action={formAction} className="mt-8 space-y-4 md:mt-12">
+          <div className="space-y-2">
+            <div className="relative">
+              <Input
+                name="email"
+                id="email"
+                disabled={pending}
+                label="Email"
+                required
+                error={getFieldError('email')}
+              />
+            </div>
 
-                <div className="mt-5 space-y-2">
-                  <Label
-                    htmlFor="password"
-                    className="text-sm font-semibold text-slate-700"
-                  >
-                    Password
-                  </Label>
-                  <div className="relative">
-                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
-                      <IcoPassword className="z-10 h-5 w-5" />
-                    </div>
-                    <PasswordInput
-                      name="password"
-                      id="password"
-                      placeholder="Enter your password"
-                      disabled={pending}
-                      className="h-12 rounded-xl pl-12"
-                    />
-                    {getFieldError('password') && (
-                      <p className="mt-1 text-sm text-red-500">
-                        {getFieldError('password')}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              {/* Remember Me & Forgot Password */}
-              <div className="mt-5 flex items-center justify-between">
-                <label className="group flex cursor-pointer items-center gap-2">
-                  <input type="checkbox" className="h-4 w-4 rounded" />
-                  <span className="text-sm text-slate-600">Remember me</span>
-                </label>
-                <Link
-                  href="/account/recovery"
-                  className="text-primary text-sm font-medium transition-colors duration-200 hover:opacity-80"
-                >
-                  Forgot password?
-                </Link>
-              </div>
-
-              {state.errors.some((e) => e.field.length === 0) && (
-                <div className="rounded-xl border border-red-200 bg-red-50 p-4">
-                  <div className="flex gap-3">
-                    <IcoError />
-                    <ul className="space-y-1 text-sm text-red-700">
-                      {state.errors
-                        .filter((e) => e.field.length === 0)
-                        .map((error, index) => (
-                          <li key={index}>{error.message}</li>
-                        ))}
-                    </ul>
-                  </div>
-                </div>
-              )}
-
-              {/* Submit Button */}
-              <div className="mt-12">
-                <Button
-                  type="submit"
+            <div className="mt-5 space-y-2">
+              <div className="relative">
+                <PasswordInput
+                  name="password"
+                  id="password"
                   disabled={pending}
-                  variant={'primary'}
-                  className="h-12 w-full font-semibold shadow-lg"
-                >
-                  {pending ? (
-                    <>
-                      <IcoSpin />
-                      Signing in...
-                    </>
-                  ) : (
-                    <>
-                      Sign In
-                      <IcoArrowRight />
-                    </>
-                  )}
-                </Button>
+                  required
+                  label="Password"
+                  error={getFieldError('password')}
+                />
               </div>
             </div>
-
-            {/* Divider */}
-            <div className="relative my-6">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-slate-200" />
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="bg-white px-4 font-medium text-slate-500">
-                  Or continue with
-                </span>
-              </div>
-            </div>
-
-            {/* Social Login */}
-            <SocialLoginWrapper />
           </div>
+
+          {/* Remember Me & Forgot Password */}
+          <div className="mt-5 flex items-center justify-between">
+            <label className="group flex cursor-pointer items-center gap-2">
+              <input type="checkbox" className="h-4 w-4 rounded" />
+              <span className="text-sm text-slate-600">Remember me</span>
+            </label>
+            <Link
+              href="/account/recovery"
+              className="text-primary text-sm font-medium transition-colors duration-200 hover:opacity-80"
+            >
+              Forgot password?
+            </Link>
+          </div>
+
+          {state.errors.some((e) => e.field.length === 0) && (
+            <div className="rounded-xl border border-red-200 bg-red-50 p-4">
+              <div className="flex gap-3">
+                <IcoError />
+                <ul className="space-y-1 text-sm text-red-700">
+                  {state.errors
+                    .filter((e) => e.field.length === 0)
+                    .map((error, index) => (
+                      <li key={index}>{error.message}</li>
+                    ))}
+                </ul>
+              </div>
+            </div>
+          )}
+
+          {/* Submit Button */}
+          <div className="mt-12">
+            <Button
+              type="submit"
+              disabled={pending}
+              variant={'primary'}
+              className="h-12 w-full font-semibold shadow-lg"
+            >
+              {pending ? (
+                <>
+                  <IcoSpin />
+                  Signing in...
+                </>
+              ) : (
+                <>
+                  Sign In
+                  <IcoArrowRight />
+                </>
+              )}
+            </Button>
+          </div>
+
+          {/* Divider */}
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-slate-200" />
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="bg-white px-4 font-medium text-slate-500">
+                Or continue with
+              </span>
+            </div>
+          </div>
+
+          {/* Social Login */}
+          <SocialLoginWrapper />
         </form>
 
         {/* Sign Up Link */}
@@ -196,7 +168,7 @@ const SignInForm = () => {
           Dont have an account?
           <Link
             href="/account/register"
-            className="font-semibold text-blue-600 transition-colors duration-200 hover:text-blue-700 hover:underline"
+            className="text-primary pl-1 font-semibold transition-colors duration-200 hover:text-blue-700 hover:underline"
           >
             Create one now
           </Link>

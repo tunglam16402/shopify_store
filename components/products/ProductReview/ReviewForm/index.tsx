@@ -117,7 +117,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
               disabled={pending}
               defaultValue={hasReviewed?.comment}
               placeholder="Tell us what you like or dislike (min. 10 characters)"
-              className="border p-2 h-30 rounded-xl w-full"
+              className="border p-2 h-30 border-gray-600 w-full"
               minLength={10}
               required
             />

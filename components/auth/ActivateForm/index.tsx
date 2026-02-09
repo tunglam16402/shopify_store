@@ -1,9 +1,8 @@
 'use client'
 
-import { IcoEmail, IcoSpin } from '@/components/icons'
+import PasswordInput from '@/components/common/PasswordInput'
+import { IcoSpin } from '@/components/icons'
 import { Button } from '@/components/ui/Button'
-import { Input } from '@/components/ui/Input'
-import { Label } from '@/components/ui/Label'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
@@ -49,60 +48,48 @@ const ActivateForm: React.FC<ActivateFormProps> = ({ activationUrl }) => {
   }
 
   return (
-    <div className="w-full flex items-center justify-center mt-6 md:mt-12 page-width">
-      <div className="w-full max-w-[560px] mt-6">
-        <div className="bg-white rounded-2xl shadow-xl p-4 md:p-8">
-          <div>
-            <div className="space-y-2">
-              <Label
-                htmlFor="email"
-                className="text-sm font-semibold text-slate-700"
-              >
-                Password
-              </Label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <IcoEmail className="h-5 w-5" />
-                </div>
-                <Input
-                  type="password"
-                  placeholder="Set your password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  disabled={loading}
-                  className="h-12 pl-12 rounded-xl"
-                />
-              </div>
-            </div>
-
-            {/* Submit Button */}
-            <div className="mt-12">
-              <Button
-                onClick={handleActivate}
-                disabled={loading}
-                variant={'primary'}
-                className="w-full h-12 font-semibold shadow-lg"
-              >
-                {loading ? (
-                  <>
-                    <IcoSpin />
-                    Activating...
-                  </>
-                ) : (
-                  <>Activate</>
-                )}
-              </Button>
-            </div>
-            {message && (
-              <p
-                className={`mt-4 text-sm font-medium ${
-                  isSuccess ? 'text-green-600' : 'text-red-500'
-                }`}
-              >
-                {message}
-              </p>
-            )}
+    <div className="page-width mt-6 flex w-full items-center justify-center md:mt-12">
+      <div className="mt-6 w-full max-w-[560px]">
+        <div className="rounded-2xl bg-white p-4 shadow-xl md:p-8">
+          <div className="relative">
+            <PasswordInput
+              type="password"
+              placeholder="Set your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              disabled={loading}
+              className="h-12 rounded-xl pl-12"
+              label="Password"
+            />
           </div>
+
+          {/* Submit Button */}
+          <div className="mt-12">
+            <Button
+              onClick={handleActivate}
+              disabled={loading}
+              variant={'primary'}
+              className="h-12 w-full font-semibold shadow-lg"
+            >
+              {loading ? (
+                <>
+                  <IcoSpin />
+                  Activating...
+                </>
+              ) : (
+                <>Activate</>
+              )}
+            </Button>
+          </div>
+          {message && (
+            <p
+              className={`mt-4 text-sm font-medium ${
+                isSuccess ? 'text-green-600' : 'text-red-500'
+              }`}
+            >
+              {message}
+            </p>
+          )}
         </div>
       </div>
     </div>

@@ -1,5 +1,7 @@
 import { Input } from '@/components/ui/Input'
 import { Label } from '@/components/ui/Label'
+import PhoneInput from 'react-phone-number-input'
+
 import React, { useActionState } from 'react'
 import {
   Address,
@@ -64,7 +66,6 @@ const AddressForm: React.FC<AddressFormProps> = ({
 
       <div>
         <Input
-          type="phone"
           name="phone"
           defaultValue={defaultValues.phone || ''}
           label="Phone"

@@ -6,12 +6,18 @@ import { IcoEye, IcoEyeOff } from '@/components/icons'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 
-interface PasswordInputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
+interface PasswordInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   disabled?: boolean
+  label?: string
+  error?: string
 }
 
-const PasswordInput = ({ disabled, ...props }: PasswordInputProps) => {
+const PasswordInput = ({
+  disabled,
+  label,
+  error,
+  ...props
+}: PasswordInputProps) => {
   const [showPassword, setShowPassword] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -30,6 +36,8 @@ const PasswordInput = ({ disabled, ...props }: PasswordInputProps) => {
         type={showPassword ? 'text' : 'password'}
         className="pr-10"
         disabled={disabled}
+        label={label}
+        error={error}
         {...props}
       />
       <Button
@@ -38,7 +46,7 @@ const PasswordInput = ({ disabled, ...props }: PasswordInputProps) => {
         size="icon"
         onClick={togglePasswordVisibility}
         disabled={disabled}
-        className="absolute right-2 top-1/2 -translate-y-1/2 hover:bg-transparent"
+        className="absolute top-1/2 right-2 -translate-y-1/2 hover:bg-transparent"
         aria-label={showPassword ? 'Hide password' : 'Show password'}
       >
         {showPassword ? (

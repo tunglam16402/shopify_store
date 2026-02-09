@@ -68,7 +68,7 @@ const UploadMediaField: React.FC<UploadMediaFieldProps> = ({
 
       <div className="relative inline-block w-full cursor-pointer">
         <div
-          className={`flex h-12 items-center justify-center rounded-md border border-gray-300 bg-white ${
+          className={`flex h-12 items-center justify-center border border-gray-500 bg-white ${
             disabled ? 'cursor-not-allowed opacity-50' : ''
           }`}
         >
@@ -82,7 +82,7 @@ const UploadMediaField: React.FC<UploadMediaFieldProps> = ({
           )}
         </div>
 
-        <Input
+        <input
           ref={fileInputRef}
           type="file"
           id={name}

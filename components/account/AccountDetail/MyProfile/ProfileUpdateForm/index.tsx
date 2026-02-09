@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux'
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 import { DatePicker } from '@/components/ui/DoBInput'
+import { Input } from '@/components/ui/Input'
 
 interface IProfileUpdateForm {
   customer: Customer
@@ -19,7 +20,10 @@ const initialState = {
   customer: null,
 }
 
-const ProfileUpdateForm: React.FC<IProfileUpdateForm> = ({ customer, onCancel }) => {
+const ProfileUpdateForm: React.FC<IProfileUpdateForm> = ({
+  customer,
+  onCancel,
+}) => {
   const dispatch = useDispatch()
   const [dob, setDob] = useState<Date | undefined>(
     customer.dateOfBirth ? new Date(customer.dateOfBirth) : undefined
@@ -49,14 +53,13 @@ const ProfileUpdateForm: React.FC<IProfileUpdateForm> = ({ customer, onCancel })
       )
       onCancel()
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.success])
 
   return (
     <form action={formAction} className="space-y-4 rounded-md border p-4">
       <div>
-        <label className="block text-sm font-medium">First Name</label>
-        <input
+        <Input
           name="firstName"
           value={formValues.firstName}
           onChange={(e) =>
@@ -65,13 +68,12 @@ const ProfileUpdateForm: React.FC<IProfileUpdateForm> = ({ customer, onCancel })
               firstName: e.target.value,
             }))
           }
-          className="w-full rounded border p-2"
+          label="First Name"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium">Last Name</label>
-        <input
+        <Input
           name="lastName"
           value={formValues.lastName}
           onChange={(e) =>
@@ -80,21 +82,19 @@ const ProfileUpdateForm: React.FC<IProfileUpdateForm> = ({ customer, onCancel })
               lastName: e.target.value,
             }))
           }
-          className="w-full rounded border p-2"
+          label="Last Name"
         />
       </div>
-      <div>
+      {/* <div>
         <label className="block text-sm font-medium">Email</label>
-        <input
+        <Input
           type="email"
           defaultValue={customer.email ?? ''}
           className="w-full rounded border bg-gray-200 p-2 text-gray-500"
           disabled
         />
-      </div>
+      </div> */}
       <div>
-        <label className="block text-sm font-medium">Phone</label>
-
         <PhoneInput
           international={false}
           defaultCountry="VN"
