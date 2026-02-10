@@ -6,7 +6,7 @@ import {
   updateCustomer,
   updateCustomerMetafields,
 } from '@/shopify/customer/use-customer'
-import { UpdateCustomerState } from '@/types/customer'
+import { UpdateCustomerState, VerifyPasswordState } from '@/types/customer'
 import { cookies } from 'next/headers'
 
 export async function updateCustomerAction(
@@ -68,6 +68,40 @@ export async function updateCustomerAction(
     customer: result.customer,
     errors: [],
   }
+}
+
+export async function verifyCustomerPasswordAction(
+  initialState: VerifyPasswordState,
+  formData: FormData
+): Promise<VerifyPasswordState> {
+  const email = formData.get('email') as string
+  const password = formData.get('password') as string
+
+  if (!password) {
+    return {
+      success: false,
+      errors: [{ field: ['password'], message: 'Password is required' }],
+    }
+  }
+
+  const result = await createCustomerAccessToken({ email, password })
+  const cookieStore = await cookies()
+
+  if (!result.success || !result.accessToken) {
+    return {
+      success: false,
+      errors: [{ field: ['password'], message: 'Current Password do not match' }],
+    }
+  }
+
+  cookieStore.set('customer_reauth', '1', {
+    httpOnly: true,
+    maxAge: 5 * 60,
+    sameSite: 'lax',
+    path: '/',
+  })
+
+  return { success: true }
 }
 
 export async function changeCustomerPasswordAction(
@@ -139,6 +173,59 @@ export async function changeCustomerPasswordAction(
   }
 
   cookieStore.delete('shopify_customer_token')
+
+  return {
+    success: true,
+    requireReLogin: true,
+    errors: [],
+  }
+}
+
+export async function changeCustomerEmailAction(
+  initialState: UpdateCustomerState,
+  formData: FormData
+): Promise<UpdateCustomerState> {
+  const newEmail = formData.get('newEmail') as string
+  const cookieStore = await cookies()
+
+  if (!cookieStore.has('customer_reauth')) {
+    return {
+      success: false,
+      errors: [{ field: [], message: 'Re-authentication required' }],
+    }
+  }
+
+  if (!newEmail) {
+    return {
+      success: false,
+      errors: [{ field: ['email'], message: 'Email is required' }],
+    }
+  }
+  
+  const customerToken = cookieStore.get('shopify_customer_token')?.value
+
+  if (!customerToken) {
+    return {
+      success: false,
+      requireReLogin: true,
+      errors: [],
+    }
+  }
+
+  const result = await updateCustomer(customerToken, {
+    email: newEmail,
+  })
+
+  if (!result || result.errors.length > 0) {
+    return {
+      success: false,
+      errors: result?.errors,
+    }
+  }
+
+  // cleanup
+  cookieStore.delete('customer_reauth')
+  // cookieStore.delete('shopify_customer_token')
 
   return {
     success: true,

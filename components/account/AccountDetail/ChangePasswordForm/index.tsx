@@ -38,7 +38,7 @@ export default function ChangePasswordForm({
 
       <PasswordInput
         name="oldPassword"
-        label="Old Password"
+        label="Current Password"
         required
         disabled={pending}
         error=""

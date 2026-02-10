@@ -2,16 +2,9 @@
 
 import { loginCustomer } from '@/actions/login'
 import PasswordInput from '@/components/common/PasswordInput'
-import {
-  IcoArrowRight,
-  IcoEmail,
-  IcoError,
-  IcoPassword,
-  IcoSpin,
-} from '@/components/icons'
+import { IcoArrowRight, IcoError, IcoSpin } from '@/components/icons'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
-import { Label } from '@/components/ui/Label'
 import { EventTracking, sendEventTracking } from '@/lib/analytics/klaviyo'
 import { useAppDispatch } from '@/lib/hooks/useAppDispatch'
 import { loadUserFromCookie } from '@/store/slices/userSlice'
@@ -21,6 +14,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useActionState, useEffect } from 'react'
 import SocialLoginWrapper from '../SocialLogin/SocialLoginWrapper'
+import { getFieldError } from '../helper'
 
 const initialState: LoginState = {
   success: false,
@@ -36,8 +30,6 @@ const SignInForm = () => {
     loginCustomer,
     initialState
   )
-
-  console.log('state :>> ', state)
 
   useEffect(() => {
     const mergeCart = async () => {
@@ -60,9 +52,6 @@ const SignInForm = () => {
     mergeCart()
   }, [state.success, state.accessToken, dispatch, router])
 
-  const getFieldError = (fieldName: string) =>
-    state.errors.find((err) => err.field[0] === fieldName)?.message
-
   return (
     <div className="page-width">
       <div className="mx-auto w-full max-w-[560px] bg-white p-4 shadow-xl md:p-8">
@@ -78,7 +67,7 @@ const SignInForm = () => {
                 disabled={pending}
                 label="Email"
                 required
-                error={getFieldError('email')}
+                error={getFieldError(state.errors, 'email')}
               />
             </div>
 
@@ -90,7 +79,7 @@ const SignInForm = () => {
                   disabled={pending}
                   required
                   label="Password"
-                  error={getFieldError('password')}
+                  error={getFieldError(state.errors, 'password')}
                 />
               </div>
             </div>

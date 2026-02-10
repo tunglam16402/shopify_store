@@ -130,8 +130,8 @@ const ProfileUpdateForm: React.FC<IProfileUpdateForm> = ({
       <div className="">
         <label className="mb-2 block text-lg font-bold uppercase">Gender</label>
 
-        <div className="flex gap-6">
-          {['Male', 'Female', 'Other'].map((g) => (
+        <div className="flex gap-6 capitalize">
+          {['male', 'female', 'other'].map((g) => (
             <label
               key={g}
               className="flex items-center gap-2 text-base md:text-lg cursor-pointer"

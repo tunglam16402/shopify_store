@@ -1,12 +1,11 @@
 'use client'
 
+import Modal from '@/components/common/Modal'
 import { Button } from '@/components/ui/Button'
 import { Customer } from '@/types/customer'
 import React, { useState } from 'react'
 import ProfileDetailItem from '../ProfileDetailItem'
 import ProfileUpdateForm from '../ProfileUpdateForm'
-import Modal from '@/components/common/Modal'
-import { PhoneInput } from '@/components/ui/PhoneInput'
 
 interface ProfileDetailsProps {
   customer: Customer
@@ -16,7 +15,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ customer }) => {
   const [isEditingAccount, setIsEditingAccount] = useState(false)
 
   return (
-    <section className="">
+    <section>
       <h3 className="text-[26px] font-bold uppercase md:text-3xl">
         My Details
       </h3>
@@ -35,7 +34,11 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ customer }) => {
           />
 
           <ProfileDetailItem label="Phone Number" value={customer?.phone} />
-          <ProfileDetailItem label="Gender" value={customer?.gender} />
+          <ProfileDetailItem
+            label="Gender"
+            value={customer?.gender}
+            valueClassName="capitalize"
+          />
         </div>
       </div>
 

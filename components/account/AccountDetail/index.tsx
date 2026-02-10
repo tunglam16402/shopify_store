@@ -2,11 +2,12 @@
 
 import { RootState } from '@/store/store'
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import ChangePasswordForm from './ChangePasswordForm'
 
-import { logout } from '@/store/slices/userSlice'
+import { useAppDispatch } from '@/lib/hooks/useAppDispatch'
+import { logoutUser } from '@/store/slices/userSlice'
 import { useRouter } from 'next/navigation'
 import AddressBook from './AddressBook'
 import MyProfile from './MyProfile'
@@ -17,11 +18,11 @@ const AccountDetail: React.FC = () => {
   const { customer } = useSelector((state: RootState) => state.user)
 
   const [activeTab, setActiveTab] = useState<TabKey>('account')
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const router = useRouter()
 
-  const handleLogout = () => {
-    dispatch(logout())
+  const handleLogout = async () => {
+    await dispatch(logoutUser())
     router.push('/account/login')
   }
 
@@ -67,7 +68,7 @@ const AccountDetail: React.FC = () => {
 
       {/* Content */}
       <section className="col-span-12 md:col-span-9">
-        <div className="rounded-md border bg-white p-4 md:p-6 shadow-sm">
+        <div className="rounded-md border bg-white p-4 shadow-sm md:p-6">
           {activeTab === 'account' && <MyProfile customer={customer} />}
 
           {activeTab === 'address' && <AddressBook customer={customer} />}

@@ -30,6 +30,11 @@ export interface UpdateCustomerState {
   requireReLogin?: boolean
 }
 
+export interface VerifyPasswordState {
+  success: boolean
+  errors?: AppError[]
+}
+
 export interface ShopifyMetafield {
   value: string
   type: string
