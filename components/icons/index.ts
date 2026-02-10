@@ -17,6 +17,7 @@ export { default as IcoStarEmpty } from './IcoStarEmpty'
 export { default as IcoReviewBuy } from './IcoReviewBuy'
 export { default as IcoEmptyBox } from './IcoEmptyBox'
 export { default as IcoTrash } from './IcoTrash'
+export { default as IcoChecked } from './IcoChecked'
 
 export * from './Payments'
 export * from './Accounts'

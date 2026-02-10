@@ -4,10 +4,12 @@ import { updateCustomerInfo } from '@/store/slices/userSlice'
 import { Customer } from '@/types/customer'
 import { useActionState, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 import { DatePicker } from '@/components/ui/DoBInput'
 import { Input } from '@/components/ui/Input'
+import { Button } from '@/components/ui/Button'
+import { IcoSpin } from '@/components/icons'
+import { PhoneInput } from '@/components/ui/PhoneInput'
 
 interface IProfileUpdateForm {
   customer: Customer
@@ -57,34 +59,38 @@ const ProfileUpdateForm: React.FC<IProfileUpdateForm> = ({
   }, [state.success])
 
   return (
-    <form action={formAction} className="space-y-4 rounded-md border p-4">
-      <div>
-        <Input
-          name="firstName"
-          value={formValues.firstName}
-          onChange={(e) =>
-            setFormValues((prev) => ({
-              ...prev,
-              firstName: e.target.value,
-            }))
-          }
-          label="First Name"
-        />
+    <form
+      action={formAction}
+      className="space-y-8 rounded-md border px-9 pt-5 pb-9"
+    >
+      <div className="">
+        <h4 className="text-3xl font-bold uppercase">Edit your details</h4>
       </div>
 
-      <div>
-        <Input
-          name="lastName"
-          value={formValues.lastName}
-          onChange={(e) =>
-            setFormValues((prev) => ({
-              ...prev,
-              lastName: e.target.value,
-            }))
-          }
-          label="Last Name"
-        />
-      </div>
+      <Input
+        name="firstName"
+        value={formValues.firstName}
+        onChange={(e) =>
+          setFormValues((prev) => ({
+            ...prev,
+            firstName: e.target.value,
+          }))
+        }
+        label="First Name"
+      />
+
+      <Input
+        name="lastName"
+        value={formValues.lastName}
+        onChange={(e) =>
+          setFormValues((prev) => ({
+            ...prev,
+            lastName: e.target.value,
+          }))
+        }
+        label="Last Name"
+      />
+
       {/* <div>
         <label className="block text-sm font-medium">Email</label>
         <Input
@@ -94,7 +100,11 @@ const ProfileUpdateForm: React.FC<IProfileUpdateForm> = ({
           disabled
         />
       </div> */}
-      <div>
+      <div className="">
+        <label className="mb-2 block text-lg font-bold uppercase">
+          Phone number
+        </label>
+
         <PhoneInput
           international={false}
           defaultCountry="VN"
@@ -110,20 +120,31 @@ const ProfileUpdateForm: React.FC<IProfileUpdateForm> = ({
         <input type="hidden" name="phone" value={formValues.phone} />
       </div>
 
-      <div>
-        <label className="mb-2 block text-sm font-medium">Gender</label>
+      <div className="">
+        <label className="mb-2 block text-lg font-bold uppercase">
+          Date of birth
+        </label>
+        <DatePicker name="dateOfBirth" value={dob} onChange={setDob} />
+      </div>
+
+      <div className="">
+        <label className="mb-2 block text-lg font-bold uppercase">Gender</label>
 
         <div className="flex gap-6">
-          {['male', 'female', 'other'].map((g) => (
-            <label key={g} className="flex items-center gap-2 text-sm">
+          {['Male', 'Female', 'Other'].map((g) => (
+            <label
+              key={g}
+              className="flex items-center gap-2 text-base md:text-lg cursor-pointer"
+            >
               <input
-                type="radio"
+                type="checkbox"
                 name="gender"
                 value={g}
                 checked={formValues.gender === g}
                 onChange={() =>
                   setFormValues((prev) => ({ ...prev, gender: g }))
                 }
+                className="accent-primary h-5 w-5 rounded-sm"
               />
               {g}
             </label>
@@ -131,27 +152,31 @@ const ProfileUpdateForm: React.FC<IProfileUpdateForm> = ({
         </div>
       </div>
 
-      <div>
-        <label className="mb-2 block text-sm font-medium">Date of Birth</label>
-
-        <DatePicker name="dateOfBirth" value={dob} onChange={setDob} />
-      </div>
-
-      <div className="flex justify-between gap-4">
-        <button
+      <div className="gap-4">
+        <Button
+          variant={'primary'}
           type="submit"
           disabled={pending}
-          className="rounded bg-green-500 px-4 py-2 text-white transition hover:bg-green-600"
+          className="mt-2 flex w-full max-w-[750px] items-center justify-between py-6 uppercase md:mt-4 md:text-lg"
         >
-          {pending ? 'Updating...' : 'Save'}
-        </button>
-        <button
+          <div> {pending ? 'Updating...' : 'update details'}</div>
+          {!pending ? (
+            <div className="text-3xl">→</div>
+          ) : (
+            <div className="animate-spin">
+              <IcoSpin className="size-6" />
+            </div>
+          )}
+        </Button>
+        <Button
+          variant={'outline'}
           type="button"
           onClick={onCancel}
-          className="rounded bg-gray-300 px-4 py-2 transition hover:bg-gray-400"
+          className="mt-3 flex w-full max-w-[750px] items-center justify-between py-6 uppercase md:mt-4 md:text-lg"
         >
-          Cancel
-        </button>
+          <div>Cancel</div>
+          <div className="text-3xl">→</div>
+        </Button>
       </div>
       {!pending && (state?.errors?.length ?? 0) > 0 && (
         <ul className="text-sm text-red-500">

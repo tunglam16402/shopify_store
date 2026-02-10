@@ -21,7 +21,7 @@ const FilterMobile = ({
   if (!open) return null
 
   return (
-    <div className="fixed inset-0 z-50 bg-white flex flex-col">
+    <div className="fixed inset-0 z-49 bg-white flex flex-col">
       <div className="flex-1 overflow-y-auto p-4">{children}</div>
 
       <div className="border-t p-3 space-y-2 ">

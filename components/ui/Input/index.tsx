@@ -29,7 +29,7 @@ export function Input({
           required={required}
           aria-invalid={hasError}
           className={cn(
-            'peer h-12 w-full border bg-transparent px-3 text-sm transition-colors outline-none',
+            'peer h-12 w-full border bg-transparent px-3 text-sm md:text-base transition-colors outline-none',
             {
               'border-b-2 border-red-500 border-b-red-500': hasError,
 
@@ -51,7 +51,7 @@ export function Input({
                 'text-green-600': !hasError && hasValue,
                 'text-neutral-500': !hasError && !hasValue,
 
-                'peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:text-xs peer-focus:top-0 peer-focus:text-xs': true,
+                'peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:text-xs md:peer-not-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs': true,
               }
             )}
           >

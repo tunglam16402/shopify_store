@@ -37,7 +37,7 @@ const Modal: React.FC<ModalProps> = ({
   return (
     <div
       className={cn(
-        'fixed inset-0 flex items-center bg-black/70 z-51',
+        'fixed inset-0 flex items-center bg-black/70 z-50',
         align === 'center' && 'justify-center',
         align === 'right' && 'justify-end',
         align === 'left' && 'justify-start'

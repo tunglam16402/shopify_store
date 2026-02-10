@@ -1,11 +1,11 @@
 'use client'
 
-import * as React from 'react'
 import { format } from 'date-fns'
+import * as React from 'react'
 import { Button } from '../Button'
-import { Field, FieldLabel } from '../Field'
-import { Popover, PopoverContent, PopoverTrigger } from '../Popover'
 import { Calendar } from '../Calendar'
+import { Field } from '../Field'
+import { Popover, PopoverContent, PopoverTrigger } from '../Popover'
 
 interface DatePickerProps {
   value?: Date
@@ -18,11 +18,12 @@ export function DatePicker({ value, onChange, name }: DatePickerProps) {
 
   return (
     <Field className="w-fit">
-      <FieldLabel>Date of birth</FieldLabel>
-
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button variant="outline" className="justify-start font-normal">
+          <Button
+            variant="default"
+            className="h-12 w-full justify-start px-6 md:px-10 text-sm font-normal md:text-base"
+          >
             {value ? format(value, 'dd/MM/yyyy') : 'Select date'}
           </Button>
         </PopoverTrigger>

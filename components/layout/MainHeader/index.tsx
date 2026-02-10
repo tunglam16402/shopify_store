@@ -51,7 +51,7 @@ const MainHeader = ({ menuItems }: Props) => {
   return (
     <div
       className={cn(
-        'fixed left-0 z-50 w-full bg-white py-2! transition-all duration-300 ease-out',
+        'fixed left-0 z-49 w-full bg-white py-2! transition-all duration-300 ease-out',
         scrolled ? 'top-0' : 'top-10',
         !visible && '-translate-y-full md:translate-y-0'
       )}

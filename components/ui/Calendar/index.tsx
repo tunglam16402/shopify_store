@@ -8,9 +8,9 @@ import {
   type DayButton,
 } from 'react-day-picker'
 
+import { IcoArrowRight, IcoBack, IcoDown, IcoFront } from '@/components/icons'
 import { cn } from '@/lib/utils'
 import { Button, buttonVariants } from '../Button'
-import { IcoArrowRight, IcoBack, IcoDown, IcoFront } from '@/components/icons'
 
 function Calendar({
   className,
@@ -141,12 +141,17 @@ function Calendar({
         },
         Chevron: ({ className, orientation, ...props }) => {
           if (orientation === 'left') {
-            return <IcoBack className={cn('size-4', className)} {...props} />
+            return (
+              <IcoArrowRight
+                className={cn('size-4 rotate-180', className)}
+                {...props}
+              />
+            )
           }
 
           if (orientation === 'right') {
             return (
-              <IcoFront className={cn('size-4', className)} {...props} />
+              <IcoArrowRight className={cn('size-4', className)} {...props} />
             )
           }
 
