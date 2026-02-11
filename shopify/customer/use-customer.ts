@@ -162,6 +162,10 @@ export async function deleteCustomer(id: string) {
 
   const errors = parseShopifyUsersErrors(result)
 
+  if (errors.length > 0) {
+    return { success: false, errors }
+  }
+
   return {
     deletedCustomerId: result.deletedCustomerId,
     errors,

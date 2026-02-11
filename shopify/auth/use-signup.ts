@@ -3,12 +3,13 @@ import { CustomerCreateMutation } from '../types/graphql'
 import customerCreateMutation from '../utils/mutation/customer-create'
 import { CustomerActivateByUrlMutation } from '../types/graphql'
 import customerActivateByUrlMutation from '../utils/mutation/customer-activate-by-url'
+import { parseShopifyCustomersErrors } from '@/lib/helper'
 
 export async function createCustomer(input: {
   firstName?: string
   lastName?: string
+  phone?: string
   email: string
-  phone: string
   password: string
 }) {
   const data = await shopifyFetch<CustomerCreateMutation>({
@@ -16,15 +17,15 @@ export async function createCustomer(input: {
     variables: { input },
   })
 
-  if (data?.customerCreate?.customerUserErrors?.length) {
-    console.error(
-      'Customer create errors:',
-      data.customerCreate.customerUserErrors
-    )
-    return { success: false, errors: data.customerCreate.customerUserErrors }
+  const result = data.customerCreate
+
+  const errors = parseShopifyCustomersErrors(result)
+
+  if (errors.length > 0) {
+    return { success: false, errors }
   }
 
-  return { success: true, customer: data.customerCreate?.customer }
+  return { success: true, customer: result?.customer }
 }
 
 export async function activateCustomer(input: {
@@ -39,17 +40,18 @@ export async function activateCustomer(input: {
     },
   })
 
-  if (data?.customerActivateByUrl?.customerUserErrors?.length) {
-    return {
-      success: false,
-      errors: data.customerActivateByUrl.customerUserErrors,
-    }
+  const result = data.customerActivateByUrl
+
+  const errors = parseShopifyCustomersErrors(result)
+
+  if (errors.length > 0) {
+    return { success: false, errors }
   }
 
   return {
     success: true,
-    customer: data.customerActivateByUrl?.customer,
-    accessToken: data?.customerActivateByUrl?.customerAccessToken?.accessToken,
-    expiresAt: data?.customerActivateByUrl?.customerAccessToken?.expiresAt,
+    customer: result?.customer,
+    accessToken: result?.customerAccessToken?.accessToken,
+    expiresAt: result?.customerAccessToken?.expiresAt,
   }
 }

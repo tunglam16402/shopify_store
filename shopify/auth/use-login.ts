@@ -1,3 +1,4 @@
+import { parseShopifyCustomersErrors } from '@/lib/helper'
 import { shopifyFetch } from '../fetcher'
 import { CustomerAccessTokenCreateMutation } from '../types/graphql'
 import customerAccessTokenCreateMutation from '../utils/mutation/customer-access-token-create'
@@ -31,16 +32,7 @@ export async function createCustomerAccessToken(
 
     const result = data.customerAccessTokenCreate
 
-    if (result?.customerUserErrors?.length) {
-      return {
-        success: false,
-        errors: result.customerUserErrors.map((err) => ({
-          code: err.code || undefined,
-          field: err.field || [],
-          message: err.message,
-        })),
-      }
-    }
+    const errors = parseShopifyCustomersErrors(result)
 
     if (result?.customerAccessToken) {
       return {
@@ -50,9 +42,13 @@ export async function createCustomerAccessToken(
       }
     }
 
+    if (errors.length > 0) {
+      return { success: false, errors }
+    }
+
     return {
       success: false,
-      errors: [{ field: [], message: 'Unknown error occurred during login.' }],
+      errors: [{ field: [], message: 'Unknown error occurred.' }],
     }
   } catch (err) {
     console.error('createCustomerAccessToken error:', err)

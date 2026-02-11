@@ -4,7 +4,7 @@ import { createCustomer } from '@/shopify/auth/use-signup'
 import { RegisterState } from '@/types/auth'
 
 export async function registerCustomer(
-  initialState: RegisterState, 
+  initialState: RegisterState,
   formData: FormData
 ): Promise<RegisterState> {
   const email = formData.get('email') as string
@@ -21,13 +21,22 @@ export async function registerCustomer(
     }
   }
 
-  const result = await createCustomer({
+  const input: {
+    email: string
+    password: string
+    phone?: string
+    firstName?: string
+    lastName?: string
+  } = {
     email,
     password,
-    phone,
-    firstName,
-    lastName,
-  })
+  }
+
+  if (phone) input.phone = phone
+  if (firstName) input.firstName = firstName
+  if (lastName) input.lastName = lastName
+
+  const result = await createCustomer(input)
 
   return {
     success: result.success,

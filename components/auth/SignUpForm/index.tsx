@@ -2,21 +2,16 @@
 
 import { registerCustomer } from '@/actions/register'
 import PasswordInput from '@/components/common/PasswordInput'
+import { IcoArrowRight, IcoSpin } from '@/components/icons'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
-import { Label } from '@/components/ui/Label'
 import type { RegisterState } from '@/types/auth'
 import Link from 'next/link'
-import { useActionState } from 'react'
+import { useActionState, useEffect } from 'react'
 import SocialLoginWrapper from '../SocialLogin/SocialLoginWrapper'
-import {
-  IcoArrowRight,
-  IcoEmail,
-  IcoName,
-  IcoPassword,
-  IcoPhone,
-  IcoSpin,
-} from '@/components/icons'
+import { getFieldError } from '../helper'
+import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 
 const initialState: RegisterState = {
   success: false,
@@ -25,18 +20,23 @@ const initialState: RegisterState = {
 }
 
 const SignUpForm = () => {
+  const router = useRouter()
   const [state, formAction, pending] = useActionState(
     registerCustomer,
     initialState
   )
 
-  const getFieldError = (fieldName: string) =>
-    state.errors.find((err) => err.field[0] === fieldName)?.message
+  useEffect(() => {
+    if (state.success) {
+      toast.success('Account created successfully 🎉')
+      router.push('/account/login')
+    }
+  }, [state.success, router])
 
   return (
     <div className="page-width">
       <div className="mx-auto w-full max-w-[560px] bg-white p-4 shadow-xl md:p-8">
-        <h1 className="text-center text-3xl font-bold text-slate-900 uppercase sm:text-4xl">
+        <h1 className="text-center text-3xl font-bold uppercase md:text-4xl">
           Register
         </h1>
         <form action={formAction} className="mt-8 space-y-4 md:mt-12">
@@ -46,7 +46,7 @@ const SignUpForm = () => {
                 name="email"
                 id="email"
                 disabled={pending}
-                error={getFieldError('email')}
+                error={getFieldError(state.errors, 'email')}
                 required
                 label="Email"
               />
@@ -58,7 +58,7 @@ const SignUpForm = () => {
                 name="phone"
                 id="phone"
                 disabled={pending}
-                error={getFieldError('phone')}
+                error={getFieldError(state.errors, 'phone')}
                 label="Phone"
               />
             </div>
@@ -69,7 +69,7 @@ const SignUpForm = () => {
                 name="firstName"
                 id="firstName"
                 disabled={pending}
-                error={getFieldError('firstName')}
+                error={getFieldError(state.errors, 'firstName')}
                 label="First Name"
               />
             </div>
@@ -80,7 +80,7 @@ const SignUpForm = () => {
                 name="lastName"
                 id="lastName"
                 disabled={pending}
-                error={getFieldError('lastName')}
+                error={getFieldError(state.errors, 'lastName')}
                 label="Last Name"
               />
             </div>
@@ -92,12 +92,11 @@ const SignUpForm = () => {
                 label="Password"
                 disabled={pending}
                 required
-                error={getFieldError('password')}
+                error={getFieldError(state.errors, 'password')}
               />
             </div>
           </div>
 
-          {/* Submit Button */}
           <div className="mt-12">
             <Button
               type="submit"
@@ -119,7 +118,10 @@ const SignUpForm = () => {
             </Button>
           </div>
 
-          {/* Divider */}
+          {state.success && (
+            <p className="text-center text-green-600">Register SuccessFully</p>
+          )}
+
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-slate-200" />
@@ -131,32 +133,20 @@ const SignUpForm = () => {
             </div>
           </div>
 
-          {/* Social Login */}
           <SocialLoginWrapper />
         </form>
 
-        {/* Sign Up Link */}
         <p className="mt-6 text-center text-sm text-slate-600">
           Already have an account?
           <Link
             href="/account/login"
-            className="text-primary pl-1 font-semibold transition-colors duration-200 hover:text-blue-700 hover:underline"
+            className="text-primary pl-1 font-semibold hover:text-blue-700 hover:underline"
           >
             Log In
           </Link>
         </p>
       </div>
     </div>
-
-    // {state.errors.length > 0 && (
-    //   <ul className="text-red-500 text-sm space-y-1">
-    //     {state.errors.map((error, index) => (
-    //       <li key={index}>{error.message}</li>
-    //     ))}
-    //   </ul>
-    // )}
-
-    // {state.success && <p className="text-green-600">Register SuccessFully</p>}
   )
 }
 
