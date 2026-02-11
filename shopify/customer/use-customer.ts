@@ -8,7 +8,8 @@ import { shopifyFetch } from '../fetcher'
 import { CustomerUpdateMutation, GetCustomerQuery } from '../types/graphql'
 import { customerUpdateMutation } from '../utils/mutation'
 import getCustomerQuery from '../utils/query/get-customer-query'
-import customerMetafielsMutation from '../utils/mutation/customer-metafield-update'
+import customerMetafielsMutation from '../utils/customer-metafield-update'
+import customerDeleteMutation from '../utils/customer-delete'
 
 export async function getCustomer(accessToken: string) {
   try {
@@ -137,4 +138,32 @@ export async function updateCustomerMetafields(
   }
 
   return data.metafieldsSet.metafields
+}
+
+export async function deleteCustomer(id: string) {
+  const data = await adminFetch<{
+    customerDelete: {
+      deletedCustomerId: string | null
+      userErrors: {
+        field: string[] | null
+        message: string
+      }[]
+    }
+  }>({
+    query: customerDeleteMutation,
+    variables: { id },
+  })
+
+  if (!data?.customerDelete) {
+    throw new Error('Invalid Admin API response')
+  }
+
+  const result = data.customerDelete
+
+  const errors = parseShopifyUsersErrors(result)
+
+  return {
+    deletedCustomerId: result.deletedCustomerId,
+    errors,
+  }
 }

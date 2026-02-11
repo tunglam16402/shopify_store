@@ -2,7 +2,7 @@
 
 import { Customer } from '@/types/customer'
 import { useState } from 'react'
-import ChangeEmailForm from './Form'
+import ChangeEmailForm from './ChangeEmailForm'
 import VerifyPasswordForm from './VerifyPasswordForm'
 
 interface IChangeEmailSection {

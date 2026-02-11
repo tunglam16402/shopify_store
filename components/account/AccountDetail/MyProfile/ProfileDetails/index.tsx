@@ -23,7 +23,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ customer }) => {
         Feel free to edit any of your details below so your account is up to
         date.
       </p>
-      <div className="mt-10 md:mt-14">
+      <div className="mt-14">
         <h4 className="text-[26px] font-bold uppercase md:text-3xl">Details</h4>
         <div className="">
           <ProfileDetailItem label="First Name" value={customer?.firstName} />

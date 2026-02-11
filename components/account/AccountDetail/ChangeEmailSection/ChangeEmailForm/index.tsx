@@ -7,6 +7,8 @@ import { Input } from '@/components/ui/Input'
 import { logoutUser } from '@/store/slices/userSlice'
 import { useRouter } from 'next/navigation'
 import { useActionState, useEffect, useState } from 'react'
+import { useAppDispatch } from '@/lib/hooks/useAppDispatch'
+import { ConfirmdDialog } from '@/components/ui/ConfirmDialog'
 
 const initialState = {
   success: false,
@@ -74,45 +76,14 @@ export default function ChangeEmailForm({
         </div>
       </form>
 
-      <EmailChangedDialog open={!showSuccess} onConfirm={handleConfirm} />
+      <ConfirmdDialog
+        onConfirm={handleConfirm}
+        open={showSuccess}
+        title="Email changed successfully"
+        subTitle="You will be redirected to the login page."
+        ctaText="Go to Login"
+        close={() => setShowSuccess(false)}
+      />
     </>
-  )
-}
-
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
-import { useAppDispatch } from '@/lib/hooks/useAppDispatch'
-
-interface SuccessDialogProps {
-  open: boolean
-  onConfirm: () => void
-}
-
-export function EmailChangedDialog({ open, onConfirm }: SuccessDialogProps) {
-  return (
-    <Dialog open={open}>
-      <DialogContent className="max-w-md text-center">
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-bold">
-            Email changed successfully
-          </DialogTitle>
-          <DialogDescription className="mt-2 text-base">
-            You will be redirected to the login page.
-          </DialogDescription>
-        </DialogHeader>
-
-        <Button
-          onClick={onConfirm}
-          className="mt-6 w-full py-6 text-lg font-bold uppercase"
-        >
-          OK
-        </Button>
-      </DialogContent>
-    </Dialog>
   )
 }

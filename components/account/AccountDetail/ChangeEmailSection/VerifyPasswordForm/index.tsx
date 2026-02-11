@@ -1,10 +1,11 @@
 'use client'
 
-import { useActionState, useEffect } from 'react'
-import PasswordInput from '@/components/common/PasswordInput'
-import { Button } from '@/components/ui/Button'
 import { verifyCustomerPasswordAction } from '@/actions/customer'
 import { getFieldError } from '@/components/auth/helper'
+import PasswordInput from '@/components/common/PasswordInput'
+import { Button } from '@/components/ui/Button'
+import { ConfirmdDialog } from '@/components/ui/ConfirmDialog'
+import { useActionState, useEffect } from 'react'
 
 const initialState = {
   success: false,
@@ -64,6 +65,7 @@ export default function VerifyPasswordForm({
           Cancel
         </Button>
       </div>
+   
     </form>
   )
 }

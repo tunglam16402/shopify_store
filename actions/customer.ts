@@ -3,6 +3,8 @@
 import { formatPhoneE164 } from '@/lib/helper'
 import { createCustomerAccessToken } from '@/shopify/auth/use-login'
 import {
+  deleteCustomer,
+  getCustomer,
   updateCustomer,
   updateCustomerMetafields,
 } from '@/shopify/customer/use-customer'
@@ -90,7 +92,9 @@ export async function verifyCustomerPasswordAction(
   if (!result.success || !result.accessToken) {
     return {
       success: false,
-      errors: [{ field: ['password'], message: 'Current Password do not match' }],
+      errors: [
+        { field: ['password'], message: 'Current Password do not match' },
+      ],
     }
   }
 
@@ -201,7 +205,7 @@ export async function changeCustomerEmailAction(
       errors: [{ field: ['email'], message: 'Email is required' }],
     }
   }
-  
+
   const customerToken = cookieStore.get('shopify_customer_token')?.value
 
   if (!customerToken) {
@@ -232,4 +236,30 @@ export async function changeCustomerEmailAction(
     requireReLogin: true,
     errors: [],
   }
+}
+
+export async function deleteCustomerAccountAction() {
+  const cookieStore = await cookies()
+  const token = cookieStore.get('shopify_customer_token')?.value
+
+  if (!token) {
+    throw new Error('Not authenticated')
+  }
+
+  const customer = await getCustomer(token)
+
+  if (!customer?.id) {
+    throw new Error('Invalid customer')
+  }
+
+  //admin api
+  const result = await deleteCustomer(customer.id)
+
+  if (result.errors.length > 0) {
+    return { success: false, errors: result.errors }
+  }
+
+  cookieStore.delete('shopify_customer_token')
+
+  return { success: true }
 }
