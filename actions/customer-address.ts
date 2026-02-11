@@ -5,6 +5,7 @@ import {
   createCustomerAddress,
   deleteCustomerAddress,
   updateCustomerAddress,
+  updateCustomerDefaultAddress,
 } from '@/shopify/customer-address/use-address'
 import {
   CreateAddressState,
@@ -127,6 +128,40 @@ export async function updateCustomerAddressAction(
         field: err.field || [],
         message: err.message,
       })) ?? [],
+  }
+}
+
+export async function updateDefaultAddressAction(id: string) {
+  try {
+    const cookieStore = await cookies()
+    const accessToken = cookieStore.get('shopify_customer_token')?.value
+
+    if (!accessToken) {
+      return {
+        success: false,
+        errors: [{ field: [], message: 'User not authenticated' }],
+      }
+    }
+
+    const result = await updateCustomerDefaultAddress(accessToken, id)
+
+    if (!result || !result.success) {
+      return {
+        success: false,
+        errors: result?.errors ?? [
+          { field: [], message: 'set default address failed' },
+        ],
+      }
+    }
+
+    return {
+      success: true,
+    }
+  } catch (error) {
+    return {
+      success: false,
+      errors: [{ message: 'Server error while setting default address' }],
+    }
   }
 }
 

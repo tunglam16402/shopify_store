@@ -17,7 +17,8 @@ const AccountDropdown = () => {
   const router = useRouter()
   const dispatch = useAppDispatch()
   const { isLoggedIn, customer } = useSelector((state: RootState) => state.user)
-  const userName = customer?.firstName || customer?.email || 'User'
+  const userName =
+    customer?.firstName || customer?.email?.split('@')[0] || 'User'
 
   useEffect(() => {
     if (!open) return
@@ -43,7 +44,6 @@ const AccountDropdown = () => {
 
   return (
     <div ref={dropdownRef} className="relative">
-      {/* Trigger */}
       <button
         onClick={() => {
           if (!isLoggedIn) {
@@ -52,7 +52,7 @@ const AccountDropdown = () => {
           }
           setOpen((prev) => !prev)
         }}
-        className="hover:[&_path]:stroke-primary hover:[&_ellipse]:stroke-primary hover:text-primary flex items-center gap-2 py-2 pl-2 pr-0 md:p-2 text-sm"
+        className="hover:[&_path]:stroke-primary hover:[&_ellipse]:stroke-primary hover:text-primary flex items-center gap-2 py-2 pr-0 pl-2 text-sm md:p-2"
         aria-haspopup={isLoggedIn ? 'menu' : undefined}
         aria-expanded={isLoggedIn ? open : undefined}
       >

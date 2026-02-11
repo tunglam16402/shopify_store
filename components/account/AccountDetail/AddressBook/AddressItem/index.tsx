@@ -1,12 +1,14 @@
 import { Button } from '@/components/ui/Button'
 import { Address } from '@/types/customer/address'
 import React from 'react'
+import cn from 'classnames'
 
 export type AddressItemProps = {
   isDefault: boolean
   address: Address
   onEdit: (address: Address) => void
   onDelete: (id: string) => void
+  onSetDefault: (id: string) => void
 }
 
 const AddressItem: React.FC<AddressItemProps> = ({
@@ -14,21 +16,27 @@ const AddressItem: React.FC<AddressItemProps> = ({
   isDefault = false,
   onEdit,
   onDelete,
+  onSetDefault,
 }) => {
   return (
-    <div className="rounded-2xl border border-gray-200 p-4 shadow-sm hover:shadow-md transition">
-      <div className="flex items-center justify-between mb-3">
-        <h3 className="font-semibold text-gray-800 flex items-center gap-2">
+    <div
+      className={cn(
+        'border border-gray-300 bg-gray-50 p-4 shadow-sm transition hover:shadow-md',
+        isDefault ? 'border-primary' : 'border-gray-300'
+      )}
+    >
+      <div className="mb-3 flex items-center justify-between">
+        <p className="flex items-center gap-2 font-bold">
           {address.firstName} {address.lastName}
-        </h3>
+        </p>
         {isDefault && (
-          <span className="text-xs px-2 py-1 bg-blue-100 text-blue-600 rounded-full">
+          <span className="bg-primary rounded-md px-2 py-1 text-xs text-white md:text-sm">
             Default
           </span>
         )}
       </div>
 
-      <div className="text-sm space-y-1 text-gray-700">
+      <div className="space-y-1 text-sm md:text-base">
         <div>
           <span>
             Address: {address.address1}, {address.address2}
@@ -47,13 +55,23 @@ const AddressItem: React.FC<AddressItemProps> = ({
         {address.phone && <div>Phone: {address.phone}</div>}
       </div>
 
-      <div className="flex gap-2 mt-4">
-        <Button variant="secondary" onClick={() => onEdit(address)}>
-          Edit
-        </Button>
-        <Button variant="destructive" onClick={() => onDelete(address.id!)}>
-          Delete
-        </Button>
+      <div className="mt-4 flex justify-between">
+        <div className="flex gap-2">
+          <Button variant="default" onClick={() => onEdit(address)}>
+            Edit
+          </Button>
+          <Button variant="default" onClick={() => onDelete(address.id!)}>
+            Delete
+          </Button>
+        </div>
+        {!isDefault && (
+          <button
+            className="font-semibold underline hover:opacity-80"
+            onClick={() => onSetDefault(address.id!)}
+          >
+            Set as Default
+          </button>
+        )}
       </div>
     </div>
   )

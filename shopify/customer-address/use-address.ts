@@ -9,8 +9,10 @@ import {
   CustomerAddressCreateMutation,
   CustomerAddressDeleteMutation,
   CustomerAddressUpdateMutation,
+  CustomerDefaultAddressUpdateMutation,
 } from '../types/graphql'
 import { parseShopifyCustomersErrors } from '@/lib/helper'
+import customerDefaultAddressUpdate from '../utils/mutation/customer-address-default-update'
 
 export async function createCustomerAddress(
   accessToken: string,
@@ -93,6 +95,47 @@ export async function updateCustomerAddress(
         success: false,
         errors: [{ field: [], message: 'Address not updated' }],
       }
+    }
+
+    return {
+      success: true,
+      data: payload,
+    }
+  } catch (error) {
+    console.error('Error in createCustomerAddres:', error)
+    return {
+      success: false,
+      errors: [{ field: [], message: 'Network error or Shopify unreachable' }],
+    }
+  }
+}
+
+export async function updateCustomerDefaultAddress(
+  accessToken: string,
+  id: string
+) {
+  try {
+    const data = await shopifyFetch<CustomerDefaultAddressUpdateMutation>({
+      query: customerDefaultAddressUpdate,
+      variables: {
+        customerAccessToken: accessToken,
+        addressId: id,
+      },
+    })
+
+    const payload = data.customerDefaultAddressUpdate
+
+    if (!payload) {
+      return {
+        success: false,
+        errors: [{ field: [], message: 'Invalid Shopify response' }],
+      }
+    }
+
+    const errors = parseShopifyCustomersErrors(payload)
+
+    if (errors.length > 0) {
+      return { success: false, errors }
     }
 
     return {

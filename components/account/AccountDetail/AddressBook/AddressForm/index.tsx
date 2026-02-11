@@ -8,6 +8,8 @@ import {
   CreateAddressState,
   UpdateAddressState,
 } from '@/types/customer/address'
+import { getFieldError } from '@/components/auth/helper'
+import { Button } from '@/components/ui/Button'
 
 interface AddressFormProps {
   onCancel: () => void
@@ -33,130 +35,116 @@ const AddressForm: React.FC<AddressFormProps> = ({
   const [state, formAction, isPending] = useActionState(actionFn, initialState)
 
   return (
-    <form action={formAction} className="space-y-4 rounded-md border p-4">
-      {actionType === 'edit' && defaultValues.id && (
-        <input type="hidden" name="id" value={defaultValues.id} />
-      )}
+    <div className="rounded-md border p-4">
+      <h4 className="text-3xl font-bold uppercase">
+        {actionType === 'edit' ? <>Edit address</> : <>adding new address</>}
+      </h4>
 
-      <div>
-        <Input
-          name="firstName"
-          defaultValue={defaultValues.firstName || ''}
-          label="First Name"
-          required
-          error=""
-        />
-      </div>
+      <form action={formAction} className="mt-6 space-y-4 md:space-y-6 md:mt-8">
+        {actionType === 'edit' && defaultValues.id && (
+          <input type="hidden" name="id" value={defaultValues.id} />
+        )}
 
-      <div>
-        <Input
-          name="lastName"
-          defaultValue={defaultValues.lastName || ''}
-          label="Last Name"
-        />
-      </div>
+        <div className="flex flex-col gap-4 md:flex-row">
+          <Input
+            name="firstName"
+            defaultValue={defaultValues.firstName || ''}
+            label="First Name"
+            required
+          />
 
-      <div>
-        <Input
-          name="company"
-          defaultValue={defaultValues.company || ''}
-          label="Company"
-        />
-      </div>
+          <Input
+            name="lastName"
+            defaultValue={defaultValues.lastName || ''}
+            label="Last Name"
+          />
+        </div>
 
-      <div>
-        <Input
-          name="phone"
-          defaultValue={defaultValues.phone || ''}
-          label="Phone"
-        />
-      </div>
+        <div>
+          <Input
+            name="company"
+            defaultValue={defaultValues.company || ''}
+            label="Company"
+          />
+        </div>
 
-      <div>
-        <Input
-          name="address1"
-          defaultValue={defaultValues.address1 || ''}
-          label="Address 1"
-        />
-      </div>
+        <div>
+          <Input
+            name="address1"
+            defaultValue={defaultValues.address1 || ''}
+            label="Address 1"
+          />
+        </div>
 
-      <div>
-        <Input
-          name="address2"
-          defaultValue={defaultValues.address2 || ''}
-          label="Address 2"
-        />
-      </div>
+        <div>
+          <Input
+            name="address2"
+            defaultValue={defaultValues.address2 || ''}
+            label="Address 2"
+          />
+        </div>
 
-      <div>
-        <Input
-          name="city"
-          defaultValue={defaultValues.city || ''}
-          label="City"
-        />
-      </div>
+        <div className="flex flex-col gap-4 md:flex-row">
+          <Input
+            name="country"
+            defaultValue={defaultValues.country || ''}
+            label="Country"
+            error={getFieldError(state.errors, 'country')}
+          />
+          <Input
+            name="city"
+            defaultValue={defaultValues.city || ''}
+            label="City"
+          />
+        </div>
 
-      <div>
-        <Input
-          name="province"
-          defaultValue={defaultValues.province || ''}
-          label="Province"
-        />
-      </div>
+        <div className="flex flex-col gap-4 md:flex-row">
+          <Input
+            name="province"
+            defaultValue={defaultValues.province || ''}
+            label="Province"
+            error={getFieldError(state.errors, 'province')}
+          />
+          <Input
+            name="zip"
+            defaultValue={defaultValues.zip || ''}
+            label="Postcode"
+          />
+        </div>
+        <div>
+          <Input
+            name="phone"
+            defaultValue={defaultValues.phone || ''}
+            label="Phone"
+            error={getFieldError(state.errors, 'phone')}
+          />
+          <p className="mt-2 text-sm text-gray-600 md:text-base">
+            We will only call you if there are questions regarding your order.
+          </p>
+        </div>
 
-      <div>
-        <Input
-          name="country"
-          defaultValue={defaultValues.country || ''}
-          label="Country"
-        />
-      </div>
-
-      <div>
-        <Input
-          name="zip"
-          defaultValue={defaultValues.zip || ''}
-          label="Postcode"
-        />
-      </div>
-
-      <div className="flex justify-between gap-4">
-        <button
-          type="submit"
-          disabled={isPending}
-          className="rounded bg-green-500 px-4 py-2 text-white transition hover:bg-green-600"
-        >
-          {isPending
-            ? actionType === 'edit'
-              ? 'Updating...'
-              : 'Saving...'
-            : 'Save'}
-        </button>
-        <button
-          type="button"
-          onClick={onCancel}
-          className="rounded bg-gray-300 px-4 py-2 transition hover:bg-gray-400"
-        >
-          Cancel
-        </button>
-      </div>
-
-      {state.errors.length > 0 && (
-        <ul className="text-sm text-red-500">
-          {state.errors.map((err, idx) => (
-            <li key={idx}>{err.message}</li>
-          ))}
-        </ul>
-      )}
-
-      {state.success && (
-        <p className="text-sm text-green-500">
-          {actionType === 'edit'
-            ? 'Address updated successfully!'
-            : 'Address created successfully!'}
-        </p>
-      )}
-    </form>
+        <div className="mt-6 flex justify-end gap-4 md:mt-8">
+          <Button
+            type="submit"
+            variant={'primary'}
+            disabled={isPending}
+            className="rounded px-10 py-6 text-base md:px-16 md:text-lg"
+          >
+            {isPending
+              ? actionType === 'edit'
+                ? 'Updating...'
+                : 'Saving...'
+              : 'Save'}
+          </Button>
+          <Button
+            onClick={onCancel}
+            className="rounded px-10 py-6 text-base md:px-16 md:text-lg"
+          >
+            Cancel
+          </Button>
+        </div>
+      </form>
+    </div>
   )
 }
 
