@@ -1,15 +1,15 @@
 import { Input } from '@/components/ui/Input'
-import { Label } from '@/components/ui/Label'
-import PhoneInput from 'react-phone-number-input'
 
-import React, { useActionState } from 'react'
+import { getFieldError } from '@/components/auth/helper'
+import { Button } from '@/components/ui/Button'
+import { useAppDispatch } from '@/lib/hooks/useAppDispatch'
+import { loadUserFromCookie } from '@/store/slices/userSlice'
 import {
   Address,
   CreateAddressState,
   UpdateAddressState,
 } from '@/types/customer/address'
-import { getFieldError } from '@/components/auth/helper'
-import { Button } from '@/components/ui/Button'
+import React, { useActionState, useEffect } from 'react'
 
 interface AddressFormProps {
   onCancel: () => void
@@ -34,30 +34,43 @@ const AddressForm: React.FC<AddressFormProps> = ({
 }) => {
   const [state, formAction, isPending] = useActionState(actionFn, initialState)
 
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    if (state.success) {
+      dispatch(loadUserFromCookie())
+      onCancel()
+    }
+  }, [state.success])
+
   return (
     <div className="rounded-md border p-4">
       <h4 className="text-3xl font-bold uppercase">
         {actionType === 'edit' ? <>Edit address</> : <>adding new address</>}
       </h4>
 
-      <form action={formAction} className="mt-6 space-y-4 md:space-y-6 md:mt-8">
+      <form action={formAction} className="mt-6 space-y-4 md:mt-8 md:space-y-6">
         {actionType === 'edit' && defaultValues.id && (
           <input type="hidden" name="id" value={defaultValues.id} />
         )}
+        <div>
+          <div className="flex flex-col gap-4 md:flex-row">
+            <Input
+              name="firstName"
+              defaultValue={defaultValues.firstName || ''}
+              label="First Name"
+              required
+            />
 
-        <div className="flex flex-col gap-4 md:flex-row">
-          <Input
-            name="firstName"
-            defaultValue={defaultValues.firstName || ''}
-            label="First Name"
-            required
-          />
-
-          <Input
-            name="lastName"
-            defaultValue={defaultValues.lastName || ''}
-            label="Last Name"
-          />
+            <Input
+              name="lastName"
+              defaultValue={defaultValues.lastName || ''}
+              label="Last Name"
+            />
+          </div>
+          <p className="mt-1 text-sm font-light md:text-base">
+            Please enter name for your address item
+          </p>
         </div>
 
         <div>
@@ -72,16 +85,22 @@ const AddressForm: React.FC<AddressFormProps> = ({
           <Input
             name="address1"
             defaultValue={defaultValues.address1 || ''}
-            label="Address 1"
+            label="Street Number/ Street Name"
           />
+          <p className="mt-1 text-sm font-light md:text-base">
+            Example: 33 Le Duan street,...
+          </p>
         </div>
 
         <div>
           <Input
             name="address2"
             defaultValue={defaultValues.address2 || ''}
-            label="Address 2"
+            label="Building Name/ Floor etc"
           />
+          <p className="mt-1 text-sm font-light md:text-base">
+            Example: Deutsches Haus; Block X1 - XYZ Apartment,...
+          </p>
         </div>
 
         <div className="flex flex-col gap-4 md:flex-row">
@@ -118,7 +137,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
             label="Phone"
             error={getFieldError(state.errors, 'phone')}
           />
-          <p className="mt-2 text-sm text-gray-600 md:text-base">
+          <p className="mt-1 text-sm font-light md:text-base">
             We will only call you if there are questions regarding your order.
           </p>
         </div>

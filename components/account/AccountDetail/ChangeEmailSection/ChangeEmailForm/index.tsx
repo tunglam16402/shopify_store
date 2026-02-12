@@ -81,7 +81,7 @@ export default function ChangeEmailForm({
         open={showSuccess}
         title="Email changed successfully"
         subTitle="You will be redirected to the login page."
-        ctaText="Go to Login"
+        confirmCtaText="Go to Login"
         close={() => setShowSuccess(false)}
       />
     </>

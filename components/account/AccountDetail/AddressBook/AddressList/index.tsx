@@ -1,20 +1,20 @@
 'use client'
 
-import {
-  deleteCustomerAddressAction,
-  updateDefaultAddressAction,
-} from '@/actions/customer-address'
+import { updateDefaultAddressAction } from '@/actions/customer-address'
+import { useAppDispatch } from '@/lib/hooks/useAppDispatch'
+import { loadUserFromCookie } from '@/store/slices/userSlice'
 import { Address } from '@/types/customer/address'
 import React from 'react'
-import AddressItem from '../AddressItem'
 import AddAddressCard from '../AddAddressCard'
-import { updateCustomerDefaultAddress } from '@/shopify/customer-address/use-address'
+import AddressItem from '../AddressItem'
 
 interface AddressListProps {
   addresses: Address[]
   defaultAddressId?: string | null
   onEditAddress: (address: Address) => void
   onAddNew: () => void
+  onDeleteAddress: (id: string) => void
+  disableAdd?: boolean
 }
 
 const AddressList: React.FC<AddressListProps> = ({
@@ -22,25 +22,19 @@ const AddressList: React.FC<AddressListProps> = ({
   defaultAddressId,
   onEditAddress,
   onAddNew,
+  onDeleteAddress,
+  disableAdd,
 }) => {
-  const handleDelete = async (id: string) => {
-    try {
-      const res = await deleteCustomerAddressAction(id)
-      if (!res.success) {
-        alert(res.errors?.[0]?.message || 'Failed to delete address')
-      }
-    } catch (error) {
-      console.error(error)
-      alert('Unexpected error occurred.')
-    }
-  }
+  const dispatch = useAppDispatch()
 
   const handleSetDefault = async (id: string) => {
     try {
       const res = await updateDefaultAddressAction(id)
       if (!res.success) {
         alert(res.errors?.[0]?.message || 'Failed to update default address')
+        return
       }
+      await dispatch(loadUserFromCookie())
     } catch (error) {
       console.error(error)
       alert('Unexpected error occurred.')
@@ -49,7 +43,7 @@ const AddressList: React.FC<AddressListProps> = ({
 
   return (
     <div className="mx-2 grid gap-6 sm:grid-cols-1 lg:grid-cols-2">
-      <AddAddressCard onClick={onAddNew} />
+      {!disableAdd && <AddAddressCard onClick={onAddNew} />}
 
       {addresses.length === 0 && (
         <div className="col-span-full py-10 text-center text-sm text-gray-500">
@@ -63,7 +57,7 @@ const AddressList: React.FC<AddressListProps> = ({
           address={address}
           isDefault={address.id === defaultAddressId}
           onEdit={onEditAddress}
-          onDelete={handleDelete}
+          onDelete={() => onDeleteAddress(address.id || '')}
           onSetDefault={handleSetDefault}
         />
       ))}

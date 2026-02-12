@@ -21,7 +21,7 @@ const AddressItem: React.FC<AddressItemProps> = ({
   return (
     <div
       className={cn(
-        'border border-gray-300 bg-gray-50 p-4 shadow-sm transition hover:shadow-md',
+        'flex h-full flex-col border bg-gray-50 p-4 transition hover:shadow-lg',
         isDefault ? 'border-primary' : 'border-gray-300'
       )}
     >
@@ -39,11 +39,13 @@ const AddressItem: React.FC<AddressItemProps> = ({
       <div className="space-y-1 text-sm md:text-base">
         <div>
           <span>
-            Address: {address.address1}, {address.address2}
+            Address: {address.address2}, {address.address1}
           </span>
         </div>
         <div>
-          <span>City, State: {address.city}</span>
+          <span>
+            City, State/Province: {address.city}, {address.province}
+          </span>
         </div>
         <div>
           <span>Country: {address.country}</span>
@@ -55,7 +57,8 @@ const AddressItem: React.FC<AddressItemProps> = ({
         {address.phone && <div>Phone: {address.phone}</div>}
       </div>
 
-      <div className="mt-4 flex justify-between">
+      <div className="mt-auto flex justify-between pt-4">
+        {' '}
         <div className="flex gap-2">
           <Button variant="default" onClick={() => onEdit(address)}>
             Edit

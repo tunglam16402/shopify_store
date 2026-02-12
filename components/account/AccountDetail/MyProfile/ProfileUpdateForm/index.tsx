@@ -91,15 +91,6 @@ const ProfileUpdateForm: React.FC<IProfileUpdateForm> = ({
         label="Last Name"
       />
 
-      {/* <div>
-        <label className="block text-sm font-medium">Email</label>
-        <Input
-          type="email"
-          defaultValue={customer.email ?? ''}
-          className="w-full rounded border bg-gray-200 p-2 text-gray-500"
-          disabled
-        />
-      </div> */}
       <div className="">
         <label className="mb-2 block text-lg font-bold uppercase">
           Phone number
@@ -134,7 +125,7 @@ const ProfileUpdateForm: React.FC<IProfileUpdateForm> = ({
           {['male', 'female', 'other'].map((g) => (
             <label
               key={g}
-              className="flex items-center gap-2 text-base md:text-lg cursor-pointer"
+              className="flex cursor-pointer items-center gap-2 text-base md:text-lg"
             >
               <input
                 type="checkbox"

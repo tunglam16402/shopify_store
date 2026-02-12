@@ -1,12 +1,5 @@
 import Modal from '@/components/common/Modal'
 import { Button } from '../Button'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '../dialog'
 
 interface IConfirmdDialog {
   open: boolean
@@ -14,7 +7,8 @@ interface IConfirmdDialog {
   onConfirm: () => void
   title: string
   subTitle?: string
-  ctaText?: string
+  confirmCtaText?: string
+  cancelCtaText?: string
 }
 
 export function ConfirmdDialog({
@@ -23,7 +17,8 @@ export function ConfirmdDialog({
   onConfirm,
   title,
   subTitle,
-  ctaText = 'OK',
+  confirmCtaText = 'OK',
+  cancelCtaText = 'close',
 }: IConfirmdDialog) {
   return (
     <Modal isOpen={open} onClose={close}>
@@ -39,16 +34,16 @@ export function ConfirmdDialog({
             variant={'primary'}
             className="w-full items-center justify-between py-6 text-lg font-semibold uppercase"
           >
-            <div> {ctaText}</div>
+            <div> {confirmCtaText}</div>
             <div className="text-3xl">→</div>
           </Button>
 
           <Button
             onClick={close}
             variant={'default'}
-            className="mt-2 w-full items-center justify-between py-6 text-lg font-semibold uppercase"
+            className="mt-4 w-full items-center justify-between py-6 text-lg font-semibold uppercase"
           >
-            <div>close</div>
+            <div>{cancelCtaText}</div>
             <div className="text-3xl">→</div>
           </Button>
         </div>

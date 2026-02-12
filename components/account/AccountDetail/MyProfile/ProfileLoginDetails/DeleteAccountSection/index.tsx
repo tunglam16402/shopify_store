@@ -43,7 +43,8 @@ const DeleteAccountSection = () => {
         subTitle="Are you sure you want to delete your printwork apps account? You’ll no longer have access to the information in your account, like your order history, wish list or athletic progress.
 
                 If you choose to delete your account a confirmation e-mail will be sent to ."
-        ctaText="Delete account"
+        confirmCtaText="Delete account"
+        cancelCtaText='Keep my account'
       />
     </div>
   )

@@ -43,7 +43,8 @@ const LogoutSection = () => {
         open={showConfirm}
         title="Log out of all web browsers?"
         subTitle="Are you sure you want to log out from all of your web browsers?"
-        ctaText="Yes, log me out"
+        confirmCtaText="Yes, log me out"
+        cancelCtaText='stay in'
       />
     </div>
   )

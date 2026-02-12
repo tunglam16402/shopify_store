@@ -6,6 +6,7 @@ type InputProps = React.ComponentProps<'input'> & {
   required?: boolean
   error?: string
   placeholder?: string
+  height?: number | string
 }
 
 export function Input({
@@ -13,7 +14,8 @@ export function Input({
   required,
   error,
   value,
-  placeholder=" ",
+  placeholder = ' ',
+  height = 'h-12 md:h-14',
   ...props
 }: InputProps) {
   const hasError = Boolean(error)
@@ -29,13 +31,12 @@ export function Input({
           required={required}
           aria-invalid={hasError}
           className={cn(
-            'peer h-12 w-full border bg-transparent px-3 text-sm md:text-base transition-colors outline-none',
+            'peer w-full border bg-transparent px-3 text-sm transition-colors outline-none md:text-base',
+            height,
             {
               'border-b-2 border-red-500 border-b-red-500': hasError,
-
               'border-b-2 border-neutral-400 border-b-green-500':
                 !hasError && hasValue,
-
               'border-neutral-400 focus:border-b-2 focus:border-black':
                 !hasError && !hasValue,
             }
@@ -45,13 +46,13 @@ export function Input({
         {label && (
           <label
             className={cn(
-              'pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 bg-white px-1 text-sm transition-all',
+              'pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 bg-white px-1 text-sm transition-all md:text-base',
               {
                 'text-red-500': hasError,
                 'text-green-600': !hasError && hasValue,
                 'text-neutral-500': !hasError && !hasValue,
 
-                'peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:text-xs md:peer-not-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs': true,
+                'peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:text-xs peer-focus:top-0 peer-focus:text-xs md:peer-not-placeholder-shown:text-sm': true,
               }
             )}
           >
