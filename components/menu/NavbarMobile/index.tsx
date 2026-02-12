@@ -37,22 +37,9 @@ const NavbarMobile = ({ isOpen, onClose, menuItems }: Props) => {
 
   return (
     <>
-      {/* Overlay */}
-      <div
-        className={`fixed inset-0 bg-black/50 z-40 backdrop-blur-[1px] transition-opacity duration-300 ${
-          isOpen
-            ? 'opacity-100 pointer-events-auto'
-            : 'opacity-0 pointer-events-none'
-        }`}
-        onClick={onClose}
-      />
-      <div
-        className={`fixed inset-0 w-[350px] bg-white z-40 transform transition-transform duration-300 ease-in-out uppercase ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
-      >
+      <div className="bg-white uppercase">
         {/* Header */}
-        <div className="relative flex items-center justify-center p-4 border-b bg-gray-100">
+        <div className="relative flex items-center justify-center border-b bg-gray-100 p-4">
           {selectedMenu ? (
             <button
               onClick={() => setSelectedMenu(null)}
@@ -66,15 +53,15 @@ const NavbarMobile = ({ isOpen, onClose, menuItems }: Props) => {
             </button>
           )}
 
-          <h3 className="font-semibold text-lg text-center">
+          <h3 className="text-center text-lg font-semibold">
             {selectedMenu ? selectedMenu.title : 'Menu'}
           </h3>
         </div>
 
         {/* Container */}
-        <div className="relative w-full h-[calc(100vh-64px)] overflow-hidden">
+        <div className="relative h-[calc(100vh-64px)] w-full overflow-hidden">
           <div
-            className={`absolute w-full h-full bg-white transition-transform duration-300 ${
+            className={`absolute h-full w-full bg-white transition-transform duration-300 ${
               selectedMenu ? '-translate-x-full' : 'translate-x-0'
             }`}
           >
@@ -84,7 +71,7 @@ const NavbarMobile = ({ isOpen, onClose, menuItems }: Props) => {
                   {menu.children?.length ? (
                     <button
                       onClick={() => setSelectedMenu(menu)}
-                      className="w-full flex justify-between items-center text-gray-800 font-medium uppercase"
+                      className="flex w-full items-center justify-between font-medium text-gray-800 uppercase"
                     >
                       <span>{menu.title}</span>
                       <IcoFront className="h-5 w-5" />
@@ -93,7 +80,7 @@ const NavbarMobile = ({ isOpen, onClose, menuItems }: Props) => {
                     <Link
                       href={menu.url}
                       onClick={onClose}
-                      className="block text-gray-800 font-medium hover:text-gray-900"
+                      className="block font-medium text-gray-800 hover:text-gray-900"
                     >
                       {menu.title}
                     </Link>
@@ -104,12 +91,12 @@ const NavbarMobile = ({ isOpen, onClose, menuItems }: Props) => {
           </div>
 
           <div
-            className={`absolute w-full h-full bg-white transition-transform duration-300 ${
+            className={`absolute h-full w-full bg-white transition-transform duration-300 ${
               selectedMenu ? 'translate-x-0' : 'translate-x-full'
             } overflow-y-auto`}
           >
             {selectedMenu && (
-              <div className="p-4 flex flex-col justify-between h-full">
+              <div className="flex h-full flex-col justify-between p-4">
                 <div>
                   {selectedMenu.children?.map((child, index) => (
                     <Dropdown
@@ -122,7 +109,7 @@ const NavbarMobile = ({ isOpen, onClose, menuItems }: Props) => {
                         })) || []
                       }
                       openIcon={<IcoDown className="h-5 w-5" />}
-                      closeIcon={<IcoDown className="h-5 w-5 " />}
+                      closeIcon={<IcoDown className="h-5 w-5" />}
                       className="mb-2"
                     />
                   ))}
@@ -130,7 +117,7 @@ const NavbarMobile = ({ isOpen, onClose, menuItems }: Props) => {
 
                 {previewImage && (
                   <div className="mt-10">
-                    <div className="relative w-full h-[350px] overflow-hidden">
+                    <div className="relative h-[350px] w-full overflow-hidden">
                       <Image
                         src={previewImage}
                         alt={selectedMenu.title}

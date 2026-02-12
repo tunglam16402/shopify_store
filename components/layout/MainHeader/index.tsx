@@ -98,20 +98,29 @@ const MainHeader = ({ menuItems }: Props) => {
           <Modal
             isOpen={isOpen}
             onClose={close}
-            className="h-full w-[390px] sm:w-[480px]"
+            className="h-full w-[390px] md:w-[480px]"
             align="right"
           >
             <CartSideBar isClose={close} />
           </Modal>
         )}
       </div>
+
       {/* Navbar mobile */}
       {isOpenMobile && (
-        <NavbarMobile
+        <Modal
           isOpen={isOpenMobile}
           onClose={() => setIsOpenMobile(false)}
-          menuItems={menuItems}
-        />
+          className="h-full w-[390px]"
+          align="left"
+          hasClose={false}
+        >
+          <NavbarMobile
+            isOpen={isOpenMobile}
+            onClose={() => setIsOpenMobile(false)}
+            menuItems={menuItems}
+          />
+        </Modal>
       )}
     </div>
   )

@@ -175,7 +175,7 @@ const CartItemComponent = ({
         </div>
       </div>
       {personalization && (
-        <Modal isOpen={openModal} onClose={() => setOpenModal(false)}>
+        <Modal isOpen={openModal} onClose={() => setOpenModal(false)} className='relative'>
           <PersonalizationPreview
             productImage={personalization.productImage}
             textBlock={personalization.textBlock}

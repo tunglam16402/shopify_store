@@ -2,6 +2,7 @@
 
 import { IcoClose } from '@/components/icons'
 import React, { ReactNode, useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import cn from 'classnames'
 
 interface ModalProps {
@@ -23,6 +24,7 @@ const Modal: React.FC<ModalProps> = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false)
   const [shouldRender, setShouldRender] = useState(isOpen)
+
 
   useEffect(() => {
     if (isOpen) {
@@ -54,7 +56,6 @@ const Modal: React.FC<ModalProps> = ({
   if (!shouldRender) return null
 
   const handleOverlayClick = () => {
-    if (!hasClose) return
     onClose?.()
   }
 
@@ -67,7 +68,6 @@ const Modal: React.FC<ModalProps> = ({
           return `${base} translate-x-full opacity-0`
         case 'left':
           return `${base} -translate-x-full opacity-0`
-        case 'center':
         default:
           return `${base} scale-95 opacity-0`
       }
@@ -76,10 +76,10 @@ const Modal: React.FC<ModalProps> = ({
     return `${base} translate-x-0 scale-100 opacity-100`
   }
 
-  return (
+  return createPortal(
     <div
       className={cn(
-        'fixed inset-0 z-50 flex items-center bg-black/70 transition-opacity duration-200',
+        'fixed inset-0 z-50  flex items-center bg-black/70 transition-opacity duration-200',
         isVisible ? 'opacity-100' : 'opacity-0',
         align === 'center' && 'justify-center',
         align === 'right' && 'justify-end',
@@ -101,12 +101,13 @@ const Modal: React.FC<ModalProps> = ({
             onClick={onClose}
             aria-label="Close modal"
           >
-            <IcoClose className="h-5 w-5" />
+            <IcoClose className="size-5 transition-transform duration-300 hover:rotate-90 md:size-6" />
           </button>
         )}
         {children}
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }
 

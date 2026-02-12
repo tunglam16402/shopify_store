@@ -58,7 +58,7 @@ const CartSideBar = ({ isClose }: ICartSideBar) => {
 
   return (
     <div className="flex h-full flex-col">
-      <SideCartHeader subTotal={subTotal} isClose={isClose} />
+      <SideCartHeader subTotal={subTotal} />
       <div className="flex-1 overflow-y-auto">
         {productLines.length === 0 ? (
           <CartEmpty />

@@ -16,10 +16,9 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ customer }) => {
 
   return (
     <section>
-
       <div className="mt-14">
         <h4 className="text-[26px] font-bold uppercase md:text-3xl">Details</h4>
-        <div className="">
+        <div>
           <ProfileDetailItem label="First Name" value={customer?.firstName} />
           <ProfileDetailItem label="Last Name" value={customer?.lastName} />
           <ProfileDetailItem
