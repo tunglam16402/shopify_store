@@ -1,12 +1,13 @@
 'use client'
 
-import { RootState } from '@/store/store'
+import { Customer } from '@/types/customer'
 import Image from 'next/image'
-import { useSelector } from 'react-redux'
 
-const OrderHistory = () => {
-  const { customer } = useSelector((state: RootState) => state.user)
+interface IAccountDetail {
+  customer: Customer
+}
 
+const OrderHistory = ({ customer }: IAccountDetail) => {
   const orders = customer?.orders?.nodes
 
   if (orders?.length === 0) {
@@ -19,10 +20,10 @@ const OrderHistory = () => {
       {orders?.map((order) => (
         <div
           key={order.id}
-          className="border rounded-lg p-4 shadow-sm bg-white space-y-4"
+          className="space-y-4 rounded-lg border bg-white p-4 shadow-sm"
         >
           {/* Order header */}
-          <div className="flex justify-between items-center">
+          <div className="flex items-center justify-between">
             <div>
               <p className="font-medium">Order {order.name}</p>
               <p className="text-sm text-gray-500">
@@ -47,7 +48,7 @@ const OrderHistory = () => {
                   }
                   width={200}
                   height={100}
-                  className="w-16 h-16 object-cover rounded"
+                  className="h-16 w-16 rounded object-cover"
                 />
                 <div>
                   <p className="font-medium">{item.variant?.product.title}</p>

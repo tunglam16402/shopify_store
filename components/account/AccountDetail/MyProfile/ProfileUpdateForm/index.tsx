@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
 import { IcoSpin } from '@/components/icons'
 import { PhoneInput } from '@/components/ui/PhoneInput'
+import { useRouter } from 'next/navigation'
 
 interface IProfileUpdateForm {
   customer: Customer
@@ -26,7 +27,6 @@ const ProfileUpdateForm: React.FC<IProfileUpdateForm> = ({
   customer,
   onCancel,
 }) => {
-  const dispatch = useDispatch()
   const [dob, setDob] = useState<Date | undefined>(
     customer.dateOfBirth ? new Date(customer.dateOfBirth) : undefined
   )
@@ -34,6 +34,7 @@ const ProfileUpdateForm: React.FC<IProfileUpdateForm> = ({
     updateCustomerAction,
     initialState
   )
+  const router = useRouter()
 
   const [formValues, setFormValues] = useState({
     firstName: customer.firstName ?? '',
@@ -44,15 +45,8 @@ const ProfileUpdateForm: React.FC<IProfileUpdateForm> = ({
 
   useEffect(() => {
     if (state.success) {
-      dispatch(
-        updateCustomerInfo({
-          firstName: formValues.firstName,
-          lastName: formValues.lastName,
-          phone: formValues.phone,
-          gender: formValues.gender,
-          dateOfBirth: dob ? dob.toISOString().slice(0, 10) : null,
-        })
-      )
+      router.refresh()
+
       onCancel()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

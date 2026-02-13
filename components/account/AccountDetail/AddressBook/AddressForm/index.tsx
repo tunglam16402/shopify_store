@@ -10,6 +10,7 @@ import {
   UpdateAddressState,
 } from '@/types/customer/address'
 import React, { useActionState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 interface AddressFormProps {
   onCancel: () => void
@@ -33,12 +34,11 @@ const AddressForm: React.FC<AddressFormProps> = ({
   actionFn,
 }) => {
   const [state, formAction, isPending] = useActionState(actionFn, initialState)
-
-  const dispatch = useAppDispatch()
+  const router = useRouter()
 
   useEffect(() => {
     if (state.success) {
-      dispatch(loadUserFromCookie())
+      router.refresh()
       onCancel()
     }
   }, [state.success])

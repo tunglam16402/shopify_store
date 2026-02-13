@@ -7,6 +7,7 @@ import { Address } from '@/types/customer/address'
 import React from 'react'
 import AddAddressCard from '../AddAddressCard'
 import AddressItem from '../AddressItem'
+import { useRouter } from 'next/navigation'
 
 interface AddressListProps {
   addresses: Address[]
@@ -25,7 +26,7 @@ const AddressList: React.FC<AddressListProps> = ({
   onDeleteAddress,
   disableAdd,
 }) => {
-  const dispatch = useAppDispatch()
+  const router = useRouter()
 
   const handleSetDefault = async (id: string) => {
     try {
@@ -34,7 +35,7 @@ const AddressList: React.FC<AddressListProps> = ({
         alert(res.errors?.[0]?.message || 'Failed to update default address')
         return
       }
-      await dispatch(loadUserFromCookie())
+      router.refresh()
     } catch (error) {
       console.error(error)
       alert('Unexpected error occurred.')

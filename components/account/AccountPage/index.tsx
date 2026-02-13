@@ -3,25 +3,30 @@ import React from 'react'
 import { Account, Order } from '@/components/icons'
 import AccountDetail from '../AccountDetail'
 import OrderHistory from '../OrderHistory'
+import { Customer } from '@/types/customer'
 
-const profileTabs = [
-  {
-    label: 'Profile',
-    icon: <Account />,
-    key: 'profile',
-    component: <AccountDetail />,
-  },
-  {
-    label: 'Order History',
-    icon: <Order />,
-    key: 'order',
-    component: <OrderHistory />,
-  },
-]
+interface IAccountPage {
+  customer: Customer
+}
 
-const AccountPage = () => {
+const AccountPage = ({ customer }: IAccountPage) => {
+  const profileTabs = [
+    {
+      label: 'Profile',
+      icon: <Account />,
+      key: 'profile',
+      component: <AccountDetail customer={customer} />,
+    },
+    {
+      label: 'Order History',
+      icon: <Order />,
+      key: 'order',
+      component: <OrderHistory customer={customer} />,
+    },
+  ]
+
   return (
-    <div className='bg-white layout-width rounded-4xl'>
+    <div className="layout-width rounded-4xl bg-white">
       <Tabs tabs={profileTabs} />
     </div>
   )

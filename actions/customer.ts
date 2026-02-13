@@ -125,7 +125,7 @@ export async function changeCustomerPasswordAction(
       success: false,
       errors: [
         {
-          field: ['password'],
+          field: [],
           message: 'All password fields are required',
         },
       ],
@@ -151,14 +151,26 @@ export async function changeCustomerPasswordAction(
   })
 
   if (!verifyResult.success || !verifyResult.accessToken) {
+    const hasUnidentifiedError = verifyResult.errors?.some(
+      (err) => err.code === 'UNIDENTIFIED_CUSTOMER'
+    )
+
     return {
       success: false,
-      errors: verifyResult.errors ?? [
-        {
-          field: ['oldPassword'],
-          message: 'Old password is incorrect',
-        },
-      ],
+      requireReLogin: false,
+      errors: hasUnidentifiedError
+        ? [
+            {
+              field: ['oldPassword'],
+              message: 'Current password is incorrect',
+            },
+          ]
+        : (verifyResult.errors ?? [
+            {
+              field: [],
+              message: 'Verification failed',
+            },
+          ]),
     }
   }
 
@@ -167,9 +179,10 @@ export async function changeCustomerPasswordAction(
     password: newPassword,
   })
 
-  if (!result || result.errors.length > 0) {
+  if (!result || result.errors?.length) {
     return {
       success: false,
+      requireReLogin: false,
       errors: result?.errors ?? [
         { field: [], message: 'Password update failed' },
       ],

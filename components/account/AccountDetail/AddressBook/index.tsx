@@ -12,17 +12,17 @@ import Modal from '@/components/common/Modal'
 import { loadUserFromCookie } from '@/store/slices/userSlice'
 import { useAppDispatch } from '@/lib/hooks/useAppDispatch'
 import { ConfirmdDialog } from '@/components/ui/ConfirmDialog'
+import { useRouter } from 'next/navigation'
 
 interface IAddressBook {
   customer: Customer
 }
 
 const AddressBook = ({ customer }: IAddressBook) => {
-  const dispatch = useAppDispatch()
-
   const [isAddingAddress, setIsAddingAddress] = useState(false)
   const [editingAddress, setEditingAddress] = useState<Address | null>(null)
   const [deletingAddress, setDeletingAddress] = useState<string | null>(null)
+  const router = useRouter()
 
   const addresses = customer.addresses?.nodes ?? []
   const MAX_ADDRESSES = 5
@@ -36,7 +36,7 @@ const AddressBook = ({ customer }: IAddressBook) => {
         return
       }
 
-      await dispatch(loadUserFromCookie())
+      router.refresh()
     } catch (error) {
       console.error(error)
       alert('Unexpected error occurred.')

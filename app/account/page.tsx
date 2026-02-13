@@ -1,12 +1,25 @@
 import AccountPage from '@/components/account/AccountPage'
-import { Suspense } from 'react'
+import { getCustomer } from '@/shopify/customer/use-customer'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
-const Account = () => {
+const Account = async () => {
+  const cookieStore = await cookies()
+  const customerToken = cookieStore.get('shopify_customer_token')?.value
+
+  if (!customerToken) {
+    redirect('/account/login')
+  }
+
+  const customer = await getCustomer(customerToken)
+
+  if (!customer) {
+    redirect('/account/login')
+  }
+
   return (
     <div>
-      <Suspense fallback={null}>
-        <AccountPage />
-      </Suspense>
+      <AccountPage customer={customer} />
     </div>
   )
 }
