@@ -1,6 +1,7 @@
 'use client'
 
 import Loading from '@/components/common/Loading'
+import SearchInput from '@/components/common/SearchInput'
 import { Button } from '@/components/ui/Button'
 import { useReviews } from '@/lib/hooks/useReviews'
 import { Reviews } from '@/types/reviews'
@@ -10,7 +11,6 @@ import FilterReview from './FilterReview'
 import ReviewItem from './ReviewItem'
 import ReviewPagination from './ReviewPagination'
 import ReviewSummary from './ReviewSummary'
-import SearchReview from './SearchReview'
 import SortReview from './SortReview'
 
 interface ReviewContainerProps {
@@ -60,18 +60,19 @@ const ReviewContainer: React.FC<ReviewContainerProps> = ({
 
   return (
     <div>
-      <div className="flex flex-col justify-between my-8 md:my-12 md:mb-8 border-t border-b py-8 md:py-12">
-        <SearchReview
+      <div className="my-8 flex flex-col justify-between border-t border-b py-8 md:my-12 md:mb-8 md:py-12">
+        <SearchInput
           value={search}
           onSearch={(value) => {
             setSearch(value)
             setPage(1)
           }}
+          placeholder="Search reviews..."
         />
 
         <FilterReview filters={filters} setFilters={setFilters} />
 
-        <div className="flex flex-col md:flex-row justify-between md:items-center mt-4 md:mt-8">
+        <div className="mt-4 flex flex-col justify-between md:mt-8 md:flex-row md:items-center">
           <ReviewSummary start={start} end={end} total={total} />
 
           <SortReview
@@ -84,12 +85,12 @@ const ReviewContainer: React.FC<ReviewContainerProps> = ({
         </div>
       </div>
       {isLoading ? (
-        <div className="min-h-96 flex items-center justify-center">
+        <div className="flex min-h-96 items-center justify-center">
           <Loading />
         </div>
       ) : total === 0 ? (
-        <div className="text-center w-full">
-          <p className="text-gray-500 text-base md:text-lg">
+        <div className="w-full text-center">
+          <p className="text-base text-gray-500 md:text-lg">
             No matching reviews
           </p>
           <p>Try clearing or changing the filters</p>
@@ -97,7 +98,7 @@ const ReviewContainer: React.FC<ReviewContainerProps> = ({
           <Button
             onClick={handleClear}
             variant="primary"
-            className="mt-6 md:mt-8 text-base md:text-lg md:py-6 md:px-10 rounded-3xl"
+            className="mt-6 rounded-3xl text-base md:mt-8 md:px-10 md:py-6 md:text-lg"
           >
             Clear Filter
           </Button>

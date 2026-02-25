@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type Maybe<T> = T | null
 export type InputMaybe<T> = Maybe<T>
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -4136,13 +4137,10 @@ export type GetProductDetailQuery = {
     }
     colorVariants?: {
       references?: {
-        nodes: Array<
-          | {
-              handle: string
-              featuredImage?: { url: string; altText?: string | null } | null
-            }
-          | {}
-        >
+        nodes: Array<{
+          handle: string
+          featuredImage?: { url: string; altText?: string | null } | null
+        }>
       } | null
     } | null
     productInfo?: { value: string; type: string } | null
@@ -4308,29 +4306,27 @@ export type GetSearchResultQueryVariables = Exact<{
 export type GetSearchResultQuery = {
   search: {
     edges: Array<{
-      node:
-        | {
-            id: string
-            title: string
-            handle: string
-            description: string
-            tags: Array<string>
-            images: { nodes: Array<{ url: string; altText?: string | null }> }
-            variants: {
-              edges: Array<{
-                node: {
-                  id: string
-                  title: string
-                  price: { amount: string; currencyCode: CurrencyCode }
-                  compareAtPrice?: {
-                    amount: string
-                    currencyCode: CurrencyCode
-                  } | null
-                }
-              }>
+      node: {
+        id: string
+        title: string
+        handle: string
+        description: string
+        tags: Array<string>
+        images: { nodes: Array<{ url: string; altText?: string | null }> }
+        variants: {
+          edges: Array<{
+            node: {
+              id: string
+              title: string
+              price: { amount: string; currencyCode: CurrencyCode }
+              compareAtPrice?: {
+                amount: string
+                currencyCode: CurrencyCode
+              } | null
             }
-          }
-        | {}
+          }>
+        }
+      }
     }>
   }
 }

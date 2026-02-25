@@ -1,10 +1,17 @@
-'use client'
-
 import { IcoSort } from '@/components/icons'
 import Select from '@/components/ui/Select'
-import React, { memo } from 'react'
+import React from 'react'
 
-const options = [
+const dateRangeOptions = [
+  { label: 'Anytime', value: 'anytime' },
+  { label: 'Last 30 days', value: 'last30days' },
+  { label: 'Last 6 months', value: 'last6months' },
+  { label: '2026', value: '2026' },
+  { label: '2025', value: '2025' },
+  { label: '2024', value: '2024' },
+]
+
+const statusOptions = [
   { label: 'Most Relevant', value: 'relevant' },
   { label: 'Most Recent', value: 'newest' },
   { label: 'Highest Rating', value: 'high' },
@@ -12,25 +19,26 @@ const options = [
   { label: 'Most Helpful', value: 'helpful' },
 ]
 
-interface ISortReview {
+interface IOrderSort {
   value: string
   onChange: (value: string) => void
 }
 
-const SortReview: React.FC<ISortReview> = ({ value, onChange }) => {
+const OrderSort = ({value, onChange} : IOrderSort) => {
   return (
-    <div className="mt-4 md:mt-0">
+    <div>
       <Select
-        options={options}
-        value={[value]} 
+        options={dateRangeOptions}
+        value={[value]}
         onChange={(v) => onChange(v[0])}
         placeholder="Sort by: Most Relevant"
-        icon={<IcoSort className="w-5 h-5" />}
+        icon={<IcoSort className="h-5 w-5" />}
         className="w-full"
         multiple={false}
       />
+
     </div>
   )
 }
 
-export default memo(SortReview)
+export default OrderSort

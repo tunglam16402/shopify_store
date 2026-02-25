@@ -1,7 +1,10 @@
 'use client'
 
+import SearchInput from '@/components/common/SearchInput'
 import { Customer } from '@/types/customer'
 import Image from 'next/image'
+import OrderSort from './OrderSort'
+import OrderList from './OrderList'
 
 interface IAccountDetail {
   customer: Customer
@@ -9,74 +12,42 @@ interface IAccountDetail {
 
 const OrderHistory = ({ customer }: IAccountDetail) => {
   const orders = customer?.orders?.nodes
+  console.log('orders :>> ', orders)
 
-  if (orders?.length === 0) {
-    return <p className="text-gray-500">You have no orders yet.</p>
+  if (!orders || orders.length === 0) {
+    return (
+      <div className="rounded-xl border border-dashed p-10 text-center">
+        <p className="text-lg font-medium">No orders yet</p>
+        <p className="mt-2 text-sm text-gray-500">
+          When you place an order, it will appear here.
+        </p>
+      </div>
+    )
   }
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-xl font-semibold">Order History</h2>
-      {orders?.map((order) => (
-        <div
-          key={order.id}
-          className="space-y-4 rounded-lg border bg-white p-4 shadow-sm"
-        >
-          {/* Order header */}
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="font-medium">Order {order.name}</p>
-              <p className="text-sm text-gray-500">
-                Placed on {new Date(order.processedAt).toLocaleDateString()}
-              </p>
-            </div>
-            <p className="font-semibold">
-              {order.totalPrice.amount} {order.totalPrice.currencyCode}
-            </p>
-          </div>
-
-          {/* Line items */}
-          <div className="divide-y">
-            {order.lineItems.nodes.map((item, index) => (
-              <div key={index} className="flex items-center gap-4 py-2">
-                <Image
-                  src={item.variant?.product.images.nodes[0]?.url || ''}
-                  alt={
-                    item.variant?.product.images.nodes[0]?.altText ||
-                    item.variant?.product.title ||
-                    ''
-                  }
-                  width={200}
-                  height={100}
-                  className="h-16 w-16 rounded object-cover"
-                />
-                <div>
-                  <p className="font-medium">{item.variant?.product.title}</p>
-                  <p className="text-sm text-gray-500">
-                    Quantity: {item.quantity}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Shipping Address */}
-          <div className="text-sm text-gray-600">
-            <p>
-              Ship to: {order.shippingAddress?.firstName}{' '}
-              {order.shippingAddress?.lastName}
-            </p>
-            <p>{order.shippingAddress?.address1}</p>
-            <p>
-              {order.shippingAddress?.province}, {order.shippingAddress?.zip}
-            </p>
-            {order.shippingAddress?.phone && (
-              <p>Phone: {order.shippingAddress.phone}</p>
-            )}
-          </div>
+    <section className="space-y-10">
+      <div>
+        <h2 className="text-2xl font-semibold tracking-tight">Order History</h2>
+        <div>
+          {/* <SearchInput
+            value={search}
+            onSearch={setSearch}
+            placeholder="Search order ID..."
+            debounceMs={300}
+            className="w-full md:max-w-sm"
+          />
+          <OrderSort
+            value={sort}
+            onChange={(value: string) => {
+              setSort(value)
+              setPage(1)
+            }}
+          /> */}
         </div>
-      ))}
-    </div>
+        <OrderList orders={orders} />
+      </div>
+    </section>
   )
 }
 
