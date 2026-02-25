@@ -2,15 +2,13 @@ import { Input } from '@/components/ui/Input'
 
 import { getFieldError } from '@/components/auth/helper'
 import { Button } from '@/components/ui/Button'
-import { useAppDispatch } from '@/lib/hooks/useAppDispatch'
-import { loadUserFromCookie } from '@/store/slices/userSlice'
 import {
   Address,
   CreateAddressState,
   UpdateAddressState,
 } from '@/types/customer/address'
-import React, { useActionState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import React, { useActionState, useEffect } from 'react'
 
 interface AddressFormProps {
   onCancel: () => void

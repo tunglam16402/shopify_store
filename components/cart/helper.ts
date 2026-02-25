@@ -4,7 +4,7 @@ import { Cart, CartDisplayItem, CartLine } from '@/types/cart'
 
 type CartLineNode = CartFragment['lines']['edges'][number]['node']
 
-export function mapCartResponse(cart: CartFragment) {
+export function mapCartResponse(cart: CartFragment): Cart {
   return {
     id: cart.id,
     createdAt: cart.createdAt,
@@ -13,10 +13,32 @@ export function mapCartResponse(cart: CartFragment) {
     lines: cart.lines.edges.map(({ node }: { node: CartLineNode }) => {
       const currencyCode = node.merchandise.price.currencyCode
 
+      const attributes = node.attributes
+        .filter((a) => typeof a.value === 'string')
+        .map((a) => ({
+          key: a.key,
+          value: a.value!,
+        }))
+
+      const image = node.merchandise.image
+        ? {
+            url: node.merchandise.image.url,
+            altText: node.merchandise.image.altText ?? '',
+          }
+        : null
+
+      const category = node.merchandise.product.category
+        ? {
+            name: node.merchandise.product.category.name,
+          }
+        : {
+            name: 'Uncategorized',
+          }
+
       return {
         id: node.id,
         quantity: node.quantity,
-        attributes: node.attributes,
+        attributes: attributes.length ? attributes : undefined,
         merchandise: {
           id: node.merchandise.id,
           title: node.merchandise.title,
@@ -33,17 +55,14 @@ export function mapCartResponse(cart: CartFragment) {
               }
             : null,
 
-          image: node.merchandise.image && {
-            url: node.merchandise.image.url,
-            altText: node.merchandise.image.altText ?? null,
-          },
+          image: image,
 
           product: {
             id: node.merchandise.product.id,
             title: node.merchandise.product.title,
             handle: node.merchandise.product.handle,
             totalInventory: node.merchandise.product.totalInventory ?? 0,
-            category: node.merchandise.product.category ?? undefined,
+            category,
           },
         },
       }

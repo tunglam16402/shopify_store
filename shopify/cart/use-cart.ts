@@ -64,6 +64,34 @@ export async function createCart() {
   return data.cartCreate?.cart
 }
 
+function generateLinkId(
+  variantId: string,
+  personalization?: CartLinePersonalizationPayload
+) {
+  if (!personalization) return variantId
+
+  return (
+    variantId +
+    '::' +
+    JSON.stringify({
+      values: Object.keys(personalization.values)
+        .sort()
+        .reduce(
+          (acc, k) => {
+            acc[k] = personalization.values[k]
+            return acc
+          },
+          {} as Record<string, string>
+        ),
+      font: personalization.font,
+      fontSize: personalization.fontSize,
+      fontWeight: personalization.fontWeight,
+      color: personalization.color,
+      position: personalization.position ?? null,
+    })
+  )
+}
+
 export async function addCartLine(
   cartId: string,
   variantId: string,
@@ -76,7 +104,7 @@ export async function addCartLine(
   const shopifyY = cookie?.get('_shopify_y')?.value
   const shopifyS = cookie?.get('_shopify_s')?.value
 
-  const linkId = crypto.randomUUID()
+  const linkId = generateLinkId(variantId, personalization)
 
   const lines = [
     {
