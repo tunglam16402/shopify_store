@@ -26,6 +26,9 @@ const getCustomerQuery = /* GraphQL */ `
       orders(first: 100) {
         nodes {
           id
+          statusUrl
+          fulfillmentStatus
+          financialStatus
           name
           totalPrice {
             amount
@@ -42,6 +45,7 @@ const getCustomerQuery = /* GraphQL */ `
                   id
                   title
                   handle
+                  vendor
                   category {
                     name
                   }
