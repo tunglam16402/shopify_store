@@ -29,7 +29,7 @@ const OrderList = ({ orders }: IOrderList) => {
           className="group relative overflow-hidden rounded-3xl border border-gray-200 bg-white/80 p-6 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
         >
           {/* Gradient accent */}
-          <div className="from-primary/5 absolute inset-0 bg-gradient-to-r via-transparent to-transparent opacity-0 transition group-hover:opacity-100" />
+          <div className="from-primary/5 absolute inset-0 bg-linear-to-r via-transparent to-transparent opacity-0 transition group-hover:opacity-100" />
 
           <div className="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             {/* LEFT SIDE */}
