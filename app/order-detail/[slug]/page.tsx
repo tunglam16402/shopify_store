@@ -1,4 +1,4 @@
-import OrderDetail from '@/components/account/OrderHistory/OrderDetail'
+import OrderDetail from '@/components/orders/OrderDetail'
 import { notFound, redirect } from 'next/navigation'
 import { getUserOrders } from '../services'
 
@@ -12,13 +12,17 @@ const OrderDetailPage = async ({ params }: Props) => {
   if (!orders) redirect('/account/login')
   if (!orders?.length) notFound()
 
-  const order = orders.find((item) => item.name === slug)
+  const orderDetail = orders.find((item) => item.name === slug)
 
-  if (!order) notFound()
+  if (!orderDetail) notFound()
 
   return (
     <div>
-      <OrderDetail order={order} />
+      <OrderDetail
+        order={orderDetail}
+        isViewInvoice={!!orderDetail}
+        isLoggedIn={true}
+      />
     </div>
   )
 }
