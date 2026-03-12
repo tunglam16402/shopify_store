@@ -82,7 +82,7 @@ const AccountDropdown = () => {
               </DropdownLink>
 
               <DropdownLink
-                href="/account/order-history"
+                href="/account?tab=order"
                 icon={<IcoOrderHistory className="h-4 w-4" />}
                 onClick={() => setOpen(false)}
               >

@@ -17,21 +17,21 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({
   homeHref = '/',
   className = '',
 }) => {
-  const defaultSeparator = "/"
+  const defaultSeparator = '/'
   const separatorElement = separator || defaultSeparator
 
   return (
     <nav
       aria-label="Breadcrumb"
-      className={`flex items-center text-sm md:text-base capitalize ${className}`}
+      className={`flex items-center text-sm capitalize md:text-base ${className}`}
     >
-      <ol className="flex items-center flex-wrap gap-1 font-light">
+      <ol className="flex flex-wrap items-center gap-1">
         {showHome && (
           <>
             <li className="flex items-center">
               <Link
                 href={homeHref}
-                className="flex items-center text-gray-600 hover:text-gray-900 transition-colors"
+                className="text-gray-500 transition-colors hover:text-gray-900 hover:underline"
                 aria-label="Home"
               >
                 Home
@@ -55,7 +55,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({
                 {item.href && !isCurrent ? (
                   <Link
                     href={item.href}
-                    className="text-gray-600 hover:text-gray-900 transition-colors hover:underline"
+                    className="text-gray-500 transition-colors hover:text-gray-900 hover:underline"
                     aria-current={isCurrent ? 'page' : undefined}
                   >
                     {item.label}
@@ -63,7 +63,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({
                 ) : (
                   <span
                     className={`${
-                      isCurrent ? 'text-gray-900 font-medium' : 'text-gray-600'
+                      isCurrent ? 'font-medium text-gray-900' : 'text-gray-600'
                     }`}
                     aria-current={isCurrent ? 'page' : undefined}
                   >

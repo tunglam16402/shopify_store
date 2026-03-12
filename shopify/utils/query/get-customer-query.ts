@@ -34,6 +34,18 @@ const getCustomerQuery = /* GraphQL */ `
             amount
             currencyCode
           }
+          totalShippingPrice {
+            amount
+            currencyCode
+          }
+          totalTax {
+            amount
+            currencyCode
+          }
+          subtotalPrice {
+            amount
+            currencyCode
+          }
           processedAt
           customerUrl
           lineItems(first: 10) {

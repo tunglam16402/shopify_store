@@ -15,5 +15,5 @@ export type ProductCardProps = {
   basePrice: number
   compareAtPrice?: number
   currency: string
-  discountPercent: number
+  discountPercent?: number
 }

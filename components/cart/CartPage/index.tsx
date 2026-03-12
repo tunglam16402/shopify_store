@@ -61,7 +61,7 @@ const CartPage = () => {
           <CartEmpty headingClassName="mt-6 md:text-5xl text-4xl font-semibold" />
         </div>
       ) : (
-        <div className="layout-width pt-4! md:pt-5!">
+        <div className="layout-width pt-2! md:pt-5!">
           <StyledHeading
             headingClass="text-4xl md:text-[54px]"
             subHeadingClass="font-sub-heading text-5xl md:text-[68px]"

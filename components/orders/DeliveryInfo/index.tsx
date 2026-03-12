@@ -12,7 +12,7 @@ const DeliveryInfo: FC<Props> = ({ order, isLoggedIn }) => {
     <>
       <p className="text-xl font-medium md:text-2xl">Delivery Info</p>
 
-      <div className="mt-2 rounded-xl text-sm md:mt-5">
+      <div className="mt-2 rounded-xl text-sm md:mt-4">
         <p className="font-bold">Delivery Address</p>
 
         <p className="mt-1">
@@ -25,7 +25,7 @@ const DeliveryInfo: FC<Props> = ({ order, isLoggedIn }) => {
           {order.shippingAddress?.province}, {order.shippingAddress?.zip}
         </p>
 
-        {order.email && <p className="mt-1">Email: {order.email}</p>}
+        {order.email && <p className="mt-3">Email: {order.email}</p>}
 
         {order.shippingAddress?.phone && (
           <p className="mt-1">Phone: {order.shippingAddress.phone}</p>

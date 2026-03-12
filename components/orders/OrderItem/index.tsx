@@ -17,7 +17,7 @@ const OrderItem: React.FC<IOrderItem> = ({ item }) => {
   return (
     <Link href={product?.handle ? `/products/${product.handle}` : '#'}>
       <div className="flex gap-3">
-        <div className="relative h-[113px] w-[113px] min-w-[113px] border border-[#f6f5f4] md:h-[138px] md:w-[138px] md:min-w-[138px]">
+        <div className="relative h-[130px] w-[113px] min-w-[113px] md:h-[150px] md:w-[138px] md:min-w-[138px]">
           <Image
             src={image?.url || '/product-img-placeholder.svg'}
             fill
@@ -25,24 +25,24 @@ const OrderItem: React.FC<IOrderItem> = ({ item }) => {
             className="object-contain"
           />
 
-          <div className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#909090] font-semibold text-white">
+          <div className="bg-primary absolute -top-2 right-0 flex h-5 w-5 items-center justify-center rounded-full font-semibold text-white">
             {item.quantity}
           </div>
         </div>
 
         <div>
-          <div className="font-bold">{product?.vendor}</div>
-
-          <div className="mt-1 text-sm md:mt-2 md:text-base">
+          <div className="mt-1 text-sm font-bold md:mt-2 md:text-base">
             {product?.title}
           </div>
+
+          <div className="">{product?.vendor}</div>
 
           {price && (
             <div className="mt-2 font-bold md:mt-3">
               <span>${Number(price).toFixed(2)}</span>
 
               {compareAtPrice && Number(compareAtPrice) > Number(price) && (
-                <s className="ml-3">${Number(compareAtPrice).toFixed(2)}</s>
+                <s className="ml-3 font-normal text-primary">${Number(compareAtPrice).toFixed(2)}</s>
               )}
             </div>
           )}
