@@ -20,7 +20,6 @@ interface IOrderDetail {
 }
 
 const OrderDetail = ({ order, isLoggedIn, isViewInvoice }: IOrderDetail) => {
-  console.log('order :>> ', order)
   const steps = getListSteps(order.fulfillmentStatus)
   const [, startTransition] = useTransition()
   const [recommendations, setRecommendations] = useState<ProductCardProps[]>([])
@@ -73,7 +72,7 @@ const OrderDetail = ({ order, isLoggedIn, isViewInvoice }: IOrderDetail) => {
             <OrderSummary order={order} />
           </div>
         </div>
-        <div className="mt-12 max-w-5xl md:mt-16 mx-auto">
+        <div className="mt-12 max-w-5xl md:mt-16 mx-auto ">
           <ProductRecommend title="Just for you" data={recommendations} />
         </div>
       </div>

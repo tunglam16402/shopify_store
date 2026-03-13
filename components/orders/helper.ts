@@ -41,26 +41,3 @@ export const getListSteps = (fulfillmentStatus: string) => {
     passed: index <= activeIndex,
   }))
 }
-
-export const downloadInvoice = (name: string) => {
-  const input = document.getElementById('invoice-dowload')
-  html2canvas(input as HTMLElement, { scale: 6 }).then((canvas) => {
-    const imgData = canvas.toDataURL('image/png')
-    const imgWidth = 210
-    const pageHeight = 295
-    const imgHeight = (canvas.height * imgWidth) / canvas.width
-    let heightLeft = imgHeight
-    const doc = new jsPDF('p', 'mm')
-    let position = 0
-    doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight)
-    heightLeft -= pageHeight
-    while (heightLeft >= 0) {
-      position = heightLeft - imgHeight
-      doc.addPage()
-      doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight)
-      heightLeft -= pageHeight
-    }
-    window.open(doc.output('bloburl'))
-    doc.save(`invoice-${name}.pdf`)
-  })
-}

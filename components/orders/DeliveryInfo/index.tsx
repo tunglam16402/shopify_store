@@ -19,13 +19,21 @@ const DeliveryInfo: FC<Props> = ({ order, isLoggedIn }) => {
           {order.shippingAddress?.firstName} {order.shippingAddress?.lastName}
         </p>
 
-        <p>{order.shippingAddress?.address1}</p>
-
         <p>
-          {order.shippingAddress?.province}, {order.shippingAddress?.zip}
+          {order.shippingAddress?.address2} {order.shippingAddress?.address1}
         </p>
 
+        <p>
+          {order.shippingAddress?.province} {order.shippingAddress?.city},{' '}
+          {order.shippingAddress?.country}
+        </p>
+
+        <p>{order.shippingAddress?.zip}</p>
+
         {order.email && <p className="mt-3">Email: {order.email}</p>}
+        {order.shippingAddress?.phone && (
+          <p className="mt-1"> {order.shippingAddress?.phone}</p>
+        )}
 
         {order.shippingAddress?.phone && (
           <p className="mt-1">Phone: {order.shippingAddress.phone}</p>

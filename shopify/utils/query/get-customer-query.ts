@@ -87,8 +87,11 @@ const getCustomerQuery = /* GraphQL */ `
           }
           shippingAddress {
             address1
+            address2
             firstName
             lastName
+            city
+            country
             zip
             province
             phone
