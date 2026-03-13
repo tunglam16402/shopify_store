@@ -17,9 +17,15 @@ interface IOrderDetail {
   order: Order
   isLoggedIn?: boolean
   isViewInvoice?: boolean
+  shippingMethod: (string | null)[]
 }
 
-const OrderDetail = ({ order, isLoggedIn, isViewInvoice }: IOrderDetail) => {
+const OrderDetail = ({
+  order,
+  isLoggedIn,
+  isViewInvoice,
+  shippingMethod,
+}: IOrderDetail) => {
   const steps = getListSteps(order.fulfillmentStatus)
   const [, startTransition] = useTransition()
   const [recommendations, setRecommendations] = useState<ProductCardProps[]>([])
@@ -50,7 +56,11 @@ const OrderDetail = ({ order, isLoggedIn, isViewInvoice }: IOrderDetail) => {
         <div className="pt-6 md:pt-10">
           <div className="mx-auto flex max-w-5xl flex-col px-[15px] md:flex-row md:flex-wrap">
             <div className="order-1 md:w-1/2">
-              <TrackingInfo order={order} isViewInvoice={isViewInvoice} />
+              <TrackingInfo
+                order={order}
+                isViewInvoice={isViewInvoice}
+                shippingMethod={shippingMethod}
+              />
             </div>
 
             {!!steps.length && (
@@ -72,7 +82,7 @@ const OrderDetail = ({ order, isLoggedIn, isViewInvoice }: IOrderDetail) => {
             <OrderSummary order={order} />
           </div>
         </div>
-        <div className="mt-12 max-w-5xl md:mt-16 mx-auto ">
+        <div className="mx-auto mt-12 max-w-5xl md:mt-16">
           <ProductRecommend title="Just for you" data={recommendations} />
         </div>
       </div>

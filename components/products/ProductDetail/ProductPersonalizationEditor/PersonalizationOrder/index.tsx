@@ -10,10 +10,10 @@ const PersonalizationOrder = ({
   totalPrice,
 }: IPersonalizationOrder) => {
   return (
-    <div className="bg-gray-100 p-6 rounded-md md:mt-6">
+    <div className="rounded-md bg-gray-100 p-6 md:mt-6">
       <h5 className="text-3xl">Your order</h5>
 
-      <div className="mt-4 pb-4 border-b border-gray-300">
+      <div className="mt-4 border-b border-gray-300 pb-4">
         <div className="flex justify-between font-medium">
           <div>Personalization of {product.title}</div>
           <div>
@@ -26,12 +26,12 @@ const PersonalizationOrder = ({
           <div>Personalization:</div>
           <div>
             {product.variant?.currency}
-            {Number(totalPrice - product.variant.basePrice).toFixed(2)}
+            {Number(totalPrice - (product?.variant?.basePrice ?? 0)).toFixed(2)}
           </div>
         </div>
       </div>
 
-      <div className="flex justify-between mt-4 font-semibold">
+      <div className="mt-4 flex justify-between font-semibold">
         <div className="uppercase">Total</div>
         <div>
           {product.variant?.currency}

@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic'
 interface Props {
   order: Order
   isViewInvoice?: boolean
+  shippingMethod: (string | null)[]
 }
 
 const InvoiceDownloadButton = dynamic(
@@ -16,7 +17,7 @@ const InvoiceDownloadButton = dynamic(
   { ssr: false }
 )
 
-const TrackingInfo: FC<Props> = ({ order, isViewInvoice }) => {
+const TrackingInfo: FC<Props> = ({ order, isViewInvoice, shippingMethod }) => {
   return (
     <>
       <h3 className="text-3xl font-medium md:text-4xl">Order Detail</h3>
@@ -31,7 +32,7 @@ const TrackingInfo: FC<Props> = ({ order, isViewInvoice }) => {
 
         <div>
           Shipping method:{' '}
-          <span className="font-semibold">{order.fulfillmentStatus}</span>
+          <span className="font-semibold">{shippingMethod}</span>
         </div>
 
         {isViewInvoice && <InvoiceDownloadButton order={order} />}

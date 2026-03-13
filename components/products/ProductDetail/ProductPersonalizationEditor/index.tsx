@@ -42,14 +42,14 @@ export function ProductPersonalizationEditor({
   }
 
   const totalPrice = Number(
-    (product.variant.basePrice + PersonalizationPrice).toFixed(2)
+    ((product?.variant?.basePrice ?? 0) + PersonalizationPrice).toFixed(2)
   )
 
   return (
     <div className="layout-width mb-40! md:mb-24!">
       <PersonalizationHeader onClose={onClose} />
 
-      <div className="flex gap-8 flex-col md:flex-row md:gap-28 mt-20">
+      <div className="mt-20 flex flex-col gap-8 md:flex-row md:gap-28">
         <div className="flex flex-col md:w-[45%]">
           <PersonalizationOptions
             personalization={personalization}
@@ -60,7 +60,7 @@ export function ProductPersonalizationEditor({
           </div>
         </div>
 
-        <div className="md:w-[55%] ">
+        <div className="md:w-[55%]">
           <PersonalizationPreview
             productImage={product.images.at(-1)!}
             textBlock={personalization.textBlock}

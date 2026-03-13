@@ -6,7 +6,7 @@ export type ProductCardProps = {
   handle: string
   description: string
   category?: string
-  tags?: string
+  tags?: Array<string>
   images?: {
     url: string
     altText?: string | null

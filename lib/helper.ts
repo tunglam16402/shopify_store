@@ -48,6 +48,7 @@ export function mappingDiscountPrice(
     variantId: product.variants.edges[0].node.id,
     title: normalizeTitle(product.title),
     handle: product.handle,
+    tags: product.tags,
     description: product.description,
     publishedAt: product.publishedAt,
     category: product.category?.name,
@@ -59,6 +60,7 @@ export function mappingDiscountPrice(
     compareAtPrice: compareAt,
     currency: CURRENCY_SYMBOL_MAP[currencyCode] ?? currencyCode,
     discountPercent,
+    
   }
 }
 

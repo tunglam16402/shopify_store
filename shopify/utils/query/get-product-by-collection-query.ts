@@ -11,10 +11,7 @@ const getProductByCollectionQuery = /* GraphQL */ `
       id
       title
 
-      globalPriceRange: products(
-        first: 1
-        filters: $globalFilters
-      ) {
+      globalPriceRange: products(first: 1, filters: $globalFilters) {
         filters {
           id
           label
@@ -40,6 +37,7 @@ const getProductByCollectionQuery = /* GraphQL */ `
           handle
           publishedAt
           description
+          tags
           category {
             name
           }

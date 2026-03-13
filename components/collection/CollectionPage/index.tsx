@@ -42,26 +42,26 @@ const CollectionPage: React.FC<ICollectionPage> = async ({
       </div>
       <div className="page-width">
         <div className="mt-4 md:mt-6">
-          <h1 className="text-3xl md:text-5xl uppercase font-light">
+          <h1 className="text-3xl font-light uppercase md:text-5xl">
             {currentCollection?.title}
           </h1>
           {currentCollection?.description && (
             <ExpandableText
               text={currentCollection.description}
               lineClamp={4}
-              className="text-sm md:text-base md:w-2/3 mt-2 md:mt-6"
+              className="mt-2 text-sm md:mt-6 md:w-2/3 md:text-base"
             />
           )}
         </div>
         <div className="mt-6 md:mt-10">
           <ShopByCategory subCategories={subCategories} />
         </div>
-          <CollectionContent
-            products={products}
-            tiles={bannerData?.tiles}
-            facets={facets}
-            globalPrice={globalPrice}
-          />
+        <CollectionContent
+          products={products}
+          tiles={bannerData?.tiles}
+          facets={facets}
+          globalPrice={globalPrice}
+        />
       </div>
     </div>
   )

@@ -70,7 +70,7 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
   }
 
   return (
-    <div className="relative w-full flex flex-col h-full">
+    <div className="relative flex h-full w-full flex-col">
       <div
         onMouseOver={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
@@ -79,7 +79,7 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
         <Link
           href={`/products/${product?.handle}`}
           onClick={handleProductClick}
-          className="relative block w-full h-full"
+          className="relative block h-full w-full"
         >
           <Image
             src={(isHover && secondImage ? secondImage : image) || ''}
@@ -87,7 +87,6 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
             fill
             className="object-contain"
             sizes="(max-width: 768px) 59vw, 25vw"
-
             loading={'lazy'}
           />
         </Link>
@@ -97,27 +96,30 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
             <AddToCart
               variantId={product.variantId}
               product={product}
-              className="w-full py-6 rounded-none"
+              className="w-full rounded-none py-6"
             />
           </div>
         )}
 
-        <div className="flex justify-between absolute top-4 left-2 right-2 z-2">
-          {product.discountPercent > 0 ? (
-            <span className="bg-sub-primary text-white text-xs font-semibold px-2 py-1 rounded-md z-2">
+        <div className="absolute top-4 right-2 left-2 z-2 flex justify-between">
+          {product.discountPercent ? (
+            <span className="bg-sub-primary z-2 rounded-md px-2 py-1 text-xs font-semibold text-white">
               -{product.discountPercent}%
             </span>
           ) : (
             <span></span>
           )}
-          <WishlistButton productId={product.id} iconClassName='size-5 md:size-6'/>
+          <WishlistButton
+            productId={product.id}
+            iconClassName="size-5 md:size-6"
+          />
         </div>
       </div>
 
-      <div className="flex flex-col flex-1 mt-3 px-2">
-        <div className="md:min-h-6 min-h-5">
+      <div className="mt-3 flex flex-1 flex-col px-2">
+        <div className="min-h-5 md:min-h-6">
           {product.category && (
-            <p className="text-xs md:text-sm font-light uppercase tracking-wide">
+            <p className="text-xs font-light tracking-wide uppercase md:text-sm">
               {product.category}
             </p>
           )}
@@ -129,7 +131,7 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
             href={`/products/${product?.handle}`}
             onClick={handleProductClick}
           >
-            <p className="md:text-base font-semibold text-gray-800 line-clamp-2 md:line-clamp-1 min-h-12 md:min-h-0 capitalize">
+            <p className="line-clamp-2 min-h-12 font-semibold text-gray-800 capitalize md:line-clamp-1 md:min-h-0 md:text-base">
               {product.title}
             </p>
           </Link>
@@ -137,22 +139,22 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
 
         <div className="flex flex-col md:flex-col-reverse">
           {/* price */}
-          <div className="min-h-7 mt-1">
-            {product.discountPercent > 0 ? (
+          <div className="mt-1 min-h-7">
+            {product.discountPercent ? (
               <div className="flex items-center gap-2">
                 {product.compareAtPrice && (
-                  <span className="line-through text-gray-400 text-sm">
+                  <span className="text-sm text-gray-400 line-through">
                     {product.currency}
                     {product.compareAtPrice}
                   </span>
                 )}
-                <span className="font-bold text-lg">
+                <span className="text-lg font-bold">
                   {product.currency}
                   {product.basePrice}
                 </span>
               </div>
             ) : (
-              <span className="font-bold text-lg text-gray-900">
+              <span className="text-lg font-bold text-gray-900">
                 {product.currency}
                 {product.basePrice}
               </span>
@@ -160,11 +162,11 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
           </div>
 
           {/* ratings */}
-          <div className="min-h-6 mt-2 ">
+          <div className="mt-2 min-h-6">
             {avgRating || totalReviews ? (
               <div className="flex items-center gap-2">
                 <StarRating rating={avgRating} size={4} />
-                <span className="text-sm text-primary">
+                <span className="text-primary text-sm">
                   {avgRating.toFixed(1)} ({totalReviews})
                 </span>
               </div>

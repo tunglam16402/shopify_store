@@ -14,25 +14,36 @@ import ProductInformation from './ProductInformation'
 import TopCollection from './TopCollection'
 import { PersonalizationConfig } from './type'
 
-type Variant = ReturnType<typeof mappingVariantPrice> & {
-  id: string
-  sku: string
-}
-
 export type ProductDetailProps = {
   product: {
     id: string
     handle: string
     title: string
-    vendor: string
+    collection: {
+      id: string
+      handle: string
+      title: string
+    }
     description: string
+    vendor: string
     information: string
-    collection: { id: string; title: string; handle: string }
-    featuredImage?: string | null
-    altText?: string
+    featuredImage: string | null
+    altText: string
     images: string[]
-    variant: Variant
-    colorVariants: { handle: string; image: string | null }[]
+    variant:
+      | {
+          basePrice: number
+          compareAtPrice: number
+          discountPercent: number
+          currency: string
+          id: string
+          sku: string
+        }
+      | undefined
+    colorVariants: {
+      handle: string
+      image: string | null
+    }[]
     personalization: PersonalizationConfig
   }
   menu: CategoryMenu[]
