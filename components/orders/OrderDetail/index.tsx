@@ -52,7 +52,7 @@ const OrderDetail = ({
         />
       </div>
       <div className="relative mt-4 tracking-wide">
-        <div className="bg-secondary absolute z-[-2] h-[350px] w-full md:h-[480px]"></div>
+        <div className="bg-secondary absolute z-[-2] h-[400px] w-full md:h-[580px]"></div>
         <div className="pt-6 md:pt-10">
           <div className="mx-auto flex max-w-5xl flex-col px-[15px] md:flex-row md:flex-wrap">
             <div className="order-1 md:w-1/2">
@@ -74,7 +74,7 @@ const OrderDetail = ({
             </div>
           </div>
         </div>
-        <div className="mx-auto mt-6 flex max-w-5xl flex-col space-y-4 px-[15px] md:mt-12 md:flex-row md:gap-6">
+        <div className="mx-auto mt-8 flex max-w-5xl flex-col space-y-4 px-[15px] md:mt-12 md:flex-row md:gap-6">
           <div className="md:w-[60%]">
             <OrderLineItems lineItems={order?.lineItems?.nodes || []} />
           </div>
@@ -82,7 +82,7 @@ const OrderDetail = ({
             <OrderSummary order={order} />
           </div>
         </div>
-        <div className="mx-auto mt-12 max-w-5xl md:mt-16">
+        <div className="mx-auto mt-16 max-w-5xl md:mt-20">
           <ProductRecommend title="Just for you" data={recommendations} />
         </div>
       </div>

@@ -8,39 +8,77 @@ interface Props {
 
 const DeliveryInfo: FC<Props> = ({ order, isLoggedIn }) => {
   const { shippingAddress } = order
-  return shippingAddress && isLoggedIn ? (
-    <>
-      <p className="text-xl font-medium md:text-2xl">Delivery Info</p>
 
-      <div className="mt-2 rounded-xl text-sm md:mt-4">
-        <p className="font-bold">Delivery Address</p>
+  if (!shippingAddress || !isLoggedIn) return null
 
-        <p className="mt-1">
-          {order.shippingAddress?.firstName} {order.shippingAddress?.lastName}
-        </p>
+  const fullName =
+    [shippingAddress.firstName, shippingAddress.lastName]
+      .filter(Boolean)
+      .join(' ') || 'N/A'
 
-        <p>
-          {order.shippingAddress?.address2} {order.shippingAddress?.address1}
-        </p>
+  const addressLine =
+    [shippingAddress.address2, shippingAddress.address1]
+      .filter(Boolean)
+      .join(', ') || 'N/A'
 
-        <p>
-          {order.shippingAddress?.province} {order.shippingAddress?.city},{' '}
-          {order.shippingAddress?.country}
-        </p>
+  const locationLine =
+    [shippingAddress.province, shippingAddress.city, shippingAddress.country]
+      .filter(Boolean)
+      .join(', ') || 'N/A'
 
-        <p>{order.shippingAddress?.zip}</p>
-
-        {order.email && <p className="mt-3">Email: {order.email}</p>}
-        {order.shippingAddress?.phone && (
-          <p className="mt-1"> {order.shippingAddress?.phone}</p>
-        )}
-
-        {order.shippingAddress?.phone && (
-          <p className="mt-1">Phone: {order.shippingAddress.phone}</p>
-        )}
+  return (
+    <section className="space-y-4">
+      <div>
+        <h4 className="text-xl font-semibold text-gray-900 md:text-2xl">
+          Delivery Info
+        </h4>
       </div>
-    </>
-  ) : null
+
+      <div>
+        <p className="text-sm font-semibold text-gray-900 md:text-base">
+          Delivery Address
+        </p>
+
+        <div className="mt-1 space-y-3 text-sm text-gray-700 md:text-base">
+          <p>
+            <span className="text-gray-500">Recipient: </span>
+            <span className="text-gray-900">{fullName}</span>
+          </p>
+
+          <p>
+            <span className="text-gray-500">Address: </span>
+            <span className="text-gray-900">{addressLine}</span>
+          </p>
+
+          <p>
+            <span className="text-gray-500">Region: </span>
+            <span className="text-gray-900">{locationLine}</span>
+          </p>
+
+          {shippingAddress.zip && (
+            <p>
+              <span className="text-gray-500">Postal Code: </span>
+              <span className="text-gray-900">{shippingAddress.zip}</span>
+            </p>
+          )}
+
+          {order.email && (
+            <p>
+              <span className="text-gray-500">Email: </span>
+              <span className="break-all text-gray-900">{order.email}</span>
+            </p>
+          )}
+
+          {shippingAddress.phone && (
+            <p>
+              <span className="text-gray-500">Phone: </span>
+              <span className="text-gray-900">{shippingAddress.phone}</span>
+            </p>
+          )}
+        </div>
+      </div>
+    </section>
+  )
 }
 
 export default DeliveryInfo

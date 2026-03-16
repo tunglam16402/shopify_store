@@ -1,17 +1,13 @@
 import OrderDetail from '@/components/orders/OrderDetail'
+import { getOrderShippingMethod } from '@/shopify/customer/use-order'
 import { notFound, redirect } from 'next/navigation'
 import { getUserOrders } from '../services'
-import { getOrderShippingMethod } from '@/shopify/customer/use-order'
-import { cacheLife } from 'next/cache'
 
 type Props = {
   params: Promise<{ slug: string }>
 }
 
 const OrderDetailPage = async ({ params }: Props) => {
-  'use cache'
-  cacheLife('hours')
-
   const { slug } = await params
   const orders = await getUserOrders()
   if (!orders) redirect('/account/login')
