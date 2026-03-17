@@ -12,6 +12,7 @@ interface ModalProps {
   hasClose?: boolean
   className?: string
   align?: 'center' | 'right' | 'left'
+  closeBtnColor?: string
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -21,10 +22,10 @@ const Modal: React.FC<ModalProps> = ({
   hasClose = true,
   className,
   align = 'center',
+  closeBtnColor,
 }) => {
   const [isVisible, setIsVisible] = useState(false)
   const [shouldRender, setShouldRender] = useState(isOpen)
-
 
   useEffect(() => {
     if (isOpen) {
@@ -79,7 +80,7 @@ const Modal: React.FC<ModalProps> = ({
   return createPortal(
     <div
       className={cn(
-        'fixed inset-0 z-50  flex items-center bg-black/70 transition-opacity duration-200',
+        'fixed inset-0 z-50 flex items-center bg-black/70 transition-opacity duration-200',
         isVisible ? 'opacity-100' : 'opacity-0',
         align === 'center' && 'justify-center',
         align === 'right' && 'justify-end',
@@ -101,7 +102,10 @@ const Modal: React.FC<ModalProps> = ({
             onClick={onClose}
             aria-label="Close modal"
           >
-            <IcoClose className="size-5 transition-transform duration-300 hover:rotate-90 md:size-6" />
+            <IcoClose
+              className="size-5 transition-transform duration-300 hover:rotate-90 md:size-6"
+              color={closeBtnColor}
+            />
           </button>
         )}
         {children}

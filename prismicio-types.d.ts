@@ -791,6 +791,93 @@ export type HomepageDocument<Lang extends string = string> =
     Lang
   >
 
+/**
+ * Content for Newsletter documents
+ */
+interface NewsletterDocumentData {
+  /**
+   * Image field in *Newsletter*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: newsletter.image
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  image: prismic.ImageField<never>
+
+  /**
+   * Title field in *Newsletter*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: newsletter.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField
+
+  /**
+   * Sub Title field in *Newsletter*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: newsletter.sub_title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  sub_title: prismic.KeyTextField
+
+  /**
+   * Input Text field in *Newsletter*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: newsletter.input_text
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  input_text: prismic.KeyTextField
+
+  /**
+   * CTA Text field in *Newsletter*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: newsletter.cta_text
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  cta_text: prismic.KeyTextField
+
+  /**
+   * Background Color field in *Newsletter*
+   *
+   * - **Field Type**: Color
+   * - **Placeholder**: *None*
+   * - **API ID Path**: newsletter.background_color
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/color
+   */
+  background_color: prismic.ColorField
+}
+
+/**
+ * Newsletter document from Prismic
+ *
+ * - **API ID**: `newsletter`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type NewsletterDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<NewsletterDocumentData>,
+    'newsletter',
+    Lang
+  >
+
 type TestpageDocumentDataSlicesSlice = BannerTestSlice
 
 /**
@@ -829,6 +916,7 @@ export type AllDocumentTypes =
   | BannerManagementDocument
   | FooterDocument
   | HomepageDocument
+  | NewsletterDocument
   | TestpageDocument
 
 /**
@@ -1104,6 +1192,8 @@ declare module '@prismicio/client' {
       HomepageDocumentDataFeatureInItem,
       HomepageDocumentDataUspItem,
       HomepageDocumentDataBlogItem,
+      NewsletterDocument,
+      NewsletterDocumentData,
       TestpageDocument,
       TestpageDocumentData,
       TestpageDocumentDataSlicesSlice,

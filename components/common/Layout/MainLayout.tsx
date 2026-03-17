@@ -2,6 +2,7 @@ import Footer from '@/components/layout/Footer'
 import MainHeader from '@/components/layout/MainHeader'
 import SubHeader from '@/components/layout/SubHeader'
 import TopHeader from '@/components/layout/TopHeader'
+import Newsletter from '@/components/Newsletter'
 import { createClient } from '@/prismicio'
 import { getMainMenu } from '@/shopify/api/operations/get-menu'
 import { cacheLife } from 'next/cache'
@@ -18,9 +19,11 @@ const MainLayout = async ({
   cacheLife('days')
 
   const client = createClient({}, cookie)
-  const footer = await client.getSingle('footer')
-
-  const menuItems = await getMainMenu()
+  const [footer, newsletter, menuItems] = await Promise.all([
+    client.getSingle('footer'),
+    client.getSingle('newsletter').catch(() => null),
+    getMainMenu(),
+  ])
 
   return (
     <>
@@ -37,6 +40,12 @@ const MainLayout = async ({
       <Suspense fallback={null}>
         <Footer data={footer.data} />
       </Suspense>
+
+      {newsletter?.data ? (
+        <Suspense fallback={null}>
+          <Newsletter data={newsletter.data} />
+        </Suspense>
+      ) : null}
     </>
   )
 }

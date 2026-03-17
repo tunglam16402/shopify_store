@@ -1,0 +1,57 @@
+{
+  "format": "custom",
+  "id": "newsletter",
+  "label": "Newsletter",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {
+      "image": {
+        "type": "Image",
+        "config": {
+          "label": "Image",
+          "constraint": {
+            "width": 390,
+            "height": 423
+          },
+          "thumbnails": []
+        }
+      },
+      "title": {
+        "type": "Text",
+        "config": {
+          "label": "Title",
+          "placeholder": ""
+        }
+      },
+      "sub_title": {
+        "type": "Text",
+        "config": {
+          "label": "Sub Title",
+          "placeholder": ""
+        }
+      },
+      "input_text": {
+        "type": "Text",
+        "config": {
+          "label": "Input Text",
+          "placeholder": ""
+        }
+      },
+      "cta_text": {
+        "type": "Text",
+        "config": {
+          "label": "CTA Text",
+          "placeholder": ""
+        }
+      },
+      "background_color": {
+        "type": "Color",
+        "config": {
+          "label": "Background Color",
+          "placeholder": ""
+        }
+      }
+    }
+  }
+}
