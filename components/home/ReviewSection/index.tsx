@@ -3,6 +3,7 @@ import PWSwiper from '@/components/ui/Swiper'
 import ReviewItem from './HomeReviewItem'
 import { getHomepageReviewSectionData } from './service'
 import { REVIEWSECTION_BREAKPOINT } from './type'
+import styles from './style.module.css'
 
 const ReviewSection = async () => {
   const data = await getHomepageReviewSectionData()
@@ -10,11 +11,9 @@ const ReviewSection = async () => {
   return (
     <section className="page-width">
       <div className="mt-12 md:mt-20 md:px-12">
-        <p className="font-sub-heading text-center text-[40px] font-extralight tracking-tight md:text-6xl">
-          From our customers
-        </p>
+        <p className={styles.heading}>From our customers</p>
 
-        <p className="font-sub-heading mx-auto mt-4 max-w-180 text-center text-2xl leading-tight tracking-tight not-italic! md:mt-10 md:text-[32px]">
+        <p className={styles.subheading}>
           Need a little reassurance before you choose? Discover how customers
           felt once it arrived.
         </p>
@@ -35,6 +34,7 @@ const ReviewSection = async () => {
           <PWSwiper
             pagination={false}
             breakpoints={REVIEWSECTION_BREAKPOINT}
+            className={styles.reviews_swiper}
             autoplay
           >
             {data.reviews.map((review) => (

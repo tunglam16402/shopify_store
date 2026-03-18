@@ -1,0 +1,45 @@
+.reviews_swiper :global(.swiper) {
+  position: static;
+}
+
+.reviews_swiper :global(.swiper-button-next) {
+  right: -40px;
+}
+.reviews_swiper :global(.swiper-button-prev) {
+  left: -40px;
+}
+
+.reviews_swiper :global(.swiper-button-next):hover,
+.reviews_swiper :global(.swiper-button-prev):hover {
+  opacity: 70;
+}
+
+.heading {
+  font-family: var(--font-sub-heading);
+  text-align: center;
+  font-size: 40px;
+  font-weight: 200;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  font-style: italic;
+
+  @media (min-width: 768px) {
+    font-size: 60px;
+  }
+}
+
+.subheading {
+  font-family: var(--font-sub-heading);
+  margin: 1rem auto 0;
+  max-width: 720px;
+  text-align: center;
+  font-size: 24px;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+  font-style: normal;
+
+  @media (min-width: 768px) {
+    margin-top: 40px;
+    font-size: 32px;
+  }
+}

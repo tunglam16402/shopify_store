@@ -38,7 +38,7 @@ const HomeReviewItem: FC<Props> = ({ review, product }) => {
         ))}
       </div>
 
-      <p className="mt-4 text-lg leading-snug text-gray-700">
+      <p className="mt-4 line-clamp-2 text-lg leading-snug text-gray-700">
         {review.headline}
       </p>
 

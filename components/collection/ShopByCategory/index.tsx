@@ -1,7 +1,7 @@
 import PWSwiper from '@/components/ui/Swiper'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import styles from './style.module.css'
 
 interface IShopByCategory {
   subCategories: {
@@ -33,7 +33,12 @@ const ShopByCategory = ({ subCategories }: IShopByCategory) => {
   if (!subCategories || subCategories.length === 0) return null
 
   return (
-    <PWSwiper pagination={false} breakpoints={COLLECTION_BREAKPOINT} freeMode>
+    <PWSwiper
+      pagination={false}
+      breakpoints={COLLECTION_BREAKPOINT}
+      freeMode
+      className={styles.pw_swiper}
+    >
       {subCategories.map((subCategory) => (
         <Link
           href={subCategory.url}
@@ -49,17 +54,8 @@ const ShopByCategory = ({ subCategories }: IShopByCategory) => {
           />
           {!!subCategory.title && (
             <>
-              <span
-                aria-hidden
-                className="pointer-events-none absolute inset-0 rounded-sm md:rounded-lg"
-                style={{
-                  background:
-                    'linear-gradient(180deg, rgba(0,0,0,0) 44.71%, rgba(0,0,0,0.6) 85.1%)',
-                }}
-              />
-              <span className="absolute bottom-2 left-2 text-sm font-medium text-white md:bottom-4 md:left-4 md:text-lg">
-                {subCategory.title}
-              </span>
+              <span aria-hidden className={styles.overlay} />
+              <span className={styles.label}>{subCategory.title}</span>
             </>
           )}
         </Link>
