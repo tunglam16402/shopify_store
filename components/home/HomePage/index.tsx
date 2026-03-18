@@ -6,6 +6,7 @@ import VideoSection from '../VideoSection'
 import FeaturedIn from '../FeaturedIn'
 import Blogs from '../Blogs'
 import USPs from '../USPs'
+import ReviewSection from '../ReviewSection'
 
 interface IHomePage {
   data: Simplify<HomepageDocumentData>
@@ -34,6 +35,7 @@ const HomePage: React.FC<IHomePage> = ({ data }) => {
       <USPs usps={data.usp}/>
       <Blogs blogs={data.blog}/>
 
+      <ReviewSection/>
 
       {/* {bestSellerSection && <FeaturedProduct products={[bestSellerSection]} />} */}
     </div>

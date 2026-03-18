@@ -38,7 +38,7 @@ const ExpandableText: React.FC<ExpandableTextProps> = ({
       {showButton && (
         <button
           onClick={() => setExpanded(!expanded)}
-          className="mt-3 text-sm md:text-base underline"
+          className="mt-3 text-sm underline md:text-base"
         >
           {expanded ? 'Read Less' : 'Read more'}
         </button>

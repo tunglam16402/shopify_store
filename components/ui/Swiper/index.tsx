@@ -2,7 +2,7 @@
 
 import React, { ReactNode } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, Pagination, Autoplay } from 'swiper/modules'
+import { Navigation, Pagination, Autoplay, FreeMode } from 'swiper/modules'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -24,6 +24,7 @@ type PWSwiperProps = {
   breakpoints?: Record<number, Breakpoint>
   className?: string
   initialSlide?: number
+  freeMode?: boolean
 }
 
 export const DEFAULT_BREAKPOINTS: Record<number, Breakpoint> = {
@@ -36,6 +37,7 @@ const PWSwiper: React.FC<PWSwiperProps> = ({
   children,
   autoplay = false,
   navigation = true,
+  freeMode = false,
   pagination = true,
   loop = false,
   breakpoints = DEFAULT_BREAKPOINTS,
@@ -51,9 +53,10 @@ const PWSwiper: React.FC<PWSwiperProps> = ({
   return (
     <div className={`${styles['pw-swiper']} ${className}`}>
       <Swiper
-        modules={[Navigation, Pagination, Autoplay]}
+        modules={[Navigation, Pagination, Autoplay, FreeMode]}
         navigation={enableNavigation}
         speed={500}
+        freeMode={freeMode}
         initialSlide={initialSlide}
         loop={enableLoop}
         pagination={

@@ -41,6 +41,7 @@ const ProductImage = ({ images, altText, title }: ProductImageProps) => {
           pagination={true}
           breakpoints={MOBILE_IMAGE}
           loop={true}
+          navigation={false}
         >
           {images.map((url, i) => (
             <div key={i} onClick={() => openLightbox(i)}>

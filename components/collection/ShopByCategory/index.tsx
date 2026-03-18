@@ -33,18 +33,18 @@ const ShopByCategory = ({ subCategories }: IShopByCategory) => {
   if (!subCategories || subCategories.length === 0) return null
 
   return (
-    <PWSwiper pagination={false} breakpoints={COLLECTION_BREAKPOINT}>
+    <PWSwiper pagination={false} breakpoints={COLLECTION_BREAKPOINT} freeMode>
       {subCategories.map((subCategory) => (
         <Link
           href={subCategory.url}
           key={subCategory.url}
-          className="relative h-28 md:h-32 w-full inline-block"
+          className="relative inline-block h-28 w-full md:h-32"
         >
           <Image
             src={subCategory.image || ''}
             alt=""
             fill
-            className="object-cover rounded-sm md:rounded-lg "
+            className="rounded-sm object-cover md:rounded-lg"
             sizes="(max-width: 768px) 20vw, 40vw"
           />
           {!!subCategory.title && (

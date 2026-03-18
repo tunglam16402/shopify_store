@@ -52,18 +52,18 @@ const Wishlist = () => {
     <>
       {customer === null && !loading && (
         <div className="mt-5 md:mt-7">
-          <div className=" rounded-lg bg-[#F1F1F1] py-4 text-center text-sm  md:text-base">
-            <div className="md:flex  items-center layout-width justify-between">
+          <div className="rounded-lg bg-[#F1F1F1] py-4 text-center text-sm md:text-base">
+            <div className="layout-width items-center justify-between md:flex">
               <div>
                 <span className="inline-block text-left">
                   Log in or register so you can save these items and see them on
                   any device.
                 </span>
               </div>
-              <div className="mt-3 flex  gap-4 md:mt-0 md:justify-center md:gap-8">
+              <div className="mt-3 flex gap-4 md:mt-0 md:justify-center md:gap-8">
                 <Link href="account/login" className="flex-1 md:flex-none">
                   <Button
-                    className="w-full md:px-24 py-6 text-base md:text-lg rounded-md"
+                    className="w-full rounded-md py-6 text-base md:px-24 md:text-lg"
                     variant="primary"
                   >
                     LOGIN
@@ -72,7 +72,7 @@ const Wishlist = () => {
 
                 <Link href="account/register" className="flex-1 md:flex-none">
                   <Button
-                    className="w-full md:px-24 py-6 text-base md:text-lg rounded-md"
+                    className="w-full rounded-md py-6 text-base md:px-24 md:text-lg"
                     variant="primary"
                   >
                     REGISTER
@@ -83,7 +83,7 @@ const Wishlist = () => {
           </div>
         </div>
       )}
-      <div className="mt-9! md:mt-11! layout-width">
+      <div className="layout-width mt-9! md:mt-11!">
         {loading || isWaitingProducts ? (
           <ProductListSkeleton />
         ) : hasWishlist ? (
@@ -92,23 +92,24 @@ const Wishlist = () => {
           <div className="relative my-24 flex flex-col items-center text-center">
             <div className="relative">
               <IcoEmptyBox className="h-48 w-48" />
-        
             </div>
 
-            <h2 className="mt-8 text-3xl font-bold tracking-tight up">
+            <h2 className="up mt-8 text-3xl font-bold tracking-tight">
               Your wishlist feels lonely
             </h2>
 
             {/* Description */}
-            <p className="mt-4 md:mt-6 max-w-md text-sm md:text-base text-muted-foreground">
+            <p className="text-muted-foreground mt-4 max-w-md text-sm md:mt-6 md:text-base">
               You haven’t saved any products yet. Find something you love and
-              keep it close 
+              keep it close
             </p>
 
-            <Button variant={'primary'} className='mt-6 px-10 text-lg py-6 rounded-md'>
+            <Button
+              variant={'primary'}
+              className="mt-6 rounded-md px-10 py-6 text-lg"
+            >
               Discover products
             </Button>
-
           </div>
         )}
       </div>

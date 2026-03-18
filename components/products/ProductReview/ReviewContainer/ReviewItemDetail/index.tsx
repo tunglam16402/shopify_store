@@ -17,11 +17,12 @@ const ReviewItemDetail: React.FC<IReviewItemDetail> = ({
   startIndex,
 }) => {
   return (
-    <div className="flex flex-col md:flex-row gap-4 mt-12 md:mt-0">
+    <div className="mt-12 flex flex-col gap-4 md:mt-0 md:flex-row">
       <div className="w-full md:w-[520px]">
         <Suspense fallback={null}>
           <PWSwiper
             pagination={false}
+            navigation={false}
             initialSlide={startIndex}
             breakpoints={{
               0: { slidesPerView: 1, slidesPerGroup: 1 },
@@ -30,7 +31,7 @@ const ReviewItemDetail: React.FC<IReviewItemDetail> = ({
             {review.review_media.map((media) =>
               media.type === 'image' ? (
                 <div
-                  className="relative w-full h-[600px] md:w-[520px] bg-black md:h-[720px]"
+                  className="relative h-[600px] w-full bg-black md:h-[720px] md:w-[520px]"
                   key={media.id}
                 >
                   <Image
@@ -46,7 +47,7 @@ const ReviewItemDetail: React.FC<IReviewItemDetail> = ({
                   key={media.id}
                   src={media.url}
                   controls
-                  className="w-40 h-40 rounded"
+                  className="h-40 w-40 rounded"
                 />
               )
             )}
@@ -58,7 +59,7 @@ const ReviewItemDetail: React.FC<IReviewItemDetail> = ({
           <div>
             <strong>{review.username}</strong>
             <div className="flex items-center gap-1">
-              <IcoVerify className="w-5 h-5" />
+              <IcoVerify className="h-5 w-5" />
               <p className="text-gray-700">Verified Buyer</p>
             </div>
           </div>
@@ -68,7 +69,7 @@ const ReviewItemDetail: React.FC<IReviewItemDetail> = ({
           </span>
         </div>
 
-        <div className="flex -ml-2 mt-4 md:mt-4">
+        <div className="mt-4 -ml-2 flex md:mt-4">
           {[...Array(review.rating)].map((_, i) => (
             <IcoStarFill key={`full-${i}`} className="h-9 w-9" />
           ))}
@@ -78,7 +79,7 @@ const ReviewItemDetail: React.FC<IReviewItemDetail> = ({
         </div>
 
         <div>
-          <p className="font-medium text-xl mt-2 md:mt-4">{review.headline}</p>
+          <p className="mt-2 text-xl font-medium md:mt-4">{review.headline}</p>
           <ExpandableText
             text={review.comment}
             lineClamp={6}
@@ -86,7 +87,7 @@ const ReviewItemDetail: React.FC<IReviewItemDetail> = ({
           />
         </div>
         {review.quality !== 0 && review.value !== 0 && (
-          <div className="space-y-5 mt-5 ">
+          <div className="mt-5 space-y-5">
             <RatingBar label="Quality of this product" value={review.quality} />
             <RatingBar label="Value of this product" value={review.value} />
           </div>
