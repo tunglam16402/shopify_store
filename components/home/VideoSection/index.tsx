@@ -17,29 +17,32 @@ const VideoSection: React.FC<IVideoSection> = ({ videos }) => {
   const videoUrl = video?.video && 'url' in video.video ? video.video.url : ''
 
   return (
-    <div className=' w-full mt-12'>
+    <div className="mt-12 w-full">
       <div className="relative">
         <video
           src={videoUrl}
           autoPlay
           muted
           loop
-          className="w-full h-[100vh] md:h-[calc(100vh+500px)] object-cover"
+          className="h-screen w-full object-cover md:h-[calc(100vh+500px)]"
           playsInline
           preload="metadata"
         />
 
-        <div className="absolute inset-0 bg-black/30 flex flex-col justify-between items-center text-white ">
-          <div className="flex flex-col items-center my-auto uppercase">
-            <h3 className="text-[44px] md:text-8xl max-w-[800px] text-center font-extralight">
+        <div className="absolute inset-0 flex flex-col items-center justify-between bg-black/30 text-white">
+          <div className="my-auto flex flex-col items-center uppercase">
+            <h3 className="max-w-[800px] text-center text-[44px] font-extralight md:text-8xl">
               {video?.title}
             </h3>
-            <p className="font-bold text-lg md:mt-6 md:text-xl">
+            <p className="text-lg font-bold md:mt-6 md:text-xl">
               {video?.sub_title}
             </p>
             {video?.button_text && (
               <Link href={video?.pathname || '#'}>
-                <Button className="uppercase mt-10 px-12 md:px-18 md:mt-[140px] text-lg">
+                <Button
+                  className="mt-10 px-12 text-lg uppercase md:mt-[140px] md:px-18"
+                  variant={'rollingText'}
+                >
                   {video?.button_text}
                 </Button>
               </Link>
@@ -47,7 +50,7 @@ const VideoSection: React.FC<IVideoSection> = ({ videos }) => {
           </div>
         </div>
       </div>
-      <div className='mt-4'>
+      <div className="mt-4">
         <VideoBanner field={video?.banner} />
       </div>
     </div>

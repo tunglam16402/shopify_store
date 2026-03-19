@@ -5,7 +5,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium cursor-pointer transition-all duration-300 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  "relative inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium cursor-pointer transition-all duration-300 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
     variants: {
       variant: {
@@ -30,6 +30,17 @@ const buttonVariants = cva(
           after:transition-all after:duration-300 after:ease-out
           hover:after:w-full
         `,
+        rollingText: `
+          group
+          relative
+          overflow-hidden
+          bg-white
+          border border-black
+          text-black
+          px-6
+          hover:bg-black
+          hover:text-white
+        `,
       },
       size: {
         default: 'h-9 px-4 py-2 has-[>svg]:px-3',
@@ -45,24 +56,69 @@ const buttonVariants = cva(
   }
 )
 
+type ButtonProps = React.ComponentProps<'button'> &
+  VariantProps<typeof buttonVariants> & {
+    asChild?: boolean
+  }
+
 function Button({
   className,
   variant,
   size,
   asChild = false,
+  children,
   ...props
-}: React.ComponentProps<'button'> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
-  }) {
+}: ButtonProps) {
   const Comp = asChild ? Slot : 'button'
+
+  const isRollingText =
+    variant === 'rollingText' &&
+    (typeof children === 'string' || typeof children === 'number')
 
   return (
     <Comp
       data-slot="button"
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
-    />
+    >
+      {isRollingText ? (
+        <span className="relative block h-[1.2em] overflow-hidden leading-none">
+          <span
+            aria-hidden="true"
+            className="
+              block
+              transition-transform
+              duration-800
+              ease-[cubic-bezier(0.22,1,0.36,1)]
+              group-hover:-translate-y-[1.6em]
+            "
+          >
+            {children}
+          </span>
+
+          <span
+            aria-hidden="true"
+            className="
+              absolute
+              left-0
+              top-[1.6em]
+              block
+              w-full
+              transition-transform
+              duration-800
+              ease-[cubic-bezier(0.22,1,0.36,1)]
+              group-hover:-translate-y-[1.6em]
+            "
+          >
+            {children}
+          </span>
+
+          <span className="sr-only">{children}</span>
+        </span>
+      ) : (
+        children
+      )}
+    </Comp>
   )
 }
 

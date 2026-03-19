@@ -2,6 +2,7 @@ import AccountPage from '@/components/account/AccountPage'
 import { getCustomer } from '@/shopify/customer/use-customer'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import { Suspense } from 'react'
 
 const Account = async () => {
   const cookieStore = await cookies()
@@ -19,7 +20,9 @@ const Account = async () => {
 
   return (
     <div>
-      <AccountPage customer={customer} />
+      <Suspense>
+        <AccountPage customer={customer} />
+      </Suspense>
     </div>
   )
 }
