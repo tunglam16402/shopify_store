@@ -7,15 +7,13 @@ import FeaturedIn from '../FeaturedIn'
 import Blogs from '../Blogs'
 import USPs from '../USPs'
 import ReviewSection from '../ReviewSection'
+import { AnimatedSection } from '@/components/common/AnimatedSection'
 
 interface IHomePage {
   data: Simplify<HomepageDocumentData>
 }
 
 const HomePage: React.FC<IHomePage> = ({ data }) => {
-  // const bestSellerSection = data.product_section?.find(
-  //   (s) => s.widget_id === 'bestseller'
-  // )
   const latestSection = data.product_section?.find(
     (s) => s.widget_id === 'latest'
   )
@@ -23,21 +21,48 @@ const HomePage: React.FC<IHomePage> = ({ data }) => {
   return (
     <div>
       <HeroSection banners={data.hero_banners} />
-      <FeaturedCollections collections={data.collections} />
 
-      {latestSection && <FeaturedProduct products={[latestSection]} />}
-      <VideoSection videos={data.video_banner} />
-      <HeroSection banners={data.hero_banners} />
-      <section className='max-w-[1440px] mx-auto'>
-        {latestSection && <FeaturedProduct products={[latestSection]} />}
-      </section>
-      <FeaturedIn features={data.feature_in}/>
-      <USPs usps={data.usp}/>
-      <Blogs blogs={data.blog}/>
+      <AnimatedSection variant="fade-up" delay={0}>
+        <FeaturedCollections collections={data.collections} />
+      </AnimatedSection>
 
-      <ReviewSection/>
+      {latestSection && (
+        <AnimatedSection variant="fade-up" delay={0}>
+          <FeaturedProduct products={[latestSection]} />
+        </AnimatedSection>
+      )}
 
-      {/* {bestSellerSection && <FeaturedProduct products={[bestSellerSection]} />} */}
+      <AnimatedSection variant="scale-up" duration={900}>
+        <VideoSection videos={data.video_banner} />
+      </AnimatedSection>
+
+      <AnimatedSection variant="fade-up">
+        <HeroSection banners={data.hero_banners} />
+      </AnimatedSection>
+
+      {latestSection && (
+        <AnimatedSection variant="fade-up" delay={100}>
+          <section className="mx-auto max-w-[1440px]">
+            <FeaturedProduct products={[latestSection]} />
+          </section>
+        </AnimatedSection>
+      )}
+
+      <AnimatedSection variant="fade-right" duration={800}>
+        <FeaturedIn features={data.feature_in} />
+      </AnimatedSection>
+
+      <AnimatedSection variant="fade-up">
+        <USPs usps={data.usp} />
+      </AnimatedSection>
+
+      <AnimatedSection variant="fade-up" delay={50}>
+        <Blogs blogs={data.blog} />
+      </AnimatedSection>
+
+      <AnimatedSection variant="fade-up" delay={50}>
+        <ReviewSection />
+      </AnimatedSection>
     </div>
   )
 }

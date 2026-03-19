@@ -35,17 +35,15 @@ const FeaturedCollections: React.FC<IFeaturedCollections> = ({
   collections,
 }) => {
   return (
-    <div className="mt-5 mx-3 md:mx-5">
-      <Suspense fallback={null}>
-        <PWSwiper breakpoints={COLLECTION_HOME_BREAKPOINT} pagination={false}>
-          {collections.map((collection) => (
-            <FeaturedCollectionItem
-              key={collection.pathname}
-              collection={collection}
-            />
-          ))}
-        </PWSwiper>
-      </Suspense>
+    <div className="mx-3 mt-5 md:mx-5">
+      <PWSwiper breakpoints={COLLECTION_HOME_BREAKPOINT} pagination={false}>
+        {collections.map((collection) => (
+          <FeaturedCollectionItem
+            key={collection.pathname}
+            collection={collection}
+          />
+        ))}
+      </PWSwiper>
     </div>
   )
 }
