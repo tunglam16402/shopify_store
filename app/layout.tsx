@@ -3,14 +3,12 @@ import { GlobalUIProvider } from '@/components/common/Layout/GlobalUI'
 import MainLayout from '@/components/common/Layout/MainLayout'
 import StoreProvider from '@/components/common/Layout/StoreProvider'
 import MainScript from '@/components/common/MainScript'
-import { repositoryName } from '@/prismicio'
 import { cookie } from '@prismicio/client'
-import { PrismicPreview } from '@prismicio/next'
 import type { Metadata } from 'next'
 import {
   Cormorant_Garamond,
-  Playfair_Display,
   Open_Sans,
+  Playfair_Display,
 } from 'next/font/google'
 import { cookies } from 'next/headers'
 import { Suspense } from 'react'
@@ -19,7 +17,6 @@ import 'swiper/css/grid'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import './globals.css'
-import { OrientationLock } from '@/components/OrientationLock'
 
 const SubHeadingFont = Cormorant_Garamond({
   variable: '--font-sub-heading',
@@ -56,8 +53,7 @@ async function RootLayoutContent({ children }: { children: React.ReactNode }) {
         <StoreProvider>
           <GlobalUIProvider>
             <MainLayout cookie={cookiePreview}>{children}</MainLayout>
-            <PrismicPreview repositoryName={repositoryName} />
-            <OrientationLock />
+            {/* <PrismicPreview repositoryName={repositoryName} /> */}
           </GlobalUIProvider>
         </StoreProvider>
         <MainScript />
