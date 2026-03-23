@@ -46,7 +46,7 @@ const BlogDetail = ({ blog }: BlogDetailProps) => {
           <div className="w-full">
             <Image
               src={titleImage.url}
-              alt={titleImage.altText || blog?.title}
+              alt={titleImage.altText || ''}
               width={titleImage.width || 2600}
               height={titleImage.height || 349}
               className="h-auto w-full object-contain"

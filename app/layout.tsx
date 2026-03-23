@@ -19,6 +19,7 @@ import 'swiper/css/grid'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import './globals.css'
+import { OrientationLock } from '@/components/OrientationLock'
 
 const SubHeadingFont = Cormorant_Garamond({
   variable: '--font-sub-heading',
@@ -56,6 +57,7 @@ async function RootLayoutContent({ children }: { children: React.ReactNode }) {
           <GlobalUIProvider>
             <MainLayout cookie={cookiePreview}>{children}</MainLayout>
             <PrismicPreview repositoryName={repositoryName} />
+            <OrientationLock />
           </GlobalUIProvider>
         </StoreProvider>
         <MainScript />
