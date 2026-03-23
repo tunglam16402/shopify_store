@@ -1,49 +1,70 @@
 import { formatDate } from '@/lib/helper'
 import { GetDetailArticleQuery } from '@/shopify/types/graphql'
 import Image from 'next/image'
-import React from 'react'
+import { SimpleZigzagContent } from '../helper'
 
 type BlogDetailProps = {
   blog: NonNullable<GetDetailArticleQuery['blog']>['articleByHandle']
 }
 
 const BlogDetail = ({ blog }: BlogDetailProps) => {
+  const titleImage =
+    blog?.titleImage?.reference?.__typename === 'MediaImage'
+      ? blog.titleImage.reference.image
+      : null
+
+  console.log('blog :>> ', blog)
+
   return (
     <section>
       {blog?.image && (
-        <div className="relative w-full h-[500px] md:h-[600px]">
-          <div className="absolute inset-0 bg-linear-to-b from-black/60 to-black/10 z-10" />
+        <div className="w-full">
           <Image
             src={blog.image.url}
             alt={blog.title}
-            fill
-            className="object-cover"
+            width={1920}
+            height={718}
+            className="h-auto w-full object-contain"
+            sizes="100vw"
             priority
-            sizes='50vw'
+            unoptimized
           />
         </div>
       )}
 
-      <div className="max-w-7xl wrapper mx-auto">
-        <div className="text-lg side-text mt-6 flex items-center gap-2 md:text-2xl md:gap-4 flex-wrap">
-          <span>{blog?.author.name}</span>
-          <span>|</span>
-          <time>{formatDate(blog?.publishedAt)}</time>
+      <div className="mt-4 md:mt-6">
+        <div className="page-width flex flex-col items-center justify-between gap-2 text-sm md:flex-row md:text-xl">
+          <h1 className="uppercase">{blog?.title}</h1>
+          <div className="side-text flex flex-wrap items-center gap-2 md:gap-4">
+            <span>{blog?.author.name}</span>
+            <span>|</span>
+            <time>{formatDate(blog?.publishedAt)}</time>
+          </div>
         </div>
 
-        <h1 className="text-5xl md:text-8xl font-bold mt-4">{blog?.title}</h1>
+        {titleImage && (
+          <div className="w-full">
+            <Image
+              src={titleImage.url}
+              alt={titleImage.altText || blog?.title}
+              width={titleImage.width || 2600}
+              height={titleImage.height || 349}
+              className="h-auto w-full object-contain"
+              sizes="100vw"
+              priority
+              unoptimized
+            />
+          </div>
+        )}
 
         {blog?.excerpt && (
-          <p className="text-3xl md:text-5xl mt-6 text-primary font-semibold">
+          <h2 className="mx-6 mt-6 text-center text-lg leading-tight md:mx-40 md:text-2xl">
             {blog?.excerpt}
-          </p>
+          </h2>
         )}
 
         {blog?.contentHtml && (
-          <div
-            className="prose prose-lg max-w-none mt-10"
-            dangerouslySetInnerHTML={{ __html: blog.contentHtml }}
-          />
+          <SimpleZigzagContent contentHtml={blog.contentHtml} />
         )}
       </div>
     </section>
