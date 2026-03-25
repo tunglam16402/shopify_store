@@ -1,13 +1,12 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 function extractTexts(contentHtml: string) {
-  const spanMatches = [
-    ...contentHtml.matchAll(/<span[^>]*>([\s\S]*?)<\/span>/gi),
-  ]
+  const matches = [...contentHtml.matchAll(/<(span|p)[^>]*>([\s\S]*?)<\/\1>/gi)]
 
-  return spanMatches
+  return matches
     .map((match) =>
-      match[1]
+      match[2]
         .replace(/<br\s*\/?>/gi, ' ')
         .replace(/<[^>]+>/g, '')
         .replace(/\s+/g, ' ')
@@ -24,55 +23,59 @@ function extractImages(contentHtml: string) {
   return imgMatches.map((match) => match[1]).filter(Boolean)
 }
 
-export function SimpleZigzagContent({ contentHtml }: { contentHtml: string }) {
+export function SimpleZigzagContent({
+  contentHtml,
+  handle,
+}: {
+  contentHtml: string
+  handle?: string
+}) {
   const texts = extractTexts(contentHtml)
   const images = extractImages(contentHtml)
-  console.log('images :>> ', images)
   const maxLen = Math.max(texts.length, images.length)
 
   return (
-    <div className="mt-10 space-y-8 md:space-y-12">
+    <div className="mt-10 space-y-8 md:space-y-0">
       {Array.from({ length: maxLen }).map((_, index) => {
         const isReverse = index % 2 === 1
 
         const textBlock = (
-          <div className="flex items-center">
-            <p className="text-base leading-8 md:text-lg md:leading-9">
+          <div
+            className={`flex items-center ${
+              isReverse ? 'md:order-2' : 'md:order-1'
+            }`}
+          >
+            <p className="font-heading px-10 text-center text-lg leading-tight tracking-tight md:px-20 md:text-2xl">
               {texts[index] || ''}
             </p>
           </div>
         )
 
         const imageBlock = images[index] ? (
-          <div className="relative min-h-[300px] w-full overflow-hidden rounded-3xl md:min-h-[500px]">
+          <Link
+            href={`/products/${handle}`}
+            className={isReverse ? 'md:order-1' : 'md:order-2'}
+          >
             <Image
               src={images[index]}
               alt={`Article image ${index + 1}`}
-              fill
-              className="object-cover"
+              width={1600}
+              height={900}
+              className="h-auto w-full object-contain"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
-          </div>
+          </Link>
         ) : (
-          <div />
+          <div className={isReverse ? 'md:order-1' : 'md:order-2'} />
         )
 
         return (
           <div
             key={index}
-            className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-10"
+            className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-0"
           >
-            {isReverse ? (
-              <>
-                {imageBlock}
-                {textBlock}
-              </>
-            ) : (
-              <>
-                {textBlock}
-                {imageBlock}
-              </>
-            )}
+            {imageBlock}
+            {textBlock}
           </div>
         )
       })}

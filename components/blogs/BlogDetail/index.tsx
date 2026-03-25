@@ -2,6 +2,8 @@ import { formatDate } from '@/lib/helper'
 import { GetDetailArticleQuery } from '@/shopify/types/graphql'
 import Image from 'next/image'
 import { SimpleZigzagContent } from '../helper'
+import { Button } from '@/components/ui/Button'
+import Link from 'next/link'
 
 type BlogDetailProps = {
   blog: NonNullable<GetDetailArticleQuery['blog']>['articleByHandle']
@@ -58,13 +60,29 @@ const BlogDetail = ({ blog }: BlogDetailProps) => {
         )}
 
         {blog?.excerpt && (
-          <h2 className="mx-6 mt-6 text-center text-lg leading-tight md:mx-40 md:text-2xl">
+          <h2 className="mx-6 mt-4 text-center text-lg leading-tight md:mx-40 md:mt-6 md:text-2xl">
             {blog?.excerpt}
           </h2>
         )}
 
+        <div className="mt-10 flex justify-center md:mt-12">
+          {blog?.handle && (
+            <Link href={`/products/${blog.handle}`}>
+              <Button
+                variant="primary"
+                className="px-16 text-base uppercase md:px-24 md:py-5 md:text-lg"
+              >
+                Shop now
+              </Button>
+            </Link>
+          )}
+        </div>
+
         {blog?.contentHtml && (
-          <SimpleZigzagContent contentHtml={blog.contentHtml} />
+          <SimpleZigzagContent
+            contentHtml={blog.contentHtml}
+            handle={blog.handle}
+          />
         )}
       </div>
     </section>

@@ -13,7 +13,7 @@ const buttonVariants = cva(
         defaultOutline:
           'bg-black border border-white text-white shadow-xs hover:bg-white hover:text-black hover:border-black',
         primary:
-          'border border-primary bg-primary text-white hover:text-primary hover:bg-white! hover:border-primary',
+          'border group relative overflow-hidden border-primary bg-primary text-white hover:text-primary hover:bg-white! hover:border-primary',
         destructive:
           'bg-black text-white hover:bg-white hover:text-black border hover:border-black',
         outline:
@@ -72,7 +72,7 @@ function Button({
   const Comp = asChild ? Slot : 'button'
 
   const isRollingText =
-    variant === 'rollingText' &&
+    (variant === 'rollingText' || variant === 'primary') &&
     (typeof children === 'string' || typeof children === 'number')
 
   return (
@@ -85,30 +85,14 @@ function Button({
         <span className="relative block h-[1.2em] overflow-hidden leading-none">
           <span
             aria-hidden="true"
-            className="
-              block
-              transition-transform
-              duration-800
-              ease-[cubic-bezier(0.22,1,0.36,1)]
-              group-hover:-translate-y-[1.6em]
-            "
+            className="block transition-transform duration-800 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-[1.6em]"
           >
             {children}
           </span>
 
           <span
             aria-hidden="true"
-            className="
-              absolute
-              left-0
-              top-[1.6em]
-              block
-              w-full
-              transition-transform
-              duration-800
-              ease-[cubic-bezier(0.22,1,0.36,1)]
-              group-hover:-translate-y-[1.6em]
-            "
+            className="absolute top-[1.6em] left-0 block w-full transition-transform duration-800 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-[1.6em]"
           >
             {children}
           </span>

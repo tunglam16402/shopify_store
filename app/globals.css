@@ -259,6 +259,10 @@ p {
   font-family: var(--font-paragraph);
 }
 
+.font-heading {
+  font-family: var(--font-heading);
+}
+
 .font-sub-heading {
   font-family: var(--font-sub-heading);
   font-style: italic;
