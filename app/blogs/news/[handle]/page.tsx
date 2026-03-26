@@ -6,8 +6,8 @@ import { notFound } from 'next/navigation'
 const BlogDetailPage = async ({
   params,
 }: PageProps<'/blogs/news/[handle]'>) => {
-  // 'use cache'
-  // cacheLife('days')
+  'use cache'
+  cacheLife('days')
 
   const { handle } = await params
   const detailBlog = await getArticleByHandle('news', handle)

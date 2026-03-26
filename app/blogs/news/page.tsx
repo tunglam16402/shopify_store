@@ -7,8 +7,8 @@ import {
 import { cacheLife } from 'next/cache'
 
 const BlogsLoader = async () => {
-  // 'use cache'
-  // cacheLife('days')
+  'use cache'
+  cacheLife('days')
 
   const blogs = await getAllArticles()
   const category = await getBlogCategories()
