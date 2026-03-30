@@ -63,6 +63,7 @@ export function SimpleZigzagContent({
               height={900}
               className="h-auto w-full object-contain"
               sizes="(max-width: 768px) 100vw, 50vw"
+              loading="lazy"
             />
           </Link>
         ) : (
