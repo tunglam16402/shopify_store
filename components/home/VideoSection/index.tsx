@@ -24,7 +24,7 @@ const VideoSection: React.FC<IVideoSection> = ({ videos }) => {
           autoPlay
           muted
           loop
-          className="h-screen w-full object-cover md:h-[calc(100vh+500px)]"
+          className="h-screen w-full object-cover md:h-[calc(100dvh+500px)]"
           playsInline
           preload="metadata"
         />

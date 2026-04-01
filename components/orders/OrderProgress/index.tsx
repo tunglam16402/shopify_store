@@ -57,13 +57,16 @@ const OrderProgress: React.FC<IOrderProgress> = ({ steps }) => {
                     fill
                     alt=""
                     className="object-contain"
+                    sizes="(max-width: 768px) 50px, 108px"
                   />
                 </div>
                 <div>
                   <div
                     className={cn([
                       'text-center md:text-base',
-                      step.passed ? 'text-sub-primary font-medium' : 'text-black',
+                      step.passed
+                        ? 'text-sub-primary font-medium'
+                        : 'text-black',
                       steps.length < 5 ? 'text-[11px]' : 'text-[9px]',
                     ])}
                   >

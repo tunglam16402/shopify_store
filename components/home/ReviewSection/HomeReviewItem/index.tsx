@@ -49,20 +49,21 @@ const HomeReviewItem: FC<Props> = ({ review, product }) => {
       />
 
       {product && (
-        <Link href={`/products/${product.handle}`} className="mt-auto block">
+        <Link href={`/products/${product.handle}`} className="mt-auto block group">
           <div className="mt-4 flex items-center gap-2 border-t border-gray-100">
-            <div className="relative h-9 w-9 shrink-0">
+            <div className="relative h-16 w-16 shrink-0">
               {product.image && (
                 <Image
                   src={product.image.url}
                   alt={product.image.altText || product.title}
                   fill
                   className="rounded-sm object-cover"
+                  sizes='64px'
                 />
               )}
             </div>
 
-            <span className="line-clamp-2 text-sm text-gray-400 md:text-base">
+            <span className="line-clamp-2 text-sm text-gray-400 md:text-base group-hover:text-black">
               {product.title}
             </span>
           </div>

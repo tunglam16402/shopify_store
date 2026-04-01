@@ -18,6 +18,7 @@ const BlogItem: React.FC<IBlogItem> = ({ blog }) => {
           field={blog.image}
           className="object-contain transition-all duration-800 hover:scale-120"
           sizes="(min-width: 768px) 100vw, 25vw"
+          alt=""
         />
       </div>
 

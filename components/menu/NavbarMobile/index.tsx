@@ -59,7 +59,7 @@ const NavbarMobile = ({ isOpen, onClose, menuItems }: Props) => {
         </div>
 
         {/* Container */}
-        <div className="relative h-[calc(100vh-64px)] w-full overflow-hidden">
+        <div className="relative h-[calc(100dvh-64px)] w-full overflow-hidden">
           <div
             className={`absolute h-full w-full bg-white transition-transform duration-300 ${
               selectedMenu ? '-translate-x-full' : 'translate-x-0'

@@ -1,7 +1,7 @@
 .hero_banner_item {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 100px);
+  height: calc(100dvh - 100px);
   gap: 32px;
 }
 
@@ -18,7 +18,7 @@
   .hero_banner_item {
     flex-direction: row;
     gap: 0;
-    height: 100vh ;
+    height: 100dvh ;
   }
 
   .hero_text {

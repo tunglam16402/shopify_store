@@ -23,6 +23,7 @@ const OrderItem: React.FC<IOrderItem> = ({ item }) => {
             fill
             alt={image?.altText || product?.title || 'product image'}
             className="object-contain"
+            sizes='(max-width: 768px) 113px, 138px'
           />
 
           <div className="bg-primary absolute -top-2 right-0 flex h-5 w-5 items-center justify-center rounded-full font-semibold text-white">

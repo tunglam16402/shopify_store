@@ -106,7 +106,7 @@ const CollectionContent: React.FC<ICollectionContent> = ({
                     : 'w-0 -translate-x-full opacity-0 pointer-events-none'
                 )}
               >
-                <div className="w-64 sticky max-h-[calc(100vh-5rem)] overflow-y-auto top-20">
+                <div className="w-64 sticky max-h-[calc(100dvh-5rem)] overflow-y-auto top-20">
                   <div className="border-b uppercase text-base md:text-xl font-semibold border-gray-600 pb-3">
                     Filter
                   </div>

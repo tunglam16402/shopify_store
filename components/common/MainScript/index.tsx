@@ -5,15 +5,15 @@ import * as klaviyo from '@/lib/analytics/klaviyo'
 const MainScript = () => {
   return (
     <>
-      <Script
-        strategy="beforeInteractive"
-        async
-        type="text/javascript"
-        src={`https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=${klaviyo.KLAVIYO_API_KEY}`}
-      />
+      {process.env.NODE_ENV === 'production' && (
+        <Script
+          strategy="beforeInteractive"
+          type="text/javascript"
+          src={`https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=${klaviyo.KLAVIYO_API_KEY}`}
+        />
+      )}
     </>
   )
 }
 
 export default MainScript
-  
