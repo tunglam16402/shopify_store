@@ -13,11 +13,12 @@ const BlogItem: React.FC<IBlogItem> = ({ blog }) => {
       href={blog.pathname ?? ''}
       className="flex h-full flex-col bg-white px-2"
     >
-      <div className="relative w-full overflow-hidden">
+      <div className="relative aspect-3/4 w-full overflow-hidden">
         <PrismicNextImage
           field={blog.image}
-          className="object-contain transition-all duration-800 hover:scale-120"
-          sizes="(min-width: 768px) 100vw, 25vw"
+          fill
+          className="object-cover transition-all duration-800 hover:scale-120"
+          sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 100vw"
           alt=""
         />
       </div>
