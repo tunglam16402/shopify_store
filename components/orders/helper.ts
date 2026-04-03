@@ -1,5 +1,3 @@
-import html2canvas from 'html2canvas'
-import jsPDF from 'jspdf'
 
 const ORDER_STEPS = [
   'packed',
