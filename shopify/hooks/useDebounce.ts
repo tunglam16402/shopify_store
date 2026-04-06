@@ -2,9 +2,9 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 
 /**
- * 🔹 useDebounceValue
- * Dùng để debounce một giá trị (string, number, object, ...)
- * Trả về giá trị mới sau khi user dừng thay đổi trong `delay` ms.
+ * useDebounceValue
+ * Used to debounce a value (string, number, object, ...)
+ * Returns the new value after the user stops changing it during the ms `delay`.
  */
 export function useDebounceValue<T>(value: T, delay = 300): T {
   const [debouncedValue, setDebouncedValue] = useState(value)
@@ -23,9 +23,9 @@ export function useDebounceValue<T>(value: T, delay = 300): T {
 }
 
 /**
- * 🔹 useDebounceCallback
- * Dùng để debounce một hàm callback (ví dụ: gọi API, handle input, scroll,...)
- * Trả về 1 hàm đã được debounce (memoized và cleanup chuẩn).
+ * useDebounceCallback
+ * Used to debounce a callback function (e.g., API call, input handle, scroll, etc.)
+ * Returns a debounced function (memoized and properly cleaned up).
  */
 export function useDebounceCallback<T extends (...args: any[]) => void>(
   callback: T,

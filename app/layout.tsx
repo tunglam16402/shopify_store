@@ -47,23 +47,14 @@ export const metadata: Metadata = {
   },
 }
 
-async function RootLayoutContent({ children }: { children: React.ReactNode }) {
+async function PreviewLayout({ children }: { children: React.ReactNode }) {
   const cookiePreview = (await cookies()).get(cookie.preview)?.value
   return (
-    <html
-      lang="en"
-      className={`${SubHeadingFont.variable} ${HeadingFont.variable} ${ParagraphFont.variable} antialiased`}
-    >
-      <body>
-        <StoreProvider>
-          <GlobalUIProvider>
-            <MainLayout cookie={cookiePreview}>{children}</MainLayout>
-            {/* <PrismicPreview repositoryName={repositoryName} /> */}
-          </GlobalUIProvider>
-        </StoreProvider>
-        <MainScript />
-      </body>
-    </html>
+    <GlobalUIProvider>
+      <Suspense>
+        <MainLayout cookie={cookiePreview}>{children}</MainLayout>
+      </Suspense>
+    </GlobalUIProvider>
   )
 }
 
@@ -73,8 +64,18 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <Suspense>
-      <RootLayoutContent>{children}</RootLayoutContent>
-    </Suspense>
+    <html
+      lang="en"
+      className={`${SubHeadingFont.variable} ${HeadingFont.variable} ${ParagraphFont.variable} antialiased`}
+    >
+      <body>
+        <StoreProvider>
+          <Suspense>
+            <PreviewLayout>{children}</PreviewLayout>
+          </Suspense>
+        </StoreProvider>
+        <MainScript />
+      </body>
+    </html>
   )
 }

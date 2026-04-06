@@ -3371,3 +3371,8 @@ export type GetSearchResultQueryVariables = Exact<{
 
 
 export type GetSearchResultQuery = { search: { edges: Array<{ node: { id: string, title: string, handle: string, description: string, tags: Array<string>, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } } | {} }> } };
+
+export type GetShopPoliciesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetShopPoliciesQuery = { shop: { refundPolicy?: { title: string, body: string, url: string } | null, privacyPolicy?: { title: string, body: string, url: string } | null, termsOfService?: { title: string, body: string, url: string } | null, shippingPolicy?: { title: string, body: string, url: string } | null } };
