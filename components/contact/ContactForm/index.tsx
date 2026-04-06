@@ -1,14 +1,19 @@
 'use client'
 
+import { Button } from '@/components/ui/Button'
 import StyledHeading from '@/components/ui/StyledHeading'
 import UnderlineInput from '@/components/ui/UnderlineInput'
+import Link from 'next/link'
 import React, { useState } from 'react'
+import { validateForm } from '../helper'
 
-type ContactFormValues = {
+export type ContactFormValues = {
   name: string
   email: string
   phone: string
   message: string
+  agreeTerms: boolean
+  subscribeNews: boolean
 }
 
 const initialValues: ContactFormValues = {
@@ -16,6 +21,8 @@ const initialValues: ContactFormValues = {
   email: '',
   phone: '',
   message: '',
+  agreeTerms: false,
+  subscribeNews: false,
 }
 
 const ContactForm = () => {
@@ -23,24 +30,15 @@ const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [successMessage, setSuccessMessage] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
-  const [checked, setChecked] = useState(false)
-  const [showCheckboxError, setShowCheckboxError] = useState(false)
 
-  const updateValue = (field: keyof ContactFormValues, value: string) => {
+  const updateValue = (
+    field: keyof ContactFormValues,
+    value: string | boolean
+  ) => {
     setValues((prev) => ({
       ...prev,
       [field]: value,
     }))
-  }
-
-  const validateForm = () => {
-    if (!values.name.trim()) return 'Please enter your name.'
-    if (!values.email.trim()) return 'Please enter your email.'
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
-      return 'Please enter a valid email address.'
-    }
-    if (!values.message.trim()) return 'Please enter your message.'
-    return ''
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -49,7 +47,7 @@ const ContactForm = () => {
     setSuccessMessage('')
     setErrorMessage('')
 
-    const validationError = validateForm()
+    const validationError = validateForm(values)
     if (validationError) {
       setErrorMessage(validationError)
       return
@@ -118,39 +116,37 @@ const ContactForm = () => {
         </div>
 
         <UnderlineInput
-          type="text"
+          as="textarea"
           value={values.message}
           placeholder="Message"
           onChange={(e) => updateValue('message', e.target.value)}
-          className="pb-20 pl-1 text-white placeholder:text-lg placeholder:text-white md:pb-26 md:text-lg"
+          rows={4}
+          className="pl-1 text-white placeholder:text-lg placeholder:text-white md:text-lg"
         />
 
         <div>
-          <label className="flex cursor-pointer items-start gap-2 text-sm">
+          <label className="flex cursor-pointer items-start gap-2 text-xs md:text-sm">
             <input
               type="checkbox"
-              checked={checked}
-              onChange={(e) => {
-                setChecked(e.target.checked)
-                if (e.target.checked) setShowCheckboxError(false)
-              }}
+              checked={values.agreeTerms}
+              onChange={(e) => updateValue('agreeTerms', e.target.checked)}
               className="peer accent-primary mt-0.5 h-4 w-4 cursor-pointer"
             />
 
             <span className="text-white transition">
-              I have read and agree with Terms & Conditions
+              I have read and agree with{' '}
+              <Link href="terms" className="underline hover:opacity-80">
+                Terms & Conditions
+              </Link>
             </span>
           </label>
 
-          <label className="flex cursor-pointer items-start gap-2 text-sm">
+          <label className="mt-4 flex cursor-pointer items-start gap-2 text-xs md:text-sm">
             <input
               type="checkbox"
-              checked={checked}
-              onChange={(e) => {
-                setChecked(e.target.checked)
-                if (e.target.checked) setShowCheckboxError(false)
-              }}
-              className="peer accent-primary mt-0.5 h-4 w-4 cursor-pointer"
+              checked={values.subscribeNews}
+              onChange={(e) => updateValue('subscribeNews', e.target.checked)}
+              className="peer accent-primary mt-0.5 h-4 w-4 cursor-pointer shrink-0 "
             />
 
             <span className="text-white transition">
@@ -158,29 +154,22 @@ const ContactForm = () => {
               news, & offers
             </span>
           </label>
-
-          {showCheckboxError && (
-            <p className="mt-1 text-xs text-red-500">
-              Please confirm before adding this product to cart.
-            </p>
-          )}
         </div>
 
-        <button
+        <Button
           type="submit"
           disabled={isSubmitting}
-          className="inline-flex min-w-[140px] items-center justify-center rounded-md border border-black px-5 py-3 text-sm font-medium transition-opacity disabled:cursor-not-allowed disabled:opacity-50"
+          variant="rollingText"
+          className="w-full py-5 text-base uppercase md:text-lg"
         >
-          {isSubmitting ? 'Sending...' : 'Send Message'}
-        </button>
+          {isSubmitting ? 'Sending...' : 'Send'}
+        </Button>
 
-        {successMessage && checked ? (
+        {successMessage && (
           <p className="text-sm text-green-600">{successMessage}</p>
-        ) : null}
+        )}
 
-        {errorMessage || !checked ? (
-          <p className="text-sm text-red-600">{errorMessage}</p>
-        ) : null}
+        {errorMessage && <p className="text-sm text-red-600">{errorMessage}</p>}
       </form>
     </div>
   )
