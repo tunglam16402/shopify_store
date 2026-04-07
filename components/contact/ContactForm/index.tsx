@@ -4,8 +4,9 @@ import { Button } from '@/components/ui/Button'
 import StyledHeading from '@/components/ui/StyledHeading'
 import UnderlineInput from '@/components/ui/UnderlineInput'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { FC, useState } from 'react'
 import { validateForm } from '../helper'
+import { cn } from '@/lib/utils'
 
 export type ContactFormValues = {
   name: string
@@ -25,7 +26,19 @@ const initialValues: ContactFormValues = {
   subscribeNews: false,
 }
 
-const ContactForm = () => {
+type Props = {
+  className?: string
+  formTitle?: string
+  textClassName?: string
+  checkboxClassName?: string
+}
+
+const ContactForm: FC<Props> = ({
+  className,
+  formTitle = 'Get in touch',
+  textClassName = 'pl-1 text-white placeholder:text-lg placeholder:text-white md:text-lg',
+  checkboxClassName = 'text-white',
+}) => {
   const [values, setValues] = useState<ContactFormValues>(initialValues)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [successMessage, setSuccessMessage] = useState('')
@@ -82,10 +95,15 @@ const ContactForm = () => {
   }
 
   return (
-    <div className="bg-primary w-full p-4 text-white md:px-20 md:py-10">
+    <div
+      className={cn(
+        'bg-primary w-full p-4 text-white md:px-20 md:py-10',
+        className
+      )}
+    >
       <form onSubmit={handleSubmit} className="space-y-6">
         <StyledHeading
-          text="Get in touch"
+          text={formTitle}
           headingClass="text-3xl md:text-[42px] uppercase tracking-tighter"
           subHeadingClass="text-4xl md:text-5xl font-sub-heading"
         />
@@ -95,7 +113,7 @@ const ContactForm = () => {
           value={values.name}
           placeholder="Name"
           onChange={(e) => updateValue('name', e.target.value)}
-          className="pl-1 text-white placeholder:text-lg placeholder:text-white md:text-lg"
+          className={textClassName}
         />
 
         <div className="flex flex-col items-center justify-center gap-6 md:flex-row">
@@ -104,14 +122,14 @@ const ContactForm = () => {
             value={values.email}
             placeholder="Email"
             onChange={(e) => updateValue('email', e.target.value)}
-            className="pl-1 text-white placeholder:text-lg placeholder:text-white md:text-lg"
+            className={textClassName}
           />
           <UnderlineInput
             type="tel"
             value={values.phone}
             placeholder="Phone"
             onChange={(e) => updateValue('phone', e.target.value)}
-            className="pl-1 text-white placeholder:text-lg placeholder:text-white md:text-lg"
+            className={textClassName}
           />
         </div>
 
@@ -121,7 +139,7 @@ const ContactForm = () => {
           placeholder="Message"
           onChange={(e) => updateValue('message', e.target.value)}
           rows={4}
-          className="pl-1 text-white placeholder:text-lg placeholder:text-white md:text-lg"
+          className={textClassName}
         />
 
         <div>
@@ -133,7 +151,7 @@ const ContactForm = () => {
               className="peer accent-primary mt-0.5 h-4 w-4 cursor-pointer"
             />
 
-            <span className="text-white transition">
+            <span className={checkboxClassName}>
               I have read and agree with{' '}
               <Link href="terms" className="underline hover:opacity-80">
                 Terms & Conditions
@@ -146,10 +164,10 @@ const ContactForm = () => {
               type="checkbox"
               checked={values.subscribeNews}
               onChange={(e) => updateValue('subscribeNews', e.target.checked)}
-              className="peer accent-primary mt-0.5 h-4 w-4 cursor-pointer shrink-0 "
+              className="peer accent-primary mt-0.5 h-4 w-4 shrink-0 cursor-pointer"
             />
 
-            <span className="text-white transition">
+            <span className={checkboxClassName}>
               I would like to receive more information about products, events,
               news, & offers
             </span>

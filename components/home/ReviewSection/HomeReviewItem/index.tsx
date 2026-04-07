@@ -14,7 +14,7 @@ interface Props {
 
 const HomeReviewItem: FC<Props> = ({ review, product }) => {
   return (
-    <div className="flex h-full min-h-[352px] w-full max-w-[440px] flex-col rounded-sm border-2 border-gray-200 bg-white p-5">
+    <div className="flex h-full min-h-[372px] w-full max-w-[440px] flex-col rounded-sm border-2 border-gray-200 bg-white p-5">
       <div className="flex items-center justify-between">
         <div className="flex items-center justify-center gap-1">
           <span className="font-medium">{review.username}</span>

@@ -47,7 +47,7 @@ const ProductReview: React.FC<ProductReviewProps> = ({ productId }) => {
           <p className="text-xl md:text-2xl mt-6 md:mt-8">
             We’re looking for stars!
           </p>
-          <p className="md:text-lg text-gray-500 mt-4">
+          <p className="md:text-lg text-gray-500 my-4">
             Let us know what you think
           </p>
 

@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -41,9 +42,10 @@ export function SimpleZigzagContent({
 
         const textBlock = (
           <div
-            className={`flex items-center ${
+            className={cn(
+              'flex items-center',
               isReverse ? 'md:order-2' : 'md:order-1'
-            }`}
+            )}
           >
             <p className="font-heading px-10 text-center text-lg leading-tight tracking-tight md:px-20 md:text-2xl">
               {texts[index] || ''}

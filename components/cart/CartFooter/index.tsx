@@ -6,10 +6,9 @@ import CartSubtotal from '../CartSubtotal'
 interface ICartFooter {
   handleOnClick?: () => void
   subTotal?: CartSubTotal
-  children?: React.ReactNode
 }
 
-const CartFooter = ({ handleOnClick, subTotal, children }: ICartFooter) => {
+const CartFooter = ({ handleOnClick, subTotal }: ICartFooter) => {
   return (
     <div className="sticky bottom-0 z-2 bg-[#F1EFEF] p-4 md:px-6">
       <CartSubtotal subTotal={subTotal} />
@@ -17,10 +16,10 @@ const CartFooter = ({ handleOnClick, subTotal, children }: ICartFooter) => {
       <div className="mt-4 md:mt-6">
         <Button
           variant={'primary'}
-          className="w-full rounded-none md:py-6 md:text-lg"
+          className="w-full rounded-none uppercase py-5 md:py-6 text-lg"
           onClick={handleOnClick}
         >
-          {children}
+          Checkout
         </Button>
       </div>
       <div className="mt-4">

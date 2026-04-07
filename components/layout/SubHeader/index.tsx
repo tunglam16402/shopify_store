@@ -60,7 +60,6 @@ const SubHeader = ({ menuItems }: Props) => {
     [activeIndex, menuItems]
   )
 
-
   useEffect(() => {
     setIsDropdownVisible(false)
     setActiveIndex(null)
@@ -68,36 +67,37 @@ const SubHeader = ({ menuItems }: Props) => {
 
   return (
     <nav className="relative mt-15" onMouseLeave={handleMouseLeave}>
-      <ul className="hidden md:flex items-center justify-center">
+      <ul className="hidden items-center justify-center md:flex">
         {menuItems.map((item, index) => {
           const isActive = activeIndex === index
 
           return (
-            <li
+            <Link
+              href={item.url}
               key={item.url}
-              className="py-4 px-3 relative cursor-pointer text-sm"
+              className="relative cursor-pointer px-3 py-4 text-sm"
               onMouseEnter={() => handleMouseEnter(index)}
             >
-              <Link
-                href={item.url}
+              <li
                 className={`text-gray-800 uppercase transition-colors duration-200 ${
                   isActive ? 'text-sub-primary' : 'hover:text-sub-primary'
                 }`}
               >
                 {item.title}
-              </Link>
-              <span
-                className={`absolute bottom-0 left-0 right-0 h-0.5 bg-sub-primary transition-all duration-300 ${
-                  isActive ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0'
-                }`}
-                aria-hidden="true"
-              />
-            </li>
+
+                <span
+                  className={`bg-sub-primary absolute right-0 bottom-0 left-0 h-0.5 transition-all duration-300 ${
+                    isActive ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0'
+                  }`}
+                  aria-hidden="true"
+                />
+              </li>
+            </Link>
           )
         })}
       </ul>
       <div
-        className={`absolute left-0 right-0 bg-white shadow-lg overflow-hidden transition-all duration-300 ease-in-out z-10 ${
+        className={`absolute right-0 left-0 z-10 overflow-hidden bg-white shadow-lg transition-all duration-300 ease-in-out ${
           isDropdownVisible ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
         }`}
         style={{

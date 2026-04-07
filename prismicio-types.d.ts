@@ -69,6 +69,59 @@ type ContentRelationshipFieldWithData<
   >
 }[Exclude<TCustomType[number], string>['id']]
 
+/**
+ * Item in *About → About Us*
+ */
+export interface AboutDocumentDataAboutUsItem {
+  /**
+   * Image field in *About → About Us*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about.about_us[].image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  image: prismic.ImageField<never>
+
+  /**
+   * Description field in *About → About Us*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about.about_us[].description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField
+}
+
+/**
+ * Content for About documents
+ */
+interface AboutDocumentData {
+  /**
+   * About Us field in *About*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about.about_us[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  about_us: prismic.GroupField<Simplify<AboutDocumentDataAboutUsItem>>
+}
+
+/**
+ * About document from Prismic
+ *
+ * - **API ID**: `about`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type AboutDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<Simplify<AboutDocumentData>, 'about', Lang>
+
 type BannerManagementDocumentDataSlicesSlice = CollectionBannerSlice
 
 /**
@@ -913,6 +966,7 @@ export type TestpageDocument<Lang extends string = string> =
   >
 
 export type AllDocumentTypes =
+  | AboutDocument
   | BannerManagementDocument
   | FooterDocument
   | HomepageDocument
@@ -1174,6 +1228,9 @@ declare module '@prismicio/client' {
 
   namespace Content {
     export type {
+      AboutDocument,
+      AboutDocumentData,
+      AboutDocumentDataAboutUsItem,
       BannerManagementDocument,
       BannerManagementDocumentData,
       BannerManagementDocumentDataSlicesSlice,

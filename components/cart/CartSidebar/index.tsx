@@ -4,13 +4,13 @@ import { getCartRecommendations } from '@/actions/cart'
 import { ProductRecommend } from '@/components/products'
 import { useAppSelector } from '@/lib/hooks/useAppSelector'
 import { ProductCardProps } from '@/types/product/productCard'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState, useTransition } from 'react'
 import CartEmpty from '../CartEmpty'
 import CartFooter from '../CartFooter'
 import { CartItem } from '../CartItem'
 import { getCartDisplayItems, isPersonalizationFee } from '../helper'
 import SideCartHeader from './SideCartHeader'
-import Link from 'next/link'
 
 interface ICartSideBar {
   isClose: () => void
@@ -35,6 +35,7 @@ export const SIDEBAR_SWIPER_BREAKPOINT = {
 }
 
 const CartSideBar = ({ isClose }: ICartSideBar) => {
+  const router = useRouter()
   const cart = useAppSelector((state) => state.cart.cart)
   const displayItems = getCartDisplayItems(cart)
   const [recommendations, setRecommendations] = useState<ProductCardProps[]>([])
@@ -55,6 +56,11 @@ const CartSideBar = ({ isClose }: ICartSideBar) => {
   const lines = cart?.lines ?? []
 
   const productLines = lines.filter((line) => !isPersonalizationFee(line))
+
+  const handleCheckout = () => {
+    isClose()
+    router.push('/cart')
+  }
 
   return (
     <div className="flex h-full flex-col">
@@ -91,9 +97,7 @@ const CartSideBar = ({ isClose }: ICartSideBar) => {
         )}
       </div>
 
-      <CartFooter handleOnClick={isClose} subTotal={subTotal}>
-        <Link href="/cart">CHECKOUT</Link>
-      </CartFooter>
+      <CartFooter handleOnClick={handleCheckout} subTotal={subTotal} />
     </div>
   )
 }

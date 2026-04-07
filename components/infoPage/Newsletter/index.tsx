@@ -3,8 +3,8 @@
 import { NewsletterDocumentData, Simplify } from '@/prismicio-types'
 import Image from 'next/image'
 import { FC, useEffect, useState } from 'react'
-import Modal from '../common/Modal'
-import { Button } from '../ui/Button'
+import Modal from '../../common/Modal'
+import { Button } from '../../ui/Button'
 
 interface Props {
   data: Simplify<NewsletterDocumentData>

@@ -29,11 +29,11 @@ const ReviewButton = ({
   }
 
   return (
-    <div className="text-center mt-4 md:mt-0">
+    <div className="mt-4 md:mt-0">
       <Button
         variant="primary"
         onClick={handleOpenReviewForm}
-        className="px-8 md:px-12 md:py-5 md:text-base capitalize font-semibold"
+        className="px-8 font-semibold capitalize md:px-12 md:py-5 md:text-base"
       >
         {hasReviewed ? 'Update your review' : buttonText}
       </Button>
@@ -43,20 +43,20 @@ const ReviewButton = ({
           isOpen={showModal}
           onClose={() => setShowModal(false)}
           hasClose={false}
-          className="rounded-2xl! md:w-3xl p-6"
+          className="flex flex-col items-center justify-center rounded-2xl! p-6 md:w-3xl"
         >
           <div>
-            <span className="text-2xl md:text-3xl font-medium">
+            <span className="text-2xl font-medium md:text-3xl">
               You cannot write review yet
             </span>
-            <IcoReviewBuy className="w-36 h-36 md:w-40 md:h-40 mt-10 md:mt-12 animate-bounce mx-auto" />
-            <p className="mt-4 md:mt-8 text-base md:text-lg text-gray-600">
+            <IcoReviewBuy className="mx-auto mt-10 h-36 w-36 animate-bounce md:mt-12 md:h-40 md:w-40" />
+            <p className="mt-4 text-base text-gray-600 md:mt-8 md:text-lg">
               Please purchase this product first to leave a review.
             </p>
-            <div className="flex justify-center gap-4 mt-6 md:mt-8">
+            <div className="mt-6 flex justify-center gap-4 md:mt-8">
               <Button
-                className="text-lg md:text-xl px-10 py-6 rounded-4xl"
-                variant={'primary'}
+                className="rounded-4xl px-10 py-6 text-lg md:text-xl"
+                variant={'rollingText'}
               >
                 {customer ? (
                   <div onClick={() => setShowModal(false)}>
@@ -69,7 +69,7 @@ const ReviewButton = ({
 
               <Button
                 variant="secondary"
-                className="text-lg md:text-xl px-10 py-6 rounded-4xl"
+                className="rounded-4xl px-10 py-6 text-lg md:text-xl"
                 onClick={() => setShowModal(false)}
               >
                 Close

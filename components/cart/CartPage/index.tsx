@@ -95,9 +95,8 @@ const CartPage = () => {
                 <ShippingProgressBar subTotal={subTotal} />
               </div>
 
-              <CartFooter handleOnClick={handleCheckout} subTotal={subTotal}>
-                CHECKOUT
-              </CartFooter>
+              <CartFooter handleOnClick={handleCheckout} subTotal={subTotal}/>
+
             </div>
           </div>
         </div>

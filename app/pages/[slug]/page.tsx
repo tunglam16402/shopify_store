@@ -1,7 +1,6 @@
 // app/pages/[slug]/page.tsx
-import PolicyDetail from '@/components/policies/PolicyDetail'
+import PolicyDetail from '@/components/infoPage/policies/PolicyDetail'
 import { getShopPolicies } from '@/shopify/api/operations/get-policies'
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 const POLICY_MAP = {

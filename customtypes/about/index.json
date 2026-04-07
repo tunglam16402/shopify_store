@@ -1,0 +1,38 @@
+{
+  "format": "custom",
+  "id": "about",
+  "label": "About",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {
+      "about_us": {
+        "type": "Group",
+        "config": {
+          "label": "About Us",
+          "repeat": true,
+          "fields": {
+            "image": {
+              "type": "Image",
+              "config": {
+                "label": "Image",
+                "constraint": {
+                  "width": 720,
+                  "height": 720
+                },
+                "thumbnails": []
+              }
+            },
+            "description": {
+              "type": "Text",
+              "config": {
+                "label": "Description",
+                "placeholder": ""
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
