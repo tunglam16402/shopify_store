@@ -6,7 +6,7 @@ import { useEffect, useRef, useState, useCallback } from 'react'
  * Used to debounce a value (string, number, object, ...)
  * Returns the new value after the user stops changing it during the ms `delay`.
  */
-export function useDebounceValue<T>(value: T, delay = 300): T {
+export function useDebounceValue<T>(value: T, delay = 500): T {
   const [debouncedValue, setDebouncedValue] = useState(value)
 
   useEffect(() => {

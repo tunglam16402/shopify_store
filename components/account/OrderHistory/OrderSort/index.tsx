@@ -1,42 +1,33 @@
 import { IcoSort } from '@/components/icons'
 import Select from '@/components/ui/Select'
 import React from 'react'
+import { OrderSortValue } from '../helper'
 
-const dateRangeOptions = [
-  { label: 'Anytime', value: 'anytime' },
-  { label: 'Last 30 days', value: 'last30days' },
-  { label: 'Last 6 months', value: 'last6months' },
-  { label: '2026', value: '2026' },
-  { label: '2025', value: '2025' },
-  { label: '2024', value: '2024' },
-]
-
-const statusOptions = [
-  { label: 'Most Relevant', value: 'relevant' },
-  { label: 'Most Recent', value: 'newest' },
-  { label: 'Highest Rating', value: 'high' },
-  { label: 'Lowest Rating', value: 'low' },
-  { label: 'Most Helpful', value: 'helpful' },
+const sortOptions = [
+  { label: 'Newest first', value: 'date-desc' },
+  { label: 'Oldest first', value: 'date-asc' },
+  { label: 'Status A → Z', value: 'status-asc' },
+  { label: 'Status Z → A', value: 'status-desc' },
 ]
 
 interface IOrderSort {
-  value: string
-  onChange: (value: string) => void
+  value: OrderSortValue
+  onChange: (value: OrderSortValue) => void
+  className?: string
 }
 
-const OrderSort = ({value, onChange} : IOrderSort) => {
+const OrderSort = ({ value, onChange, className }: IOrderSort) => {
   return (
-    <div>
+    <div className={className}>
       <Select
-        options={dateRangeOptions}
+        options={sortOptions}
         value={[value]}
-        onChange={(v) => onChange(v[0])}
-        placeholder="Sort by: Most Relevant"
+        onChange={(v) => onChange(v[0] as OrderSortValue)}
+        placeholder="Sort orders"
         icon={<IcoSort className="h-5 w-5" />}
         className="w-full"
         multiple={false}
       />
-
     </div>
   )
 }

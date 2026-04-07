@@ -1,7 +1,6 @@
 import { Order } from '@/types/customer/order'
-import Link from 'next/link'
-import React from 'react'
 import clsx from 'clsx'
+import Link from 'next/link'
 
 interface IOrderList {
   orders: Order[]
