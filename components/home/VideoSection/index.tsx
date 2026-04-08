@@ -50,9 +50,7 @@ const VideoSection: React.FC<IVideoSection> = ({ videos }) => {
           </div>
         </div>
       </div>
-      <div className="mt-4">
-        <VideoBanner field={video?.banner} />
-      </div>
+      <VideoBanner field={video?.banner} />
     </div>
   )
 }

@@ -384,85 +384,85 @@ export type FooterDocument<Lang extends string = string> =
   >
 
 /**
- * Item in *Homepage → Hero Banners*
+ * Item in *Homepage →  Banners*
  */
-export interface HomepageDocumentDataHeroBannersItem {
+export interface HomepageDocumentDataBannersItem {
   /**
-   * Image field in *Homepage → Hero Banners*
+   * Image field in *Homepage →  Banners*
    *
    * - **Field Type**: Image
    * - **Placeholder**: *None*
-   * - **API ID Path**: homepage.hero_banners[].image
+   * - **API ID Path**: homepage.banners[].image
    * - **Documentation**: https://prismic.io/docs/fields/image
    */
   image: prismic.ImageField<'Mobile'>
 
   /**
-   * Title field in *Homepage → Hero Banners*
+   * Title field in *Homepage →  Banners*
    *
    * - **Field Type**: Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: homepage.hero_banners[].title
+   * - **API ID Path**: homepage.banners[].title
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   title: prismic.KeyTextField
 
   /**
-   * Lower Title field in *Homepage → Hero Banners*
+   * Lower Title field in *Homepage →  Banners*
    *
    * - **Field Type**: Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: homepage.hero_banners[].lower_title
+   * - **API ID Path**: homepage.banners[].lower_title
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   lower_title: prismic.KeyTextField
 
   /**
-   * Text field in *Homepage → Hero Banners*
+   * Text field in *Homepage →  Banners*
    *
    * - **Field Type**: Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: homepage.hero_banners[].text
+   * - **API ID Path**: homepage.banners[].text
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   text: prismic.KeyTextField
 
   /**
-   * Title 2 field in *Homepage → Hero Banners*
+   * Title 2 field in *Homepage →  Banners*
    *
    * - **Field Type**: Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: homepage.hero_banners[].title_2
+   * - **API ID Path**: homepage.banners[].title_2
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   title_2: prismic.KeyTextField
 
   /**
-   * Button Text field in *Homepage → Hero Banners*
+   * Button Text field in *Homepage →  Banners*
    *
    * - **Field Type**: Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: homepage.hero_banners[].button_text
+   * - **API ID Path**: homepage.banners[].button_text
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   button_text: prismic.KeyTextField
 
   /**
-   * Pathname field in *Homepage → Hero Banners*
+   * Pathname field in *Homepage →  Banners*
    *
    * - **Field Type**: Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: homepage.hero_banners[].pathname
+   * - **API ID Path**: homepage.banners[].pathname
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   pathname: prismic.KeyTextField
 
   /**
-   * Background Color field in *Homepage → Hero Banners*
+   * Background Color field in *Homepage →  Banners*
    *
    * - **Field Type**: Text
    * - **Placeholder**: #4f141f
-   * - **API ID Path**: homepage.hero_banners[].background_color
+   * - **API ID Path**: homepage.banners[].background_color
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   background_color: prismic.KeyTextField
@@ -749,21 +749,74 @@ export interface HomepageDocumentDataBlogItem {
 }
 
 /**
+ * Item in *Homepage → Hero Banners*
+ */
+export interface HomepageDocumentDataHeroBannersItem {
+  /**
+   * Image field in *Homepage → Hero Banners*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.hero_banners[].image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  image: prismic.ImageField<'mobile'>
+
+  /**
+   * Title field in *Homepage → Hero Banners*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.hero_banners[].title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField
+
+  /**
+   * subTitle field in *Homepage → Hero Banners*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.hero_banners[].subtitle
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  subtitle: prismic.KeyTextField
+
+  /**
+   * ctaText field in *Homepage → Hero Banners*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.hero_banners[].ctatext
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  ctatext: prismic.KeyTextField
+
+  /**
+   * ctaLink field in *Homepage → Hero Banners*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.hero_banners[].ctalink
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  ctalink: prismic.KeyTextField
+}
+
+/**
  * Content for Homepage documents
  */
 interface HomepageDocumentData {
   /**
-   * Hero Banners field in *Homepage*
+   *  Banners field in *Homepage*
    *
    * - **Field Type**: Group
    * - **Placeholder**: *None*
-   * - **API ID Path**: homepage.hero_banners[]
+   * - **API ID Path**: homepage.banners[]
    * - **Tab**: Banner
    * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
    */
-  hero_banners: prismic.GroupField<
-    Simplify<HomepageDocumentDataHeroBannersItem>
-  > /**
+  banners: prismic.GroupField<Simplify<HomepageDocumentDataBannersItem>> /**
    * Collections field in *Homepage*
    *
    * - **Field Type**: Group
@@ -825,7 +878,18 @@ interface HomepageDocumentData {
    * - **Tab**: Blogs
    * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
    */
-  blog: prismic.GroupField<Simplify<HomepageDocumentDataBlogItem>>
+  blog: prismic.GroupField<Simplify<HomepageDocumentDataBlogItem>> /**
+   * Hero Banners field in *Homepage*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.hero_banners[]
+   * - **Tab**: Hero Banner
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  hero_banners: prismic.GroupField<
+    Simplify<HomepageDocumentDataHeroBannersItem>
+  >
 }
 
 /**
@@ -1242,13 +1306,14 @@ declare module '@prismicio/client' {
       FooterDocumentDataPoliciesItem,
       HomepageDocument,
       HomepageDocumentData,
-      HomepageDocumentDataHeroBannersItem,
+      HomepageDocumentDataBannersItem,
       HomepageDocumentDataCollectionsItem,
       HomepageDocumentDataProductSectionItem,
       HomepageDocumentDataVideoBannerItem,
       HomepageDocumentDataFeatureInItem,
       HomepageDocumentDataUspItem,
       HomepageDocumentDataBlogItem,
+      HomepageDocumentDataHeroBannersItem,
       NewsletterDocument,
       NewsletterDocumentData,
       TestpageDocument,

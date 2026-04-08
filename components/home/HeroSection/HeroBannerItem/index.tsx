@@ -1,57 +1,57 @@
 'use client'
 
-import { PrismicNextImage } from '@prismicio/next'
-import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 import { HomepageDocumentDataHeroBannersItem } from '@/prismicio-types'
-import styles from './style.module.css'
+import { PrismicNextImage } from '@prismicio/next'
+import Link from 'next/link'
 
 interface IHeroBannerItem {
-  data: HomepageDocumentDataHeroBannersItem
+  heroBannerData: HomepageDocumentDataHeroBannersItem
+  firstBanner?: boolean
 }
 
-const HeroBannerItem: React.FC<IHeroBannerItem> = ({ data }) => {
+const HeroBannerItem: React.FC<IHeroBannerItem> = ({
+  heroBannerData,
+  firstBanner,
+}) => {
   return (
-    <div className={styles.hero_banner_item}>
-      <div className="relative h-[60%] md:h-full md:flex-1">
-        <PrismicNextImage
-          field={data.image}
-          fill
-          alt=""
-          className="object-cover"
-          preload
-          fetchPriority="high"
-          sizes="(max-width: 768px) 100vw, 50vw"
+    <div className="relative md:h-auto">
+      <picture>
+        <source
+          media="(max-width: 768px)"
+          srcSet={heroBannerData.image?.mobile.url?.split('?')?.[0]}
         />
+        <PrismicNextImage
+          field={heroBannerData.image}
+          width={heroBannerData.image.dimensions?.width}
+          height={heroBannerData.image.dimensions?.height}
+          alt=""
+          className="object-contain"
+          preload={firstBanner}
+          fetchPriority={firstBanner ? 'high' : 'auto'}
+          loading={firstBanner ? 'eager' : 'lazy'}
+          imgixParams={{ auto: ['enhance'] }}
+          sizes=" 100vw"
+        />
+      </picture>
+      <div className="absolute inset-0 hidden bg-linear-to-r from-black/50 via-transparent to-transparent md:block"></div>
+
+      <div className="absolute top-1/2 left-8 hidden w-full max-w-4xl -translate-y-1/2 transform text-white md:block">
+        <h1 className="mb-4 text-4xl leading-tight font-light tracking-wide md:text-[80px]">
+          {heroBannerData.title}
+        </h1>
+        <p className="mb-6 text-lg md:text-2xl">{heroBannerData.subtitle}</p>
       </div>
 
-      <div className={styles.hero_text}>
-        <h1 className="text-5xl font-light text-white md:text-7xl">
-          {data.title}
-          {data.lower_title && (
-            <span className="font-sub-heading px-2 text-6xl">
-              {data.lower_title}
-            </span>
-          )}
-          {data.title_2 && data.title_2}
-        </h1>
-
-        {data.text && (
-          <span className="mt-6 text-center font-semibold text-white md:px-8 md:text-lg">
-            {data.text}
-          </span>
-        )}
-
-        {data.button_text && (
-          <Link href={data.pathname || '#'}>
-            <Button
-              className="mt-8 px-12 text-lg uppercase md:mt-10 md:px-18"
-              variant={'rollingText'}
-            >
-              {data.button_text}
-            </Button>
-          </Link>
-        )}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 transform md:bottom-10">
+        <Link href={heroBannerData.ctalink || '#'}>
+          <Button
+            variant={'rollingText'}
+            className="border-white bg-transparent px-16 text-base text-white md:px-28 md:text-lg"
+          >
+            {heroBannerData.ctatext}
+          </Button>
+        </Link>
       </div>
     </div>
   )

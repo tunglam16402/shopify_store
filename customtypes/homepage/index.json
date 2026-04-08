@@ -6,10 +6,10 @@
   "status": true,
   "json": {
     "Banner": {
-      "hero_banners": {
+      "banners": {
         "type": "Group",
         "config": {
-          "label": "Hero Banners",
+          "label": " Banners",
           "repeat": true,
           "fields": {
             "image": {
@@ -332,6 +332,62 @@
               "type": "Text",
               "config": {
                 "label": "Pathname",
+                "placeholder": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    "Hero Banner": {
+      "hero_banners": {
+        "type": "Group",
+        "config": {
+          "label": "Hero Banners",
+          "repeat": true,
+          "fields": {
+            "image": {
+              "type": "Image",
+              "config": {
+                "label": "Image",
+                "constraint": {
+                  "width": 1920,
+                  "height": 768
+                },
+                "thumbnails": [
+                  {
+                    "name": "mobile",
+                    "width": 431,
+                    "height": 306
+                  }
+                ]
+              }
+            },
+            "title": {
+              "type": "Text",
+              "config": {
+                "label": "Title",
+                "placeholder": ""
+              }
+            },
+            "subtitle": {
+              "type": "Text",
+              "config": {
+                "label": "subTitle",
+                "placeholder": ""
+              }
+            },
+            "ctatext": {
+              "type": "Text",
+              "config": {
+                "label": "ctaText",
+                "placeholder": ""
+              }
+            },
+            "ctalink": {
+              "type": "Text",
+              "config": {
+                "label": "ctaLink",
                 "placeholder": ""
               }
             }

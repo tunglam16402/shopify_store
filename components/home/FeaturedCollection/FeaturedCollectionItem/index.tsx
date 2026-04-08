@@ -26,7 +26,7 @@ const FeaturedCollectionItem: React.FC<IFeaturedCollectionItem> = ({
                 alt=""
                 fill
                 className="object-contain transition-transform duration-1000 ease-out group-hover:scale-125"
-                sizes="(max-width: 768px) 100vw, 33vw"
+                sizes="(max-width: 768px) 90vw, 30vw"
               />
             </div>
 

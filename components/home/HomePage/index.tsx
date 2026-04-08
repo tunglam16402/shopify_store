@@ -8,6 +8,7 @@ import Blogs from '../Blogs'
 import USPs from '../USPs'
 import ReviewSection from '../ReviewSection'
 import { AnimatedSection } from '@/components/common/AnimatedSection'
+import GiftGuide from '../GiftGuide'
 
 interface IHomePage {
   data: Simplify<HomepageDocumentData>
@@ -37,7 +38,7 @@ const HomePage: React.FC<IHomePage> = ({ data }) => {
       </AnimatedSection>
 
       <AnimatedSection variant="fade-up">
-        <HeroSection banners={data.hero_banners} />
+        <GiftGuide banners={data.banners} />
       </AnimatedSection>
 
       {latestSection && (
