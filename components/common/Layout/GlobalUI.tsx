@@ -1,4 +1,5 @@
 'use client'
+import { SessionProvider } from 'next-auth/react'
 import { createContext, useState, ReactNode, useCallback } from 'react'
 
 interface UIState {
@@ -35,7 +36,7 @@ export const GlobalUIProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <GlobalUIContext.Provider value={{ isOpen, open, close, toggle }}>
-      {children}
+      <SessionProvider>{children}</SessionProvider>
     </GlobalUIContext.Provider>
   )
 }
