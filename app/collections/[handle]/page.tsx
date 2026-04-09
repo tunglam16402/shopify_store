@@ -6,7 +6,7 @@ import {
   getCollections,
 } from '@/shopify/api/operations/get-collection'
 import { getCategoryMenus } from '@/shopify/api/operations/get-menu'
-import { buildProductFilters, parseSort } from '@/shopify/helper'
+import { buildProductFilters, parseCollectionSort } from '@/shopify/helper'
 
 type Props = {
   params: Promise<{ handle: string }>
@@ -16,7 +16,7 @@ type Props = {
 const Collection = async ({ params, searchParams }: Props) => {
   const { handle } = await params
   const filterSearch = await searchParams
-  const { sortKey, reverse } = parseSort(filterSearch?.sort)
+  const { sortKey, reverse } = parseCollectionSort(filterSearch?.sort)
 
   const filters = buildProductFilters(toURLSearchParams(filterSearch))
 

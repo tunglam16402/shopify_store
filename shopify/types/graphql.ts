@@ -3367,10 +3367,15 @@ export type GetPredictiveSearchQuery = { predictiveSearch?: { products: Array<{ 
 
 export type GetSearchResultQueryVariables = Exact<{
   query: Scalars['String']['input'];
+  sortKey?: InputMaybe<SearchSortKeys>;
+  reverse?: InputMaybe<Scalars['Boolean']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  globalFilters?: InputMaybe<Array<ProductFilter> | ProductFilter>;
+  filters?: InputMaybe<Array<ProductFilter> | ProductFilter>;
 }>;
 
 
-export type GetSearchResultQuery = { search: { edges: Array<{ node: { id: string, title: string, handle: string, description: string, tags: Array<string>, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } } | {} }> } };
+export type GetSearchResultQuery = { globalPriceRange: { productFilters: Array<{ id: string, label: string, type: FilterType, values: Array<{ id: string, label: string, count: number, input: any }> }> }, searchResult: { edges: Array<{ node: { id: string, title: string, handle: string, description: string, publishedAt: string, tags: Array<string>, category?: { name: string } | null, images: { nodes: Array<{ url: string, altText?: string | null }> }, priceRange: { minVariantPrice: { amount: string, currencyCode: CurrencyCode }, maxVariantPrice: { amount: string, currencyCode: CurrencyCode } }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } } | {} }>, productFilters: Array<{ id: string, label: string, type: FilterType, values: Array<{ id: string, label: string, count: number, input: any }> }> } };
 
 export type GetShopPoliciesQueryVariables = Exact<{ [key: string]: never; }>;
 

@@ -1,21 +1,47 @@
-import { ProductList } from '@/components/products'
+import SearchResult from '@/components/searchResult'
+import { toURLSearchParams } from '@/lib/helper'
 import { getSearchResult } from '@/shopify/api/operations/get-search'
+import { buildProductFilters, parseSortSearch } from '@/shopify/helper'
+import { Metadata } from 'next'
 
 interface SearchResultPageProps {
-  searchParams?: Promise<{ q?: string }>
+  searchParams?: Promise<Record<string, string | undefined>>
+}
+
+export const metadata: Metadata = {
+  title: 'Search Results',
+  description: 'Search Results',
+  openGraph: {
+    title: 'Search Results',
+  },
 }
 
 export default async function SearchResultPage({
   searchParams,
 }: SearchResultPageProps) {
-  const query = (await searchParams)?.q || ''
+  const params = (await searchParams) || {}
+  const query = params.q || ''
 
-  const products = await getSearchResult(query)
+  const { sortKey, reverse } = parseSortSearch(params.sort)
+  const filters = buildProductFilters(toURLSearchParams(params))
+
+  const {
+    products,
+    filters: facets,
+    globalPriceFilters,
+  } = await getSearchResult({
+    query,
+    sortKey,
+    reverse,
+    filters,
+  })
 
   return (
-    <main className="mx-auto max-w-6xl p-8">
-      <h1 className="mb-6 text-3xl font-bold">Shop All Products</h1>
-      <ProductList products={products} />
-    </main>
+    <SearchResult
+      query={query}
+      products={products}
+      facets={facets}
+      globalPrice={globalPriceFilters}
+    />
   )
 }

@@ -1,4 +1,3 @@
-import { mappingDiscountPrice } from '@/lib/helper'
 import getProductByCollectionQuery from '@/shopify/utils/query/get-product-by-collection-query'
 import { cacheLife } from 'next/cache'
 import { notFound } from 'next/navigation'
@@ -9,6 +8,7 @@ import {
   ProductFilter,
 } from '../../types/graphql'
 import getAllCollectionQuery from '../../utils/query/get-all-collection-query'
+import { getProductListing, splitPriceFilters } from './get-product-listing'
 
 export async function getCollections() {
   'use cache'
@@ -25,33 +25,6 @@ export async function getCollections() {
     })) || []
 
   return collections
-}
-
-export function splitPriceFilters(filters?: ProductFilter[]) {
-  if (!filters?.length) {
-    return {
-      filters: undefined,
-      globalFilters: undefined,
-    }
-  }
-
-  const globalFilters: ProductFilter[] = []
-  const appliedFilters: ProductFilter[] = []
-
-  for (const filter of filters) {
-    const isPriceFilter = 'price' in filter && filter.price !== undefined
-
-    appliedFilters.push(filter)
-
-    if (!isPriceFilter) {
-      globalFilters.push(filter)
-    }
-  }
-
-  return {
-    filters: appliedFilters,
-    globalFilters: globalFilters.length ? globalFilters : undefined,
-  }
 }
 
 export async function getCollectionProductsByHandle({
@@ -71,7 +44,17 @@ export async function getCollectionProductsByHandle({
   cacheLife('hours')
   const { filters: appliedFilters, globalFilters } = splitPriceFilters(filters)
 
-  const data = await shopifyFetch<GetProductByCollectionQuery>({
+  const result = await getProductListing<
+    GetProductByCollectionQuery,
+    {
+      handle: string
+      sortKey?: string
+      reverse?: boolean
+      filters?: ProductFilter[]
+      globalFilters?: ProductFilter[]
+      first: number
+    }
+  >({
     query: getProductByCollectionQuery,
     variables: {
       handle,
@@ -81,26 +64,31 @@ export async function getCollectionProductsByHandle({
       filters: appliedFilters,
       globalFilters,
     },
+    extract: (data) => {
+      const collection = data?.collection
+
+      if (!collection) {
+        return {
+          productsConnection: null,
+          globalPriceConnection: null,
+          notFound: true,
+        }
+      }
+
+      return {
+        productsConnection: collection.products,
+        globalPriceConnection: collection.globalPriceRange,
+      }
+    },
   })
 
-  const collection = data?.collection
-  if (!collection) return notFound()
-
-  const productsConnection = collection.products
-  const globalPriceConnection = collection.globalPriceRange
-
-  if (!productsConnection || !globalPriceConnection) {
+  if (result.notFound) {
     return notFound()
   }
 
   return {
-    products: productsConnection.nodes.map(mappingDiscountPrice),
-
-    // Facet dùng cho UI filter (count, disable, etc.)
-    filters: productsConnection.filters,
-
-    // Facet price range GỐC (không bị ảnh hưởng bởi price filter)
-    globalPriceFilters: globalPriceConnection.filters,
+    products: result.products,
+    filters: result.filters,
+    globalPriceFilters: result.globalPriceFilters,
   }
 }
-

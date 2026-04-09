@@ -1,6 +1,6 @@
 import { ProductFilter } from './types/graphql'
 
-export function parseSort(sort?: string) {
+export function parseCollectionSort(sort?: string) {
   switch (sort) {
     case 'best-selling':
       return { sortKey: 'BEST_SELLING', reverse: false }
@@ -25,6 +25,19 @@ export function parseSort(sort?: string) {
 
     default:
       return { sortKey: 'COLLECTION_DEFAULT', reverse: false }
+  }
+}
+
+export function parseSortSearch(sort?: string) {
+  switch (sort) {
+    case 'price-asc':
+      return { sortKey: 'PRICE', reverse: false }
+
+    case 'price-desc':
+      return { sortKey: 'PRICE', reverse: true }
+
+    default:
+      return { sortKey: 'RELEVANCE', reverse: false }
   }
 }
 
