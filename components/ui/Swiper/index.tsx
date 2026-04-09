@@ -3,10 +3,6 @@
 import React, { ReactNode } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, Autoplay, FreeMode } from 'swiper/modules'
-
-import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
 import styles from './style.module.css'
 
 type Breakpoint = {
@@ -31,6 +27,12 @@ export const DEFAULT_BREAKPOINTS: Record<number, Breakpoint> = {
   0: { slidesPerView: 2, slidesPerGroup: 2, spaceBetween: 8 },
   640: { slidesPerView: 3, slidesPerGroup: 3, spaceBetween: 8 },
   1024: { slidesPerView: 4, slidesPerGroup: 4, spaceBetween: 24 },
+}
+
+export const ONE_ITEMS_BREAKPOINTS: Record<number, Breakpoint> = {
+  0: { slidesPerView: 1, slidesPerGroup: 1, spaceBetween: 0 },
+  640: { slidesPerView: 1, slidesPerGroup: 1, spaceBetween: 0 },
+  1024: { slidesPerView: 1, slidesPerGroup: 1, spaceBetween: 0 },
 }
 
 const PWSwiper: React.FC<PWSwiperProps> = ({

@@ -1,10 +1,6 @@
 'use client'
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem
-} from '@/components/ui/Carousel'
+import PWSwiper, { ONE_ITEMS_BREAKPOINTS } from '@/components/ui/Swiper'
 import { HomepageDocumentDataUspItem, Simplify } from '@/prismicio-types'
 import { GroupField } from '@prismicio/client'
 import React from 'react'
@@ -17,22 +13,22 @@ interface IUSPs {
 const USPs: React.FC<IUSPs> = ({ usps }) => {
   return (
     <section className="mt-12">
-      <div className="hidden md:grid md:grid-cols-3 md:gap-6">
+      <div className="hidden md:grid md:grid-cols-4 md:gap-6">
         {usps?.map((usp) => (
           <USPItem usp={usp} key={usp.title} />
         ))}
       </div>
 
       <div className="md:hidden">
-        <Carousel opts={{ align: 'center', loop: true }}>
-          <CarouselContent>
-            {usps?.map((usp) => (
-              <CarouselItem key={usp.title} >
-                <USPItem usp={usp} />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
+        <PWSwiper
+          pagination={false}
+          breakpoints={ONE_ITEMS_BREAKPOINTS}
+          navigation={false}
+        >
+          {usps?.map((usp) => (
+            <USPItem usp={usp} key={usp.title} />
+          ))}
+        </PWSwiper>
       </div>
     </section>
   )

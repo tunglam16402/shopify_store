@@ -1,14 +1,3 @@
-.pw_swiper :global(.swiper) {
-  position: static;
-}
-
-.pw_swiper :global(.swiper-button-next) {
-  right: -40px;
-}
-.pw_swiper :global(.swiper-button-prev) {
-  left: -40px;
-}
-
 .overlay {
   pointer-events: none;
   position: absolute;

@@ -43,7 +43,7 @@ const ProductSwiper: React.FC<ProductSwiperProps> = ({
   return (
     <div className={`product-swiper ${className}`}>
       <Suspense fallback={null}>
-        <PWSwiper breakpoints={resolvedBreakpoints} pagination>
+        <PWSwiper breakpoints={resolvedBreakpoints} pagination className='pw_swiper'>
           {data.map((product) => (
             <div key={product.id} className="mb-6 md:mb-10">
               <ProductCard product={product} />

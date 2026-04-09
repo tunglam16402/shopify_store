@@ -37,7 +37,7 @@ const ShopByCategory = ({ subCategories }: IShopByCategory) => {
       pagination={false}
       breakpoints={COLLECTION_BREAKPOINT}
       freeMode
-      className={styles.pw_swiper}
+      className="pw_swiper"
     >
       {subCategories.map((subCategory) => (
         <Link

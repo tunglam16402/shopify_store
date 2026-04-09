@@ -3,11 +3,7 @@
 import { IcoClose } from '@/components/icons'
 import ProductCard from '@/components/products/ProductCard'
 import { Button } from '@/components/ui/Button'
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from '@/components/ui/Carousel'
+import PWSwiper from '@/components/ui/Swiper'
 import { ProductCardProps } from '@/types/product/productCard'
 import { getCookie, setCookie } from '@/utils/set-cookie'
 import Link from 'next/link'
@@ -51,7 +47,7 @@ const SuggestionProducts = ({
       handle: 'denim-jacket',
       images: [
         {
-          url: '/LogoWhite.webp', 
+          url: '/LogoWhite.webp',
           altText: 'Denim Jacket',
         },
       ],
@@ -62,7 +58,6 @@ const SuggestionProducts = ({
       discountPercent: 0,
     },
   ]
-
 
   useEffect(() => {
     try {
@@ -105,64 +100,60 @@ const SuggestionProducts = ({
         {isTyping ? (
           hasPredictive ? (
             <>
-              <span className="uppercase font-light">Product</span>
+              <span className="font-light uppercase">Product</span>
             </>
           ) : (
             <>
-              <span className="uppercase font-light">Popular</span>
-              <span className="font-sub-heading font-bold px-2">products</span>
+              <span className="font-light uppercase">Popular</span>
+              <span className="font-sub-heading px-2 font-bold">products</span>
             </>
           )
         ) : hasRecent ? (
           <>
-            <span className="font-sub-heading font-bold pr-2">Recently</span>
-            <span className="uppercase font-light">viewed</span>
+            <span className="font-sub-heading pr-2 font-bold">Recently</span>
+            <span className="font-light uppercase">viewed</span>
           </>
         ) : (
           <>
             <span className="uppercase">You</span>
-            <span className="font-sub-heading font-bold px-2">may</span>
+            <span className="font-sub-heading px-2 font-bold">may</span>
             <span className="uppercase">like</span>
           </>
         )}
       </h3>
 
-      <div>
-        <Carousel className="w-full ">
-          <CarouselContent className="pt-6">
-            {displayList.map((product) => (
-              <CarouselItem
-                key={product.id}
-                className="basis-1/2 md:basis-1/4 pl-2 md:pl-4 relative overflow-visible"
-                onClick={() => onClose()}
+      <PWSwiper navigation className="pw_swiper">
+        {displayList.map((product) => (
+          <div
+            key={product.id}
+            className="relative pt-6"
+            onClick={() => onClose()}
+          >
+            {displayList === recentProducts && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onRemove?.(product.handle)
+                }}
+                className="bg-sub-primary absolute top-2.5 -right-2 z-11 cursor-pointer rounded-full p-1 hover:scale-110"
+                title="Remove"
               >
-                {displayList === recentProducts && (
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      onRemove?.(product.handle)
-                    }}
-                    className="absolute -top-2.5 -right-2 bg-sub-primary rounded-full p-1 cursor-pointer z-11 hover:scale-110"
-                    title="Remove"
-                  >
-                    <IcoClose className="h-4 w-4" color='white' />
-                  </button>
-                )}
+                <IcoClose className="h-4 w-4" color="white" />
+              </button>
+            )}
 
-                <div className="relative z-10">
-                  <ProductCard product={product} showCTA={false} />
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
-      </div>
-      <div className="text-center mt-4">
+            <div className="relative z-10 pb-4">
+              <ProductCard product={product} showCTA={false} />
+            </div>
+          </div>
+        ))}
+      </PWSwiper>
+      <div className="mt-4 text-center">
         <Link href={seeAllUrl}>
           <Button
             variant={'underline'}
-            className="px-10 text-center uppercase relative"
+            className="relative px-10 text-center uppercase"
             onClick={onClose}
           >
             + see all results

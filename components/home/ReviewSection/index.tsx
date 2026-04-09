@@ -36,6 +36,7 @@ const ReviewSection = async () => {
             breakpoints={REVIEWSECTION_BREAKPOINT}
             className={styles.reviews_swiper}
             autoplay
+            loop
           >
             {data.reviews.map((review) => (
               <ReviewItem
