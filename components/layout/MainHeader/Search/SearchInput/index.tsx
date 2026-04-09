@@ -135,7 +135,7 @@ const SearchInput = () => {
           <input
             type="text"
             name="q"
-            className="w-full border focus:border-[#7c0214] rounded-md py-3 pl-2 pr-10"
+            className="w-full border focus:border-[#7c0214] rounded-md py-2.5 pl-2 pr-10"
             placeholder="Enter product name..."
             value={input}
             onFocus={() => setIsOpen(true)}

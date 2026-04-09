@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useLayoutEffect, useRef, useState } from 'react'
 
 const messages = [
   '🚀 Free shipping for orders over 500K!',
@@ -13,8 +13,8 @@ const ANIMATION_DURATION = 500
 
 const TopHeader: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [offsetPx, setOffsetPx] = useState(0)
   const [itemHeight, setItemHeight] = useState(40)
+  const [offsetPx, setOffsetPx] = useState(0)
   const [useTransition, setUseTransition] = useState(true)
 
   const itemRef = useRef<HTMLDivElement | null>(null)
@@ -22,20 +22,20 @@ const TopHeader: React.FC = () => {
   const timeoutRef = useRef<number | null>(null)
   const resizeObserverRef = useRef<ResizeObserver | null>(null)
 
-  useEffect(() => {
-    const measure = () => {
-      if (itemRef.current) {
-        const h = Math.round(itemRef.current.getBoundingClientRect().height)
-        if (h > 0) setItemHeight(h)
-      }
+  const measureHeight = () => {
+    if (itemRef.current) {
+      const h = Math.round(itemRef.current.getBoundingClientRect().height)
+      if (h > 0) setItemHeight(h)
     }
-    measure()
+  }
 
+  useLayoutEffect(() => {
+    measureHeight()
     if (itemRef.current && 'ResizeObserver' in window) {
-      resizeObserverRef.current = new ResizeObserver(measure)
+      resizeObserverRef.current = new ResizeObserver(measureHeight)
       resizeObserverRef.current.observe(itemRef.current)
     }
-    const t = window.setTimeout(measure, 100)
+    const t = window.setTimeout(measureHeight, 100)
     return () => {
       clearTimeout(t)
       if (resizeObserverRef.current && itemRef.current) {
@@ -45,7 +45,7 @@ const TopHeader: React.FC = () => {
     }
   }, [])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     intervalRef.current = window.setInterval(() => {
       setUseTransition(true)
       setOffsetPx(-itemHeight)
@@ -55,22 +55,22 @@ const TopHeader: React.FC = () => {
         setOffsetPx(0)
         setCurrentIndex((prev) => (prev + 1) % messages.length)
 
-        requestAnimationFrame(() => {
+        requestAnimationFrame(() =>
           requestAnimationFrame(() => setUseTransition(true))
-        })
+        )
       }, ANIMATION_DURATION)
     }, SCROLL_INTERVAL)
 
     return () => {
-      if (intervalRef.current) window.clearInterval(intervalRef.current)
-      if (timeoutRef.current) window.clearTimeout(timeoutRef.current)
+      if (intervalRef.current) clearInterval(intervalRef.current)
+      if (timeoutRef.current) clearTimeout(timeoutRef.current)
     }
   }, [itemHeight])
 
   const nextIndex = (currentIndex + 1) % messages.length
 
   return (
-    <div className="w-full bg-sub-primary text-white uppercase overflow-hidden">
+    <div className="bg-sub-primary w-full overflow-hidden text-white uppercase">
       <div className="relative" style={{ height: itemHeight }}>
         <div
           style={{
@@ -79,7 +79,7 @@ const TopHeader: React.FC = () => {
               ? `transform ${ANIMATION_DURATION}ms ease`
               : 'none',
           }}
-          className="absolute left-0 top-0 w-full"
+          className="absolute top-0 left-0 w-full"
         >
           <div
             ref={itemRef}
@@ -88,7 +88,6 @@ const TopHeader: React.FC = () => {
           >
             <span className="text-sm">{messages[currentIndex]}</span>
           </div>
-
           <div
             className="flex items-center justify-center"
             style={{ height: itemHeight }}

@@ -3,8 +3,15 @@ import type { NextConfig } from 'next'
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    domains: ['cdn.shopify.com', 'cvpfzhthbagmelqgibke.supabase.co'],
     remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.shopify.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cvpfzhthbagmelqgibke.supabase.co',
+      },
       {
         protocol: 'https',
         hostname: 'images.prismic.io',

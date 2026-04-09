@@ -44,6 +44,8 @@ const MainHeader = ({ menuItems }: Props) => {
       setLastScrollY(currentScrollY)
     }
 
+    handleScroll()
+
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [lastScrollY])
@@ -70,14 +72,12 @@ const MainHeader = ({ menuItems }: Props) => {
             />
           </button>
 
-          {/* Logo */}
           <div className="shrink-0">
             <Link href="/">
               <Logo />
             </Link>
           </div>
 
-          {/* Search desktop */}
           <div className="hidden md:block">
             <SearchInput />
           </div>
@@ -93,7 +93,6 @@ const MainHeader = ({ menuItems }: Props) => {
           <SearchInput />
         </div>
 
-        {/* Cart sidebar */}
         {isOpen && (
           <Modal
             isOpen={isOpen}
@@ -106,7 +105,6 @@ const MainHeader = ({ menuItems }: Props) => {
         )}
       </div>
 
-      {/* Navbar mobile */}
       {isOpenMobile && (
         <Modal
           isOpen={isOpenMobile}
