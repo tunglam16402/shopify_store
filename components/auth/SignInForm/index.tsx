@@ -85,7 +85,6 @@ const SignInForm = () => {
             </div>
           </div>
 
-          {/* Remember Me & Forgot Password */}
           <div className="mt-5 flex items-center justify-between">
             <label className="group flex cursor-pointer items-center gap-2">
               <input type="checkbox" className="h-4 w-4 rounded" />
@@ -114,7 +113,6 @@ const SignInForm = () => {
             </div>
           )}
 
-          {/* Submit Button */}
           <div className="mt-12">
             <Button
               type="submit"
@@ -136,7 +134,6 @@ const SignInForm = () => {
             </Button>
           </div>
 
-          {/* Divider */}
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-slate-200" />
@@ -148,11 +145,9 @@ const SignInForm = () => {
             </div>
           </div>
 
-          {/* Social Login */}
           <SocialLoginWrapper />
         </form>
 
-        {/* Sign Up Link */}
         <p className="mt-6 text-center text-sm text-slate-600">
           Dont have an account?
           <Link
