@@ -1,7 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
-import { useDebounceValue } from '@/shopify/hooks/useDebounce'
+import { useMemo, useState } from 'react'
 
 interface UseSearchOptions<T> {
   data: T[]

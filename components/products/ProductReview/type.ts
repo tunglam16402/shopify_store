@@ -14,6 +14,19 @@ export interface ReviewQuery {
   limit: number
 }
 
+export interface Summary {
+  avgRating: number
+  totalReviews: number
+  breakdown: Record<1 | 2 | 3 | 4 | 5, number>
+}
+
+export interface TotalRatingProps {
+  summary: Summary
+  onOpenForm: () => void
+  verifiedBuyer: boolean
+  hasReviewed: boolean
+}
+
 // export interface ReviewMedia {
 //   id: string
 //   type: 'image' | 'video'

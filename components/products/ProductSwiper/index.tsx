@@ -2,6 +2,7 @@ import PWSwiper from '@/components/ui/Swiper'
 import { ProductCardProps } from '@/types/product/productCard'
 import React, { Suspense } from 'react'
 import ProductCard from '../ProductCard'
+import { useReviewSummary } from '@/lib/hooks/useReviewSummary'
 
 export interface SwiperBreakpoint {
   slidesPerView: number
@@ -40,13 +41,24 @@ const ProductSwiper: React.FC<ProductSwiperProps> = ({
 }) => {
   const resolvedBreakpoints = breakpoints ?? PRODUCT_SWIPER_BREAKPOINT
 
+  const productIds = data.map((p) => p.id)
+
+  const { summaryMap } = useReviewSummary(productIds)
+
   return (
     <div className={`product-swiper ${className}`}>
       <Suspense fallback={null}>
-        <PWSwiper breakpoints={resolvedBreakpoints} pagination className='pw_swiper'>
+        <PWSwiper
+          breakpoints={resolvedBreakpoints}
+          pagination
+          className="pw_swiper"
+        >
           {data.map((product) => (
             <div key={product.id} className="mb-6 md:mb-10">
-              <ProductCard product={product} />
+              <ProductCard
+                product={product}
+                summary={summaryMap?.[product.id]}
+              />
             </div>
           ))}
         </PWSwiper>

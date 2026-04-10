@@ -18,7 +18,7 @@ const SubBanner = ({ bannerData }: { bannerData: BannerData }) => {
       {CTALink && CTAText && (
         <Link href={CTALink || '#'} className="mt-4 md:mt-8">
           <Button
-            variant={'default'}
+            variant={'rollingText'}
             className="px-10 py-4 text-sm md:text-base rounded uppercase"
           >
             {CTAText}

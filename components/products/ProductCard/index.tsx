@@ -2,34 +2,41 @@
 
 import WishlistButton from '@/components/common/WishlistButton'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
-import { useReviews } from '@/lib/hooks/useReviews'
 import { ProductCardProps } from '@/types/product/productCard'
 import { getCookie, setCookie } from '@/utils/set-cookie'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useMemo, useState } from 'react'
+import { memo, useMemo, useState } from 'react'
 import AddToCart from '../AddToCart'
 import StarRating from '../ProductReview/TotalRating/StarRating'
 import styles from './style.module.css'
+import { Summary } from '../ProductReview/type'
 
 interface IProductCardProps {
   product: ProductCardProps
   showCTA?: boolean
+  summary?: Summary
 }
 
-const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
+const ProductCard = ({
+  product,
+  showCTA = true,
+  summary,
+}: IProductCardProps) => {
   const [isHover, setIsHover] = useState(false)
-  const { data } = useReviews(product.id)
   const isMobile = useMediaQuery('(max-width: 768px)')
 
-  const avgRating = data?.summary?.avgRating ?? 0
-  const totalReviews = data?.summary?.totalReviews ?? 0
+  const avgRating = summary?.avgRating ?? 0
+  const totalReviews = summary?.totalReviews ?? 0
+
   const { image, secondImage } = useMemo(() => {
     return {
       image: product.images?.[0]?.url || '',
       secondImage: product.images?.[1]?.url || '',
     }
   }, [product.images])
+
+  const currentImage = isHover && secondImage ? secondImage : image
 
   const handleProductClick = () => {
     try {
@@ -82,7 +89,7 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
           className="relative block h-full w-full"
         >
           <Image
-            src={(isHover && secondImage ? secondImage : image) || ''}
+            src={currentImage}
             alt={product?.images?.[0]?.altText || product.title}
             fill
             className="object-contain"
@@ -188,4 +195,4 @@ const ProductCard = ({ product, showCTA = true }: IProductCardProps) => {
   )
 }
 
-export default ProductCard
+export default memo(ProductCard)

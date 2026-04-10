@@ -1,20 +1,8 @@
 'use client'
 
+import { TotalRatingProps } from '../type'
 import ReviewButton from './ReviewButton'
 import StarRating from './StarRating'
-
-interface Summary {
-  avgRating: number
-  totalReviews: number
-  breakdown: Record<1 | 2 | 3 | 4 | 5, number>
-}
-
-interface TotalRatingProps {
-  summary: Summary
-  onOpenForm: () => void
-  verifiedBuyer: boolean
-  hasReviewed: boolean
-}
 
 const RATING_LEVELS = [5, 4, 3, 2, 1] as const
 

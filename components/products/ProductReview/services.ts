@@ -1,4 +1,4 @@
-import { ReviewQuery } from "./type"
+import { ReviewQuery } from './type'
 
 export async function fetchReviews(payload: ReviewQuery) {
   const res = await fetch('/api/reviews', {
@@ -26,6 +26,18 @@ export async function voteReview(payload: {
     const data = await res.json().catch(() => ({}))
     throw new Error(data.error || 'Failed to vote review')
   }
+
+  return res.json()
+}
+
+export async function fetchReviewSummary(productIds: string[]) {
+  const res = await fetch('/api/reviews/summary', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ productIds }),
+  })
+
+  if (!res.ok) throw new Error('Failed to load reviews')
 
   return res.json()
 }
