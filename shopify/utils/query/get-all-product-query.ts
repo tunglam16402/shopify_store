@@ -1,6 +1,6 @@
 const getProductsQuery = /* GraphQL */ `
-  query getProducts {
-    products(first: 250) {
+  query getProducts($first: Int = 250, $after: String) {
+    products(first: $first, after: $after) {
       nodes {
         id
         title
@@ -34,6 +34,11 @@ const getProductsQuery = /* GraphQL */ `
             }
           }
         }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        endCursor
       }
     }
   }

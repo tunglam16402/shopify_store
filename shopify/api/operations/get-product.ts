@@ -1,7 +1,4 @@
-import {
-  mappingDiscountPrice,
-  mappingVariantPrice
-} from '@/lib/helper'
+import { mappingDiscountPrice, mappingVariantPrice } from '@/lib/helper'
 import { isPublicShopifyProduct } from '@/shopify/helper'
 import getProductsByIdsQuery from '@/shopify/utils/query/get-product-by-ids'
 import getProductRecommendationsQuery from '@/shopify/utils/query/get-product-recommendation'
@@ -114,6 +111,26 @@ export async function getAllProduct() {
   const products = (data.products?.nodes ?? []).filter(isPublicShopifyProduct)
 
   return products.map(mappingDiscountPrice)
+}
+
+export async function getProducts({
+  first = 20,
+  after,
+}: {
+  first?: number
+  after?: string | null
+}) {
+  const data = await shopifyFetch<GetProductsQuery>({
+    query: getProductsQuery,
+    variables: { first, after },
+  })
+
+  const products = (data.products?.nodes ?? []).filter(isPublicShopifyProduct)
+
+  return {
+    products: products.map(mappingDiscountPrice),
+    pageInfo: data.products.pageInfo,
+  }
 }
 
 export async function getProductRecommendations(productId: string) {
