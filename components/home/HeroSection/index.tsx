@@ -22,6 +22,7 @@ const HeroSection: React.FC<IHeroBanner> = ({ banners }) => {
         breakpoints={ONE_ITEMS_BREAKPOINTS}
         autoplay
         loop
+        navigation={false}
       >
         {banners.map((banner, index) => (
           <HeroBannerItem

@@ -90,7 +90,7 @@ const Modal: React.FC<ModalProps> = ({
     >
       <div
         className={cn(
-          'relative max-h-screen overflow-auto bg-white shadow-lg',
+          'relative max-h-dvh overflow-auto bg-white shadow-lg',
           getModalAnimation(),
           className
         )}
