@@ -57,23 +57,44 @@ const ProductDetail = ({
   complementaryProducts,
 }: ProductDetailProps) => {
   const findCollectionTrail = () => {
-    for (const category of menu) {
-      const found = category?.collections?.find((col) =>
-        col.url.includes(product.collection.handle)
-      )
+    const handle = product?.collection?.handle
+    if (!handle) return []
+
+    for (const category of menu ?? []) {
+      const collections = category?.collections ?? []
+
+      const found = collections.find((col) => col?.url?.includes(handle))
+
       if (found) {
         return [category, found]
       }
     }
+
     return []
   }
 
   const [parent, child] = findCollectionTrail()
 
   const items = [
-    ...(parent ? [{ label: parent.title, href: parent.url }] : []),
-    ...(child ? [{ label: child.title, href: child.url }] : []),
-    { label: product.title },
+    ...(parent
+      ? [
+          {
+            label: parent?.title || 'Category',
+            href: parent?.url || '#',
+          },
+        ]
+      : []),
+    ...(child
+      ? [
+          {
+            label: child?.title || 'Collection',
+            href: child?.url || '#',
+          },
+        ]
+      : []),
+    {
+      label: product?.title || 'Product',
+    },
   ]
 
   useEffect(() => {
@@ -93,6 +114,7 @@ const ProductDetail = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product.id])
 
+  console.log('product', product)
   return (
     <div className="pt-8">
       <div className="page-width">
