@@ -6,6 +6,7 @@ import { parseFacetInput } from '../../CollectionPage/helper'
 import { Facets } from '../../type'
 import { IcoDown } from '@/components/icons'
 import Dropdown from '@/components/ui/Dropdown'
+import { formatCategoryLabel } from '../helper'
 
 interface IFilter {
   facets: Facets[]
@@ -26,7 +27,7 @@ const FilterItem = ({ facets, toggleValue }: IFilter) => {
             title={facet.label}
             openIcon={<IcoDown className="h-5 w-5" />}
             closeIcon={<IcoDown className="h-5 w-5" />}
-            className="pb-6 border-b-gray-200"
+            className="border-b-gray-200 pb-6"
             defaultOpen={true}
           >
             <ul className="space-y-4 pt-6">
@@ -38,15 +39,15 @@ const FilterItem = ({ facets, toggleValue }: IFilter) => {
                 const checked = searchParams.getAll(param).includes(value)
                 return (
                   <li key={v.id}>
-                    <label className="flex items-center gap-3 cursor-pointer">
+                    <label className="flex cursor-pointer items-center gap-3">
                       <input
                         type="checkbox"
                         checked={checked}
                         onChange={() => toggleValue(param, value)}
-                        className="h-[18px] w-[18px] rounded-sm accent-primary"
+                        className="accent-primary h-[18px] w-[18px] rounded-sm"
                       />
                       <span className={checked ? 'font-medium' : 'font-normal'}>
-                        {v.label} ({v.count})
+                        {formatCategoryLabel(v.label)} ({v.count})
                       </span>
                     </label>
                   </li>

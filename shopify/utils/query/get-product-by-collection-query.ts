@@ -78,6 +78,11 @@ const getProductByCollectionQuery = /* GraphQL */ `
           }
         }
 
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+
         filters {
           id
           label

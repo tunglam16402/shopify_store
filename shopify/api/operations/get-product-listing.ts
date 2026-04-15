@@ -1,12 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { mappingDiscountPrice } from '@/lib/helper'
 import { cacheLife } from 'next/cache'
-import { ProductFilter } from '../../types/graphql'
 import { shopifyFetch } from '../../fetcher'
+import { ProductFilter } from '../../types/graphql'
 
 type ListingConnection = {
   nodes: any[]
   filters: any[]
+  pageInfo: {
+    hasNextPage: boolean
+    endCursor?: string | null
+  }
 }
 
 type PriceConnection = {
@@ -48,22 +52,24 @@ export function splitPriceFilters(filters?: ProductFilter[]) {
   }
 }
 
-async function fetchProductListingData<TData, TVariables extends Record<string, any> | undefined>(
-  query: string,
-  variables: TVariables
-): Promise<TData> {
+async function fetchProductListingData<
+  TData,
+  TVariables extends Record<string, any> | undefined,
+>(query: string, variables: TVariables): Promise<TData> {
   'use cache'
   cacheLife('hours')
 
   return shopifyFetch<TData>({ query, variables })
 }
 
-export async function getProductListing<TData, TVariables extends Record<string, any> | undefined>({
-  query,
-  variables,
-  extract,
-}: GetProductListingParams<TData, TVariables>) {
-  const data = await fetchProductListingData<TData, TVariables>(query, variables)
+export async function getProductListing<
+  TData,
+  TVariables extends Record<string, any> | undefined,
+>({ query, variables, extract }: GetProductListingParams<TData, TVariables>) {
+  const data = await fetchProductListingData<TData, TVariables>(
+    query,
+    variables
+  )
 
   const { productsConnection, globalPriceConnection, notFound } = extract(data)
 
@@ -72,5 +78,9 @@ export async function getProductListing<TData, TVariables extends Record<string,
     products: (productsConnection?.nodes || []).map(mappingDiscountPrice),
     filters: productsConnection?.filters || [],
     globalPriceFilters: globalPriceConnection?.filters || [],
+    pageInfo: productsConnection?.pageInfo || {
+      hasNextPage: false,
+      endCursor: null,
+    },
   }
 }

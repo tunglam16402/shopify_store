@@ -3278,12 +3278,12 @@ export type GetAllCollectionQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetAllCollectionQuery = { collections: { nodes: Array<{ handle: string, title: string, description: string }> } };
 
 export type GetProductsQueryVariables = Exact<{
-  first: Scalars['Int']['input'];
+  first?: InputMaybe<Scalars['Int']['input']>;
   after?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type GetProductsQuery = { products: { nodes: Array<{ id: string, title: string, handle: string, description: string, publishedAt: string, tags: Array<string>, category?: { name: string } | null, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } }>, pageInfo: { hasNextPage: boolean, hasPreviousPage: boolean, endCursor?: string | null } } };
+export type GetProductsQuery = { products: { nodes: Array<{ id: string, title: string, handle: string, description: string, publishedAt: string, tags: Array<string>, category?: { name: string } | null, images: { nodes: Array<{ url: string, altText?: string | null }> }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } }>, pageInfo: { hasNextPage: boolean, endCursor?: string | null } } };
 
 export type GetArticleListQueryVariables = Exact<{
   handle: Scalars['String']['input'];
@@ -3338,7 +3338,7 @@ export type GetProductByCollectionQueryVariables = Exact<{
 }>;
 
 
-export type GetProductByCollectionQuery = { collection?: { id: string, title: string, globalPriceRange: { filters: Array<{ id: string, label: string, type: FilterType, values: Array<{ id: string, label: string, count: number, input: any }> }> }, products: { nodes: Array<{ id: string, title: string, handle: string, publishedAt: string, description: string, tags: Array<string>, category?: { name: string } | null, images: { nodes: Array<{ url: string, altText?: string | null }> }, priceRange: { minVariantPrice: { amount: string, currencyCode: CurrencyCode }, maxVariantPrice: { amount: string, currencyCode: CurrencyCode } }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } }>, filters: Array<{ id: string, label: string, type: FilterType, values: Array<{ id: string, label: string, count: number, input: any }> }> } } | null };
+export type GetProductByCollectionQuery = { collection?: { id: string, title: string, globalPriceRange: { filters: Array<{ id: string, label: string, type: FilterType, values: Array<{ id: string, label: string, count: number, input: any }> }> }, products: { nodes: Array<{ id: string, title: string, handle: string, publishedAt: string, description: string, tags: Array<string>, category?: { name: string } | null, images: { nodes: Array<{ url: string, altText?: string | null }> }, priceRange: { minVariantPrice: { amount: string, currencyCode: CurrencyCode }, maxVariantPrice: { amount: string, currencyCode: CurrencyCode } }, variants: { edges: Array<{ node: { id: string, title: string, price: { amount: string, currencyCode: CurrencyCode }, compareAtPrice?: { amount: string, currencyCode: CurrencyCode } | null } }> } }>, pageInfo: { hasNextPage: boolean, endCursor?: string | null }, filters: Array<{ id: string, label: string, type: FilterType, values: Array<{ id: string, label: string, count: number, input: any }> }> } } | null };
 
 export type GetProductDetailQueryVariables = Exact<{
   handle: Scalars['String']['input'];

@@ -32,12 +32,14 @@ export async function getCollectionProductsByHandle({
   sortKey,
   reverse,
   filters,
-  first = 24,
+  after,
+  first = 40,
 }: {
   handle: string
   sortKey?: string
   reverse?: boolean
   filters?: ProductFilter[]
+  after?: string | null
   first?: number
 }) {
   'use cache'
@@ -50,6 +52,7 @@ export async function getCollectionProductsByHandle({
       handle: string
       sortKey?: string
       reverse?: boolean
+      after?: string | null
       filters?: ProductFilter[]
       globalFilters?: ProductFilter[]
       first: number
@@ -61,6 +64,7 @@ export async function getCollectionProductsByHandle({
       sortKey,
       reverse,
       first,
+      after,
       filters: appliedFilters,
       globalFilters,
     },
@@ -90,5 +94,6 @@ export async function getCollectionProductsByHandle({
     products: result.products,
     filters: result.filters,
     globalPriceFilters: result.globalPriceFilters,
+    pageInfo: result.pageInfo,
   }
 }

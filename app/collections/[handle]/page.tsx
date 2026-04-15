@@ -20,11 +20,7 @@ const Collection = async ({ params, searchParams }: Props) => {
 
   const filters = buildProductFilters(toURLSearchParams(filterSearch))
 
-  const {
-    products,
-    filters: facets,
-    globalPriceFilters,
-  } = await getCollectionProductsByHandle({
+  const collectionData = await getCollectionProductsByHandle({
     handle,
     sortKey,
     reverse,
@@ -36,9 +32,9 @@ const Collection = async ({ params, searchParams }: Props) => {
 
   return (
     <CollectionPage
-      products={products}
-      facets={facets}
-      globalPrice={globalPriceFilters}
+      initialData={collectionData}
+      facets={collectionData.filters}
+      globalPrice={collectionData.globalPriceFilters}
       bannerData={bannerData}
       handle={handle}
       collections={collections}

@@ -37,7 +37,7 @@ const getProductsQuery = /* GraphQL */ `
       }
       pageInfo {
         hasNextPage
-        hasPreviousPage
+        
         endCursor
       }
     }
