@@ -8,9 +8,8 @@ import CollectionContent from '../CollectionContent'
 import ShopByCategory from '../ShopByCategory'
 import { CategoryMenu, Collection, Facets } from '../type'
 import { getBreadcrumbFromMenu, getSubCategory } from './helper'
-import { getCollectionProductsByHandle } from '@/shopify/api/operations/get-collection'
 interface ICollectionPage {
-  initialData: Awaited<ReturnType<typeof getCollectionProductsByHandle>>
+  products: ProductCardProps[]
   bannerData: BannerData | null
   handle: string
   collections: Collection[]
@@ -20,7 +19,7 @@ interface ICollectionPage {
 }
 
 const CollectionPage: React.FC<ICollectionPage> = async ({
-  initialData,
+  products,
   bannerData,
   handle,
   collections,
@@ -58,7 +57,7 @@ const CollectionPage: React.FC<ICollectionPage> = async ({
           <ShopByCategory subCategories={subCategories} />
         </div>
         <CollectionContent
-          initialData={initialData}
+          products={products}
           tiles={bannerData?.tiles}
           facets={facets}
           globalPrice={globalPrice}
