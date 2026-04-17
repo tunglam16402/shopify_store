@@ -11,13 +11,15 @@ export async function getProductsByWidget(widgetId: string) {
   switch (widgetId) {
     case 'bestseller':
       return mappedProducts
-        .filter((p) => (p.category || '').toLowerCase().includes('best'))
-        .slice(0, 8)
+        .filter((p) =>
+          (p.tags || []).some((tag) => tag.toLowerCase().includes('best'))
+        )
+        .slice(0, 16)
 
     case 'latest':
     default:
       return [...mappedProducts]
         .sort((a, b) => b.publishedAtTime - a.publishedAtTime)
-        .slice(0, 8)
+        .slice(0, 16)
   }
 }

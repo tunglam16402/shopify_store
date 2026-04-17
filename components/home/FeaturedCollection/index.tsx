@@ -36,7 +36,7 @@ const FeaturedCollections: React.FC<IFeaturedCollections> = ({
 }) => {
   return (
     <div className="mx-3 mt-5 md:mx-5">
-      <PWSwiper breakpoints={COLLECTION_HOME_BREAKPOINT} pagination={false}>
+      <PWSwiper breakpoints={COLLECTION_HOME_BREAKPOINT} pagination={false} navigation={false}>
         {collections.map((collection) => (
           <FeaturedCollectionItem
             key={collection.pathname}

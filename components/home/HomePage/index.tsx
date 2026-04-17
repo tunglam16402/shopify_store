@@ -19,6 +19,11 @@ const HomePage: React.FC<IHomePage> = ({ data }) => {
     (s) => s.widget_id === 'latest'
   )
 
+  const bestsellerSection = data.product_section?.find(
+    (s) => s.widget_id === 'bestseller'
+  )
+
+  console.log('bestsellerSection', bestsellerSection)
   return (
     <div>
       <HeroSection banners={data.hero_banners} />
@@ -27,9 +32,9 @@ const HomePage: React.FC<IHomePage> = ({ data }) => {
         <FeaturedCollections collections={data.collections} />
       </AnimatedSection>
 
-      {latestSection && (
+      {bestsellerSection && (
         <AnimatedSection variant="fade-up" delay={0}>
-          <FeaturedProduct products={[latestSection]} />
+          <FeaturedProduct products={[bestsellerSection]} />
         </AnimatedSection>
       )}
 

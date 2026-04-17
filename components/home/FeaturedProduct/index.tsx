@@ -20,6 +20,7 @@ const FeaturedProductServer = async ({
   const allData = await Promise.all(
     products.map(async (rawSection) => {
       const widgetId = rawSection.widget_id || 'latest'
+
       const items = await getProductsByWidget(widgetId)
 
       return {

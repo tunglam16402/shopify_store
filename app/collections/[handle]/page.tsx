@@ -34,6 +34,8 @@ const Collection = async ({ params, searchParams }: Props) => {
   const bannerData = await getBannerData(`/collections/${handle}`)
   const categoryMenus = await getCategoryMenus()
 
+  console.log('facets', facets)
+
   return (
     <CollectionPage
       products={products}
