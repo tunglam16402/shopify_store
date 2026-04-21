@@ -22,8 +22,6 @@ const HomePage: React.FC<IHomePage> = ({ data }) => {
   const bestsellerSection = data.product_section?.find(
     (s) => s.widget_id === 'bestseller'
   )
-
-  console.log('bestsellerSection', bestsellerSection)
   return (
     <div>
       <HeroSection banners={data.hero_banners} />

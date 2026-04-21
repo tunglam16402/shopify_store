@@ -4,10 +4,12 @@ import { IcoClose } from '@/components/icons'
 import ProductCard from '@/components/products/ProductCard'
 import { Button } from '@/components/ui/Button'
 import PWSwiper from '@/components/ui/Swiper'
+import { getProductsByWidget } from '@/shopify/utils/get-product-by-widget'
 import { ProductCardProps } from '@/types/product/productCard'
 import { getCookie, setCookie } from '@/utils/set-cookie'
 import Link from 'next/link'
 import { memo, useEffect, useState } from 'react'
+import useSWR from 'swr'
 
 type Props = {
   isTyping: boolean
@@ -24,40 +26,14 @@ const SuggestionProducts = ({
 }: Props) => {
   const [recentProducts, setRecentProducts] = useState<ProductCardProps[]>([])
 
-  const popularProducts: ProductCardProps[] = [
+  const { data: popularProducts = [] } = useSWR(
+    ['products', 'bestseller'],
+    () => getProductsByWidget('bestseller'),
     {
-      id: '3',
-      title: 'Classic Bag',
-      handle: 'classic-bag',
-      images: [
-        {
-          url: '/bag.jpg',
-          altText: 'Classic Bag',
-        },
-      ],
-      variantId: '',
-      description: '',
-      basePrice: 0,
-      currency: '$',
-      discountPercent: 0,
-    },
-    {
-      id: '4',
-      title: 'Denim Jacket',
-      handle: 'denim-jacket',
-      images: [
-        {
-          url: '/LogoWhite.webp',
-          altText: 'Denim Jacket',
-        },
-      ],
-      variantId: '',
-      description: '',
-      basePrice: 0,
-      currency: '$',
-      discountPercent: 0,
-    },
-  ]
+      revalidateOnFocus: false,
+      dedupingInterval: 1000 * 60 * 60,
+    }
+  )
 
   useEffect(() => {
     try {

@@ -7,7 +7,6 @@ import {
 } from '@/prismicio-types'
 import { GroupField } from '@prismicio/client'
 import FeaturedCollectionItem from './FeaturedCollectionItem'
-import { Suspense } from 'react'
 
 interface IFeaturedCollections {
   collections: GroupField<Simplify<HomepageDocumentDataCollectionsItem>>

@@ -1,16 +1,13 @@
 'use client'
 import { updateCustomerAction } from '@/actions/customer'
-import { updateCustomerInfo } from '@/store/slices/userSlice'
-import { Customer } from '@/types/customer'
-import { useActionState, useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import 'react-phone-number-input/style.css'
+import { IcoSpin } from '@/components/icons'
+import { Button } from '@/components/ui/Button'
 import { DatePicker } from '@/components/ui/DoBInput'
 import { Input } from '@/components/ui/Input'
-import { Button } from '@/components/ui/Button'
-import { IcoSpin } from '@/components/icons'
 import { PhoneInput } from '@/components/ui/PhoneInput'
+import { Customer } from '@/types/customer'
 import { useRouter } from 'next/navigation'
+import { useActionState, useEffect, useState } from 'react'
 
 interface IProfileUpdateForm {
   customer: Customer

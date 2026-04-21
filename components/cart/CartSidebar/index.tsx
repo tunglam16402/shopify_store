@@ -3,9 +3,8 @@
 import { getCartRecommendations } from '@/actions/cart'
 import { ProductRecommend } from '@/components/products'
 import { useAppSelector } from '@/lib/hooks/useAppSelector'
-import { ProductCardProps } from '@/types/product/productCard'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState, useTransition } from 'react'
+import useSWR from 'swr'
 import CartEmpty from '../CartEmpty'
 import CartFooter from '../CartFooter'
 import { CartItem } from '../CartItem'
@@ -38,20 +37,16 @@ const CartSideBar = ({ isClose }: ICartSideBar) => {
   const router = useRouter()
   const cart = useAppSelector((state) => state.cart.cart)
   const displayItems = getCartDisplayItems(cart)
-  const [recommendations, setRecommendations] = useState<ProductCardProps[]>([])
-  const [, startTransition] = useTransition()
 
   const anchorProductId = cart?.lines?.[0]?.merchandise?.product.id
   const subTotal = cart?.cost.subtotalAmount
 
-  useEffect(() => {
-    if (!anchorProductId) return
+  const { data } = useSWR(
+    anchorProductId ? ['cart-recommendations', anchorProductId] : null,
+    () => getCartRecommendations(anchorProductId!)
+  )
 
-    startTransition(async () => {
-      const res = await getCartRecommendations(anchorProductId)
-      setRecommendations(res?.complementary ?? [])
-    })
-  }, [anchorProductId])
+  const recommendations = data?.complementary ?? []
 
   const lines = cart?.lines ?? []
 
