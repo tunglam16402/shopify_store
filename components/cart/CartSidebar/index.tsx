@@ -55,6 +55,10 @@ const CartSideBar = ({ isClose }: ICartSideBar) => {
   const handleCheckout = () => {
     isClose()
     router.push('/cart')
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
   }
 
   return (
