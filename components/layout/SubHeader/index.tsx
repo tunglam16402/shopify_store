@@ -75,11 +75,11 @@ const SubHeader = ({ menuItems }: Props) => {
             <Link
               href={item.url}
               key={item.url}
-              className="relative cursor-pointer px-3 py-4 text-sm"
+              className="relative cursor-pointer px-3 py-4 text-xs lg:text-sm"
               onMouseEnter={() => handleMouseEnter(index)}
             >
               <li
-                className={`text-gray-800 uppercase transition-colors duration-200 ${
+                className={`tex text-gray-800 uppercase transition-colors duration-200 ${
                   isActive ? 'text-sub-primary' : 'hover:text-sub-primary'
                 }`}
               >

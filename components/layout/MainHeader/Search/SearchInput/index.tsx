@@ -115,7 +115,7 @@ const SearchInput = () => {
   }, [isOpen])
 
   return (
-    <div ref={inputRef} className="relative w-full md:w-[700px]">
+    <div ref={inputRef} className="relative w-full md:w-[480px] lg:w-[700px]">
       <form onSubmit={handleSubmit} className="relative flex items-center">
         {isOpen && (
           <button

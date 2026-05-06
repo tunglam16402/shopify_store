@@ -72,7 +72,10 @@ const DropdownContent = ({ menuItem }: DropdownContentProps) => {
               key={i}
               className="relative aspect-square w-full overflow-hidden"
             >
-              <Link href={menuItem.url}>
+              <Link
+                href={menuItem.url}
+                className="relative block h-full w-full"
+              >
                 <Image
                   src={src}
                   alt={`${menuItem.title} preview ${i + 1}`}

@@ -37,13 +37,18 @@ export const REVIEWSECTION_BREAKPOINT = {
     spaceBetween: 8,
   },
   768: {
-    slidesPerView: 3,
+    slidesPerView: 2,
     slidesPerGroup: 1,
     spaceBetween: 14,
   },
   1024: {
-    slidesPerView: 4,
+    slidesPerView: 3,
     slidesPerGroup: 1,
     spaceBetween: 20,
+  },
+  1280: {
+    slidesPerView: 4,
+    slidesPerGroup: 1,
+    spaceBetween: 24,
   },
 }
