@@ -14,9 +14,8 @@ const OrderDetailPage = async ({ params }: Props) => {
   if (!orders?.length) notFound()
 
   const orderDetail = orders.find((item) => item.name === slug)
-  const shippingMethod = await getOrderShippingMethod(orderDetail?.id ?? '')
-
   if (!orderDetail) notFound()
+  const shippingMethod = await getOrderShippingMethod(orderDetail?.id ?? '')
 
   return (
     <div>

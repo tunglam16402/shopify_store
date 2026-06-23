@@ -5,6 +5,7 @@ import {
   getProductRecommendations,
 } from '@/shopify/api/operations/get-product'
 import { cacheLife } from 'next/cache'
+import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
 
 interface Props {
@@ -19,9 +20,8 @@ const ProductDetailPage = async ({ params }: Props) => {
 
   const product = await getProductByHandle(handle)
 
-  if (!product) {
-    return <div>Product not found.</div>
-  }
+  if (!product) notFound()
+
   const recommendations = await getProductRecommendations(product.id)
 
   const categoryMenus = await getCategoryMenus()
