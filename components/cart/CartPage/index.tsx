@@ -8,7 +8,7 @@ import StyledHeading from '@/components/ui/StyledHeading'
 import { useAppSelector } from '@/lib/hooks/useAppSelector'
 import { getProductsByWidget } from '@/shopify/utils/get-product-by-widget'
 import { ProductCardProps } from '@/types/product/productCard'
-import { useEffect, useState, useTransition } from 'react'
+import { useEffect, useRef, useState, useTransition } from 'react'
 import CartEmpty from '../CartEmpty'
 import CartFooter from '../CartFooter'
 import ShippingProgressBar from '../CartSidebar/ShippingProgressBar'
@@ -20,6 +20,7 @@ const CartPage = () => {
   const [recommendations, setRecommendations] = useState<ProductCardProps[]>([])
   const [, startTransition] = useTransition()
   const anchorProductId = cart?.lines?.[0]?.merchandise?.product.id
+  const isRedirectingRef = useRef(false)
 
   useEffect(() => {
     startTransition(async () => {
@@ -42,7 +43,9 @@ const CartPage = () => {
     : undefined
 
   const handleCheckout = () => {
-    if (!cart?.checkoutUrl) return
+    if (!cart?.checkoutUrl || isRedirectingRef.current) return
+
+    isRedirectingRef.current = true
     window.location.href = cart.checkoutUrl
   }
 
@@ -95,8 +98,7 @@ const CartPage = () => {
                 <ShippingProgressBar subTotal={subTotal} />
               </div>
 
-              <CartFooter handleOnClick={handleCheckout} subTotal={subTotal}/>
-
+              <CartFooter handleOnClick={handleCheckout} subTotal={subTotal} />
             </div>
           </div>
         </div>
