@@ -1,8 +1,10 @@
 'use client'
 
 import { IcoClose } from '@/components/icons'
+import { getProductsByWidget } from '@/shopify/utils/get-product-by-widget'
 import { getCookie, setCookie } from '@/utils/set-cookie'
-import { memo, useEffect, useState } from 'react'
+import { memo, useEffect, useMemo, useState } from 'react'
+import useSWR from 'swr'
 
 type Props = {
   isTyping: boolean
@@ -16,13 +18,20 @@ const SuggestionSearch = ({
   predictiveTerms = [],
 }: Props) => {
   const [recentSearches, setRecentSearches] = useState<string[]>([])
-  const popularSearches = [
-    'bags',
-    'jeans',
-    'jackets',
-    'accessories',
-    'sneakers',
-  ]
+
+  const { data: popularProducts = [] } = useSWR(
+    ['products', 'bestseller'],
+    () => getProductsByWidget('bestseller'),
+    {
+      revalidateOnFocus: false,
+      dedupingInterval: 1000 * 60 * 60,
+    }
+  )
+
+  const popularSearches = useMemo(
+    () => popularProducts.slice(0, 6).map((p) => p.title),
+    [popularProducts]
+  )
 
   useEffect(() => {
     try {
@@ -51,53 +60,53 @@ const SuggestionSearch = ({
 
   return (
     <div className="relative">
-      <h3 className=" text-3xl md:text-4xl">
+      <h3 className="text-3xl md:text-4xl">
         {isTyping ? (
           hasPredictive ? (
             <>
-              <span className="font-sub-heading font-bold pr-2">Search</span>
-              <span className="uppercase font-light">suggestions</span>
+              <span className="font-sub-heading pr-2 font-bold">Search</span>
+              <span className="font-light uppercase">suggestions</span>
             </>
           ) : (
             <>
-              <span className="uppercase font-light">Popular</span>
-              <span className="font-sub-heading font-bold px-2">Searches</span>
+              <span className="font-light uppercase">Popular</span>
+              <span className="font-sub-heading px-2 font-bold">Searches</span>
             </>
           )
         ) : hasRecent ? (
           <>
-            <span className="font-sub-heading font-bold pr-2">Recent</span>
-            <span className="uppercase font-light">searches</span>
+            <span className="font-sub-heading pr-2 font-bold">Recent</span>
+            <span className="font-light uppercase">searches</span>
           </>
         ) : (
           <>
-            <span className="uppercase font-light">Popular</span>
-            <span className="font-sub-heading font-bold px-2">Searches</span>
+            <span className="font-light uppercase">Popular</span>
+            <span className="font-sub-heading px-2 font-bold">Searches</span>
           </>
         )}
       </h3>
 
-        <ul className="space-y-2 mt-2">
-          {displayList.map((term) => (
-            <li key={term} className="flex justify-between items-center">
+      <ul className="mt-2 space-y-2">
+        {displayList.map((term) => (
+          <li key={term} className="flex items-center justify-between">
+            <button
+              onClick={() => onSelect(term)}
+              className="text-left text-gray-700 transition hover:text-orange-500"
+            >
+              {term}
+            </button>
+            {!isTyping && recentSearches.includes(term) && (
               <button
-                onClick={() => onSelect(term)}
-                className="text-gray-700 hover:text-orange-500 transition text-left"
+                type="button"
+                onClick={() => onRemove(term)}
+                className="ml-2 flex items-center justify-center"
               >
-                {term}
+                <IcoClose className="h-4 w-4 text-gray-600 hover:text-red-500" />
               </button>
-              {!isTyping && recentSearches.includes(term) && (
-                <button
-                  type="button"
-                  onClick={() => onRemove(term)}
-                  className="ml-2 flex items-center justify-center"
-                >
-                  <IcoClose className="h-4 w-4 text-gray-600 hover:text-red-500" />
-                </button>
-              )}
-            </li>
-          ))}
-        </ul>
+            )}
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }

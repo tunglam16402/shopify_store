@@ -47,7 +47,7 @@ const SearchContainer = ({
     () => suggestions.map((q) => q.title),
     [suggestions]
   )
-
+  
   return (
     <div
       className="fixed left-0 right-0 z-40"
