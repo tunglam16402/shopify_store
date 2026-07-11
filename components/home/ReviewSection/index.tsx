@@ -8,6 +8,8 @@ import styles from './style.module.css'
 const ReviewSection = async () => {
   const data = await getHomepageReviewSectionData()
 
+  if (!data) return null
+
   return (
     <section className="page-width">
       <div className="mt-12 md:mt-20 md:px-12">

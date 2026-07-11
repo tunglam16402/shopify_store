@@ -37,7 +37,7 @@ const AccountPage = ({ customer }: IAccountPage) => {
     : profileTabs[0].key
 
   return (
-    <div className="layout-width rounded-4xl bg-white">
+    <div className="layout-width md:rounded-4xl bg-white pb-6! md:pb-10!">
       <Tabs key={initialKey} tabs={profileTabs} defaultKey={initialKey} />
     </div>
   )
